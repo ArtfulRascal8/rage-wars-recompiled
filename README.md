@@ -3,7 +3,7 @@
 **Turok: Rage Wars for Windows PC, with experimental OpenXR VR support.**
 An independent fan project by XR64 Studios.
 
-[Downloads](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases) Â· [Setup](SETUP.md) Â· [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues/new?template=bug_report.yml) Â· [Discussions](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions) Â· [Known issues](KNOWN_ISSUES.md)
+[Downloads](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases) · [Setup](SETUP.md) · [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues/new?template=bug_report.yml) · [Discussions](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions) · [Known issues](KNOWN_ISSUES.md)
 
 ## Private release preparation
 
@@ -15,12 +15,13 @@ This repository is being prepared for owner review. There is no approved public 
 2. Open **RageWarsRecompiled.exe**.
 3. Select your own supported **Turok: Rage Wars US v1.0 ROM** in the setup window. The loader validates it; renaming an unsupported ROM will not make it compatible.
 4. Choose **PC** for desktop play. **VR** requires a separately installed OpenXR runtime and remains experimental in this candidate.
+5. At the game's start screen, press **Escape** to advance. **Enter and Space do not advance this screen** in v0.1.0-beta.1.
 
 ROMs, original game assets, saves, and extracted weapon models are not supplied. See [Setup](SETUP.md) for controls, profiles, and VR requirements.
 
 ## Settings
 
-The selected baseline provides **Pause â†’ Options â†’ PC Options** for display, controls, input devices, weapon models, and VR settings. Title-screen Options access is requested release work and is not yet validated.
+Use **Pause → Options → PC Options** for display, controls, input devices, weapon models, and VR settings. The owner confirmed the pause Options submenu works on candidate **39B82289**. This candidate also adds title/lobby Options access; that path has passed offline tests but still needs live validation. Settings persistence and complete menu coverage remain unverified.
 
 ## Feedback
 

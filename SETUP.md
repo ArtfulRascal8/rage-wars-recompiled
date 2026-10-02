@@ -6,13 +6,15 @@ Use 64-bit Windows and extract every file from the release ZIP. Keep SDL2.dll, o
 
 Launch RageWarsRecompiled.exe, select your own supported Turok: Rage Wars US v1.0 ROM, choose PC, and start the game. The loader appears on ordinary launches and accepts supported ROM byte orders through its file picker. No ROM download is provided.
 
-Menu navigation accepts arrow keys or WASD, controller sticks or D-pad, and Enter/Space or left click to confirm. Use Escape or controller Back/B to return. Modern mouse aim is the default for a new profile; existing preferences are preserved.
+**Start-screen exception (v0.1.0-beta.1): press Escape to advance past the game's start screen. Enter and Space do not advance that screen.** This behavior was reported during owner testing of candidate 39B82289.
+
+After the start screen, menu navigation uses arrow keys or WASD, controller sticks or D-pad, and Enter/Space or left click to confirm. Escape or controller Back/B normally returns to the previous menu. Modern mouse aim is the default for a new profile; existing preferences are preserved.
 
 ## PC Options
 
-In the F67637BF baseline, use Pause â†’ Options â†’ PC Options. Display settings include resolution, display mode, aspect ratio, FOV, and master volume. Controls and Input Devices provide sensitivity, inversion, profile/device selection, and bindings. Models selects Original or Calibrated.
+Use Pause → Options → PC Options. The owner confirmed the pause Options submenu works on candidate 39B82289. Display settings include resolution, display mode, aspect ratio, FOV, and master volume. Controls and Input Devices provide sensitivity, inversion, profile/device selection, and bindings. Models selects Original or Calibrated.
 
-The title-menu path passed captured native lifecycle tests. Live rendering, navigation, persistence, and complete Options-menu coverage remain pending.
+The title/lobby Options path passed captured native lifecycle tests. Live title/lobby rendering and navigation, settings persistence, and complete Options-menu coverage remain pending.
 
 ## VR (experimental)
 
