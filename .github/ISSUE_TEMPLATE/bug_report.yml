@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a reproducible problem in Rage Wars Recompiled.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Release version and build ID
+      placeholder: v0.1.0-beta.1 / F67637BF
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Play mode
+      options: [PC, PCVR]
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: System and input device
+      description: Windows version, GPU, controller; for VR also headset and OpenXR runtime.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include game mode, map, menu path, and whether it happens with a fresh profile.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or redacted diagnostic excerpts
+      description: Do not upload ROMs, extracted assets, saves, secrets, or logs containing personal paths.

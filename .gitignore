@@ -1,0 +1,7 @@
+# Documentation-only release hub. Future source requires a separate audit.
+*
+!/.gitignore
+!/*.md
+!/.github/
+!/.github/ISSUE_TEMPLATE/
+!/.github/ISSUE_TEMPLATE/*.yml
