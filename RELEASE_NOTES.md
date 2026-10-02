@@ -17,7 +17,7 @@ Download **RageWarsRecompiled-v0.1.0-beta.1-windows-x64.zip**, extract it, and o
 
 No ROM, original game assets, extracted models, saves, settings, game source, debug symbols, or private archives are included. GitHub's automatic source archives contain this documentation repository only.
 
-[Setup guide](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/SETUP.md) · [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues/new?template=bug_report.yml) · [Community comments](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions/1)
+[Setup guide](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/SETUP.md) · [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues/new?template=bug_report.yml) · [Release review comments](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions/2)
 
 ## Build identity
 
@@ -40,3 +40,5 @@ Live UI verification was unavailable because the local computer-use runtime coul
 - Dependency attribution/licensing and later source privacy/provenance review remain open.
 
 See [Known issues](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/KNOWN_ISSUES.md). The repository stays private and this release stays a draft until the owner chooses otherwise.
+
+GitHub does not support release-linked discussions on unpublished drafts. The private review thread above accepts comments now; select Announcements when publishing the release to enable its native release discussion.
