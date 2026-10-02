@@ -10,9 +10,9 @@ Menu navigation accepts arrow keys or WASD, controller sticks or D-pad, and Ente
 
 ## PC Options
 
-In the F67637BF baseline, use Pause → Options → PC Options. Display settings include resolution, display mode, aspect ratio, FOV, and master volume. Controls and Input Devices provide sensitivity, inversion, profile/device selection, and bindings. Models selects Original or Calibrated.
+In the F67637BF baseline, use Pause â†’ Options â†’ PC Options. Display settings include resolution, display mode, aspect ratio, FOV, and master volume. Controls and Input Devices provide sensitivity, inversion, profile/device selection, and bindings. Models selects Original or Calibrated.
 
-Title-screen access is a pending release gate.
+The title-menu path passed captured native lifecycle tests. Live rendering, navigation, persistence, and complete Options-menu coverage remain pending.
 
 ## VR (experimental)
 

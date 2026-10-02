@@ -1,13 +1,13 @@
 # Rage Wars Recompiled
 
-**Turok: Rage Wars for Windows PC, with experimental OpenXR VR support.**  
+**Turok: Rage Wars for Windows PC, with experimental OpenXR VR support.**
 An independent fan project by XR64 Studios.
 
-[Downloads](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases) · [Setup](SETUP.md) · [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues/new?template=bug_report.yml) · [Discussions](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions) · [Known issues](KNOWN_ISSUES.md)
+[Downloads](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases) Â· [Setup](SETUP.md) Â· [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues/new?template=bug_report.yml) Â· [Discussions](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions) Â· [Known issues](KNOWN_ISSUES.md)
 
 ## Private release preparation
 
-This repository is being prepared for owner review. There is no approved public release yet. The selected baseline is **F67637BF**, identified by its executable SHA-256. Release packaging and PC Options in every Options menu are separate acceptance gates.
+This repository is being prepared for owner review. There is no approved public release yet. The selected baseline is **F67637BF**. The current private draft is its **39B82289** successor with release naming, menu integration, and build-path privacy changes. See [release notes](RELEASE_NOTES.md).
 
 ## How to play
 
@@ -20,11 +20,11 @@ ROMs, original game assets, saves, and extracted weapon models are not supplied.
 
 ## Settings
 
-The selected baseline provides **Pause → Options → PC Options** for display, controls, input devices, weapon models, and VR settings. Title-screen Options access is requested release work and is not yet validated.
+The selected baseline provides **Pause â†’ Options â†’ PC Options** for display, controls, input devices, weapon models, and VR settings. Title-screen Options access is requested release work and is not yet validated.
 
 ## Feedback
 
-Use [Issues](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues) for reproducible bugs and [Discussions](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions) for questions and feedback. Release comments use linked **Announcements** discussions. Include the version and build ID in bug reports.
+Use [Issues](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues) for reproducible bugs and [the welcome discussion](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions/1) for questions and feedback. Release comments use linked **Announcements** discussions. Include the version and build ID in bug reports.
 
 ## Source and credits
 

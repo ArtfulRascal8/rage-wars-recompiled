@@ -1,8 +1,8 @@
 # Candidate limitations
 
-These are unresolved items from the F67637BF build record, not claims that every session reproduces each issue.
+These are unresolved items inherited from F67637BF plus the 39B82289 successor acceptance gates; not every session necessarily reproduces each issue.
 
-- PC Options is established in the pause Options page. Title-screen access and complete Options-menu coverage remain release work.
+- The title/lobby PC Options integration passed offline native lifecycle tests. Live title/pause coverage, rendering, navigation and persistence remain unverified.
 - The owner observed improved Modern desktop mouse feel and resolution of camera/character/weapon separation and flipping in exercised play. Full desktop scenario coverage, movement cadence, and impact/damage accuracy remain unverified.
 - VR has not received owner acceptance on this exact build. Head/hand attachment, recentering, near-wall behavior, and tracking-extension availability need headset evidence.
 - VR shots use a separate current-time sample up to 50 ms old. Controller aim origin versus calibrated barrel origin and moving shot impact/damage remain unresolved. Native fallback weapon tracking and visibility have limitations.
