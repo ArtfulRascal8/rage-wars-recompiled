@@ -1,47 +1,72 @@
 # Rage Wars Recompiled - v0.1.0-beta.1
 
-**Private draft for owner inspection. The owner confirmed the pause Options submenu works; broader menu/gameplay acceptance remains pending.**
-
-Windows x64: desktop PC and experimental PCVR in one executable. This is a successor to the selected **F67637BF** baseline, not a filename-only copy.
-
-## Changes in this candidate
-
-- Consistent project, executable, setup window, game window, and Windows file-property naming.
-- Existing native PC settings connected to title/lobby Options while retaining pause-menu access. Native captured-menu tests passed, and the owner confirmed the pause Options submenu works. Live title/lobby coverage and complete visual acceptance remain open.
-- Personal build-path strings removed from consumer diagnostics, with a repeatable package scan.
-- Portable allowlisted runtime package, file manifest, checksums, setup guide, Issues, and Discussions.
+**First public beta — Windows x64 desktop PC and experimental PCVR.**
+XR64 Studios / non-commercial fan recompilation / build **47385556**.
 
 ## Download and setup
 
-Download **RageWarsRecompiled-v0.1.0-beta.1-windows-x64.zip**, extract it, and open **RageWarsRecompiled.exe**. Select your own supported **Turok: Rage Wars US v1.0 ROM** and choose PC. VR requires an active OpenXR runtime and has the limitations below.
+Download **RageWarsRecompiled-v0.1.0-beta.1-windows-x64.zip**, extract it and open
+**RageWarsRecompiled.exe**. Select your own supported **Turok: Rage Wars US v1.0
+ROM** and choose PC. Keep every included DLL beside the executable.
 
-**At the game's start screen, press Escape to advance. Enter and Space do not advance that screen in this version.**
+**At the game's start screen, press Escape. Enter and Space do not advance it.**
 
-No ROM, original game assets, extracted models, saves, settings, game source, debug symbols, or private archives are included. GitHub's automatic source archives contain this documentation repository only.
+[Setup](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/SETUP.md) · [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues/new?template=bug_report.yml) · [Known issues](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/KNOWN_ISSUES.md) · [Discussions](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions)
 
-[Setup guide](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/SETUP.md) · [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues/new?template=bug_report.yml) · [Release review comments](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions/2)
+## Included changes
+
+- Consistent Rage Wars Recompiled executable, window, setup and download naming.
+- Existing PC Options connected to pause and title/lobby Options. Pause Options was owner-confirmed on earlier build 39B82289; title/lobby paths passed native lifecycle tests. Complete live menu coverage and persistence remain open.
+- ROM-only source reconstruction with pinned public generator/dependency source and explicit integration patches. Snapshot comparison is optional; audio generation preserves ROM/region/handler checks.
+- Preview audio repair, portable allowlisted packaging, corrected complete component notices and matching source alongside the binary.
+- Dedicated project page, bug reports, Discussions and release comments.
+
+## Tested evidence and limits
+
+On exact executable **47385556**, the owner confirmed normal four-player preview
+and one-player/three-bot desktop combat rendering, working controls and good audio.
+Local empty-output source reconstruction passed exact comparison of all **60**
+guest/audio inputs, the host build, **eight targeted CTest contracts**, consumer
+production auditing and declared/read input auditing with **zero unexpected inputs**.
+All **3,206** callback definitions were preserved.
+
+The final notice/doc repack retains every tested executable/DLL byte. Package
+contracts (**10 tests**) and reconstruction helper contracts (**6 tests**) passed.
+Both archives passed full manifest hashes, explicit inventories and ZIP CRC/byte
+checks, plus bounded privacy checks. Raw local build/runtime evidence stays private.
+These checks do not prove every possible privacy issue or independent OS isolation.
+
+Known beta limits: Escape-only start progression; incomplete live menu/persistence
+coverage; inherited missing callback **0x00231F4C** outside tested scenarios;
+broader gameplay/save/device-recovery regressions; unaccepted headset attachment,
+recenter, tracking-extension support, near-wall and fallback weapon behavior,
+barrel/aim-origin agreement and moving-shot impact/damage. Calibrated models need
+your own extracted inputs; automatic extraction is unavailable. No Quest APK.
+**Independent-machine or donor-denying sandbox validation remains open.**
+See [Known issues](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/KNOWN_ISSUES.md).
+
+## Matching source, licensing and provenance
+
+Download **RageWarsRecompiled-v0.1.0-beta.1-source.zip** beside the Windows ZIP.
+Its **docs/PC_RECONSTRUCTION.md** explains the pinned Windows toolchain and ordered
+rebuild using your own ROM. It includes reviewed port/runtime/generator sources,
+patches, configurations and scripts. GitHub's automatic “Source code” archives
+contain this documentation repository only; use the explicitly named source asset.
+
+GNU GPLv3 and dated modification/source-access notices are in **COPYING.txt** and
+**MODIFICATIONS.txt**. Component licenses and attribution are preserved in both
+archives and indexed in **THIRD-PARTY-NOTICES.txt** in the Windows package.
+The binary contains translated guest code; source includes ROM-derived
+reconstruction edits. No ROM file, extracted assets, saves, profiles, RAM captures
+or old Git history are supplied. Original game copyrights remain with their owners.
+XR64 Studios has chosen non-commercial fan distribution; this records its decision
+and does not claim rights-holder permission, endorsement or a legal finding.
 
 ## Build identity
 
-- Candidate executable SHA-256: `39B822892A9921EF5ADFB91C57601FA2D32B4B0A08C608FE45B918709289B432`
-- Preserved baseline: `F67637BFB03202D7AC288564C232B098993623F76034CD68DBB1F935EEC38578`
-- Windows product/file version: `0.1.0-beta.1`
+Executable SHA-256:
+`47385556a13586971c341e770d7053b1503b668b5f0748b85fcfe56a27edd659`
 
-## Evidence and limits
-
-Release build, CLI startup, startup/profile contracts, seven package-safety tests, source-filter checks, 15 ROM-pinned controls/menu hooks, existing camera/control tests, and 50-cycle native pause/title menu fixtures passed. Production audit preserved all 3,206 callback definitions, with no CodeView debug symbols or forbidden capture probes. All 30 staged files passed the bounded personal-path/private-key/GitHub-token scan. This is not a comprehensive source or licensing audit.
-
-Automated live UI verification was unavailable because the local computer-use runtime could not initialize. In subsequent owner testing of candidate 39B82289, the pause Options submenu was confirmed working and the start screen required Escape; Enter and Space did not advance it. This scoped observation does not establish title/lobby coverage, settings persistence, gameplay, or headset acceptance.
-
-## Known issues before public release
-
-- Start-screen keyboard progression requires Escape; Enter and Space do not advance it.
-- Live title/lobby navigation, complete pause/settings coverage, settings persistence, every Options entry point, menu/color parity, transitions, and save lifecycle need acceptance.
-- Prior four-view audio skipping and fatal missing callback `0x00231F4C` remain unresolved.
-- VR attachment, recentering, tracking-extension availability, fallback weapon coverage, near-wall behavior, barrel/aim-origin agreement, and actual moving shot impact/damage remain unaccepted.
-- Calibrated models require private user-extracted inputs; automatic extraction is unavailable.
-- Dependency attribution/licensing and later source privacy/provenance review remain open.
-
-See [Known issues](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/KNOWN_ISSUES.md). The repository stays private and this release stays a draft until the owner chooses otherwise.
-
-GitHub does not support release-linked discussions on unpublished drafts. The private review thread above accepts comments now; select Announcements when publishing the release to enable its native release discussion.
+Version: **0.1.0-beta.1**. This is a successor to selected baseline **F67637BF**.
+Download hashes are in **SHA256SUMS.txt**; per-file hashes are in each archive's
+manifest. This is an experimental beta with the acceptance boundaries above.

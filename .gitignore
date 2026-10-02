@@ -1,7 +1,9 @@
-# Documentation-only release hub. Future source requires a separate audit.
+# Documentation release hub. Matching reviewed source is attached to releases.
 *
 !/.gitignore
 !/*.md
+!/COPYING.txt
+!/MODIFICATIONS.txt
 !/.github/
 !/.github/ISSUE_TEMPLATE/
 !/.github/ISSUE_TEMPLATE/*.yml

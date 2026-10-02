@@ -1,15 +1,17 @@
-# Candidate limitations
+# Beta limitations
 
-These are unresolved items inherited from F67637BF plus the 39B82289 successor acceptance gates; not every session necessarily reproduces each issue.
+These limits apply to v0.1.0-beta.1, build 47385556. Owner acceptance covers
+four-player preview and one-player/three-bot desktop combat, including rendering,
+controls and audio. It does not establish a complete playthrough or PCVR acceptance.
 
-- At the game's start screen, only **Escape** advances during owner keyboard testing; **Enter and Space do not work there** in v0.1.0-beta.1. This is a known input limitation.
-- The owner confirmed the pause Options submenu works on candidate 39B82289. Title/lobby PC Options passed offline native lifecycle tests, but live title/lobby coverage, settings persistence, and every Options entry point remain unverified.
-- The owner observed improved Modern desktop mouse feel and resolution of camera/character/weapon separation and flipping in exercised play. Full desktop scenario coverage, movement cadence, and impact/damage accuracy remain unverified.
-- VR has not received owner acceptance on this exact build. Head/hand attachment, recentering, near-wall behavior, and tracking-extension availability need headset evidence.
-- VR shots use a separate current-time sample up to 50 ms old. Controller aim origin versus calibrated barrel origin and moving shot impact/damage remain unresolved. Native fallback weapon tracking and visibility have limitations.
-- Earlier four-view audio skipping and a fatal missing callback (0x00231F4C) remain unresolved in the record. Interactive volume listening and physical device-removal recovery need acceptance.
-- Full menu/color parity, PC/VR transitions, all-weapon muzzle coverage, menu-back behavior, and Controller Pak lifecycle need regression coverage.
-- Calibrated weapon models and calibration files are private local inputs, not supplied assets. Automatic extraction is unavailable.
-- Clean source-only reconstruction has not been established. Source and dependency licensing review remains a prerequisite to public binary distribution and later source publication.
+- **Start screen: press Escape. Enter and Space do not advance it.**
+- Pause Options was owner-confirmed on earlier build 39B82289. Title/lobby PC Options passed native lifecycle tests; complete live menu coverage, every entry point and settings persistence remain unverified.
+- The inherited fatal missing callback **0x00231F4C** remains open outside the exercised scenarios.
+- Broader gameplay, movement cadence, impact/damage accuracy, all-weapon muzzle coverage, menu/color parity, PC/VR transitions, menu-back behavior and Controller Pak lifecycle need regression coverage.
+- Interactive volume changes and physical audio-device removal/recovery need acceptance. Earlier preview crackling was repaired; the owner reported good preview/combat audio on this build.
+- PCVR head/hand attachment, recentering, near-wall behavior and tracking-extension availability need headset evidence on this exact build.
+- VR shots use a separate current-time sample up to 50 ms old. Calibrated barrel versus controller aim origin, moving-shot impacts/damage and native fallback weapon tracking/visibility remain unaccepted.
+- Calibrated weapon models and calibration files require your own extracted inputs. Automatic extraction is unavailable.
+- Independent Windows/VM or donor-denying sandbox reconstruction remains open. Local empty-output reconstruction and declared/read input auditing passed; this does not establish OS isolation.
 
-No stable-release, complete-playthrough, or standalone Quest support claim is made.
+There is no standalone Quest APK, stable-release or complete-playthrough claim.

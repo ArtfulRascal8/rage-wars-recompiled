@@ -1,0 +1,41 @@
+Rage Wars Recompiled - v0.1.0-beta.1
+XR64 Studios modifications and distribution notice - 2026-10-02
+
+XR64 Studios modified the N64ModernRuntime runtime and N64Recomp generator
+sources and added Rage Wars port integration, PC settings, OpenXR support,
+packaging, source reconstruction and build tooling. The modified source is
+marked and recorded in reconstruction/runtime-local.patch,
+reconstruction/generator-local.patch and their provenance manifests.
+
+The port/runtime integration, modifications and combined distribution are
+provided under GNU General Public License version 3. See COPYING.txt.
+Upstream permissive component copyrights and licenses remain in licenses/.
+No warranty is provided to the extent permitted by the applicable licenses.
+
+Matching source and reconstruction instructions are provided alongside the
+binary download as RageWarsRecompiled-v0.1.0-beta.1-source.zip at:
+https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.1.0-beta.1
+The source includes the modified runtime, port code, generator source,
+configuration and scripts. Rebuilding requires your own supported US v1.0 ROM.
+
+XR64 Studios has chosen to distribute this as a non-commercial fan
+recompilation. Turok: Rage Wars and the original game code/content remain
+copyrighted by their respective owners. This records the studio's release
+decision; it does not claim permission from a rights holder or a legal finding.
+The binary contains translated guest code and the source contains
+reconstruction edits derived from the original program. No ROM file,
+extracted assets, saves, profiles, RAM captures or Git history are supplied.
+
+Renderer provenance: fast3d_scene_decoder.cpp identifies LibUltraShip field
+extraction and libultra GBI protocol macros as references. The historical
+reference revision was not recorded. The preserved Fast3D reference notice
+is MIT, copyright 2020 Emill, MaikelChan. No historical revision is invented.
+Perfect Dark VR was consulted for OpenXR lifecycle and tracking-space
+separation; rage_wars_openxr.cpp records that it does not import game-specific
+camera/input code. Its reference revision is
+67ea20c86986c6bc85687f26a27418b266af309c.
+
+Independent Windows/VM or donor-denying sandbox validation remains open.
+Local empty-output reconstruction, recorded input closure and the requested
+owner-observed desktop scenarios passed. General gameplay and PCVR acceptance
+remain limited as described on the release page.

@@ -7,7 +7,7 @@ body:
     id: version
     attributes:
       label: Release version and build ID
-      placeholder: v0.1.0-beta.1 / F67637BF
+      placeholder: v0.1.0-beta.1 / 47385556
     validations:
       required: true
   - type: dropdown

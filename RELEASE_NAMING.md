@@ -6,10 +6,12 @@
 | Studio | XR64 Studios |
 | Repository | ArtfulRascal8/rage-wars-recompiled |
 | Windows executable | RageWarsRecompiled.exe |
-| Initial draft tag | v0.1.0-beta.1 |
+| Release tag | v0.1.0-beta.1 |
 | Release title | Rage Wars Recompiled - v0.1.0-beta.1 |
 | Download | RageWarsRecompiled-v0.1.0-beta.1-windows-x64.zip |
 | ZIP root directory | RageWarsRecompiled |
+| Matching source | RageWarsRecompiled-v0.1.0-beta.1-source.zip |
+| Source ZIP root | RageWarsRecompiled-Source |
 | Checksums | SHA256SUMS.txt |
 | Build identity | Full executable SHA-256; eight-character prefix for display |
 | Existing save namespace | %LOCALAPPDATA%\XR64\RageWars |
