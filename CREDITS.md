@@ -1,6 +1,7 @@
 # Credits and notices
 
 - **XR64 Studios** — Rage Wars Recompiled port integration, PC settings, OpenXR support and reconstruction/build tooling.
+- **The Fable team, especially nemonicicon** — provided Fable Oracle, which helped us identify many missing functions in the Rage Wars recompilation.
 - [N64Recomp](https://github.com/N64Recomp/N64Recomp) and [N64ModernRuntime](https://github.com/N64Recomp/N64ModernRuntime) — generator/runtime source with explicit local modifications; GNU GPLv3 distribution and upstream component notices.
 - [SDL](https://github.com/libsdl-org/SDL), version 2.30.11 — platform, input and audio; official unchanged x64 DLL.
 - [Khronos OpenXR SDK](https://github.com/KhronosGroup/OpenXR-SDK), version 1.1.58 — source-built loader at commit 472d817ffe066d5be09a351b0d39ff420141208b; Apache-2.0 or MIT, with JsonCpp and per-file attribution.
