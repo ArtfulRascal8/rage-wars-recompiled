@@ -1,0 +1,101 @@
+{
+  "repository": "https://github.com/N64Recomp/N64Recomp",
+  "public_commit": "ffb39cdad1da5de07eaaa48bd1db4a89a7986771",
+  "public_archive_sha256": "2e0ecb91f5de5bba5ce777be3a441f07001370741f087cbd573536fc1d65cca1",
+  "public_archive_url": "https://codeload.github.com/N64Recomp/N64Recomp/zip/ffb39cdad1da5de07eaaa48bd1db4a89a7986771",
+  "top_level_matching_files": [
+    ".github/workflows/validate.yml",
+    ".gitignore",
+    ".gitmodules",
+    "CMakeLists.txt",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "LiveRecomp/live_generator.cpp",
+    "LiveRecomp/live_recompiler_test.cpp",
+    "OfflineModRecomp/main.cpp",
+    "README.md",
+    "RSPRecomp/src/rsp_recomp.cpp",
+    "RecompModMerger/main.cpp",
+    "RecompModTool/main.cpp",
+    "include/recompiler/context.h",
+    "include/recompiler/generator.h",
+    "include/recompiler/live_recompiler.h",
+    "include/recompiler/operations.h",
+    "src/analysis.h",
+    "src/config.cpp",
+    "src/config.h",
+    "src/elf.cpp",
+    "src/main.cpp",
+    "src/mdebug.cpp",
+    "src/mdebug.h",
+    "src/mod_symbols.cpp",
+    "src/operations.cpp",
+    "src/recompilation.cpp",
+    "src/symbol_lists.cpp"
+  ],
+  "local_modifications": [
+    "include/recomp.h",
+    "src/analysis.cpp",
+    "src/cgenerator.cpp"
+  ],
+  "local_patch_sha256": "b396fcb90e6710c6a79e673a340a80daed63ed87739b2d05aa4b8dd8329c3a99",
+  "submodules": [
+    {
+      "path": "lib/ELFIO",
+      "repository": "https://github.com/serge1/ELFIO",
+      "commit": "ad8b641f9682b6091ba8b9f7c8152255c1a2c803",
+      "url": "https://codeload.github.com/serge1/ELFIO/zip/ad8b641f9682b6091ba8b9f7c8152255c1a2c803",
+      "archive_sha256": "c2c9080184f1408d0db5ece87f51eb7436bb7775bd19c253672378fd6aa08ecf",
+      "matching_files": 159,
+      "different_files": [],
+      "directory": "ELFIO-ad8b641f9682b6091ba8b9f7c8152255c1a2c803"
+    },
+    {
+      "path": "lib/fmt",
+      "repository": "https://github.com/fmtlib/fmt",
+      "commit": "407c905e45ad75fc29bf0f9bb7c5c2fd3475976f",
+      "url": "https://codeload.github.com/fmtlib/fmt/zip/407c905e45ad75fc29bf0f9bb7c5c2fd3475976f",
+      "archive_sha256": "0470bba08d31fc470a247d03a2c278000adce19502741fdc28b39c9cad2bda57",
+      "matching_files": 128,
+      "different_files": [],
+      "directory": "fmt-407c905e45ad75fc29bf0f9bb7c5c2fd3475976f"
+    },
+    {
+      "path": "lib/rabbitizer",
+      "repository": "https://github.com/Decompollaborate/rabbitizer",
+      "commit": "e0d8003047938e2ec3697eaf8d61a84d11d17b43",
+      "url": "https://codeload.github.com/Decompollaborate/rabbitizer/zip/e0d8003047938e2ec3697eaf8d61a84d11d17b43",
+      "archive_sha256": "e7eb64f8e827afbc92ea5a8caf22fe50477a419a79c5a292f7ba130abc904c1a",
+      "matching_files": 290,
+      "different_files": [],
+      "directory": "rabbitizer-e0d8003047938e2ec3697eaf8d61a84d11d17b43"
+    },
+    {
+      "path": "lib/sljit",
+      "repository": "https://github.com/zherczeg/sljit",
+      "commit": "f6326087b3404efb07c6d3deed97b3c3b8098c0c",
+      "url": "https://codeload.github.com/zherczeg/sljit/zip/f6326087b3404efb07c6d3deed97b3c3b8098c0c",
+      "archive_sha256": "a400b0deacad01e7323e88eb8e42126e1acff328062badb7b4155a6f05a74e6f",
+      "matching_files": 65,
+      "different_files": [],
+      "directory": "sljit-f6326087b3404efb07c6d3deed97b3c3b8098c0c"
+    },
+    {
+      "path": "lib/tomlplusplus",
+      "repository": "https://github.com/marzer/tomlplusplus",
+      "commit": "1f7884e59165e517462f922e7b6de131bd9844f3",
+      "url": "https://codeload.github.com/marzer/tomlplusplus/zip/1f7884e59165e517462f922e7b6de131bd9844f3",
+      "archive_sha256": "7f12a500122f76d5bd79e74d4e3b9e400380c657fd1b5d74b7772b1250a0af13",
+      "matching_files": 135,
+      "different_files": [],
+      "directory": "tomlplusplus-1f7884e59165e517462f922e7b6de131bd9844f3"
+    }
+  ],
+  "historical_local_commit": "716056282c18d5cc948376e0af33555c6f95cb7e (not a publicly retrievable source pin)",
+  "selection_reason": "Public source files match the existing copied generator family; retain its three exact local modifications. No generator upgrade.",
+  "current_working_source_note": "The public-source diff includes the accepted context-aware LOOKUP_FUNC forwarder and jump-table/GPR output fixes, plus the two recovered-entry/journal helper declarations currently present in recomp.h. PUBLIC_RELEASE source preparation removes journal/replay call behavior; the exported source-manifest and clean generator-build provenance pin the exact current bytes.",
+  "current_header_additions": [
+    "xr64_rage_wars_note_recovered_rom_entry",
+    "xr64_rage_wars_invoke_function_with_context_trace"
+  ]
+}

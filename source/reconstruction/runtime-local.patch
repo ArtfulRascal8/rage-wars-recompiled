@@ -1,0 +1,3382 @@
+--- upstream/.gitmodules
++++ modified/.gitmodules
+@@ -6,7 +6,7 @@
+ 	url = https://github.com/richgel999/miniz
+ [submodule "N64Recomp"]
+ 	path = N64Recomp
+-	url = https://github.com/N64Recomp/N64Recomp
++	url = https://github.com/ArtfulRascal8/xr64-rage-wars-n64recomp-recovery.git
+ [submodule "thirdparty/o1heap"]
+ 	path = thirdparty/o1heap
+ 	url = https://github.com/N64Recomp/o1heap
+--- upstream/librecomp/CMakeLists.txt
++++ modified/librecomp/CMakeLists.txt
+@@ -53,7 +53,7 @@
+ target_compile_options(librecomp PRIVATE
+ #    -Wall
+ #    -Wextra
+-    -Wno-unused-parameter
++    $<$<COMPILE_LANG_AND_ID:CXX,GNU,Clang>:-Wno-unused-parameter>
+ )
+ 
+ if (WIN32)
+--- upstream/librecomp/include/librecomp/game.hpp
++++ modified/librecomp/include/librecomp/game.hpp
+@@ -87,9 +87,11 @@
+     std::filesystem::path get_config_path();
+     bool register_game(const recomp::GameEntry& entry);
+     void check_all_stored_roms();
+-    bool load_stored_rom(const std::u8string& game_id);
+-    RomValidationError select_rom(const std::filesystem::path& rom_path, const std::u8string& game_id);
+-    bool is_rom_valid(const std::u8string& game_id);
++    bool load_stored_rom(std::u8string& game_id);
++    RomValidationError select_rom(const std::filesystem::path& rom_path, std::u8string& game_id);
++    // Validate and retain a user-selected ROM in memory without creating an asset copy.
++    RomValidationError select_rom_in_memory(const std::filesystem::path& rom_path, std::u8string& game_id);
++    bool is_rom_valid(std::u8string& game_id);
+     bool is_rom_loaded();
+     void set_rom_contents(std::vector<uint8_t>&& new_rom);
+     std::span<const uint8_t> get_rom();
+@@ -104,8 +106,6 @@
+     /// - `renderer_callbacks`
+     /// 
+     struct Configuration {
+-        int argc = 0;
+-        char **argv = nullptr;
+         Version project_version;
+         ultramodern::renderer::WindowHandle window_handle;
+         recomp::rsp::callbacks_t rsp_callbacks;
+@@ -127,6 +127,8 @@
+     void start(const Configuration& cfg);
+ 
+     SaveType get_save_type();
++    uint64_t get_current_thread_entry_address();
++    uint64_t get_current_thread_argument();
+     bool eeprom_allowed();
+     bool sram_allowed();
+     bool flashram_allowed();
+--- upstream/librecomp/include/librecomp/overlays.hpp
++++ modified/librecomp/include/librecomp/overlays.hpp
+@@ -9,6 +9,11 @@
+ #include "sections.h"
+ 
+ namespace recomp {
++    // Host-controlled handling for generated-code break sentinels. The
++    // default runtime behavior remains fatal when no handler is installed.
++    using break_handler_t = void (*)(uint32_t vram);
++    void set_break_handler(break_handler_t handler);
++
+     namespace overlays {
+         struct overlay_section_table_data_t {
+             SectionTableEntry* code_sections;
+@@ -45,6 +50,26 @@
+ 
+         void add_loaded_function(int32_t ram_addr, recomp_func_t* func);
+ 
++        // Neutral adapter surface. Game-owned code-residency services decide
++        // whether and how a missing callable should become resident.
++        using callable_resolver_t = recomp_func_t* (*)(
++            uint8_t* rdram, recomp_context* ctx, int32_t vram);
++        void set_callable_resolver(callable_resolver_t resolver);
++        recomp_func_t* find_resident_callable(int32_t vram);
++        recomp_func_t* get_generated_callable(int32_t vram);
++        bool is_generated_callable(int32_t vram);
++
++        // Bind/unbind ROM-backed executable sections to the guest virtual
++        // ranges made present by the runtime TLB.
++        void register_tlb_mapping(uint32_t virtual_addr, uint32_t physical_addr, uint32_t size);
++        void unregister_tlb_mapping(uint32_t virtual_addr, uint32_t size);
++        void unregister_all_tlb_mappings();
++
++        // Register code made resident by a cart-ROM DMA. Unlike load_overlays(),
++        // this path tracks partial DMA coverage and only exposes a section after
++        // every byte of that section has reached its destination.
++        void register_rom_dma(uint32_t rom, int32_t ram_addr, uint32_t size);
++
+         struct BasePatchedFunction {
+             size_t patch_section;
+             size_t function_index;
+--- upstream/librecomp/src/cont.cpp
++++ modified/librecomp/src/cont.cpp
+@@ -2,7 +2,32 @@
+ 
+ #include "helpers.hpp"
+ 
++#include <atomic>
++#include <cstdio>
++#include <cstdlib>
++
+ #define MAXCONTROLLERS 4
++
++namespace {
++
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++std::atomic<unsigned long long> g_rw017_cont_sequence{0};
++
++bool rw017_trace_enabled() {
++    const char* value = std::getenv("XR64_RW017_TRACE");
++    return value != nullptr && value[0] == '1';
++}
++
++void rw017_trace_api(const char* operation, recomp_context* ctx, const char* detail) {
++    if (!rw017_trace_enabled()) return;
++    std::fprintf(stderr,
++            "RW017_GUEST_CONTROLLER sequence=%llu source=guest operation=%s ra=0x%08X %s\n",
++            ++g_rw017_cont_sequence, operation, static_cast<unsigned>(ctx->r31), detail);
++    std::fflush(stderr);
++}
++#endif
++
++} // namespace
+ 
+ extern "C" void recomp_set_current_frame_poll_id(uint8_t* rdram, recomp_context* ctx) {
+     // TODO reimplement the system for tagging polls with IDs to handle games with multithreaded input polling.
+@@ -22,6 +47,17 @@
+ 
+     MEM_B(0, bitpattern) = bitpattern_local;
+ 
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    char detail[192]{};
++    std::snprintf(detail, sizeof(detail),
++            "result=%d bitpattern=0x%02X channel=0 type=0x%04X status=0x%02X errno=0x%02X raw_request=00 raw_response=%02X %02X %02X",
++            ret, static_cast<unsigned>(bitpattern_local),
++            static_cast<unsigned>(MEM_HU(0, data)), static_cast<unsigned>(MEM_BU(2, data)),
++            static_cast<unsigned>(MEM_BU(3, data)), static_cast<unsigned>(MEM_HU(0, data) & 0xFF),
++            static_cast<unsigned>((MEM_HU(0, data) >> 8) & 0xFF),
++            static_cast<unsigned>(MEM_BU(2, data)));
++    rw017_trace_api("osContInit", ctx, detail);
++#endif
+     _return<s32>(ctx, ret);
+ }
+ 
+@@ -38,6 +74,12 @@
+     PTR(OSMesgQueue) mq = _arg<0, PTR(OSMesgQueue)>(rdram, ctx);
+ 
+     s32 ret = osContStartReadData(PASS_RDRAM mq);
++
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    char detail[96]{};
++    std::snprintf(detail, sizeof(detail), "result=%d si_completion=sent raw_request=01", ret);
++    rw017_trace_api("osContStartReadData", ctx, detail);
++#endif
+ 
+     _return<s32>(ctx, ret);
+ }
+@@ -57,12 +99,35 @@
+             MEM_B(6 * controller + 4, data) = dummy_data[controller].err_no;
+         }
+     }
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    char detail[192]{};
++    if (dummy_data[0].err_no == 0) {
++        std::snprintf(detail, sizeof(detail),
++                "channel=0 errno=0 buttons=0x%04X stick_x=%d stick_y=%d raw_request=01 raw_response=%02X %02X %02X %02X",
++                static_cast<unsigned>(dummy_data[0].button), static_cast<int>(dummy_data[0].stick_x),
++                static_cast<int>(dummy_data[0].stick_y),
++                static_cast<unsigned>((dummy_data[0].button >> 8) & 0xFF),
++                static_cast<unsigned>(dummy_data[0].button & 0xFF),
++                static_cast<unsigned>(static_cast<unsigned char>(dummy_data[0].stick_x)),
++                static_cast<unsigned>(static_cast<unsigned char>(dummy_data[0].stick_y)));
++    } else {
++        std::snprintf(detail, sizeof(detail), "channel=0 errno=0x%02X raw_request=01 raw_response=NO_RESPONSE",
++                static_cast<unsigned>(dummy_data[0].err_no));
++    }
++    rw017_trace_api("osContGetReadData", ctx, detail);
++#endif
+ }
+ 
+ extern "C" void osContStartQuery_recomp(uint8_t * rdram, recomp_context * ctx) {
+     PTR(OSMesgQueue) mq = _arg<0, PTR(OSMesgQueue)>(rdram, ctx);
+ 
+     s32 ret = osContStartQuery(PASS_RDRAM mq);
++
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    char detail[96]{};
++    std::snprintf(detail, sizeof(detail), "result=%d si_completion=sent raw_request=00", ret);
++    rw017_trace_api("osContStartQuery", ctx, detail);
++#endif
+ 
+     _return<s32>(ctx, ret);
+ }
+@@ -71,6 +136,17 @@
+     PTR(OSContStatus) data = _arg<0, PTR(OSContStatus)>(rdram, ctx);
+ 
+     osContGetQuery(PASS_RDRAM data);
++
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    char detail[192]{};
++    std::snprintf(detail, sizeof(detail),
++            "channel=0 type=0x%04X status=0x%02X errno=0x%02X raw_request=00 raw_response=%02X %02X %02X",
++            static_cast<unsigned>(MEM_HU(0, data)), static_cast<unsigned>(MEM_BU(2, data)),
++            static_cast<unsigned>(MEM_BU(3, data)), static_cast<unsigned>(MEM_HU(0, data) & 0xFF),
++            static_cast<unsigned>((MEM_HU(0, data) >> 8) & 0xFF),
++            static_cast<unsigned>(MEM_BU(2, data)));
++    rw017_trace_api("osContGetQuery", ctx, detail);
++#endif
+ }
+ 
+ extern "C" void osContSetCh_recomp(uint8_t* rdram, recomp_context* ctx) {
+--- upstream/librecomp/src/overlays.cpp
++++ modified/librecomp/src/overlays.cpp
+@@ -1,8 +1,11 @@
+ #include <algorithm>
+ #include <cassert>
++#include <cstdint>
++#include <cstdlib>
+ #include <cstdio>
+ #include <cstring>
+ #include <unordered_map>
++#include <utility>
+ #include <vector>
+ 
+ #include "ultramodern/ultramodern.hpp"
+@@ -33,15 +36,83 @@
+     }
+ };
+ 
++struct CoveredRange {
++    uint32_t begin;
++    uint32_t end;
++};
++
++struct PendingSectionLoad {
++    size_t section_table_index;
++    int32_t loaded_ram_addr;
++    std::vector<CoveredRange> covered_ranges;
++};
++
++struct TlbMapping {
++    uint32_t virtual_addr;
++    uint32_t physical_addr;
++    uint32_t size;
++};
++
++struct TlbBoundSection {
++    size_t section_table_index;
++    int32_t backing_ram_addr;
++    int32_t virtual_ram_addr;
++    uint32_t mapping_virtual_addr;
++    uint32_t mapping_physical_addr;
++    uint32_t mapping_size;
++    std::vector<std::pair<int32_t, recomp_func_t*>> bound_functions;
++};
+ static std::unordered_map<uint32_t, uint16_t> code_sections_by_rom{};
+ static std::unordered_map<uint32_t, uint16_t> patch_code_sections_by_rom{};
+ static std::vector<LoadedSection> loaded_sections{};
++static std::vector<PendingSectionLoad> pending_section_loads{};
++static std::vector<TlbMapping> active_tlb_mappings{};
++static std::vector<TlbBoundSection> tlb_bound_sections{};
+ static std::unordered_map<int32_t, recomp_func_t*> func_map{};
+ static std::unordered_map<std::string, recomp_func_t*> base_exports{};
+ static std::unordered_map<std::string, recomp_func_ext_t*> ext_base_exports{};
+ static std::unordered_map<std::string, size_t> base_events;
+ static std::unordered_map<uint32_t, recomp_func_t*> manual_patch_symbols_by_vram;
+-
++static recomp::overlays::callable_resolver_t callable_resolver = nullptr;
++
++static bool rom_dma_trace_enabled() {
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    return std::getenv("XR64_RW029_OVERLAY_TRACE") != nullptr;
++#else
++    return false;
++#endif
++}
++
++static void trace_rom_dma(const char* event, uint32_t rom, int32_t ram_addr, uint32_t size,
++    size_t section_index, size_t map_size) {
++    if (!rom_dma_trace_enabled()) {
++        return;
++    }
++    std::fprintf(stderr,
++        "RW029_OVERLAY_%s rom=0x%08X ram=0x%08X size=0x%08X section=%zu map_size=%zu\n",
++        event, rom, static_cast<uint32_t>(ram_addr), size, section_index, map_size);
++    std::fflush(stderr);
++}
++
++static bool callable_fault_trace_enabled() {
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    return std::getenv("XR64_RW031_CALLABLE_FAULT_TRACE") != nullptr;
++#else
++    return false;
++#endif
++}
++
++static void trace_callable_fault(const char* event, int32_t addr, bool known_generated,
++    bool handler_result, recomp_func_t* func) {
++    if (!callable_fault_trace_enabled()) {
++        return;
++    }
++    std::fprintf(stderr,
++        "RW031_CALLABLE_%s addr=0x%08X known_generated=%d handler_result=%d resolved=%d func=%p map_size=%zu\n",
++        event, static_cast<uint32_t>(addr), known_generated ? 1 : 0,
++        handler_result ? 1 : 0, func != nullptr ? 1 : 0, (void*)func, func_map.size());
++    std::fflush(stderr);
++}
+ extern "C" {
+ int32_t* section_addresses = nullptr;
+ }
+@@ -51,6 +122,9 @@
+     overlays_info = overlays;
+ }
+ 
++void recomp::overlays::set_callable_resolver(callable_resolver_t resolver) {
++    callable_resolver = resolver;
++}
+ void recomp::overlays::register_patches(const char* patch, std::size_t size, SectionTableEntry* sections, size_t num_sections) {
+     patch_code_sections = sections;
+     num_patch_code_sections = num_sections;
+@@ -150,6 +224,149 @@
+     func_map[ram] = func;
+ }
+ 
++static bool mapping_ranges_overlap(uint32_t first_addr, uint32_t first_size,
++    uint32_t second_addr, uint32_t second_size) {
++    const uint64_t first_begin = first_addr;
++    const uint64_t first_end = first_begin + first_size;
++    const uint64_t second_begin = second_addr;
++    const uint64_t second_end = second_begin + second_size;
++    return first_begin < second_end && second_begin < first_end;
++}
++
++static void erase_tlb_bound_section(size_t binding_index) {
++    const TlbBoundSection binding = tlb_bound_sections[binding_index];
++    const SectionTableEntry& section = sections_info.code_sections[binding.section_table_index];
++    if (callable_fault_trace_enabled()) {
++        std::fprintf(stderr,
++            "RW031_TLB_UNBIND virtual=0x%08X physical=0x%08X size=0x%08X section=%zu section_virtual=0x%08X section_physical=0x%08X map_size=%zu\n",
++            binding.mapping_virtual_addr, binding.mapping_physical_addr, binding.mapping_size,
++            binding.section_table_index, static_cast<uint32_t>(binding.virtual_ram_addr),
++            static_cast<uint32_t>(binding.backing_ram_addr), func_map.size());
++        std::fflush(stderr);
++    }
++    for (const auto& bound_function : binding.bound_functions) {
++        auto func_it = func_map.find(bound_function.first);
++        if (func_it != func_map.end() && func_it->second == bound_function.second) {
++            func_map.erase(func_it);
++        }
++    }
++    tlb_bound_sections.erase(tlb_bound_sections.begin() + binding_index);
++    section_addresses[section.index] = binding.backing_ram_addr;
++    for (const TlbBoundSection& remaining : tlb_bound_sections) {
++        if (remaining.section_table_index == binding.section_table_index &&
++            remaining.backing_ram_addr == binding.backing_ram_addr) {
++            section_addresses[section.index] = remaining.virtual_ram_addr;
++            break;
++        }
++    }
++}
++
++static void erase_tlb_bindings_for_loaded_section(
++    size_t section_table_index, int32_t backing_ram_addr) {
++    for (size_t binding_index = 0; binding_index < tlb_bound_sections.size();) {
++        const TlbBoundSection& binding = tlb_bound_sections[binding_index];
++        if (binding.section_table_index == section_table_index &&
++            binding.backing_ram_addr == backing_ram_addr) {
++            erase_tlb_bound_section(binding_index);
++            continue;
++        }
++        binding_index++;
++    }
++}
++
++static void bind_loaded_section_to_mapping(
++    const LoadedSection& loaded, const TlbMapping& mapping) {
++    const SectionTableEntry& section = sections_info.code_sections[loaded.section_table_index];
++    const uint64_t section_begin = static_cast<uint32_t>(loaded.loaded_ram_addr);
++    const uint64_t section_end = section_begin + section.size;
++    const uint64_t mapping_begin = mapping.physical_addr;
++    const uint64_t mapping_end = mapping_begin + mapping.size;
++    if (section_begin >= UINT32_MAX || section_end <= mapping_begin ||
++        section_begin >= mapping_end) {
++        return;
++    }
++
++    const int64_t virtual_section_addr = static_cast<int64_t>(mapping.virtual_addr) +
++        static_cast<int64_t>(section_begin) - static_cast<int64_t>(mapping_begin);
++    if (virtual_section_addr < 0 || static_cast<uint64_t>(virtual_section_addr) > UINT32_MAX) {
++        return;
++    }
++    const int32_t virtual_ram_addr = static_cast<int32_t>(static_cast<uint32_t>(virtual_section_addr));
++    const auto existing = std::find_if(tlb_bound_sections.begin(), tlb_bound_sections.end(),
++        [&loaded, mapping](const TlbBoundSection& binding) {
++            return binding.section_table_index == loaded.section_table_index &&
++                binding.backing_ram_addr == loaded.loaded_ram_addr &&
++                binding.mapping_virtual_addr == mapping.virtual_addr &&
++                binding.mapping_physical_addr == mapping.physical_addr &&
++                binding.mapping_size == mapping.size;
++        });
++    if (existing != tlb_bound_sections.end()) {
++        return;
++    }
++
++    TlbBoundSection binding{
++        loaded.section_table_index,
++        loaded.loaded_ram_addr,
++        virtual_ram_addr,
++        mapping.virtual_addr,
++        mapping.physical_addr,
++        mapping.size,
++        {}};
++    for (size_t function_index = 0; function_index < section.num_funcs; function_index++) {
++        const FuncEntry& func = section.funcs[function_index];
++        const uint64_t function_begin = section_begin + func.offset;
++        if (function_begin < mapping_begin || function_begin >= mapping_end ||
++            function_begin < section_begin || function_begin >= section_end) {
++            continue;
++        }
++        const int64_t virtual_function_addr = static_cast<int64_t>(mapping.virtual_addr) +
++            static_cast<int64_t>(function_begin) - static_cast<int64_t>(mapping_begin);
++        if (virtual_function_addr < 0 || static_cast<uint64_t>(virtual_function_addr) > UINT32_MAX) {
++            continue;
++        }
++        binding.bound_functions.emplace_back(
++            static_cast<int32_t>(static_cast<uint32_t>(virtual_function_addr)), func.func);
++    }
++    if (binding.bound_functions.empty()) {
++        return;
++    }
++    for (const auto& bound_function : binding.bound_functions) {
++        func_map[bound_function.first] = bound_function.second;
++    }
++    tlb_bound_sections.push_back(std::move(binding));
++    section_addresses[section.index] = virtual_ram_addr;
++    if (callable_fault_trace_enabled()) {
++        std::fprintf(stderr,
++            "RW031_TLB_BIND virtual=0x%08X physical=0x%08X size=0x%08X section=%zu section_virtual=0x%08X section_physical=0x%08X map_size=%zu\n",
++            mapping.virtual_addr, mapping.physical_addr, mapping.size,
++            loaded.section_table_index, static_cast<uint32_t>(virtual_ram_addr),
++            static_cast<uint32_t>(loaded.loaded_ram_addr), func_map.size());
++        std::fflush(stderr);
++    }
++}
++
++static void bind_loaded_section_to_active_mappings(const LoadedSection& loaded) {
++    for (const TlbMapping& mapping : active_tlb_mappings) {
++        bind_loaded_section_to_mapping(loaded, mapping);
++    }
++}
++static std::vector<LoadedSection>::iterator erase_loaded_section(
++    std::vector<LoadedSection>::iterator loaded_it) {
++    const SectionTableEntry& section = sections_info.code_sections[loaded_it->section_table_index];
++    erase_tlb_bindings_for_loaded_section(
++        loaded_it->section_table_index, loaded_it->loaded_ram_addr);
++    for (size_t function_index = 0; function_index < section.num_funcs; function_index++) {
++        const FuncEntry& func = section.funcs[function_index];
++        const int32_t address = loaded_it->loaded_ram_addr + static_cast<int32_t>(func.offset);
++        auto func_it = func_map.find(address);
++        if (func_it != func_map.end() && func_it->second == func.func) {
++            func_map.erase(func_it);
++        }
++    }
++    section_addresses[section.index] = section.ram_addr;
++    return loaded_sections.erase(loaded_it);
++}
++
+ void load_overlay(size_t section_table_index, int32_t ram) {
+     const SectionTableEntry& section = sections_info.code_sections[section_table_index];
+ 
+@@ -160,6 +377,7 @@
+ 
+     loaded_sections.emplace_back(ram, section_table_index);
+     section_addresses[section.index] = ram;
++    bind_loaded_section_to_active_mappings(loaded_sections.back());
+ }
+ 
+ static void load_special_overlay(const SectionTableEntry& section, int32_t ram) {
+@@ -204,6 +422,176 @@
+     }
+ }
+ 
++static bool ranges_overlap(uint64_t first_begin, uint64_t first_end,
++    uint64_t second_begin, uint64_t second_end) {
++    return first_begin < second_end && second_begin < first_end;
++}
++
++static bool dma_matches_loaded_section(const SectionTableEntry& section, int32_t loaded_ram_addr,
++    uint32_t rom, int32_t ram_addr) {
++    return static_cast<uint32_t>(section.rom_addr - static_cast<uint32_t>(loaded_ram_addr)) ==
++        static_cast<uint32_t>(rom - static_cast<uint32_t>(ram_addr));
++}
++
++static void invalidate_overwritten_sections(uint32_t rom, int32_t ram_addr, uint32_t size) {
++    const uint64_t dma_begin = static_cast<uint32_t>(ram_addr);
++    const uint64_t dma_end = dma_begin + size;
++    for (auto loaded_it = loaded_sections.begin(); loaded_it != loaded_sections.end();) {
++        const SectionTableEntry& section = sections_info.code_sections[loaded_it->section_table_index];
++        const uint64_t section_begin = static_cast<uint32_t>(loaded_it->loaded_ram_addr);
++        const uint64_t section_end = section_begin + section.size;
++        if (ranges_overlap(dma_begin, dma_end, section_begin, section_end) &&
++            !dma_matches_loaded_section(section, loaded_it->loaded_ram_addr, rom, ram_addr)) {
++            trace_rom_dma("INVALIDATE", rom, ram_addr, size, loaded_it->section_table_index,
++                func_map.size());
++            loaded_it = erase_loaded_section(loaded_it);
++            continue;
++        }
++        ++loaded_it;
++    }
++
++    for (auto pending_it = pending_section_loads.begin(); pending_it != pending_section_loads.end();) {
++        const SectionTableEntry& section = sections_info.code_sections[pending_it->section_table_index];
++        const uint64_t section_begin = static_cast<uint32_t>(pending_it->loaded_ram_addr);
++        const uint64_t section_end = section_begin + section.size;
++        if (ranges_overlap(dma_begin, dma_end, section_begin, section_end) &&
++            !dma_matches_loaded_section(section, pending_it->loaded_ram_addr, rom, ram_addr)) {
++            pending_it = pending_section_loads.erase(pending_it);
++            continue;
++        }
++        ++pending_it;
++    }
++}
++
++static void add_covered_range(PendingSectionLoad& pending, uint32_t begin, uint32_t end) {
++    pending.covered_ranges.push_back({ begin, end });
++    std::sort(pending.covered_ranges.begin(), pending.covered_ranges.end(),
++        [](const CoveredRange& lhs, const CoveredRange& rhs) { return lhs.begin < rhs.begin; });
++
++    std::vector<CoveredRange> merged;
++    merged.reserve(pending.covered_ranges.size());
++    for (const CoveredRange& range : pending.covered_ranges) {
++        if (merged.empty() || range.begin > merged.back().end) {
++            merged.push_back(range);
++        }
++        else {
++            merged.back().end = std::max(merged.back().end, range.end);
++        }
++    }
++    pending.covered_ranges = std::move(merged);
++}
++
++static bool section_fully_covered(const PendingSectionLoad& pending, uint32_t section_size) {
++    return pending.covered_ranges.size() == 1 && pending.covered_ranges.front().begin == 0 &&
++        pending.covered_ranges.front().end >= section_size;
++}
++
++void recomp::overlays::register_rom_dma(uint32_t rom, int32_t ram_addr, uint32_t size) {
++    if (size == 0 || sections_info.code_sections == nullptr || sections_info.num_code_sections == 0) {
++        return;
++    }
++
++    invalidate_overwritten_sections(rom, ram_addr, size);
++
++    const uint64_t dma_rom_begin = rom;
++    const uint64_t dma_rom_end = dma_rom_begin + size;
++    for (size_t section_index = 0; section_index < sections_info.num_code_sections; section_index++) {
++        const SectionTableEntry& section = sections_info.code_sections[section_index];
++        const uint64_t section_rom_begin = section.rom_addr;
++        const uint64_t section_rom_end = section_rom_begin + section.size;
++        if (section.size == 0 ||
++            !ranges_overlap(dma_rom_begin, dma_rom_end, section_rom_begin, section_rom_end)) {
++            continue;
++        }
++
++        const int64_t ram_delta = static_cast<int64_t>(section.rom_addr) - static_cast<int64_t>(rom);
++        const int64_t section_ram = static_cast<int64_t>(static_cast<uint32_t>(ram_addr)) + ram_delta;
++        if (section_ram < 0 || section_ram > UINT32_MAX) {
++            continue;
++        }
++        const int32_t section_ram_addr = static_cast<int32_t>(static_cast<uint32_t>(section_ram));
++        const uint32_t covered_begin = static_cast<uint32_t>(
++            std::max(dma_rom_begin, section_rom_begin) - section_rom_begin);
++        const uint32_t covered_end = static_cast<uint32_t>(
++            std::min(dma_rom_end, section_rom_end) - section_rom_begin);
++
++        auto pending_it = std::find_if(pending_section_loads.begin(), pending_section_loads.end(),
++            [section_index, section_ram_addr](const PendingSectionLoad& pending) {
++                return pending.section_table_index == section_index &&
++                    pending.loaded_ram_addr == section_ram_addr;
++            });
++        if (pending_it == pending_section_loads.end()) {
++            pending_it = pending_section_loads.emplace(pending_section_loads.end(),
++                PendingSectionLoad{ section_index, section_ram_addr, {} });
++        }
++        add_covered_range(*pending_it, covered_begin, covered_end);
++        trace_rom_dma("MATCH", rom, ram_addr, size, section_index, func_map.size());
++
++        if (!section_fully_covered(*pending_it, section.size)) {
++            continue;
++        }
++
++        for (auto loaded_it = loaded_sections.begin(); loaded_it != loaded_sections.end();) {
++            if (loaded_it->section_table_index == section_index &&
++                loaded_it->loaded_ram_addr == section_ram_addr) {
++                loaded_it = erase_loaded_section(loaded_it);
++                continue;
++            }
++            ++loaded_it;
++        }
++        load_overlay(section_index, section_ram_addr);
++        trace_rom_dma("REGISTER", section.rom_addr, section_ram_addr, section.size,
++            section_index, func_map.size());
++        pending_section_loads.erase(pending_it);
++    }
++}
++
++void recomp::overlays::unregister_tlb_mapping(uint32_t virtual_addr, uint32_t size) {
++    if (callable_fault_trace_enabled()) {
++        std::fprintf(stderr, "RW031_TLB_UNREGISTER_REQUEST virtual=0x%08X size=0x%08X active=%zu\n",
++            virtual_addr, size, active_tlb_mappings.size());
++        std::fflush(stderr);
++    }
++    for (size_t mapping_index = 0; mapping_index < active_tlb_mappings.size();) {
++        const TlbMapping mapping = active_tlb_mappings[mapping_index];
++        if (!mapping_ranges_overlap(
++            virtual_addr, size, mapping.virtual_addr, mapping.size)) {
++            mapping_index++;
++            continue;
++        }
++        for (size_t binding_index = 0; binding_index < tlb_bound_sections.size();) {
++            const TlbBoundSection& binding = tlb_bound_sections[binding_index];
++            if (binding.mapping_virtual_addr == mapping.virtual_addr &&
++                binding.mapping_physical_addr == mapping.physical_addr &&
++                binding.mapping_size == mapping.size) {
++                erase_tlb_bound_section(binding_index);
++                continue;
++            }
++            binding_index++;
++        }
++        active_tlb_mappings.erase(active_tlb_mappings.begin() + mapping_index);
++    }
++}
++
++void recomp::overlays::register_tlb_mapping(
++    uint32_t virtual_addr, uint32_t physical_addr, uint32_t size) {
++    if (size == 0 || physical_addr == UINT32_MAX) {
++        return;
++    }
++    unregister_tlb_mapping(virtual_addr, size);
++    active_tlb_mappings.push_back(TlbMapping{ virtual_addr, physical_addr, size });
++    const TlbMapping& mapping = active_tlb_mappings.back();
++    for (const LoadedSection& loaded : loaded_sections) {
++        bind_loaded_section_to_mapping(loaded, mapping);
++    }
++}
++
++void recomp::overlays::unregister_all_tlb_mappings() {
++    while (!tlb_bound_sections.empty()) {
++        erase_tlb_bound_section(tlb_bound_sections.size() - 1);
++    }
++    active_tlb_mappings.clear();
++}
+ extern "C" void unload_overlay_by_id(uint32_t id) {
+     uint32_t section_table_index = overlays_info.table[id];
+     const SectionTableEntry& section = sections_info.code_sections[section_table_index];
+@@ -211,16 +599,7 @@
+     auto find_it = std::find_if(loaded_sections.begin(), loaded_sections.end(), [section_table_index](const LoadedSection& s) { return s.section_table_index == section_table_index; });
+ 
+     if (find_it != loaded_sections.end()) {
+-        // Determine where each function was loaded to and remove that entry from the function map
+-        for (size_t func_index = 0; func_index < section.num_funcs; func_index++) {
+-            const auto& func = section.funcs[func_index];
+-            uint32_t func_address = func.offset + find_it->loaded_ram_addr;
+-            func_map.erase(func_address);
+-        }
+-        // Reset the section's address in the address table
+-        section_addresses[section.index] = section.ram_addr;
+-        // Remove the section from the loaded section map
+-        loaded_sections.erase(find_it);
++        erase_loaded_section(find_it);
+     }
+ }
+ 
+@@ -254,16 +633,7 @@
+                 assert(false);
+                 std::exit(EXIT_FAILURE);
+             }
+-            // Determine where each function was loaded to and remove that entry from the function map
+-            for (size_t func_index = 0; func_index < section.num_funcs; func_index++) {
+-                const auto& func = section.funcs[func_index];
+-                uint32_t func_address = func.offset + it->loaded_ram_addr;
+-                func_map.erase(func_address);
+-            }
+-            // Reset the section's address in the address table
+-            section_addresses[section.index] = section.ram_addr;
+-            // Remove the section from the loaded section map
+-            it = loaded_sections.erase(it);
++            it = erase_loaded_section(it);
+             // Skip incrementing the iterator
+             continue;
+         }
+@@ -273,6 +643,10 @@
+ 
+ void recomp::overlays::init_overlays() {
+     func_map.clear();
++    loaded_sections.clear();
++    pending_section_loads.clear();
++    active_tlb_mappings.clear();
++    tlb_bound_sections.clear();
+     section_addresses = (int32_t *)calloc(sections_info.total_num_sections, sizeof(int32_t));
+ 
+     // Sort the executable sections by rom address
+@@ -362,15 +736,56 @@
+ }
+ 
+ extern "C" recomp_func_t * get_function(int32_t addr) {
+-    auto func_find = func_map.find(addr);
+-    if (func_find == func_map.end()) {
++    recomp_func_t *function = recomp::overlays::find_resident_callable(addr);
++    if (function == nullptr) {
+         fprintf(stderr, "Failed to find function at 0x%08X\n", addr);
+         assert(false);
+         std::exit(EXIT_FAILURE);
+     }
+-    return func_find->second;
+-}
+-
++    return function;
++}
++
++recomp_func_t* recomp::overlays::find_resident_callable(int32_t addr) {
++    const auto func_find = func_map.find(addr);
++    return func_find != func_map.end() ? func_find->second : nullptr;
++}
++
++recomp_func_t* recomp::overlays::get_generated_callable(int32_t addr) {
++    const uint32_t target = static_cast<uint32_t>(addr);
++    for (size_t section_index = 0; section_index < sections_info.num_code_sections; section_index++) {
++        const SectionTableEntry& section = sections_info.code_sections[section_index];
++        for (size_t function_index = 0; function_index < section.num_funcs; function_index++) {
++            if (section.ram_addr + section.funcs[function_index].offset == target) {
++                return section.funcs[function_index].func;
++            }
++        }
++    }
++    return nullptr;
++}
++
++bool recomp::overlays::is_generated_callable(int32_t addr) {
++    return get_generated_callable(addr) != nullptr;
++}
++
++extern "C" recomp_func_t* get_function_with_context(
++    uint8_t* rdram, recomp_context* ctx, int32_t addr) {
++    if (recomp_func_t *function = recomp::overlays::find_resident_callable(addr)) {
++        return function;
++    }
++
++    trace_callable_fault("MISS", addr, false, false, nullptr);
++    if (callable_resolver != nullptr) {
++        if (recomp_func_t *function = callable_resolver(rdram, ctx, addr)) {
++            trace_callable_fault("RESOLVED", addr, false, true, function);
++            return function;
++        }
++    }
++
++    trace_callable_fault("FAILED", addr, false, false, nullptr);
++    fprintf(stderr, "Failed to find function at 0x%08X\n", addr);
++    assert(false);
++    std::exit(EXIT_FAILURE);
++}
+ std::unordered_map<recomp_func_t*, recomp::overlays::BasePatchedFunction> recomp::overlays::get_base_patched_funcs() {
+     std::unordered_map<recomp_func_t*, BasePatchedFunction> ret{};
+ 
+--- upstream/librecomp/src/pak.cpp
++++ modified/librecomp/src/pak.cpp
+@@ -4,48 +4,533 @@
+ #include "recomp.h"
+ #include "helpers.hpp"
+ 
+-extern "C" void osPfsInitPak_recomp(uint8_t * rdram, recomp_context* ctx) {
+-    ctx->r2 = 1; // PFS_ERR_NOPACK
+-}
+-
+-extern "C" void osPfsFreeBlocks_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    ctx->r2 = 1; // PFS_ERR_NOPACK
+-}
+-
+-extern "C" void osPfsAllocateFile_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    ctx->r2 = 1; // PFS_ERR_NOPACK
+-}
+-
+-extern "C" void osPfsDeleteFile_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    ctx->r2 = 1; // PFS_ERR_NOPACK
+-}
+-
+-extern "C" void osPfsFileState_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    ctx->r2 = 1; // PFS_ERR_NOPACK
+-}
+-
+-extern "C" void osPfsFindFile_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    ctx->r2 = 1; // PFS_ERR_NOPACK
+-}
+-
+-extern "C" void osPfsReadWriteFile_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    ctx->r2 = 1; // PFS_ERR_NOPACK
+-}
+-
+-extern "C" void osPfsChecker_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    ctx->r2 = 1; // PFS_ERR_NOPACK
+-}
+-
+-extern "C" void osPfsNumFiles_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    s32* max_files = _arg<1, s32*>(rdram, ctx);
+-    s32* files_used = _arg<2, s32*>(rdram, ctx);
+-
+-    *max_files = 0;
+-    *files_used = 0;
+-
+-    _return<s32>(ctx, 1); // PFS_ERR_NOPACK
+-}
+-
+-extern "C" void osPfsRepairId_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    _return<s32>(ctx, 1); // PFS_ERR_NOPACK
+-}
++#include <array>
++#include <algorithm>
++#include <atomic>
++#include <cstddef>
++#include <cstdint>
++#include <cstdio>
++#include <cstdlib>
++#include <cstring>
++#include <vector>
++#include <iomanip>
++#include <sstream>
++
++namespace {
++
++constexpr s32 PFS_ERR_NOPACK = 1;
++constexpr s32 PFS_ERR_INCONSISTENT = 3;
++constexpr s32 PFS_ERR_CONTRFAIL = 4;
++constexpr s32 PFS_ERR_INVALID = 5;
++constexpr s32 PFS_ERR_BAD_DATA = 6;
++constexpr s32 PFS_DATA_FULL = 7;
++constexpr s32 PFS_DIR_FULL = 8;
++constexpr s32 PFS_ERR_EXIST = 9;
++constexpr s32 PFS_ERR_DEVICE = 11;
++constexpr int PFS_INITIALIZED = 1;
++constexpr u8 PFS_READ = 0;
++constexpr u8 PFS_WRITE = 1;
++constexpr std::size_t kPakSize = 32 * 1024;
++constexpr std::size_t kBlockSize = 32;
++constexpr std::size_t kPageSize = 256;
++constexpr std::size_t kInodeOffset = 0x100;
++constexpr std::size_t kMirrorInodeOffset = 0x200;
++constexpr std::size_t kDirectoryOffset = 0x300;
++constexpr int kDirectoryEntries = 16;
++constexpr int kFirstDataPage = 5;
++constexpr int kPageCount = 128;
++constexpr u16 kPageEnd = 1;
++constexpr u16 kPageFree = 3;
++constexpr u8 kDirectoryOccupied = 2;
++
++#if defined(XR64_RAGE_WARS_CLEAN_RUN)
++struct Rw017ApiScope {
++    Rw017ApiScope(const char*, recomp_context*) {}
++};
++#else
++std::atomic<unsigned long long> g_rw017_pfs_sequence{0};
++
++bool rw017_trace_enabled() {
++    const char* value = std::getenv("XR64_RW017_TRACE");
++    return value != nullptr && value[0] == '1';
++}
++
++struct Rw017ApiScope {
++    const char* operation;
++    recomp_context* ctx;
++    unsigned long long sequence;
++
++    Rw017ApiScope(const char* operation_, recomp_context* ctx_)
++        : operation(operation_), ctx(ctx_), sequence(++g_rw017_pfs_sequence) {
++        ultramodern::runtime_trace(
++                "stage=pfs-entry operation=" + std::string(operation) +
++                " sequence=" + std::to_string(sequence) +
++                " thread=0x" + std::to_string(static_cast<unsigned>(ultramodern::this_thread())) +
++                " ra=0x" + std::to_string(static_cast<unsigned>(ctx->r31)));
++        if (!rw017_trace_enabled()) return;
++        std::fprintf(stderr,
++                "RW017_GUEST_PFS sequence=%llu phase=entry source=guest_or_host_selftest operation=%s ra=0x%08X\n",
++                sequence, operation, static_cast<unsigned>(ctx->r31));
++        std::fflush(stderr);
++    }
++
++    ~Rw017ApiScope() {
++        ultramodern::runtime_trace(
++                "stage=pfs-return operation=" + std::string(operation) +
++                " sequence=" + std::to_string(sequence) +
++                " thread=0x" + std::to_string(static_cast<unsigned>(ultramodern::this_thread())) +
++                " result=" + std::to_string(static_cast<long long>(ctx->r2)) +
++                " ra=0x" + std::to_string(static_cast<unsigned>(ctx->r31)));
++        if (!rw017_trace_enabled()) return;
++        std::fprintf(stderr,
++                "RW017_GUEST_PFS sequence=%llu phase=exit source=guest_or_host_selftest operation=%s ra=0x%08X result=%lld\n",
++                sequence, operation, static_cast<unsigned>(ctx->r31), static_cast<long long>(ctx->r2));
++        std::fflush(stderr);
++    }
++};
++#endif
++
++struct DirectoryEntry {
++    std::array<u8, 32> raw{};
++
++    u32 game_code() const {
++        return (u32(raw[0]) << 24) | (u32(raw[1]) << 16) | (u32(raw[2]) << 8) | raw[3];
++    }
++    u16 company_code() const { return u16((u16(raw[4]) << 8) | raw[5]); }
++    u16 start_page() const { return u16((u16(raw[6]) << 8) | raw[7]); }
++    bool occupied() const { return (raw[8] & kDirectoryOccupied) != 0; }
++    bool used() const { return company_code() != 0 && game_code() != 0; }
++};
++
++u16 read_be16(const u8* data) {
++    return u16((u16(data[0]) << 8) | data[1]);
++}
++
++void write_be16(u8* data, u16 value) {
++    data[0] = u8(value >> 8);
++    data[1] = u8(value);
++}
++
++void write_be32(u8* data, u32 value) {
++    data[0] = u8(value >> 24);
++    data[1] = u8(value >> 16);
++    data[2] = u8(value >> 8);
++    data[3] = u8(value);
++}
++
++bool controller_pak_present(int channel) {
++    const auto info = ultramodern::input::get_connected_device_info(channel);
++    return info.connected_device == ultramodern::input::Device::Controller &&
++            info.connected_pak == ultramodern::input::Pak::ControllerPak;
++}
++
++s32 availability_error(int channel) {
++    const auto info = ultramodern::input::get_connected_device_info(channel);
++    if (info.connected_device != ultramodern::input::Device::Controller) return PFS_ERR_CONTRFAIL;
++    if (info.connected_pak == ultramodern::input::Pak::None) return PFS_ERR_NOPACK;
++    if (info.connected_pak != ultramodern::input::Pak::ControllerPak) return PFS_ERR_DEVICE;
++    return 0;
++}
++
++bool read_pak(int channel, std::size_t offset, void* data, std::size_t size) {
++    const bool ok = offset <= kPakSize && size <= kPakSize - offset &&
++            ultramodern::input::read_controller_pak(
++                    channel, offset, static_cast<u8*>(data), size);
++    ultramodern::runtime_trace(
++            "stage=pak-io operation=read channel=" + std::to_string(channel) +
++            " offset=" + std::to_string(offset) +
++            " size=" + std::to_string(size) +
++            " result=" + std::to_string(ok ? 0 : 1));
++    return ok;
++}
++bool write_pak(int channel, std::size_t offset, const void* data, std::size_t size) {
++    const bool ok = offset <= kPakSize && size <= kPakSize - offset &&
++            ultramodern::input::write_controller_pak(
++                    channel, offset, static_cast<const u8*>(data), size);
++    ultramodern::runtime_trace(
++            "stage=pak-io operation=write channel=" + std::to_string(channel) +
++            " offset=" + std::to_string(offset) +
++            " size=" + std::to_string(size) +
++            " result=" + std::to_string(ok ? 0 : 1));
++    return ok;
++}
++bool initialized(const OSPfs* pfs) {
++    return pfs != nullptr && (pfs->status & PFS_INITIALIZED) != 0 &&
++            controller_pak_present(pfs->channel);
++}
++
++bool read_directory(int channel, int index, DirectoryEntry& entry) {
++    return index >= 0 && index < kDirectoryEntries &&
++            read_pak(channel, kDirectoryOffset + std::size_t(index) * kBlockSize,
++                    entry.raw.data(), entry.raw.size());
++}
++
++bool write_directory(int channel, int index, const DirectoryEntry& entry) {
++    return index >= 0 && index < kDirectoryEntries &&
++            write_pak(channel, kDirectoryOffset + std::size_t(index) * kBlockSize,
++                    entry.raw.data(), entry.raw.size());
++}
++
++bool inode_checksum_valid(const std::array<u8, kPageSize>& raw) {
++    u32 sum = 0;
++    for (std::size_t i = kFirstDataPage * 2; i < raw.size(); ++i) sum += raw[i];
++    return u8(sum) == raw[1];
++}
++
++bool read_inode_copy(int channel, std::size_t offset, std::array<u8, kPageSize>& raw) {
++    return read_pak(channel, offset, raw.data(), raw.size());
++}
++
++s32 read_inode(int channel, std::array<u16, kPageCount>& inode) {
++    std::array<u8, kPageSize> primary{};
++    if (!read_inode_copy(channel, kInodeOffset, primary)) return availability_error(channel);
++    if (!inode_checksum_valid(primary)) {
++        std::array<u8, kPageSize> mirror{};
++        if (!read_inode_copy(channel, kMirrorInodeOffset, mirror)) return availability_error(channel);
++        if (!inode_checksum_valid(mirror)) return PFS_ERR_INCONSISTENT;
++        primary = mirror;
++        if (!write_pak(channel, kInodeOffset, primary.data(), primary.size())) {
++            return availability_error(channel);
++        }
++    }
++    for (int i = 0; i < kPageCount; ++i) inode[i] = read_be16(primary.data() + i * 2);
++    return 0;
++}
++
++s32 write_inode(int channel, const std::array<u16, kPageCount>& inode) {
++    std::array<u8, kPageSize> raw{};
++    for (int i = 0; i < kPageCount; ++i) write_be16(raw.data() + i * 2, inode[i]);
++    u32 sum = 0;
++    for (std::size_t i = kFirstDataPage * 2; i < raw.size(); ++i) sum += raw[i];
++    raw[1] = u8(sum);
++    if (!write_pak(channel, kInodeOffset, raw.data(), raw.size()) ||
++            !write_pak(channel, kMirrorInodeOffset, raw.data(), raw.size())) {
++        return availability_error(channel);
++    }
++    return 0;
++}
++
++s32 collect_file_pages(const OSPfs* pfs, const DirectoryEntry& entry, std::vector<u8>& pages) {
++    std::array<u16, kPageCount> inode{};
++    s32 ret = read_inode(pfs->channel, inode);
++    if (ret != 0) return ret;
++
++    u16 current = entry.start_page();
++    std::array<bool, kPageCount> seen{};
++    while (current != kPageEnd) {
++        const u8 bank = u8(current >> 8);
++        const u8 page = u8(current);
++        if (bank != 0 || page < kFirstDataPage || page >= kPageCount || seen[page]) {
++            return PFS_ERR_INCONSISTENT;
++        }
++        seen[page] = true;
++        pages.push_back(page);
++        current = inode[page];
++    }
++    return pages.empty() ? PFS_ERR_INCONSISTENT : 0;
++}
++
++bool guest_bytes_equal(uint8_t* rdram, gpr guest, const u8* host, std::size_t size) {
++    if (guest == 0) return true;
++    for (std::size_t i = 0; i < size; ++i) {
++        if (u8(MEM_BU(i, guest)) != host[i]) return false;
++    }
++    return true;
++}
++
++void guest_store_bytes(uint8_t* rdram, gpr guest, const u8* host, std::size_t size) {
++    for (std::size_t i = 0; i < size; ++i) MEM_B(i, guest) = host[i];
++    std::ostringstream detail;
++    detail << "stage=pfs-memory-write guest=0x" << std::uppercase << std::hex
++           << static_cast<unsigned>(guest) << " bytes=" << std::dec << size << " data=";
++    for (std::size_t i = 0; i < std::min<std::size_t>(size, 32); ++i) {
++        if (i != 0) detail << ' ';
++        detail << std::setw(2) << std::setfill('0') << static_cast<unsigned>(host[i]);
++    }
++    ultramodern::runtime_trace(detail.str());
++}
++void guest_load_bytes(uint8_t* rdram, gpr guest, u8* host, std::size_t size) {
++    for (std::size_t i = 0; i < size; ++i) host[i] = u8(MEM_BU(i, guest));
++}
++
++s32 find_file(
++        uint8_t* rdram, OSPfs* pfs, u16 company, u32 game, gpr game_name, gpr ext_name,
++        int& file_no) {
++    if (!initialized(pfs)) return availability_error(pfs ? pfs->channel : 0);
++    for (int i = 0; i < kDirectoryEntries; ++i) {
++        DirectoryEntry entry{};
++        if (!read_directory(pfs->channel, i, entry)) return availability_error(pfs->channel);
++        if (entry.company_code() == company && entry.game_code() == game &&
++                guest_bytes_equal(rdram, game_name, entry.raw.data() + 16, 16) &&
++                guest_bytes_equal(rdram, ext_name, entry.raw.data() + 12, 4)) {
++            file_no = i;
++            return 0;
++        }
++    }
++    file_no = -1;
++    return PFS_ERR_INVALID;
++}
++
++} // namespace
++
++extern "C" void osPfsInitPak_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsInitPak", ctx};
++    OSPfs* pfs = _arg<1, OSPfs*>(rdram, ctx);
++    const int channel = _arg<2, s32>(rdram, ctx);
++    const s32 available = availability_error(channel);
++    if (pfs == nullptr || channel < 0 || channel >= 4 || available != 0) {
++        _return<s32>(ctx, pfs == nullptr || channel < 0 || channel >= 4 ? PFS_ERR_INVALID : available);
++        return;
++    }
++
++    std::array<u8, 32> id{};
++    std::array<u8, 32> label{};
++    if (!read_pak(channel, 0x20, id.data(), id.size()) ||
++            !read_pak(channel, 0xE0, label.data(), label.size()) || id[26] != 1) {
++        _return<s32>(ctx, PFS_ERR_DEVICE);
++        return;
++    }
++
++    pfs->status = PFS_INITIALIZED;
++    pfs->queue = static_cast<PTR(OSMesgQueue)>(ctx->r4);
++    pfs->channel = channel;
++    pfs->version = id[27];
++    pfs->dir_size = kDirectoryEntries;
++    pfs->inode_table = 8;
++    pfs->minode_table = 16;
++    pfs->dir_table = 24;
++    pfs->inode_start_page = kFirstDataPage;
++    pfs->activebank = 0;
++    pfs->banks = 1;
++    guest_store_bytes(rdram, ctx->r5 + 12, id.data(), id.size());
++    guest_store_bytes(rdram, ctx->r5 + 44, label.data(), label.size());
++
++    std::array<u16, kPageCount> inode{};
++    const s32 ret = read_inode(channel, inode);
++    std::fprintf(stderr, "RW_G2_PAK_INIT channel=%d result=%d banks=1 size=%zu\n",
++            channel, ret, kPakSize);
++    std::fflush(stderr);
++    _return<s32>(ctx, ret);
++}
++
++extern "C" void osPfsFreeBlocks_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsFreeBlocks", ctx};
++    OSPfs* pfs = _arg<0, OSPfs*>(rdram, ctx);
++    if (!initialized(pfs)) {
++        _return<s32>(ctx, availability_error(pfs ? pfs->channel : 0));
++        return;
++    }
++    std::array<u16, kPageCount> inode{};
++    const s32 ret = read_inode(pfs->channel, inode);
++    if (ret != 0) { _return<s32>(ctx, ret); return; }
++    s32 free_pages = 0;
++    for (int page = kFirstDataPage; page < kPageCount; ++page) {
++        if (inode[page] == kPageFree) ++free_pages;
++    }
++    MEM_W(0, ctx->r5) = free_pages * int(kPageSize);
++    ultramodern::runtime_trace(
++            "stage=pfs-memory-write guest=0x" + std::to_string(static_cast<unsigned>(ctx->r5)) +
++            " bytes=4 free_bytes=" + std::to_string(free_pages * int(kPageSize)));
++    std::fprintf(stderr, "RW_G2_PAK_FREE_BLOCKS result=0 bytes=%d\n",
++            free_pages * int(kPageSize));
++    std::fflush(stderr);
++    _return<s32>(ctx, 0);
++}
++
++extern "C" void osPfsAllocateFile_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsAllocateFile", ctx};
++    OSPfs* pfs = _arg<0, OSPfs*>(rdram, ctx);
++    const u16 company = _arg<1, u16>(rdram, ctx);
++    const u32 game = _arg<2, u32>(rdram, ctx);
++    const gpr game_name = ctx->r7;
++    const gpr ext_name = MEM_W(16, ctx->r29);
++    const s32 byte_count = MEM_W(20, ctx->r29);
++    const gpr file_no_out = MEM_W(24, ctx->r29);
++    if (!initialized(pfs) || company == 0 || game == 0 || byte_count <= 0) {
++        _return<s32>(ctx, initialized(pfs) ? PFS_ERR_INVALID : availability_error(pfs ? pfs->channel : 0));
++        return;
++    }
++    int existing = -1;
++    const s32 existing_ret = find_file(rdram, pfs, company, game, game_name, ext_name, existing);
++    if (existing_ret == 0) { MEM_W(0, file_no_out) = existing; _return<s32>(ctx, PFS_ERR_EXIST); return; }
++
++    int free_dir = -1;
++    for (int i = 0; i < kDirectoryEntries; ++i) {
++        DirectoryEntry entry{};
++        if (!read_directory(pfs->channel, i, entry)) { _return<s32>(ctx, availability_error(pfs->channel)); return; }
++        if (!entry.used()) { free_dir = i; break; }
++    }
++    if (free_dir < 0) { _return<s32>(ctx, PFS_DIR_FULL); return; }
++
++    std::array<u16, kPageCount> inode{};
++    s32 ret = read_inode(pfs->channel, inode);
++    if (ret != 0) { _return<s32>(ctx, ret); return; }
++    const int pages_needed = (byte_count + int(kPageSize) - 1) / int(kPageSize);
++    std::vector<u8> pages;
++    for (int page = kFirstDataPage; page < kPageCount && int(pages.size()) < pages_needed; ++page) {
++        if (inode[page] == kPageFree) pages.push_back(u8(page));
++    }
++    if (int(pages.size()) != pages_needed) { _return<s32>(ctx, PFS_DATA_FULL); return; }
++    for (std::size_t i = 0; i < pages.size(); ++i) {
++        inode[pages[i]] = i + 1 < pages.size() ? u16(pages[i + 1]) : kPageEnd;
++    }
++    ret = write_inode(pfs->channel, inode);
++    if (ret != 0) { _return<s32>(ctx, ret); return; }
++
++    DirectoryEntry entry{};
++    write_be32(entry.raw.data(), game);
++    write_be16(entry.raw.data() + 4, company);
++    entry.raw[6] = 0;
++    entry.raw[7] = pages.front();
++    guest_load_bytes(rdram, ext_name, entry.raw.data() + 12, 4);
++    guest_load_bytes(rdram, game_name, entry.raw.data() + 16, 16);
++    if (!write_directory(pfs->channel, free_dir, entry)) { _return<s32>(ctx, availability_error(pfs->channel)); return; }
++    MEM_W(0, file_no_out) = free_dir;
++    _return<s32>(ctx, 0);
++}
++
++extern "C" void osPfsDeleteFile_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsDeleteFile", ctx};
++    OSPfs* pfs = _arg<0, OSPfs*>(rdram, ctx);
++    int file_no = -1;
++    const s32 ret = find_file(rdram, pfs, _arg<1, u16>(rdram, ctx), _arg<2, u32>(rdram, ctx),
++            ctx->r7, MEM_W(16, ctx->r29), file_no);
++    if (ret != 0) { _return<s32>(ctx, ret); return; }
++    DirectoryEntry entry{};
++    if (!read_directory(pfs->channel, file_no, entry)) { _return<s32>(ctx, availability_error(pfs->channel)); return; }
++    std::vector<u8> pages;
++    const s32 pages_ret = collect_file_pages(pfs, entry, pages);
++    if (pages_ret != 0) { _return<s32>(ctx, pages_ret); return; }
++    std::array<u16, kPageCount> inode{};
++    const s32 inode_ret = read_inode(pfs->channel, inode);
++    if (inode_ret != 0) { _return<s32>(ctx, inode_ret); return; }
++    for (u8 page : pages) inode[page] = kPageFree;
++    const s32 write_ret = write_inode(pfs->channel, inode);
++    if (write_ret != 0) { _return<s32>(ctx, write_ret); return; }
++    entry.raw.fill(0);
++    _return<s32>(ctx, write_directory(pfs->channel, file_no, entry) ? 0 : availability_error(pfs->channel));
++}
++
++extern "C" void osPfsFileState_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsFileState", ctx};
++    OSPfs* pfs = _arg<0, OSPfs*>(rdram, ctx);
++    const int file_no = _arg<1, s32>(rdram, ctx);
++    const gpr state = ctx->r6;
++    if (!initialized(pfs) || file_no < 0 || file_no >= kDirectoryEntries || state == 0) {
++        _return<s32>(ctx, initialized(pfs) ? PFS_ERR_INVALID : availability_error(pfs ? pfs->channel : 0));
++        return;
++    }
++    DirectoryEntry entry{};
++    if (!read_directory(pfs->channel, file_no, entry)) { _return<s32>(ctx, availability_error(pfs->channel)); return; }
++    if (!entry.used()) { _return<s32>(ctx, PFS_ERR_INVALID); return; }
++    std::vector<u8> pages;
++    const s32 ret = collect_file_pages(pfs, entry, pages);
++    if (ret != 0) { _return<s32>(ctx, ret); return; }
++    MEM_W(0, state) = s32(pages.size() * kPageSize);
++    MEM_W(4, state) = s32(entry.game_code());
++    MEM_H(8, state) = s16(entry.company_code());
++    guest_store_bytes(rdram, state + 12, entry.raw.data() + 12, 4);
++    guest_store_bytes(rdram, state + 16, entry.raw.data() + 16, 16);
++    _return<s32>(ctx, 0);
++}
++
++extern "C" void osPfsFindFile_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsFindFile", ctx};
++    OSPfs* pfs = _arg<0, OSPfs*>(rdram, ctx);
++    int file_no = -1;
++    const s32 ret = find_file(rdram, pfs, _arg<1, u16>(rdram, ctx), _arg<2, u32>(rdram, ctx),
++            ctx->r7, MEM_W(16, ctx->r29), file_no);
++    const gpr out = MEM_W(20, ctx->r29);
++    if (out != 0) MEM_W(0, out) = file_no;
++    _return<s32>(ctx, ret);
++}
++
++extern "C" void osPfsReadWriteFile_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsReadWriteFile", ctx};
++    OSPfs* pfs = _arg<0, OSPfs*>(rdram, ctx);
++    const int file_no = _arg<1, s32>(rdram, ctx);
++    const u8 flag = _arg<2, u8>(rdram, ctx);
++    const int offset = _arg<3, s32>(rdram, ctx);
++    const int size = MEM_W(16, ctx->r29);
++    const gpr data = MEM_W(20, ctx->r29);
++    if (!initialized(pfs) || file_no < 0 || file_no >= kDirectoryEntries ||
++            (flag != PFS_READ && flag != PFS_WRITE) || offset < 0 || size <= 0 ||
++            offset % int(kBlockSize) != 0 || size % int(kBlockSize) != 0 || data == 0) {
++        _return<s32>(ctx, initialized(pfs) ? PFS_ERR_INVALID : availability_error(pfs ? pfs->channel : 0));
++        return;
++    }
++    DirectoryEntry entry{};
++    if (!read_directory(pfs->channel, file_no, entry)) { _return<s32>(ctx, availability_error(pfs->channel)); return; }
++    if (!entry.used()) { _return<s32>(ctx, PFS_ERR_INVALID); return; }
++    if (flag == PFS_READ && !entry.occupied()) { _return<s32>(ctx, PFS_ERR_BAD_DATA); return; }
++    std::vector<u8> pages;
++    const s32 ret = collect_file_pages(pfs, entry, pages);
++    if (ret != 0) { _return<s32>(ctx, ret); return; }
++    if (std::size_t(offset) + std::size_t(size) > pages.size() * kPageSize) {
++        _return<s32>(ctx, PFS_ERR_INVALID);
++        return;
++    }
++
++    std::array<u8, kBlockSize> block{};
++    for (int position = 0; position < size; position += int(kBlockSize)) {
++        const std::size_t file_offset = std::size_t(offset + position);
++        const std::size_t page_index = file_offset / kPageSize;
++        const std::size_t block_offset = file_offset % kPageSize;
++        const std::size_t pak_offset = std::size_t(pages[page_index]) * kPageSize + block_offset;
++        bool ok = false;
++        if (flag == PFS_READ) {
++            ok = read_pak(pfs->channel, pak_offset, block.data(), block.size());
++            if (ok) guest_store_bytes(rdram, data + position, block.data(), block.size());
++        } else {
++            guest_load_bytes(rdram, data + position, block.data(), block.size());
++            ok = write_pak(pfs->channel, pak_offset, block.data(), block.size());
++        }
++        if (!ok) { _return<s32>(ctx, availability_error(pfs->channel)); return; }
++    }
++    if (flag == PFS_WRITE && !entry.occupied()) {
++        entry.raw[8] |= kDirectoryOccupied;
++        if (!write_directory(pfs->channel, file_no, entry)) { _return<s32>(ctx, availability_error(pfs->channel)); return; }
++    }
++    std::fprintf(stderr, "RW_G2_PAK_FILE_IO result=0 operation=%s file=%d offset=%d size=%d\n",
++            flag == PFS_READ ? "read" : "write", file_no, offset, size);
++    std::fflush(stderr);
++    _return<s32>(ctx, 0);
++}
++
++extern "C" void osPfsChecker_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsChecker", ctx};
++    OSPfs* pfs = _arg<0, OSPfs*>(rdram, ctx);
++    if (!initialized(pfs)) {
++        _return<s32>(ctx, availability_error(pfs ? pfs->channel : 0));
++        return;
++    }
++    std::array<u16, kPageCount> inode{};
++    _return<s32>(ctx, read_inode(pfs->channel, inode));
++}
++
++extern "C" void osPfsNumFiles_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsNumFiles", ctx};
++    OSPfs* pfs = _arg<0, OSPfs*>(rdram, ctx);
++    if (!initialized(pfs)) {
++        _return<s32>(ctx, availability_error(pfs ? pfs->channel : 0));
++        return;
++    }
++    s32 used = 0;
++    for (int i = 0; i < kDirectoryEntries; ++i) {
++        DirectoryEntry entry{};
++        if (!read_directory(pfs->channel, i, entry)) { _return<s32>(ctx, availability_error(pfs->channel)); return; }
++        if (entry.used()) ++used;
++    }
++    MEM_W(0, ctx->r5) = kDirectoryEntries;
++    MEM_W(0, ctx->r6) = used;
++    std::fprintf(stderr, "RW_G2_PAK_NUM_FILES result=0 max=%d used=%d\n",
++            kDirectoryEntries, used);
++    std::fflush(stderr);
++    _return<s32>(ctx, 0);
++}
++
++extern "C" void osPfsRepairId_recomp(uint8_t* rdram, recomp_context* ctx) {
++    Rw017ApiScope rw017_scope{"osPfsRepairId", ctx};
++    OSPfs* pfs = _arg<0, OSPfs*>(rdram, ctx);
++    _return<s32>(ctx, initialized(pfs) ? 0 : availability_error(pfs ? pfs->channel : 0));
++}
+--- upstream/librecomp/src/pi.cpp
++++ modified/librecomp/src/pi.cpp
+@@ -2,12 +2,14 @@
+ #include <fstream>
+ #include <array>
+ #include <cstring>
++#include <cstdlib>
+ #include <string>
+ #include <mutex>
+ #include "recomp.h"
+ #include "librecomp/addresses.hpp"
+ #include "librecomp/game.hpp"
+ #include "librecomp/files.hpp"
++#include "librecomp/overlays.hpp"
+ #include <ultramodern/ultra64.h>
+ #include <ultramodern/ultramodern.hpp>
+ 
+@@ -267,6 +269,15 @@
+ }
+ 
+ void do_dma(RDRAM_ARG PTR(OSMesgQueue) mq, gpr rdram_address, uint32_t physical_addr, uint32_t size, uint32_t direction) {
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    const bool rw020_event_queue = mq == static_cast<PTR(OSMesgQueue)>(0x800FFC00U)
++            && std::getenv("XR64_RW020_NATIVE_TRACE") != nullptr;
++    if (rw020_event_queue) {
++        std::fprintf(stderr, "RW020_EVENT8_PI_DMA direction=%u queue=0x%08X pbus=0x%08X rdram=0x%08X size=0x%08X msg=0x00000000\n",
++                direction, static_cast<unsigned>(mq), physical_addr, static_cast<unsigned>(rdram_address), size);
++        std::fflush(stderr);
++    }
++#endif
+     // TODO asynchronous transfer
+     // TODO implement unaligned DMA correctly
+     if (direction == 0) {
+@@ -274,8 +285,14 @@
+             // read cart rom
+             recomp::do_rom_read(rdram, rdram_address, physical_addr, size);
+ 
++            // Register copied dynamic code before PI completion is guest-visible.
++            // The overlay subsystem ignores ordinary data and waits for complete
++            // section coverage before exposing callable entries.
++            recomp::overlays::register_rom_dma(
++                physical_addr - recomp::rom_base, static_cast<int32_t>(rdram_address), size);
++
+             // Send a message to the mq to indicate that the transfer completed
+-            ultramodern::enqueue_external_message_src(mq, 0, false, ultramodern::EventMessageSource::Pi);
++            ultramodern::enqueue_external_pi_dma_message(mq, 0, false);
+         } else if (physical_addr >= recomp::sram_base) {
+             if (!recomp::sram_allowed()) {
+                 ultramodern::error_handling::message_box("Attempted to use SRAM saving with other save type");
+@@ -285,7 +302,7 @@
+             save_read(rdram, rdram_address, physical_addr - recomp::sram_base, size);
+ 
+             // Send a message to the mq to indicate that the transfer completed
+-            ultramodern::enqueue_external_message_src(mq, 0, false, ultramodern::EventMessageSource::Pi);
++            ultramodern::enqueue_external_pi_dma_message(mq, 0, false);
+         } else {
+             fprintf(stderr, "[WARN] PI DMA read from unknown region, phys address 0x%08X\n", physical_addr);
+         }
+@@ -302,7 +319,7 @@
+             save_write(rdram, rdram_address, physical_addr - recomp::sram_base, size);
+ 
+             // Send a message to the mq to indicate that the transfer completed
+-            ultramodern::enqueue_external_message_src(mq, 0, false, ultramodern::EventMessageSource::Pi);
++            ultramodern::enqueue_external_pi_dma_message(mq, 0, false);
+         } else {
+             fprintf(stderr, "[WARN] PI DMA write to unknown region, phys address 0x%08X\n", physical_addr);
+         }
+@@ -319,6 +336,20 @@
+     PTR(OSMesgQueue) mq = MEM_W(0x18, ctx->r29);
+     uint32_t physical_addr = k1_to_phys(devAddr);
+ 
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    if (std::getenv("XR64_RW033_PAIR_TRACE") != nullptr &&
++            physical_addr >= recomp::rom_base &&
++            physical_addr - recomp::rom_base >= 0x001A0000U &&
++            physical_addr - recomp::rom_base < 0x001C0000U) {
++        std::fprintf(stderr,
++                "RW033_PI_REQUEST ra=0x%08X mb=0x%08X pri=0x%08X direction=%u rom=0x%08X rdram=0x%08X size=0x%08X queue=0x%08X\n",
++                static_cast<unsigned>(ctx->r31), mb, pri, direction,
++                physical_addr - recomp::rom_base, static_cast<unsigned>(dramAddr), size,
++                static_cast<unsigned>(mq));
++        std::fflush(stderr);
++    }
++#endif
++
+     debug_printf("[pi] DMA from 0x%08X into 0x%08X of size 0x%08X\n", devAddr, dramAddr, size);
+ 
+     do_dma(PASS_RDRAM mq, dramAddr, physical_addr, size, direction);
+@@ -335,6 +366,20 @@
+     uint32_t size = mb->size;
+     PTR(OSMesgQueue) mq = mb->hdr.retQueue;
+     uint32_t physical_addr = k1_to_phys(devAddr);
++
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    if (std::getenv("XR64_RW033_PAIR_TRACE") != nullptr &&
++            physical_addr >= recomp::rom_base &&
++            physical_addr - recomp::rom_base >= 0x001A0000U &&
++            physical_addr - recomp::rom_base < 0x001C0000U) {
++        std::fprintf(stderr,
++                "RW033_EPI_REQUEST ra=0x%08X handle=0x%08X mb=0x%08X direction=%u rom=0x%08X rdram=0x%08X size=0x%08X queue=0x%08X\n",
++                static_cast<unsigned>(ctx->r31), static_cast<unsigned>(ctx->r4),
++                static_cast<unsigned>(ctx->r5), direction, physical_addr - recomp::rom_base,
++                static_cast<unsigned>(dramAddr), size, static_cast<unsigned>(mq));
++        std::fflush(stderr);
++    }
++#endif
+ 
+     debug_printf("[pi] DMA from 0x%08X into 0x%08X of size 0x%08X\n", devAddr, dramAddr, size);
+ 
+--- upstream/librecomp/src/recomp.cpp
++++ modified/librecomp/src/recomp.cpp
+@@ -38,6 +38,14 @@
+ #define PATHFMT "%s"
+ #endif
+ 
++#ifndef XR64_RAGE_WARS_RDRAM_SIZE_BYTES
++#define XR64_RAGE_WARS_RDRAM_SIZE_BYTES 0x00400000U
++#endif
++
++static_assert(XR64_RAGE_WARS_RDRAM_SIZE_BYTES == 0x00400000U ||
++              XR64_RAGE_WARS_RDRAM_SIZE_BYTES == 0x00800000U,
++              "Rage Wars RDRAM must use the 4 MiB base or 8 MiB Expansion Pak profile");
++
+ enum GameStatus {
+     None,
+     Running,
+@@ -59,6 +67,11 @@
+ recomp::Version project_version;
+ // The current game's save type.
+ recomp::SaveType save_type = recomp::SaveType::None;
++static recomp::break_handler_t break_handler = nullptr;
++
++void recomp::set_break_handler(recomp::break_handler_t handler) {
++    break_handler = handler;
++}
+ 
+ std::u8string recomp::GameEntry::stored_filename() const {
+     return game_id + u8".z64";
+@@ -207,8 +220,10 @@
+ }
+ 
+ static std::unordered_set<std::u8string> valid_game_roms;
+-
+-bool recomp::is_rom_valid(const std::u8string& game_id) {
++static std::u8string memory_rom_game;
++static std::vector<uint8_t> memory_rom_data;
++
++bool recomp::is_rom_valid(std::u8string& game_id) {
+     return valid_game_roms.contains(game_id);
+ }
+ 
+@@ -220,7 +235,12 @@
+     }
+ }
+ 
+-bool recomp::load_stored_rom(const std::u8string& game_id) {
++bool recomp::load_stored_rom(std::u8string& game_id) {
++    if(game_id==memory_rom_game && !memory_rom_data.empty()) {
++        recomp::set_rom_contents(std::move(memory_rom_data));
++        memory_rom_game.clear();
++        return true;
++    }
+     auto find_it = game_roms.find(game_id);
+ 
+     if (find_it == game_roms.end()) {
+@@ -357,7 +377,7 @@
+     }
+ }
+ 
+-recomp::RomValidationError recomp::select_rom(const std::filesystem::path& rom_path, const std::u8string& game_id) {
++static recomp::RomValidationError select_rom_impl(const std::filesystem::path& rom_path, std::u8string& game_id, bool persist) {
+     auto find_it = game_roms.find(game_id);
+ 
+     if (find_it == game_roms.end()) {
+@@ -372,6 +392,7 @@
+         return recomp::RomValidationError::FailedToOpen;
+     }
+ 
++    if(rom_data.size()<0x40)return recomp::RomValidationError::NotARom;
+     // Pad the rom to the nearest multiple of 4 bytes.
+     rom_data.resize((rom_data.size() + 3) & ~3);
+ 
+@@ -405,13 +426,26 @@
+         }
+     }
+ 
+-    write_file(config_path / game_entry.stored_filename(), rom_data);
+-    
++    if(persist) {
++        if(!write_file(config_path / game_entry.stored_filename(), rom_data))
++            return recomp::RomValidationError::OtherError;
++    } else {
++        memory_rom_game=game_id;
++        memory_rom_data=std::move(rom_data);
++        valid_game_roms.insert(game_id);
++    }
+     return recomp::RomValidationError::Good;
+ }
+ 
++recomp::RomValidationError recomp::select_rom(const std::filesystem::path& path,std::u8string& id) {
++    return select_rom_impl(path,id,true);
++}
++recomp::RomValidationError recomp::select_rom_in_memory(const std::filesystem::path& path,std::u8string& id) {
++    return select_rom_impl(path,id,false);
++}
++
+ extern "C" void osGetMemSize_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    ctx->r2 = 8 * 1024 * 1024;
++    ctx->r2 = XR64_RAGE_WARS_RDRAM_SIZE_BYTES;
+ }
+ 
+ enum class StatusReg {
+@@ -464,6 +498,10 @@
+ }
+ 
+ extern "C" void do_break(uint32_t vram) {
++    if (break_handler != nullptr) {
++        break_handler(vram);
++        return;
++    }
+     printf("Encountered break at original vram 0x%08X\n", vram);
+     assert(false);
+     exit(EXIT_FAILURE);
+@@ -473,7 +511,15 @@
+ std::optional<std::u8string> current_game = std::nullopt;
+ std::atomic<GameStatus> game_status = GameStatus::None;
+ 
++thread_local uint64_t current_thread_entry_address = 0;
++thread_local uint64_t current_thread_argument = 0;
++
++uint64_t recomp::get_current_thread_entry_address() { return current_thread_entry_address; }
++uint64_t recomp::get_current_thread_argument() { return current_thread_argument; }
++
+ void run_thread_function(uint8_t* rdram, uint64_t addr, uint64_t sp, uint64_t arg) {
++    current_thread_entry_address = addr;
++    current_thread_argument = arg;
+     auto find_it = game_roms.find(current_game.value());
+     const recomp::GameEntry& game_entry = find_it->second;
+     
+@@ -487,7 +533,7 @@
+         game_entry.thread_create_callback(rdram, &ctx);
+     }
+ 
+-    recomp_func_t* func = get_function(addr);
++    recomp_func_t* func = get_function_with_context(rdram, &ctx, addr);
+     func(rdram, &ctx);
+ }
+ 
+@@ -520,7 +566,7 @@
+     MEM_W(osTvType, 0) = 1; // NTSC
+     MEM_W(osRomBase, 0) = 0xB0000000u; // standard rom base
+     MEM_W(osResetType, 0) = 0; // cold reset
+-    MEM_W(osMemSize, 0) = 8 * 1024 * 1024; // 8MB
++    MEM_W(osMemSize, 0) = XR64_RAGE_WARS_RDRAM_SIZE_BYTES;
+ }
+ 
+ std::u8string recomp::current_game_id() {
+@@ -792,111 +838,8 @@
+         save_type == SaveType::AllowAll;
+ }
+ 
+-void print_cli_game_options() {
+-    for (const auto &it : game_roms) {
+-        bool rom_valid = recomp::is_rom_valid(it.second.game_id);
+-        fprintf(stderr, "\"%s\" (%s)%s\n", it.second.mod_game_id.c_str(), it.second.display_name.c_str(), rom_valid ? "" : " (No ROM)");
+-    }
+-}
+-
+-void print_cli_game_mode_options(const std::vector<recomp::mods::ModDetails> &mods) {
+-    for (const auto &mod : mods) {
+-        if (mod.custom_gamemode) {
+-            bool mod_enabled = recomp::mods::is_mod_enabled(mod.mod_id) || recomp::mods::is_mod_auto_enabled(mod.mod_id);
+-            fprintf(stderr, "\"%s\" (%s)%s\n", mod.mod_id.c_str(), mod.display_name.c_str(), mod_enabled ? "" : " (Disabled)");
+-        }
+-    }
+-}
+-
+-void parse_cli(int argc, char **argv) {
+-    std::string cli_game_id;
+-    std::string cli_game_mode_id;
+-    bool game_mode_missing_argument = false;
+-    for (int i = 1; i < argc; i++) {
+-        if (strcmp(argv[i], "--game") == 0) {
+-            if (i + 1 < argc) {
+-                cli_game_id = std::string(argv[++i]);
+-            }
+-            else {
+-                fprintf(stderr, "No argument was specified for the game. Possible options are:\n");
+-                print_cli_game_options();
+-            }
+-        }
+-        else if (strcmp(argv[i], "--game-mode") == 0) {
+-            if (i + 1 < argc) {
+-                cli_game_mode_id = std::string(argv[++i]);
+-            }
+-            else {
+-                game_mode_missing_argument = true;
+-            }
+-        }
+-    }
+-
+-    if (!cli_game_id.empty()) {
+-        // We use the mod game ID instead to do the lookup since it's much easier for the user to remember.
+-        std::u8string game_id;
+-        for (const auto &it : game_roms) {
+-            if (it.second.mod_game_id == cli_game_id) {
+-                if (recomp::is_rom_valid(it.second.game_id)) {
+-                    game_id = it.second.game_id;
+-                }
+-                else {
+-                    fprintf(stderr, "Game \"%s\" does not have a valid ROM. Please select a ROM on the launcher first.\n", cli_game_id.c_str());
+-                }
+-
+-                break;
+-            }
+-        }
+-
+-        if (!game_id.empty()) {
+-            bool game_mode_error = false;
+-            std::string game_mode_id;
+-            if (!cli_game_mode_id.empty() || game_mode_missing_argument) {
+-                std::vector<recomp::mods::ModDetails> mods = recomp::mods::get_all_mod_details(cli_game_id);
+-                if (!cli_game_mode_id.empty()) {
+-                    for (const auto &mod : mods) {
+-                        if ((mod.mod_id == cli_game_mode_id) && mod.custom_gamemode) {
+-                            if (recomp::mods::is_mod_enabled(mod.mod_id) || recomp::mods::is_mod_auto_enabled(mod.mod_id)) {
+-                                game_mode_id = mod.mod_id;
+-                            }
+-                            else {
+-                                fprintf(stderr, "Game mode \"%s\" is disabled. Please enable it on the mods menu first.\n", cli_game_mode_id.c_str());
+-                            }
+-
+-                            break;
+-                        }
+-                    }
+-
+-                    if (game_mode_id.empty()) {
+-                        fprintf(stderr, "Game mode \"%s\" is not available. Possible options are:\n", cli_game_mode_id.c_str());
+-                        print_cli_game_mode_options(mods);
+-                        game_mode_error = true;
+-                    }
+-                }
+-                else if (game_mode_missing_argument) {
+-                    fprintf(stderr, "No argument was specified for the game mode. Possible options are:\n");
+-                    print_cli_game_mode_options(mods);
+-                    game_mode_error = true;
+-                }
+-            }
+-
+-            if (!game_mode_error) {
+-                recomp::start_game(game_id, game_mode_id);
+-            }
+-        }
+-        else {
+-            fprintf(stderr, "Game \"%s\" is not available. Possible options are:\n", cli_game_id.c_str());
+-            print_cli_game_options();
+-        }
+-    }
+-    else if (game_mode_missing_argument) {
+-        fprintf(stderr, "No argument was specified for the game mode. The game must be specified first to show the options.\n");
+-    }
+-}
+-
+ void recomp::start(const recomp::Configuration& cfg) {
+     project_version = cfg.project_version;
+-
+     recomp::check_all_stored_roms();
+ 
+     recomp::rsp::set_callbacks(cfg.rsp_callbacks);
+@@ -980,8 +923,6 @@
+         while (!wait_for_game_started(rdram, &context)) {}
+     }, window_handle, rdram};
+ 
+-    parse_cli(cfg.argc, cfg.argv);
+-
+     while (!exited) {
+         ultramodern::sleep_milliseconds(1);
+         if (gfx_callbacks.update_gfx != nullptr) {
+@@ -996,17 +937,10 @@
+     ultramodern::join_thread_cleaner_thread();
+     ultramodern::join_saving_thread();
+     
+-    // Free rdram.
+-    bool free_failed;
+-#ifdef _WIN32
+-    // VirtualFree returns zero on failure.
+-    free_failed = (VirtualFree(rdram, 0, MEM_RELEASE) == 0);
+-#else
+-    // munmap returns -1 on failure.
+-    free_failed = (munmap(rdram, allocation_size) == -1);
+-#endif
+-
+-    if (free_failed) {
+-        printf("Failed to free rdram\n");
+-    }
+-}
++    // Guest host threads can still execute generated code after quit():
++    // the cleaner only joins threads that have already finished. start()
++    // is one-shot and its caller exits the process immediately afterward.
++    // Keep RDRAM mapped until process teardown so an active guest thread
++    // cannot read a released mapping during shutdown.
++
++}
+--- upstream/librecomp/src/ultra_translation.cpp
++++ modified/librecomp/src/ultra_translation.cpp
+@@ -1,4 +1,5 @@
+ #include <memory>
++#include <cstdio>
+ #include <ultramodern/ultra64.h>
+ #include <ultramodern/ultramodern.hpp>
+ #include "recomp.h"
+@@ -123,7 +124,7 @@
+ }
+ 
+ extern "C" void __osDisableInt_recomp(uint8_t * rdram, recomp_context * ctx) {
+-    ;
++    ctx->r2 = 1;
+ }
+ 
+ extern "C" void __osRestoreInt_recomp(uint8_t * rdram, recomp_context * ctx) {
+--- upstream/librecomp/src/vi.cpp
++++ modified/librecomp/src/vi.cpp
+@@ -11,7 +11,7 @@
+ }
+ 
+ extern "C" void osCreateViManager_recomp(uint8_t* rdram, recomp_context* ctx) {
+-    ;
++    ultramodern::init_vi(rdram);
+ }
+ 
+ extern "C" void osViBlack_recomp(uint8_t* rdram, recomp_context* ctx) {
+--- upstream/ultramodern/CMakeLists.txt
++++ modified/ultramodern/CMakeLists.txt
+@@ -30,10 +30,20 @@
+     "${PROJECT_SOURCE_DIR}/../thirdparty/sse2neon"
+ )
+ 
++set(XR64_RAGE_WARS_RUNTIME_SOURCE_DIR
++    "${CMAKE_CURRENT_SOURCE_DIR}/../../../pc_runtime/src"
++    CACHE PATH "Rage Wars runtime source directory for project-specific scheduler hooks")
++if(NOT IS_DIRECTORY "${XR64_RAGE_WARS_RUNTIME_SOURCE_DIR}")
++    message(FATAL_ERROR
++        "XR64_RAGE_WARS_RUNTIME_SOURCE_DIR must contain the Rage Wars runtime sources")
++endif()
++target_include_directories(ultramodern PRIVATE
++    "${XR64_RAGE_WARS_RUNTIME_SOURCE_DIR}")
++
+ target_compile_options(ultramodern PRIVATE
+ #    -Wall
+ #    -Wextra
+-    -Wno-unused-parameter
++    $<$<COMPILE_LANG_AND_ID:CXX,GNU,Clang>:-Wno-unused-parameter>
+ )
+ 
+ if (WIN32)
+--- upstream/ultramodern/include/ultramodern/input.hpp
++++ modified/ultramodern/include/ultramodern/input.hpp
+@@ -2,6 +2,7 @@
+ #define __ULTRAMODERN_INPUT_HPP__
+ 
+ #include <cstdint>
++#include <cstddef>
+ 
+ namespace ultramodern {
+     namespace input {
+@@ -15,7 +16,7 @@
+         enum class Pak {
+             None,
+             RumblePak,
+-            // ControllerPak,
++            ControllerPak,
+             // TransferPak
+         };
+ 
+@@ -29,6 +30,8 @@
+             using get_input_t = bool(int controller_num, uint16_t* buttons, float* x, float* y);
+             using set_rumble_t = void(int controller_num, bool rumble);
+             using get_connected_device_info_t = connected_device_info_t(int controller_num);
++            using read_controller_pak_t = bool(int controller_num, std::size_t offset, std::uint8_t* data, std::size_t size);
++            using write_controller_pak_t = bool(int controller_num, std::size_t offset, const std::uint8_t* data, std::size_t size);
+ 
+             poll_input_t* poll_input;
+ 
+@@ -54,9 +57,14 @@
+              * `controller_num` is zero-indexed, meaning 0 corresponds to the first controller.
+              */
+             get_connected_device_info_t* get_connected_device_info;
++            read_controller_pak_t* read_controller_pak = nullptr;
++            write_controller_pak_t* write_controller_pak = nullptr;
+         };
+ 
+         void set_callbacks(const callbacks_t& callbacks);
++        connected_device_info_t get_connected_device_info(int controller_num);
++        bool read_controller_pak(int controller_num, std::size_t offset, std::uint8_t* data, std::size_t size);
++        bool write_controller_pak(int controller_num, std::size_t offset, const std::uint8_t* data, std::size_t size);
+     }
+ }
+ 
+--- upstream/ultramodern/include/ultramodern/renderer_context.hpp
++++ modified/ultramodern/include/ultramodern/renderer_context.hpp
+@@ -46,6 +46,10 @@
+         };
+         ViRegs* get_vi_regs();
+ 
++        // Valid only while RendererContext::send_dl is executing. This keeps
++        // diagnostic renderers from losing the guest address of the copied task.
++        PTR(OSTask) get_current_rsp_task_address();
++
+ #if defined(_WIN32)
+         // Native HWND handle to the target window.
+         struct WindowHandle {
+@@ -86,6 +90,9 @@
+                 virtual void send_dl(const OSTask* task) = 0;
+                 virtual void send_dummy_workload(uint32_t fb_address) = 0;
+                 virtual void update_screen() = 0;
++                // Opt-in presentation on the graphics owner, after task completion.
++                virtual bool has_independent_presentation() const { return false; }
++                virtual void present_frame() {}
+                 virtual void shutdown() = 0;
+                 virtual uint32_t get_display_framerate() const = 0;
+                 virtual float get_resolution_scale() const = 0;
+--- upstream/ultramodern/include/ultramodern/threads.hpp
++++ modified/ultramodern/include/ultramodern/threads.hpp
+@@ -9,6 +9,7 @@
+     namespace threads {
+         struct callbacks_t {
+             using get_game_thread_name_t = std::string(const OSThread* t);
++            using thread_activated_t = void(uint8_t* rdram, PTR(OSThread) thread);
+ 
+             /**
+              * Allows to specifying a custom name for each thread. Mainly for debugging purposes.
+@@ -18,6 +19,7 @@
+              * If this function is not provided then the thread id will be used as the name of the thread.
+              */
+             get_game_thread_name_t *get_game_thread_name;
++            thread_activated_t *thread_activated = nullptr;
+         };
+ 
+         void set_callbacks(const callbacks_t& callbacks);
+--- upstream/ultramodern/include/ultramodern/ultra64.h
++++ modified/ultramodern/include/ultramodern/ultra64.h
+@@ -103,7 +103,6 @@
+     uint16_t state;
+     OSId id;
+     int32_t pad3;
+-    UltraThreadContext* context; // An actual pointer regardless of platform
+     int32_t sp;
+ } OSThread;
+ 
+--- upstream/ultramodern/include/ultramodern/ultramodern.hpp
++++ modified/ultramodern/include/ultramodern/ultramodern.hpp
+@@ -7,6 +7,8 @@
+ #include <span>
+ #include <chrono>
+ #include <filesystem>
++#include <string_view>
++#include <string_view>
+ 
+ #undef MOODYCAMEL_DELETE_FUNCTION
+ #define MOODYCAMEL_DELETE_FUNCTION = delete
+@@ -29,13 +31,20 @@
+ 
+ namespace ultramodern {
+ 
++using runtime_trace_callback_t = void (*)(std::string_view detail);
++void set_runtime_trace_callback(runtime_trace_callback_t callback);
++void runtime_trace(std::string_view detail);
++
+ constexpr uint32_t save_size = 1024 * 1024 / 8; // Maximum save size, 1Mbit for flash
+ 
+ // Initialization.
+ void preinit(RDRAM_ARG renderer::WindowHandle window_handle);
+ void init_saving(RDRAM_ARG1);
+ void init_events(RDRAM_ARG renderer::WindowHandle window_handle);
++void init_vi(RDRAM_ARG1);
++bool is_vi_initialized();
+ void init_timers(RDRAM_ARG1);
++void pi_complete();
+ void init_thread_cleanup();
+ 
+ // Saving
+@@ -45,11 +54,28 @@
+ // Thread queues.
+ constexpr PTR(PTR(OSThread)) running_queue = (PTR(PTR(OSThread)))-1;
+ 
+-void thread_queue_insert(RDRAM_ARG PTR(PTR(OSThread)) queue, PTR(OSThread) toadd);
+-PTR(OSThread) thread_queue_pop(RDRAM_ARG PTR(PTR(OSThread)) queue);
+-bool thread_queue_remove(RDRAM_ARG PTR(PTR(OSThread)) queue_, PTR(OSThread) t_);
+-bool thread_queue_empty(RDRAM_ARG PTR(PTR(OSThread)) queue);
+-PTR(OSThread) thread_queue_peek(RDRAM_ARG PTR(PTR(OSThread)) queue);
++  void thread_queue_reset(RDRAM_ARG PTR(PTR(OSThread)) queue);
++  void thread_queue_insert(RDRAM_ARG PTR(PTR(OSThread)) queue, PTR(OSThread) toadd);
++  PTR(OSThread) thread_queue_pop(RDRAM_ARG PTR(PTR(OSThread)) queue);
++  bool thread_queue_remove(RDRAM_ARG PTR(PTR(OSThread)) queue_, PTR(OSThread) t_);
++  bool thread_queue_empty(RDRAM_ARG PTR(PTR(OSThread)) queue);
++  PTR(OSThread) thread_queue_peek(RDRAM_ARG PTR(PTR(OSThread)) queue);
++  PTR(PTR(OSThread)) thread_queue_for_thread(PTR(OSThread) thread);
++  void thread_queue_register_thread(PTR(OSThread) thread, OSPri priority);
++  void thread_queue_unregister_thread(RDRAM_ARG PTR(OSThread) thread);
++  void thread_queue_set_priority(RDRAM_ARG PTR(OSThread) thread, OSPri priority);
++
++  enum class ThreadWaitQueue : uint8_t {
++      Receive,
++      Send,
++  };
++  void thread_wait_queue_reset(RDRAM_ARG PTR(OSMesgQueue) mq, ThreadWaitQueue kind);
++  void thread_wait_queue_insert(
++      RDRAM_ARG PTR(OSMesgQueue) mq, ThreadWaitQueue kind, PTR(OSThread) thread);
++  PTR(OSThread) thread_wait_queue_pop(
++      RDRAM_ARG PTR(OSMesgQueue) mq, ThreadWaitQueue kind);
++  bool thread_wait_queue_empty(
++      RDRAM_ARG PTR(OSMesgQueue) mq, ThreadWaitQueue kind);
+ 
+ // Message queues.
+ enum class EventMessageSource : int {
+@@ -74,14 +100,26 @@
+ void set_message_queue_control(const MessageQueueControl& mqc);
+ void enqueue_external_message_src(PTR(OSMesgQueue) mq, OSMesg msg, bool jam, EventMessageSource src);
+ void enqueue_external_message(PTR(OSMesgQueue) mq, OSMesg msg, bool jam, bool requeue_if_blocked);
++void enqueue_external_pi_dma_message(PTR(OSMesgQueue) mq, OSMesg msg, bool jam);
++using vi_message_callback_t = void(uint8_t*, uint32_t, uint32_t);
++void set_vi_message_callback(vi_message_callback_t* callback, uint8_t* rdram);
++bool deliver_fault_message_and_wait(RDRAM_ARG PTR(OSMesgQueue) mq, OSMesg msg);
+ void wait_for_external_message(RDRAM_ARG1);
+ void wait_for_external_message_timed(RDRAM_ARG1, u32 millis);
++
++// Synchronous CPU-fault event support.
++bool raise_fault(RDRAM_ARG u32 cause, u32 bad_vaddr);
++PTR(OSThread) get_faulted_thread();
+ 
+ // Thread scheduling.
+ void check_running_queue(RDRAM_ARG1);
+ void run_next_thread_and_wait(RDRAM_ARG1);
+ void resume_thread_and_wait(RDRAM_ARG OSThread* t);
+ void schedule_running_thread(RDRAM_ARG PTR(OSThread) t);
++using pause_handler_t = void (*)(uint8_t* rdram);
++void set_pause_handler(pause_handler_t handler);
++using contextless_handoff_policy_t = bool (*)(OSThread *, OSThread *);
++void set_contextless_handoff_policy(contextless_handoff_policy_t policy);
+ void cleanup_thread(UltraThreadContext* thread_context);
+ struct thread_terminated : std::exception {};
+ 
+@@ -100,6 +138,8 @@
+ bool is_entrypoint_thread();
+ bool is_game_thread();
+ void submit_rsp_task(RDRAM_ARG PTR(OSTask) task);
++void send_sp_message();
++void send_dp_message();
+ void send_si_message();
+ uint32_t get_speed_multiplier();
+ 
+@@ -146,6 +186,7 @@
+ bool is_game_started();
+ void quit();
+ void join_event_threads();
++void join_vi_thread();
+ void join_thread_cleaner_thread();
+ void join_saving_thread();
+ 
+--- upstream/ultramodern/src/events.cpp
++++ modified/ultramodern/src/events.cpp
+@@ -7,7 +7,11 @@
+ #include <utility>
+ #include <mutex>
+ #include <queue>
++#include <condition_variable>
+ #include <cstring>
++#include <cstdio>
++#include <sstream>
++#include <cstdlib>
+ 
+ #include "blockingconcurrentqueue.h"
+ 
+@@ -24,7 +28,14 @@
+     events_callbacks = callbacks;
+ }
+ 
++static thread_local PTR(OSTask) current_rsp_task_address = 0;
++
++PTR(OSTask) ultramodern::renderer::get_current_rsp_task_address() {
++    return current_rsp_task_address;
++}
++
+ struct SpTaskAction {
++    PTR(OSTask) address;
+     OSTask task;
+ };
+ 
+@@ -42,7 +53,7 @@
+ using Action = std::variant<SpTaskAction, ScreenUpdateAction, UpdateConfigAction, DummyWorkloadAction>;
+ 
+ struct ViState {
+-    const OSViMode* mode = nullptr;
++    const OSViMode* mode;
+     PTR(void) framebuffer;
+     PTR(OSMesg) mq;
+     OSMesg msg;
+@@ -57,6 +68,10 @@
+ static struct {
+     struct {
+         std::thread thread;
++        std::atomic_bool stop = false;
++        bool standalone = false;
++        bool event_registered = false;
++        std::condition_variable event_cv;
+         int cur_state;
+         int field;
+         ViState states[2];
+@@ -72,11 +87,6 @@
+         void update_vi() {
+             ViState* next_state = get_next_state();
+             const OSViMode* next_mode = next_state->mode;
+-            if (next_mode == nullptr) {
+-                // Skip the update if the next mode hasn't been set yet.
+-                return;
+-            }
+-
+             const OSViCommonRegs* common_regs = &next_mode->comRegs;
+             const OSViFieldRegs* field_regs = &next_mode->fldRegs[field];
+             PTR(void) framebuffer = osVirtualToPhysical(next_state->framebuffer);
+@@ -134,6 +144,15 @@
+         PTR(OSMesgQueue) mq = NULLPTR;
+         OSMesg msg = (OSMesg)0;
+     } si;
++    struct {
++        PTR(OSMesgQueue) mq = NULLPTR;
++        OSMesg msg = (OSMesg)0;
++    } pi;
++    struct {
++        PTR(OSMesgQueue) mq = NULLPTR;
++        OSMesg msg = (OSMesg)0;
++        PTR(OSThread) thread = NULLPTR;
++    } fault;
+     // The same message queue may be used for multiple events, so share a mutex for all of them
+     std::mutex message_mutex;
+     uint8_t* rdram;
+@@ -148,6 +167,15 @@
+ 
+ extern "C" void osSetEventMesg(RDRAM_ARG OSEvent event_id, PTR(OSMesgQueue) mq_, OSMesg msg) {
+     std::lock_guard lock{ events_context.message_mutex };
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    if (event_id == OS_EVENT_PI && mq_ == static_cast<PTR(OSMesgQueue)>(0x800FFC00U)
++            && std::getenv("XR64_RW020_NATIVE_TRACE") != nullptr) {
++        std::fprintf(stderr, "RW020_EVENT8_REGISTER event=%u queue=0x%08X msg=0x%08X current_thread=0x%08X\n",
++                static_cast<unsigned>(event_id), static_cast<unsigned>(mq_), static_cast<unsigned>(msg),
++                static_cast<unsigned>(ultramodern::this_thread()));
++        std::fflush(stderr);
++    }
++#endif
+ 
+     switch (event_id) {
+         case OS_EVENT_SP:
+@@ -165,7 +193,67 @@
+         case OS_EVENT_SI:
+             events_context.si.msg = msg;
+             events_context.si.mq = mq_;
+-    }
++            break;
++        case OS_EVENT_PI:
++            events_context.pi.msg = msg;
++            events_context.pi.mq = mq_;
++            break;
++        case OS_EVENT_FAULT:
++            events_context.fault.msg = msg;
++            events_context.fault.mq = mq_;
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++            if (std::getenv("XR64_RW027_DESCRIPTOR_TRACE") != nullptr) {
++                std::fprintf(stderr,
++                        "RW027_FAULT_REGISTER event=%u queue=0x%08X msg=0x%08X current_thread=0x%08X\n",
++                        static_cast<unsigned>(event_id), static_cast<unsigned>(mq_),
++                        static_cast<unsigned>(msg), static_cast<unsigned>(ultramodern::this_thread()));
++                std::fflush(stderr);
++            }
++#endif
++            break;
++    }
++}
++
++bool ultramodern::raise_fault(RDRAM_ARG u32 cause, u32 bad_vaddr) {
++    PTR(OSMesgQueue) mq = NULLPTR;
++    OSMesg msg = (OSMesg)0;
++    const PTR(OSThread) faulted_thread = ultramodern::this_thread();
++    if (faulted_thread == NULLPTR) {
++        return false;
++    }
++
++    {
++        std::lock_guard lock{ events_context.message_mutex };
++        if (events_context.fault.mq == NULLPTR) {
++            return false;
++        }
++        events_context.fault.thread = faulted_thread;
++        mq = events_context.fault.mq;
++        msg = events_context.fault.msg;
++    }
++
++    *TO_PTR(u32, faulted_thread + 0x120U) = cause;
++    *TO_PTR(u32, faulted_thread + 0x124U) = bad_vaddr;
++    TO_PTR(OSThread, faulted_thread)->state = OSThreadState::STOPPED;
++    TO_PTR(OSThread, faulted_thread)->queue = NULLPTR;
++
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    if (std::getenv("XR64_RW027_DESCRIPTOR_TRACE") != nullptr) {
++        std::fprintf(stderr,
++                "RW027_FAULT_DELIVER thread=0x%08X cause=0x%08X bad_vaddr=0x%08X queue=0x%08X msg=0x%08X\n",
++                static_cast<unsigned>(faulted_thread), static_cast<unsigned>(cause),
++                static_cast<unsigned>(bad_vaddr), static_cast<unsigned>(mq),
++                static_cast<unsigned>(msg));
++        std::fflush(stderr);
++    }
++#endif
++
++    return ultramodern::deliver_fault_message_and_wait(PASS_RDRAM mq, msg);
++}
++
++PTR(OSThread) ultramodern::get_faulted_thread() {
++    std::lock_guard lock{ events_context.message_mutex };
++    return events_context.fault.thread;
+ }
+ 
+ extern "C" void osViSetEvent(RDRAM_ARG PTR(OSMesgQueue) mq_, OSMesg msg, u32 retrace_count) {
+@@ -174,6 +262,8 @@
+     next_state->mq = mq_;
+     next_state->msg = msg;
+     next_state->retrace_count = retrace_count;
++    events_context.vi.event_registered = true;
++    events_context.vi.event_cv.notify_all();
+ }
+ 
+ uint64_t total_vis = 0;
+@@ -193,7 +283,17 @@
+ 
+     int remaining_retraces = 1;
+ 
+-    while (!exited) {
++    while (!exited && !events_context.vi.stop) {
++        if (events_context.vi.standalone) {
++            std::unique_lock lock{events_context.message_mutex};
++            events_context.vi.event_cv.wait(lock, [] {
++                return events_context.vi.stop || events_context.vi.event_registered;
++            });
++            if (events_context.vi.stop) {
++                break;
++            }
++        }
++
+         // Determine the next VI time (more accurate than adding 16ms each VI interrupt)
+         auto next = ultramodern::get_start() + (total_vis * 1000000us) / (60 * ultramodern::get_speed_multiplier());
+         //if (next > std::chrono::high_resolution_clock::now()) {
+@@ -218,6 +318,8 @@
+         }
+         total_vis = new_total_vis;
+ 
++        const bool game_started = ultramodern::is_game_started() || events_context.vi.standalone;
++
+         // If the game hasn't started yet, set a dummy VI mode and origin.
+         if (!ultramodern::is_game_started()) {
+             static bool odd = false;
+@@ -235,15 +337,14 @@
+         events_context.vi.update_vi();
+ 
+         // If the game has started, handle sending VI and AI events.
+-        if (ultramodern::is_game_started()) {
+-            remaining_retraces--;
+-            
++        if (game_started) {
+             std::lock_guard lock{ events_context.message_mutex };
+             ViState* cur_state = events_context.vi.get_cur_state();
+-            if (remaining_retraces == 0) {
++            if (--remaining_retraces == 0) {
+                 if (cur_state->mq != NULLPTR) {
+                     // Send a message to the VI queue, and do not set it to be requeued if the queue was full.
+                     // The worst case scenario is that the game misses a VI message and has to wait a little longer for the next. 
++
+                     ultramodern::enqueue_external_message_src(cur_state->mq, cur_state->msg, false, ultramodern::EventMessageSource::Vi);
+                 }
+                 remaining_retraces = cur_state->retrace_count;
+@@ -270,6 +371,27 @@
+     uint8_t* rdram = events_context.rdram;
+     std::lock_guard lock{ events_context.message_mutex };
+     ultramodern::enqueue_external_message_src(events_context.dp.mq, events_context.dp.msg, false, ultramodern::EventMessageSource::Dp);
++}
++
++void ultramodern::send_sp_message() {
++    sp_complete();
++}
++
++void ultramodern::send_dp_message() {
++    dp_complete();
++}
++
++void ultramodern::pi_complete() {
++    std::lock_guard lock{ events_context.message_mutex };
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    if (events_context.pi.mq == static_cast<PTR(OSMesgQueue)>(0x800FFC00U)
++            && std::getenv("XR64_RW020_NATIVE_TRACE") != nullptr) {
++        std::fprintf(stderr, "RW020_EVENT8_PI_CALLBACK queue=0x%08X msg=0x%08X\n",
++                static_cast<unsigned>(events_context.pi.mq), static_cast<unsigned>(events_context.pi.msg));
++        std::fflush(stderr);
++    }
++#endif
++    ultramodern::enqueue_external_message_src(events_context.pi.mq, events_context.pi.msg, false, ultramodern::EventMessageSource::Pi);
+ }
+ 
+ void task_thread_func(uint8_t* rdram, moodycamel::LightweightSemaphore* thread_ready) {
+@@ -361,7 +483,11 @@
+     while (!exited) {
+         // Try to pull an action from the queue
+         Action action;
+-        if (events_context.action_queue.wait_dequeue_timed(action, 1ms)) {
++        const bool independent = renderer_context->has_independent_presentation();
++        unsigned action_budget = independent ? 64 : 1;
++        bool have_action = independent ? events_context.action_queue.try_dequeue(action)
++                : events_context.action_queue.wait_dequeue_timed(action, 1ms);
++        while (have_action) {
+             // Determine the action type and act on it
+             if (const auto* task_action = std::get_if<SpTaskAction>(&action)) {
+                 // Tell the game that the RSP completed instantly. This will allow it to queue other task types, but it won't
+@@ -375,7 +501,9 @@
+                 ultramodern::extensions::on_displaylist_submitted(displaylist);
+ 
+                 [[maybe_unused]] auto renderer_start = std::chrono::high_resolution_clock::now();
++                current_rsp_task_address = task_action->address;
+                 renderer_context->send_dl(&task_action->task);
++                current_rsp_task_address = 0;
+                 [[maybe_unused]] auto renderer_end = std::chrono::high_resolution_clock::now();
+ 
+                 dp_complete();
+@@ -400,7 +528,11 @@
+             else if (const auto* dummy_workload_action = std::get_if<DummyWorkloadAction>(&action)) {
+                 renderer_context->send_dummy_workload(dummy_workload_action->fb_address);
+             }
+-        }
++            // Bound the drain so a busy producer cannot starve presentation.
++            have_action = --action_budget != 0 && !exited &&
++                    events_context.action_queue.try_dequeue(action);
++        }
++        if (independent && !exited) renderer_context->present_frame();
+     }
+ 
+     graphics_shutdown_ready.wait();
+@@ -567,7 +699,7 @@
+ 
+     // Send gfx tasks to the graphics action queue
+     if (task->t.type == M_GFXTASK) {
+-        events_context.action_queue.enqueue(SpTaskAction{ *task });
++        events_context.action_queue.enqueue(SpTaskAction{ task_, *task });
+     }
+     // Set all other tasks as the RSP task
+     else {
+@@ -576,10 +708,42 @@
+ }
+ 
+ void ultramodern::send_si_message() {
++    if(std::getenv("XR64_XR_SI_TRACE")) std::fprintf(stderr,"RW114_SI_EVENT queue=%08X msg=%08X\n",
++        unsigned(events_context.si.mq),unsigned(events_context.si.msg));
++    {
++        std::ostringstream detail;
++        detail << "stage=message-generated source=si queue=0x" << std::uppercase << std::hex
++               << static_cast<unsigned>(events_context.si.mq)
++               << " msg=0x" << static_cast<unsigned>(events_context.si.msg);
++        ultramodern::runtime_trace(detail.str());
++    }
+     ultramodern::enqueue_external_message_src(events_context.si.mq, events_context.si.msg, false, ultramodern::EventMessageSource::Si);
+ }
+ 
++void ultramodern::init_vi(RDRAM_ARG1) {
++    events_context.rdram = rdram;
++    events_context.vi.stop = false;
++    events_context.vi.standalone = true;
++    events_context.vi.event_registered = false;
++    total_vis = 0;
++    events_context.vi.thread = std::thread{ vi_thread_func };
++}
++
++bool ultramodern::is_vi_initialized() {
++    return events_context.vi.thread.joinable();
++}
++
++void ultramodern::join_vi_thread() {
++    if (events_context.vi.thread.joinable()) {
++        events_context.vi.stop = true;
++        events_context.vi.event_cv.notify_all();
++        events_context.vi.thread.join();
++    }
++}
++
+ void ultramodern::init_events(RDRAM_ARG ultramodern::renderer::WindowHandle window_handle) {
++    events_context.vi.stop = false;
++    events_context.vi.standalone = false;
+     moodycamel::LightweightSemaphore gfx_thread_ready;
+     moodycamel::LightweightSemaphore task_thread_ready;
+     events_context.rdram = rdram;
+@@ -624,7 +788,7 @@
+ 
+ void ultramodern::join_event_threads() {
+     events_context.sp.gfx_thread.join();
+-    events_context.vi.thread.join();
++    ultramodern::join_vi_thread();
+ 
+     // Send a null RSP task to indicate that the RSP task thread should exit.
+     events_context.sp_task_queue.enqueue(nullptr);
+--- upstream/ultramodern/src/input.cpp
++++ modified/ultramodern/src/input.cpp
+@@ -20,6 +20,23 @@
+ 
+ void ultramodern::input::set_callbacks(const callbacks_t& callbacks) {
+     input_callbacks = callbacks;
++}
++
++ultramodern::input::connected_device_info_t ultramodern::input::get_connected_device_info(int controller_num) {
++    if (input_callbacks.get_connected_device_info == nullptr) return {};
++    return input_callbacks.get_connected_device_info(controller_num);
++}
++
++bool ultramodern::input::read_controller_pak(
++        int controller_num, std::size_t offset, std::uint8_t* data, std::size_t size) {
++    return input_callbacks.read_controller_pak != nullptr &&
++            input_callbacks.read_controller_pak(controller_num, offset, data, size);
++}
++
++bool ultramodern::input::write_controller_pak(
++        int controller_num, std::size_t offset, const std::uint8_t* data, std::size_t size) {
++    return input_callbacks.write_controller_pak != nullptr &&
++            input_callbacks.write_controller_pak(controller_num, offset, data, size);
+ }
+ 
+ static std::chrono::high_resolution_clock::time_point input_poll_time;
+--- upstream/ultramodern/src/mesgqueue.cpp
++++ modified/ultramodern/src/mesgqueue.cpp
+@@ -1,5 +1,8 @@
+ #include <bitset>
+ #include <thread>
++#include <cstdio>
++#include <cstdlib>
++#include <sstream>
+ 
+ #include "blockingconcurrentqueue.h"
+ 
+@@ -11,11 +14,22 @@
+     OSMesg mesg;
+     bool jam;
+     bool requeue_if_blocked;
++    int trace_source;
+ };
+ 
+ static moodycamel::BlockingConcurrentQueue<QueuedMessage> external_messages {};
+ std::bitset<32> requeue_enabled;
+-
++static ultramodern::vi_message_callback_t* vi_message_callback = nullptr;
++static uint8_t* vi_message_rdram = nullptr;
++
++void ultramodern::set_vi_message_callback(vi_message_callback_t* callback, uint8_t* rdram) {
++    vi_message_callback = callback;
++    vi_message_rdram = rdram;
++}
++
++std::string rw073_queue_tag(PTR(OSMesgQueue) mq, OSMesg msg);
++std::string rw073_thread_tag(PTR(OSThread) thread);
++bool do_send(RDRAM_ARG PTR(OSMesgQueue) mq_, OSMesg msg, bool jam, bool block);
+ void ultramodern::set_message_queue_control(const ultramodern::MessageQueueControl& mqc) {
+     requeue_enabled.reset();
+     requeue_enabled.set(static_cast<int>(EventMessageSource::Timer), mqc.requeue_timer);
+@@ -28,20 +42,89 @@
+ }
+ 
+ void ultramodern::enqueue_external_message_src(PTR(OSMesgQueue) mq, OSMesg msg, bool jam, EventMessageSource src) {
+-    external_messages.enqueue({mq, msg, jam, requeue_enabled[static_cast<int>(src)]});
++    std::ostringstream detail;
++    detail << "stage=message-enqueued source=" << static_cast<int>(src) << " "
++           << rw073_queue_tag(mq, msg);
++    ultramodern::runtime_trace(detail.str());
++    if (src == EventMessageSource::Vi && vi_message_callback != nullptr) {
++        vi_message_callback(vi_message_rdram, mq, msg);
++        return;
++    }
++    external_messages.enqueue({mq, msg, jam, requeue_enabled[static_cast<int>(src)], static_cast<int>(src)});
+ }
+ 
+ void ultramodern::enqueue_external_message(PTR(OSMesgQueue) mq, OSMesg msg, bool jam, bool requeue_if_blocked) {
+-    external_messages.enqueue({mq, msg, jam, requeue_if_blocked});
+-}
+-
+-bool do_send(RDRAM_ARG PTR(OSMesgQueue) mq_, OSMesg msg, bool jam, bool block);
++    ultramodern::runtime_trace(
++            "stage=message-enqueued source=guest " + rw073_queue_tag(mq, msg));
++    external_messages.enqueue({mq, msg, jam, requeue_if_blocked, -1});
++}
++
++void ultramodern::enqueue_external_pi_dma_message(PTR(OSMesgQueue) mq, OSMesg msg, bool jam) {
++    // Preserve the existing PI requeue policy while retaining that this message
++    // originated at synchronous PI-DMA completion, not OS_EVENT_PI delivery.
++    external_messages.enqueue({mq, msg, jam, false, 7});
++}
++
++std::string rw073_queue_tag(PTR(OSMesgQueue) mq, OSMesg msg) {
++    std::ostringstream detail;
++    detail << "queue=0x" << std::uppercase << std::hex << static_cast<unsigned>(mq)
++           << " msg=0x" << static_cast<unsigned>(msg);
++    return detail.str();
++}
++
++std::string rw073_thread_tag(PTR(OSThread) thread) {
++    std::ostringstream detail;
++    detail << "thread=0x" << std::uppercase << std::hex << static_cast<unsigned>(thread);
++    return detail.str();
++}
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++static bool rw027_descriptor_trace_enabled() {
++    return std::getenv("XR64_RW027_DESCRIPTOR_TRACE") != nullptr;
++}
++
++static bool rw027_descriptor_queue(PTR(OSMesgQueue) mq) {
++    return mq == static_cast<PTR(OSMesgQueue)>(0x800FD254U) ||
++            mq == static_cast<PTR(OSMesgQueue)>(0x800FDD08U);
++}
++#endif
+ 
+ void dequeue_external_messages(RDRAM_ARG1) {
+     QueuedMessage to_send;
+     std::vector<QueuedMessage> requeued_messages{};
+     while (external_messages.try_dequeue(to_send)) {
+-        if (!do_send(PASS_RDRAM to_send.mq, to_send.mesg, to_send.jam, false) && to_send.requeue_if_blocked) {
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++        const bool rw020_event_queue = to_send.mq == static_cast<PTR(OSMesgQueue)>(0x800FFC00U)
++                && std::getenv("XR64_RW020_NATIVE_TRACE") != nullptr;
++        OSMesgQueue* mq = TO_PTR(OSMesgQueue, to_send.mq);
++        const int valid_before = rw020_event_queue ? mq->validCount : 0;
++#endif
++        const bool sent = do_send(PASS_RDRAM to_send.mq, to_send.mesg, to_send.jam, false);
++        if(to_send.trace_source==int(ultramodern::EventMessageSource::Si) && std::getenv("XR64_XR_SI_TRACE"))
++            std::fprintf(stderr,"RW114_SI_DELIVERY queue=%08X sent=%d retained=%d\n",unsigned(to_send.mq),int(sent),int(to_send.requeue_if_blocked));
++
++    ultramodern::runtime_trace(
++            "stage=message-delivery source=external sent=" + std::to_string(sent ? 1 : 0) +
++            " " + rw073_queue_tag(to_send.mq, to_send.mesg));
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++        if (rw020_event_queue) {
++            const char* source = "external";
++            switch (to_send.trace_source) {
++                case static_cast<int>(ultramodern::EventMessageSource::Timer): source = "timer"; break;
++                case static_cast<int>(ultramodern::EventMessageSource::Sp): source = "sp"; break;
++                case static_cast<int>(ultramodern::EventMessageSource::Si): source = "si"; break;
++                case static_cast<int>(ultramodern::EventMessageSource::Ai): source = "ai"; break;
++                case static_cast<int>(ultramodern::EventMessageSource::Vi): source = "vi"; break;
++                case static_cast<int>(ultramodern::EventMessageSource::Pi): source = "event_pi"; break;
++                case static_cast<int>(ultramodern::EventMessageSource::Dp): source = "dp"; break;
++                case 7: source = "pi_dma_complete"; break;
++            }
++            std::fprintf(stderr, "RW020_EVENT8_DELIVERY source=%s queue=0x%08X msg=0x%08X valid_before=%d valid_after=%d sent=%d current_thread=0x%08X\n",
++                    source, static_cast<unsigned>(to_send.mq), static_cast<unsigned>(to_send.mesg), valid_before,
++                    mq->validCount, sent, static_cast<unsigned>(ultramodern::this_thread()));
++            std::fflush(stderr);
++        }
++#endif
++        if (!sent && to_send.requeue_if_blocked) {
+             requeued_messages.push_back(to_send);
+         }
+     }
+@@ -49,7 +132,6 @@
+         external_messages.enqueue(cur_mesg);
+     }
+ }
+-
+ void ultramodern::wait_for_external_message(RDRAM_ARG1) {
+     QueuedMessage to_send;
+     external_messages.wait_dequeue(to_send);
+@@ -69,6 +151,10 @@
+ 
+ extern "C" void osCreateMesgQueue(RDRAM_ARG PTR(OSMesgQueue) mq_, PTR(OSMesg) msg, s32 count) {
+     OSMesgQueue *mq = TO_PTR(OSMesgQueue, mq_);
++    ultramodern::thread_wait_queue_reset(
++            PASS_RDRAM mq_, ultramodern::ThreadWaitQueue::Receive);
++    ultramodern::thread_wait_queue_reset(
++            PASS_RDRAM mq_, ultramodern::ThreadWaitQueue::Send);
+     mq->blocked_on_recv = NULLPTR;
+     mq->blocked_on_send = NULLPTR;
+     mq->msgCount = count;
+@@ -91,6 +177,11 @@
+ 
+ bool do_send(RDRAM_ARG PTR(OSMesgQueue) mq_, OSMesg msg, bool jam, bool block) {
+     OSMesgQueue* mq = TO_PTR(OSMesgQueue, mq_);
++    const int rw073_valid_before = mq->validCount;
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    const int rw027_valid_before = rw027_descriptor_trace_enabled() && rw027_descriptor_queue(mq_)
++            ? mq->validCount : 0;
++#endif
+     if (!block) {
+         // If non-blocking, fail if the queue is full.
+         if (MQ_IS_FULL(mq)) {
+@@ -101,7 +192,13 @@
+         // Otherwise, yield this thread until the queue has room.
+         while (MQ_IS_FULL(mq)) {
+             debug_printf("[Message Queue] Thread %d is blocked on send\n", TO_PTR(OSThread, ultramodern::this_thread())->id);
+-            ultramodern::thread_queue_insert(PASS_RDRAM GET_MEMBER(OSMesgQueue, mq_, blocked_on_send), ultramodern::this_thread());
++            ultramodern::runtime_trace(
++                    "stage=thread-wait kind=send valid=" + std::to_string(mq->validCount) +
++                    " " + rw073_queue_tag(mq_, msg) + " " +
++                    rw073_thread_tag(ultramodern::this_thread()));
++            ultramodern::thread_wait_queue_insert(
++                    PASS_RDRAM mq_, ultramodern::ThreadWaitQueue::Send,
++                    ultramodern::this_thread());
+             ultramodern::run_next_thread_and_wait(PASS_RDRAM1);
+         }
+     }
+@@ -119,17 +216,49 @@
+         mq->validCount++;
+     }
+ 
++    PTR(OSThread) awakened_receiver = NULLPTR;
+     // If any threads were blocked on receiving from this message queue, pop the first one and schedule it.
+-    PTR(PTR(OSThread)) blocked_queue = GET_MEMBER(OSMesgQueue, mq_, blocked_on_recv);
+-    if (!ultramodern::thread_queue_empty(PASS_RDRAM blocked_queue)) {
+-        ultramodern::schedule_running_thread(PASS_RDRAM ultramodern::thread_queue_pop(PASS_RDRAM blocked_queue));
+-    }
+-    
++    if (!ultramodern::thread_wait_queue_empty(
++            PASS_RDRAM mq_, ultramodern::ThreadWaitQueue::Receive)) {
++        awakened_receiver = ultramodern::thread_wait_queue_pop(
++                PASS_RDRAM mq_, ultramodern::ThreadWaitQueue::Receive);
++        ultramodern::runtime_trace(
++                "stage=thread-wakeup kind=receive " + rw073_queue_tag(mq_, msg) +
++                " " + rw073_thread_tag(awakened_receiver) +
++                " valid_before=" + std::to_string(rw073_valid_before) +
++                " valid_after=" + std::to_string(mq->validCount));
++        ultramodern::schedule_running_thread(PASS_RDRAM awakened_receiver);
++    }
++    ultramodern::runtime_trace(
++            "stage=queue-send " + rw073_queue_tag(mq_, msg) +
++            " valid_before=" + std::to_string(rw073_valid_before) +
++            " valid_after=" + std::to_string(mq->validCount) +
++            " current=" + rw073_thread_tag(ultramodern::this_thread()) +
++            " awakened=" + rw073_thread_tag(awakened_receiver));
++    #if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    if (rw027_descriptor_trace_enabled() && rw027_descriptor_queue(mq_)) {
++        std::fprintf(stderr,
++                "RW027_QUEUE_SEND queue=0x%08X msg=0x%08X valid_before=%d valid_after=%d current_thread=0x%08X\n",
++                static_cast<unsigned>(mq_), static_cast<unsigned>(msg), rw027_valid_before,
++                mq->validCount, static_cast<unsigned>(ultramodern::this_thread()));
++        std::fflush(stderr);
++    }
++#endif
++
++    return true;
++}
++
++bool ultramodern::deliver_fault_message_and_wait(RDRAM_ARG PTR(OSMesgQueue) mq, OSMesg msg) {
++    if (!do_send(PASS_RDRAM mq, msg, false, false)) {
++        return false;
++    }
++    ultramodern::run_next_thread_and_wait(PASS_RDRAM1);
+     return true;
+ }
+ 
+ bool do_recv(RDRAM_ARG PTR(OSMesgQueue) mq_, PTR(OSMesg) msg_, bool block) {
+     OSMesgQueue* mq = TO_PTR(OSMesgQueue, mq_);
++    const int rw073_valid_before = mq->validCount;
+     if (!block) {
+         // If non-blocking, fail if the queue is empty
+         if (MQ_IS_EMPTY(mq)) {
+@@ -139,7 +268,13 @@
+         // Otherwise, yield this thread in a loop until the queue is no longer full
+         while (MQ_IS_EMPTY(mq)) {
+             debug_printf("[Message Queue] Thread %d is blocked on receive\n", TO_PTR(OSThread, ultramodern::this_thread())->id);
+-            ultramodern::thread_queue_insert(PASS_RDRAM GET_MEMBER(OSMesgQueue, mq_, blocked_on_recv), ultramodern::this_thread());
++            ultramodern::runtime_trace(
++                    "stage=thread-wait kind=receive valid=" + std::to_string(mq->validCount) +
++                    " " + rw073_queue_tag(mq_, 0) + " " +
++                    rw073_thread_tag(ultramodern::this_thread()));
++            ultramodern::thread_wait_queue_insert(
++                    PASS_RDRAM mq_, ultramodern::ThreadWaitQueue::Receive,
++                    ultramodern::this_thread());
+             ultramodern::run_next_thread_and_wait(PASS_RDRAM1);
+         }
+     }
+@@ -151,12 +286,24 @@
+     mq->first = (mq->first + 1) % mq->msgCount;
+     mq->validCount--;
+ 
++    PTR(OSThread) awakened_sender = NULLPTR;
+     // If any threads were blocked on sending to this message queue, pop the first one and schedule it.
+-    PTR(PTR(OSThread)) blocked_queue = GET_MEMBER(OSMesgQueue, mq_, blocked_on_send);
+-    if (!ultramodern::thread_queue_empty(PASS_RDRAM blocked_queue)) {
+-        ultramodern::schedule_running_thread(PASS_RDRAM ultramodern::thread_queue_pop(PASS_RDRAM blocked_queue));
+-    }
+-
++    if (!ultramodern::thread_wait_queue_empty(
++            PASS_RDRAM mq_, ultramodern::ThreadWaitQueue::Send)) {
++        awakened_sender = ultramodern::thread_wait_queue_pop(
++                PASS_RDRAM mq_, ultramodern::ThreadWaitQueue::Send);
++        ultramodern::runtime_trace(
++                "stage=thread-wakeup kind=send " + rw073_queue_tag(mq_, 0) +
++                " " + rw073_thread_tag(awakened_sender) +
++                " valid=" + std::to_string(mq->validCount));
++        ultramodern::schedule_running_thread(PASS_RDRAM awakened_sender);
++    }
++    ultramodern::runtime_trace(
++            "stage=queue-recv " + rw073_queue_tag(mq_, msg_ != NULLPTR ? *TO_PTR(OSMesg, msg_) : 0) +
++            " valid_before=" + std::to_string(rw073_valid_before) +
++            " valid_after=" + std::to_string(mq->validCount) +
++            " current=" + rw073_thread_tag(ultramodern::this_thread()) +
++            " awakened=" + rw073_thread_tag(awakened_sender));
+     return true;
+ }
+ 
+@@ -209,12 +356,59 @@
+     
+     assert(ultramodern::is_game_thread() && "RecvMesg not allowed outside of game threads.");
+     
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    const bool rw019_event_queue = mq_ == static_cast<PTR(OSMesgQueue)>(0x800FFC00U)
++            && std::getenv("XR64_RW019_NATIVE_TRACE") != nullptr;
++    const bool rw020_event_queue = mq_ == static_cast<PTR(OSMesgQueue)>(0x800FFC00U)
++            && std::getenv("XR64_RW020_NATIVE_TRACE") != nullptr;
++    if (rw019_event_queue) {
++        std::fprintf(stderr, "RW019_EVENT8_RECV phase=before_external thread=0x%08X valid=%d block=%d\n",
++                static_cast<unsigned>(ultramodern::this_thread()), mq->validCount, flags == OS_MESG_BLOCK);
++    }
++#endif
+     // Handle any messages that have been received from an external thread.
+     dequeue_external_messages(PASS_RDRAM1);
+-
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    if (rw019_event_queue) {
++        std::fprintf(stderr, "RW019_EVENT8_RECV phase=after_external thread=0x%08X valid=%d\n",
++                static_cast<unsigned>(ultramodern::this_thread()), mq->validCount);
++        std::fflush(stderr);
++    }
++
++    if (rw020_event_queue) {
++        std::fprintf(stderr, "RW020_EVENT8_RECV phase=before_receive queue=0x%08X valid=%d block=%d current_thread=0x%08X\n",
++                static_cast<unsigned>(mq_), mq->validCount, flags == OS_MESG_BLOCK,
++                static_cast<unsigned>(ultramodern::this_thread()));
++        std::fflush(stderr);
++    }
++#endif
+     // Try to receive a message.
+     bool received = do_recv(PASS_RDRAM mq_, msg_, flags == OS_MESG_BLOCK);
+-    
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    if (rw027_descriptor_trace_enabled() && rw027_descriptor_queue(mq_)) {
++        const OSMesg received_message = received && msg_ != NULLPTR ? *TO_PTR(OSMesg, msg_) : 0;
++        std::fprintf(stderr,
++                "RW027_QUEUE_RECV queue=0x%08X msg=0x%08X received=%d valid_after=%d current_thread=0x%08X\n",
++                static_cast<unsigned>(mq_), static_cast<unsigned>(received_message), received,
++                mq->validCount, static_cast<unsigned>(ultramodern::this_thread()));
++        std::fflush(stderr);
++    }
++#endif
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++    if (rw019_event_queue) {
++        std::fprintf(stderr, "RW019_EVENT8_RECV phase=after_receive thread=0x%08X received=%d valid=%d\n",
++                static_cast<unsigned>(ultramodern::this_thread()), received, mq->validCount);
++        std::fflush(stderr);
++    }
++    
++    if (rw020_event_queue) {
++        const OSMesg received_message = received && msg_ != NULLPTR ? *TO_PTR(OSMesg, msg_) : 0;
++        std::fprintf(stderr, "RW020_EVENT8_RECV phase=after_receive received=%d msg=0x%08X valid=%d current_thread=0x%08X\n",
++                received, static_cast<unsigned>(received_message), mq->validCount,
++                static_cast<unsigned>(ultramodern::this_thread()));
++        std::fflush(stderr);
++    }
++#endif
+     // Check the queue to see if this thread should swap execution to another.
+     ultramodern::check_running_queue(PASS_RDRAM1);
+ 
+--- upstream/ultramodern/src/misc_ultra.cpp
++++ modified/ultramodern/src/misc_ultra.cpp
+@@ -1,3 +1,28 @@
++#include "ultramodern/ultramodern.hpp"
++
++#include <mutex>
++
++namespace {
++std::mutex runtime_trace_mutex;
++ultramodern::runtime_trace_callback_t runtime_trace_callback = nullptr;
++}
++
++void ultramodern::set_runtime_trace_callback(runtime_trace_callback_t callback) {
++    std::lock_guard lock(runtime_trace_mutex);
++    runtime_trace_callback = callback;
++}
++
++void ultramodern::runtime_trace(std::string_view detail) {
++    runtime_trace_callback_t callback = nullptr;
++    {
++        std::lock_guard lock(runtime_trace_mutex);
++        callback = runtime_trace_callback;
++    }
++    if (callback != nullptr) {
++        callback(detail);
++    }
++}
++
+ #include "ultramodern/ultra64.h"
+ 
+ #define K0BASE        0x80000000
+--- upstream/ultramodern/src/scheduling.cpp
++++ modified/ultramodern/src/scheduling.cpp
+@@ -1,13 +1,40 @@
+ #include "ultramodern/ultramodern.hpp"
++#include <cstdio>
++#include <cstdlib>
++#include <sstream>
++
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++static bool rw019_native_trace_enabled() {
++    const char* value = std::getenv("XR64_RW019_NATIVE_TRACE");
++    return value != nullptr && *value != '\0';
++}
++#endif
++
++static ultramodern::pause_handler_t pause_handler = nullptr;
++
++void ultramodern::set_pause_handler(ultramodern::pause_handler_t handler) {
++    pause_handler = handler;
++}
+ 
+ void ultramodern::schedule_running_thread(RDRAM_ARG PTR(OSThread) t_) {
+     debug_printf("[Scheduling] Adding thread %d to the running queue\n", TO_PTR(OSThread, t_)->id);
+     thread_queue_insert(PASS_RDRAM running_queue, t_);
+     TO_PTR(OSThread, t_)->state = OSThreadState::QUEUED;
++    {
++        std::ostringstream detail;
++        detail << "stage=thread-runnable thread=0x" << std::uppercase << std::hex
++               << static_cast<unsigned>(t_) << " id=" << std::dec
++               << TO_PTR(OSThread, t_)->id << " priority=" << TO_PTR(OSThread, t_)->priority;
++        ultramodern::runtime_trace(detail.str());
++    }
+ }
+ 
+ void swap_to_thread(RDRAM_ARG OSThread *to) {
+     debug_printf("[Scheduling] Thread %d giving execution to thread %d\n", TO_PTR(OSThread, ultramodern::this_thread())->id, to->id);
++    ultramodern::runtime_trace(
++            "stage=scheduler-handoff current=0x" +
++            std::to_string(static_cast<unsigned>(ultramodern::this_thread())) +
++            " target=0x" + std::to_string(static_cast<unsigned>(reinterpret_cast<uintptr_t>(to))));
+     // Insert this thread in the running queue.
+     ultramodern::thread_queue_insert(PASS_RDRAM ultramodern::running_queue, ultramodern::this_thread());
+     TO_PTR(OSThread, ultramodern::this_thread())->state = OSThreadState::QUEUED;
+@@ -21,7 +48,29 @@
+         // Check if the highest priority thread in the queue is higher priority than the current thread.
+         OSThread* next_thread = TO_PTR(OSThread, ultramodern::thread_queue_peek(PASS_RDRAM running_queue));
+         OSThread* self = TO_PTR(OSThread, ultramodern::this_thread());
++        {
++            std::ostringstream detail;
++            detail << "stage=scheduler-check current=0x" << std::uppercase << std::hex
++                   << static_cast<unsigned>(ultramodern::this_thread())
++                   << " next=0x" << static_cast<unsigned>(reinterpret_cast<uintptr_t>(next_thread))
++                   << " current_priority=" << std::dec << self->priority
++                   << " next_priority=" << next_thread->priority
++                   << " decision=" << (next_thread->priority > self->priority ? "switch" : "keep");
++            ultramodern::runtime_trace(detail.str());
++        }
+         if (next_thread->priority > self->priority) {
++#if !defined(XR64_RAGE_WARS_CLEAN_RUN)
++            const auto self_ptr = ultramodern::this_thread();
++            const auto selected_ptr = ultramodern::thread_queue_peek(PASS_RDRAM running_queue);
++            if (rw019_native_trace_enabled()) {
++                std::fprintf(stderr,
++                        "RW019_SELECT outgoing=0x%08X id=%d state=%u pri=%d "
++                        "selected=0x%08X id=%d state=%u pri=%d reason=higher_priority\n",
++                        static_cast<unsigned>(self_ptr), self->id, self->state, self->priority,
++                        static_cast<unsigned>(selected_ptr), next_thread->id, next_thread->state, next_thread->priority);
++                std::fflush(stderr);
++            }
++#endif
+             ultramodern::thread_queue_pop(PASS_RDRAM running_queue);
+             // Swap to the higher priority thread.
+             swap_to_thread(PASS_RDRAM next_thread);
+@@ -30,6 +79,10 @@
+ }
+ 
+ extern "C" void pause_self(RDRAM_ARG1) {
++    if (pause_handler != nullptr) {
++        pause_handler(rdram);
++        return;
++    }
+     while (true) {
+         // Wait until an external message arrives, then allow the next thread to run.
+         ultramodern::wait_for_external_message(PASS_RDRAM1);
+--- upstream/ultramodern/src/threadqueue.cpp
++++ modified/ultramodern/src/threadqueue.cpp
+@@ -1,67 +1,203 @@
+-#include <cassert>
+-
+-#include "ultramodern/ultramodern.hpp"
+-
+-static PTR(OSThread) running_queue_impl = NULLPTR;
+-
+-static PTR(OSThread)* queue_to_ptr(RDRAM_ARG PTR(PTR(OSThread)) queue) {
+-    if (queue == ultramodern::running_queue) {
+-        return &running_queue_impl;
+-    }
+-    return TO_PTR(PTR(OSThread), queue);
+-}
+-
+-void ultramodern::thread_queue_insert(RDRAM_ARG PTR(PTR(OSThread)) queue_, PTR(OSThread) toadd_) {
+-    PTR(OSThread)* cur = queue_to_ptr(PASS_RDRAM queue_);
+-    OSThread* toadd = TO_PTR(OSThread, toadd_); 
+-    debug_printf("[Thread Queue] Inserting thread %d into queue 0x%08X\n", toadd->id, (uintptr_t)queue_);
+-    while (*cur && TO_PTR(OSThread, *cur)->priority > toadd->priority) {
+-        cur = &TO_PTR(OSThread, *cur)->next;
+-    }
+-    toadd->next = (*cur);
+-    toadd->queue = queue_;
+-    *cur = toadd_;
+-
+-    debug_printf("  Contains:");
+-    cur = queue_to_ptr(PASS_RDRAM queue_);
+-    while (*cur) {
+-        debug_printf("%d (%d) ", TO_PTR(OSThread, *cur)->id, TO_PTR(OSThread, *cur)->priority);
+-        cur = &TO_PTR(OSThread, *cur)->next;
+-    }
+-    debug_printf("\n");
+-}
+-
+-PTR(OSThread) ultramodern::thread_queue_pop(RDRAM_ARG PTR(PTR(OSThread)) queue_) {
+-    PTR(OSThread)* queue = queue_to_ptr(PASS_RDRAM queue_);
+-    PTR(OSThread) ret = *queue;
+-    *queue = TO_PTR(OSThread, ret)->next;
+-    TO_PTR(OSThread, ret)->queue = NULLPTR;
+-    debug_printf("[Thread Queue] Popped thread %d from queue 0x%08X\n", TO_PTR(OSThread, ret)->id, (uintptr_t)queue_);
+-    return ret;
+-}
+-
+-bool ultramodern::thread_queue_remove(RDRAM_ARG PTR(PTR(OSThread)) queue_, PTR(OSThread) t_) {
+-    debug_printf("[Thread Queue] Removing thread %d from queue 0x%08X\n", TO_PTR(OSThread, t_)->id, (uintptr_t)queue_);
+-
+-    PTR(PTR(OSThread)) cur = queue_;
+-    while (cur != NULLPTR) {
+-        PTR(OSThread)* cur_ptr = queue_to_ptr(PASS_RDRAM queue_);
+-        if (*cur_ptr == t_) {
+-            *cur_ptr = TO_PTR(OSThread, *cur_ptr)->next;
+-            return true;
+-        }
+-        cur = TO_PTR(OSThread, *cur_ptr)->next;
+-    }
+-
+-    return false;
+-}
+-
+-bool ultramodern::thread_queue_empty(RDRAM_ARG PTR(PTR(OSThread)) queue_) {
+-    PTR(OSThread)* queue = queue_to_ptr(PASS_RDRAM queue_);
+-    return *queue == NULLPTR;
+-}
+-
+-PTR(OSThread) ultramodern::thread_queue_peek(RDRAM_ARG PTR(PTR(OSThread)) queue_) {
+-    PTR(OSThread)* queue = queue_to_ptr(PASS_RDRAM queue_);
+-    return *queue;
+-}
++#include <cstddef>
++#include <cstdint>
++#include <mutex>
++#include <unordered_map>
++
++#include <rage_wars_scheduler.hpp>
++#include <ultramodern/ultramodern.hpp>
++
++namespace {
++using GuestThreadHandle = PTR(OSThread);
++using GuestQueueHandle = PTR(PTR(OSThread));
++using QueueId = rage_wars::RageWarsScheduler::QueueId;
++
++std::mutex mirror_mutex;
++std::unordered_map<QueueId, GuestQueueHandle> queue_mirror_slots;
++
++template <typename T>
++T* guest_rdram_ptr(uint8_t* rdram, PTR(T) guest_address) {
++    return reinterpret_cast<T*>(
++            rdram + (static_cast<std::uint32_t>(guest_address) & 0x1FFFFFFFU));
++}
++
++QueueId queue_id(GuestQueueHandle queue) {
++    return queue == ultramodern::running_queue
++            ? rage_wars::RageWarsScheduler::running_queue_id
++            : static_cast<std::uint32_t>(queue);
++}
++
++QueueId wait_queue_id(PTR(OSMesgQueue) mq, ultramodern::ThreadWaitQueue kind) {
++    constexpr QueueId wait_queue_tag = QueueId{1} << 63U;
++    return wait_queue_tag |
++            (static_cast<QueueId>(static_cast<std::uint32_t>(mq) & 0x1FFFFFFFU) << 2U) |
++            static_cast<QueueId>(kind == ultramodern::ThreadWaitQueue::Send);
++}
++
++GuestQueueHandle wait_mirror_slot(
++        PTR(OSMesgQueue) mq, ultramodern::ThreadWaitQueue kind) {
++    const std::uint32_t offset = kind == ultramodern::ThreadWaitQueue::Receive
++            ? offsetof(OSMesgQueue, blocked_on_recv)
++            : offsetof(OSMesgQueue, blocked_on_send);
++    return static_cast<GuestQueueHandle>(static_cast<std::uint32_t>(mq) + offset);
++}
++
++void register_mirror(QueueId id, GuestQueueHandle slot) {
++    if (id == rage_wars::RageWarsScheduler::running_queue_id) {
++        return;
++    }
++    std::lock_guard lock{mirror_mutex};
++    queue_mirror_slots[id] = slot;
++}
++
++GuestQueueHandle mirror_slot(QueueId id) {
++    if (id == rage_wars::RageWarsScheduler::running_queue_id) {
++        return ultramodern::running_queue;
++    }
++    std::lock_guard lock{mirror_mutex};
++    const auto found = queue_mirror_slots.find(id);
++    return found == queue_mirror_slots.end() ? NULLPTR : found->second;
++}
++
++OSThread* guest_thread(uint8_t* rdram, GuestThreadHandle thread) {
++    return guest_rdram_ptr<OSThread>(rdram, thread);
++}
++
++void clear_thread_mirror(uint8_t* rdram, GuestThreadHandle thread) {
++    if (thread == NULLPTR) {
++        return;
++    }
++    OSThread* guest = guest_thread(rdram, thread);
++    guest->next = NULLPTR;
++    guest->queue = NULLPTR;
++}
++
++void mirror_queue(uint8_t* rdram, QueueId id) {
++    const GuestQueueHandle slot = mirror_slot(id);
++    const auto threads = rage_wars::scheduler().snapshot(id);
++    for (std::size_t index = 0; index < threads.size(); ++index) {
++        OSThread* guest = guest_thread(rdram, threads[index]);
++        guest->next = index + 1 < threads.size() ? threads[index + 1] : NULLPTR;
++        guest->queue = slot;
++    }
++    if (slot != ultramodern::running_queue && slot != NULLPTR) {
++        *guest_rdram_ptr<GuestThreadHandle>(rdram, slot) =
++                threads.empty() ? NULLPTR : threads.front();
++    }
++}
++
++void refresh_mutation(uint8_t* rdram, const rage_wars::RageWarsScheduler::QueueMutation& mutation) {
++    if (mutation.previous_queue != 0) {
++        mirror_queue(rdram, mutation.previous_queue);
++    }
++    if (mutation.queue != 0 && mutation.queue != mutation.previous_queue) {
++        mirror_queue(rdram, mutation.queue);
++    }
++}
++
++void reset_queue(uint8_t* rdram, QueueId id) {
++    for (const GuestThreadHandle thread : rage_wars::scheduler().reset_queue(id)) {
++        clear_thread_mirror(rdram, thread);
++    }
++    mirror_queue(rdram, id);
++}
++
++void insert_queue(uint8_t* rdram, QueueId id, GuestThreadHandle thread) {
++    refresh_mutation(rdram, rage_wars::scheduler().enqueue(id, thread));
++}
++
++GuestThreadHandle pop_queue(uint8_t* rdram, QueueId id) {
++    const auto result = rage_wars::scheduler().dequeue(id);
++    clear_thread_mirror(rdram, result.thread);
++    mirror_queue(rdram, id);
++    return result.thread;
++}
++
++} // namespace
++
++void ultramodern::thread_queue_register_thread(
++        GuestThreadHandle thread, OSPri priority) {
++    rage_wars::scheduler().register_thread(thread, priority);
++}
++
++void ultramodern::thread_queue_unregister_thread(
++        RDRAM_ARG GuestThreadHandle thread) {
++    const auto mutation = rage_wars::scheduler().unregister_thread(thread);
++    clear_thread_mirror(rdram, thread);
++    refresh_mutation(rdram, mutation);
++}
++
++void ultramodern::thread_queue_set_priority(
++        RDRAM_ARG GuestThreadHandle thread, OSPri priority) {
++    refresh_mutation(rdram, rage_wars::scheduler().set_thread_priority(thread, priority));
++}
++
++void ultramodern::thread_queue_reset(RDRAM_ARG GuestQueueHandle queue) {
++    const QueueId id = queue_id(queue);
++    register_mirror(id, queue);
++    reset_queue(rdram, id);
++}
++
++void ultramodern::thread_queue_insert(
++        RDRAM_ARG GuestQueueHandle queue, GuestThreadHandle thread) {
++    const QueueId id = queue_id(queue);
++    register_mirror(id, queue);
++    insert_queue(rdram, id, thread);
++}
++
++GuestThreadHandle ultramodern::thread_queue_pop(
++        RDRAM_ARG GuestQueueHandle queue) {
++    const QueueId id = queue_id(queue);
++    register_mirror(id, queue);
++    return pop_queue(rdram, id);
++}
++
++bool ultramodern::thread_queue_remove(
++        RDRAM_ARG GuestQueueHandle queue, GuestThreadHandle thread) {
++    const QueueId id = queue_id(queue);
++    register_mirror(id, queue);
++    const bool removed = rage_wars::scheduler().remove(id, thread);
++    if (removed) {
++        clear_thread_mirror(rdram, thread);
++        mirror_queue(rdram, id);
++    }
++    return removed;
++}
++
++bool ultramodern::thread_queue_empty(RDRAM_ARG GuestQueueHandle queue) {
++    return rage_wars::scheduler().empty(queue_id(queue));
++}
++
++GuestThreadHandle ultramodern::thread_queue_peek(RDRAM_ARG GuestQueueHandle queue) {
++    return rage_wars::scheduler().peek(queue_id(queue));
++}
++
++GuestQueueHandle ultramodern::thread_queue_for_thread(GuestThreadHandle thread) {
++    return mirror_slot(rage_wars::scheduler().queue_for_thread(thread));
++}
++
++void ultramodern::thread_wait_queue_reset(
++        RDRAM_ARG PTR(OSMesgQueue) mq, ThreadWaitQueue kind) {
++    const QueueId id = wait_queue_id(mq, kind);
++    register_mirror(id, wait_mirror_slot(mq, kind));
++    reset_queue(rdram, id);
++}
++
++void ultramodern::thread_wait_queue_insert(
++        RDRAM_ARG PTR(OSMesgQueue) mq, ThreadWaitQueue kind,
++        GuestThreadHandle thread) {
++    const QueueId id = wait_queue_id(mq, kind);
++    register_mirror(id, wait_mirror_slot(mq, kind));
++    insert_queue(rdram, id, thread);
++}
++
++GuestThreadHandle ultramodern::thread_wait_queue_pop(
++        RDRAM_ARG PTR(OSMesgQueue) mq, ThreadWaitQueue kind) {
++    const QueueId id = wait_queue_id(mq, kind);
++    register_mirror(id, wait_mirror_slot(mq, kind));
++    return pop_queue(rdram, id);
++}
++
++bool ultramodern::thread_wait_queue_empty(
++        RDRAM_ARG PTR(OSMesgQueue) mq, ThreadWaitQueue kind) {
++    return rage_wars::scheduler().empty(wait_queue_id(mq, kind));
++}
+--- upstream/ultramodern/src/threads.cpp
++++ modified/ultramodern/src/threads.cpp
+@@ -2,6 +2,9 @@
+ #include <thread>
+ #include <cassert>
+ #include <string>
++#include <mutex>
++#include <unordered_map>
++#include <sstream>
+ 
+ #include "ultramodern/ultra64.h"
+ #include "ultramodern/ultramodern.hpp"
+@@ -15,6 +18,11 @@
+ #endif
+ 
+ static ultramodern::threads::callbacks_t threads_callbacks;
++static ultramodern::contextless_handoff_policy_t contextless_handoff_policy = nullptr;
++
++void ultramodern::set_contextless_handoff_policy(contextless_handoff_policy_t policy) {
++    contextless_handoff_policy = policy;
++}
+ 
+ void ultramodern::threads::set_callbacks(const callbacks_t& callbacks) {
+     threads_callbacks = callbacks;
+@@ -33,6 +41,50 @@
+ // Whether this thread is part of the game (i.e. the start thread or one spawned by osCreateThread)
+ thread_local bool is_game_thread = false;
+ thread_local PTR(OSThread) thread_self = NULLPTR;
++// Scheduler state is host-owned. It must never live in the guest's OSThread
++// object: Rage Wars is free to initialize and reuse that guest memory.
++thread_local UltraThreadContext* active_thread_context = nullptr;
++static std::mutex thread_contexts_mutex;
++static std::unordered_map<OSThread*, UltraThreadContext*> thread_contexts;
++
++static UltraThreadContext* get_thread_context(OSThread* thread) {
++    std::lock_guard lock{thread_contexts_mutex};
++    const auto found = thread_contexts.find(thread);
++    return found != thread_contexts.end() ? found->second : nullptr;
++}
++
++static void register_thread_context(OSThread* thread, UltraThreadContext* context) {
++    std::lock_guard lock{thread_contexts_mutex};
++    thread_contexts.insert_or_assign(thread, context);
++}
++
++static UltraThreadContext* unregister_thread_context(OSThread* thread) {
++    std::lock_guard lock{thread_contexts_mutex};
++    const auto found = thread_contexts.find(thread);
++    if (found == thread_contexts.end()) {
++        return nullptr;
++    }
++    UltraThreadContext* context = found->second;
++    thread_contexts.erase(found);
++    return context;
++}
++
++static bool is_registered_context(UltraThreadContext* context) {
++    std::lock_guard lock{thread_contexts_mutex};
++    for (const auto& [thread, registered] : thread_contexts) {
++        (void)thread;
++        if (registered == context) {
++            return true;
++        }
++    }
++    return false;
++}
++
++static UltraThreadContext* current_thread_context(uint8_t* rdram) {
++    return active_thread_context != nullptr
++            ? active_thread_context
++            : get_thread_context(TO_PTR(OSThread, thread_self));
++}
+ 
+ void ultramodern::set_entrypoint_thread() {
+     ::is_game_thread = true;
+@@ -154,14 +206,30 @@
+     thread_context->running.wait();
+     // If this thread's context was replaced by another thread or deleted, destroy it again from its own context.
+     // This will trigger thread cleanup instead.
+-    if (TO_PTR(OSThread, ultramodern::this_thread())->context != thread_context) {
++    if (!is_registered_context(thread_context)) {
+         osDestroyThread(PASS_RDRAM NULLPTR);
++    }
++    {
++        std::ostringstream detail;
++        detail << "stage=thread-awakened " << std::uppercase << std::hex
++               << "thread=0x" << static_cast<unsigned>(thread_self)
++               << " id=" << std::dec << TO_PTR(OSThread, thread_self)->id;
++        ultramodern::runtime_trace(detail.str());
++    }
++    if (threads_callbacks.thread_activated != nullptr) {
++        threads_callbacks.thread_activated(rdram, thread_self);
+     }
+ }
+ 
+ void resume_thread(OSThread* t) {
+     debug_printf("[Thread] Resuming execution of thread %d\n", t->id);
+-    t->context->running.signal();
++    ultramodern::runtime_trace(
++            "stage=thread-signal thread=0x" +
++            std::to_string(static_cast<unsigned>(reinterpret_cast<uintptr_t>(t))) +
++            " id=" + std::to_string(t->id));
++    if (UltraThreadContext* context = get_thread_context(t); context != nullptr) {
++        context->running.signal();
++    }
+ }
+ 
+ void run_next_thread(RDRAM_ARG1) {
+@@ -171,17 +239,63 @@
+ 
+     OSThread* to_run = TO_PTR(OSThread, ultramodern::thread_queue_pop(PASS_RDRAM ultramodern::running_queue));
+     debug_printf("[Scheduling] Resuming execution of thread %d\n", to_run->id);
+-    to_run->context->running.signal();
++    ultramodern::runtime_trace(
++            "stage=scheduler-select thread=0x" +
++            std::to_string(static_cast<unsigned>(reinterpret_cast<uintptr_t>(to_run))) +
++            " id=" + std::to_string(to_run->id) +
++            " priority=" + std::to_string(to_run->priority));
++    if (UltraThreadContext* context = get_thread_context(to_run); context != nullptr) {
++        context->running.signal();
++    }
+ }
+ 
+ void ultramodern::run_next_thread_and_wait(RDRAM_ARG1) {
+-    UltraThreadContext* cur_context = TO_PTR(OSThread, thread_self)->context;
++    const auto diagnostic_next_ptr = ultramodern::thread_queue_peek(PASS_RDRAM ultramodern::running_queue);
++    const auto diagnostic_self = TO_PTR(OSThread, thread_self);
++    const auto diagnostic_next = TO_PTR(OSThread, diagnostic_next_ptr);
++
++    ultramodern::runtime_trace(
++            "stage=scheduler-run-next current=0x" +
++            std::to_string(static_cast<unsigned>(reinterpret_cast<uintptr_t>(diagnostic_self))) +
++            " next=0x" + std::to_string(static_cast<unsigned>(diagnostic_next_ptr)));
++    UltraThreadContext* cur_context = current_thread_context(rdram);
++    if (cur_context == nullptr) {
++        if (contextless_handoff_policy == nullptr ||
++                !contextless_handoff_policy(diagnostic_self, diagnostic_next)) {
++            throw std::runtime_error("Contextless scheduler handoff rejected");
++        }
++        std::fprintf(stderr, "RW038_CONTEXTLESS_HANDOFF current=0x%08X target=0x%08X mode=run_next\n",
++                static_cast<unsigned>(thread_self), static_cast<unsigned>(diagnostic_next_ptr));
++        std::fflush(stderr);
++        run_next_thread(PASS_RDRAM1);
++        return;
++    }
+     run_next_thread(PASS_RDRAM1);
+     wait_for_resumed(PASS_RDRAM cur_context);
+ }
+ 
+ void ultramodern::resume_thread_and_wait(RDRAM_ARG OSThread *t) {
+-    UltraThreadContext* cur_context = TO_PTR(OSThread, thread_self)->context;
++    const auto next_ptr = ultramodern::thread_queue_peek(PASS_RDRAM ultramodern::running_queue);
++    const auto self = TO_PTR(OSThread, thread_self);
++    const auto next = TO_PTR(OSThread, next_ptr);
++
++    ultramodern::runtime_trace(
++            "stage=scheduler-resume current=0x" +
++            std::to_string(static_cast<unsigned>(reinterpret_cast<uintptr_t>(self))) +
++            " target=0x" + std::to_string(static_cast<unsigned>(reinterpret_cast<uintptr_t>(t))));
++    UltraThreadContext* cur_context = current_thread_context(rdram);
++    if (cur_context == nullptr) {
++        if (contextless_handoff_policy == nullptr ||
++                !contextless_handoff_policy(self, t)) {
++            throw std::runtime_error("Contextless scheduler handoff rejected");
++        }
++        std::fprintf(stderr, "RW038_CONTEXTLESS_HANDOFF current=0x%08X target=0x%08X mode=resume\n",
++                static_cast<unsigned>(thread_self),
++                static_cast<unsigned>(next_ptr));
++        std::fflush(stderr);
++        resume_thread(t);
++        return;
++    }
+     resume_thread(t);
+     wait_for_resumed(PASS_RDRAM cur_context);
+ }
+@@ -190,6 +304,12 @@
+     OSThread *self = TO_PTR(OSThread, self_);
+     debug_printf("[Thread] Thread created: %d\n", self->id);
+     thread_self = self_;
++    ultramodern::runtime_trace(
++            "stage=thread-host-start thread=0x" +
++            std::to_string(static_cast<unsigned>(self_)) +
++            " id=" + std::to_string(self->id) +
++            " entry=0x" + std::to_string(static_cast<unsigned>(entrypoint)));
++    active_thread_context = thread_context;
+     is_game_thread = true;
+ 
+     // Set the thread name
+@@ -208,10 +328,15 @@
+     }
+ 
+     // Make sure the thread wasn't replaced or destroyed before it was started.
+-    if (self->context == thread_context) {
++    if (is_registered_context(thread_context)) {
+         debug_printf("[Thread] Thread started: %d\n", self->id);
+         try {
+             // Run the thread's function with the provided argument.
++            ultramodern::runtime_trace(
++                    "stage=guest-entry thread=0x" +
++                    std::to_string(static_cast<unsigned>(self_)) +
++                    " id=" + std::to_string(self->id) +
++                    " entry=0x" + std::to_string(static_cast<unsigned>(entrypoint)));
+             run_thread_function(PASS_RDRAM entrypoint, self->sp, arg);
+         } catch (ultramodern::thread_terminated& terminated) {
+         }
+@@ -222,8 +347,8 @@
+ 
+     // Check if the thread hasn't been destroyed or replaced. If so, then the thread terminated or destroyed itself,
+     // so mark this thread as destroyed and run the next queued thread.
+-    if (self->context == thread_context) {
+-        self->context = nullptr;
++    if (is_registered_context(thread_context)) {
++        unregister_thread_context(self);
+         run_next_thread(PASS_RDRAM1);
+     }
+ 
+@@ -258,12 +383,19 @@
+     t->id = id;
+     t->state = OSThreadState::STOPPED;
+     t->sp = sp - 0x10; // Set up the first stack frame
++    ultramodern::runtime_trace(
++            "stage=thread-created thread=0x" +
++            std::to_string(static_cast<unsigned>(t_)) +
++            " id=" + std::to_string(id) +
++            " priority=" + std::to_string(pri) +
++            " entry=0x" + std::to_string(static_cast<unsigned>(entrypoint)));
++    ultramodern::thread_queue_register_thread(t_, pri);
+ 
+     // Spawn a new thread, which will immediately pause itself and wait until it's been started.
+     // Pass the context as an argument to the thread function to ensure that it can't get cleared before the thread captures its value.
+     UltraThreadContext* context = new UltraThreadContext{};
+-    t->context = context;
+-    context->host_thread = std::thread{_thread_func, PASS_RDRAM t_, entrypoint, arg, t->context};
++    register_thread_context(t, context);
++    context->host_thread = std::thread{_thread_func, PASS_RDRAM t_, entrypoint, arg, context};
+ 
+     // Wait until the thread is initialized to indicate that it's ready to be started.
+     context->initialized.wait();
+@@ -292,15 +424,13 @@
+     if (t_ == thread_self) {
+         throw ultramodern::thread_terminated{};
+     }
+-    // Otherwise if the thread isn't stopped, remove it from its currrent queue., 
+-    if (t->state != OSThreadState::STOPPED) {
+-        ultramodern::thread_queue_remove(PASS_RDRAM t->queue, t_);
+-    }
+-    // Check if the thread has already been destroyed to prevent destroying it again.
+-    UltraThreadContext* cur_context = t->context;
++    // Unregister by the native guest-thread handle. RageWarsScheduler owns queue
++    // membership, including message wait queues; OSThread mirrors must not be
++    // consulted to rediscover the queue during destruction.
++    UltraThreadContext* cur_context = unregister_thread_context(t);
++    ultramodern::thread_queue_unregister_thread(PASS_RDRAM t_);
+     if (cur_context != nullptr) {
+         // Mark the target thread as destroyed and resume it. When it starts it'll check this and terminate itself instead of resuming.
+-        t->context = nullptr;
+         cur_context->running.signal();
+     }
+ }
+@@ -312,11 +442,12 @@
+     OSThread* t = TO_PTR(OSThread, t_);
+ 
+     if (t->priority != pri) {
++        const auto queue = ultramodern::thread_queue_for_thread(t_);
+         t->priority = pri;
+ 
+-        if (t_ != ultramodern::this_thread() && t->state != OSThreadState::STOPPED) {
+-            ultramodern::thread_queue_remove(PASS_RDRAM t->queue, t_);
+-            ultramodern::thread_queue_insert(PASS_RDRAM t->queue, t_);
++        if (t_ != ultramodern::this_thread() &&
++                t->state != OSThreadState::STOPPED && queue != NULLPTR) {
++            ultramodern::thread_queue_set_priority(PASS_RDRAM t_, pri);
+         }
+ 
+         ultramodern::check_running_queue(PASS_RDRAM1);

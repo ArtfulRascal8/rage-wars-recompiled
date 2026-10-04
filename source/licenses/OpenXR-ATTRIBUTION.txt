@@ -1,0 +1,19 @@
+OpenXR loader built from unmodified KhronosGroup/OpenXR-SDK release-1.1.58
+Commit: 472d817ffe066d5be09a351b0d39ff420141208b
+Loader/headers: Apache-2.0 OR MIT; full texts retained.
+Vendored JsonCpp 1.9.6: MIT OR public domain; full upstream license retained.
+Windows x64 Release shared loader; vendored JsonCpp, MSVC DLL CRT.
+Built here from source; no SteamVR loader binary is copied.
+
+Copyright (c) 2016, Oculus VR, LLC.
+Copyright (c) 2017 LunarG, Inc.
+Copyright (c) 2017 Valve Corporation
+Copyright (c) 2017-2019 LunarG, Inc.
+Copyright (c) 2017-2019 Valve Corporation
+Copyright (c) 2017-2026 The Khronos Group Inc.
+Copyright (c) 2018-2026 The Khronos Group Inc.
+Copyright (c) 2019 Collabora, Ltd.
+Copyright (c) 2019-2026 The Khronos Group Inc.
+Copyright (c) 2020-2021, Collabora, Ltd.
+Copyright (c) 2020-2026 The Khronos Group Inc.
+Copyright 2017-2026 The Khronos Group Inc.

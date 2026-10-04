@@ -1,0 +1,4075 @@
+{
+  "schema": "xr64.private-reconstruction-source.v1",
+  "private_review_only": false,
+  "allowlist_basis": "Reviewed compiler-input and reconstruction allowlist; private reports and testing-slot deployment excluded; public instructions and packaging updated.",
+  "files": {
+    "COPYING.txt": {
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+      "bytes": 35823,
+      "origin": "working-source"
+    },
+    "MODIFICATIONS.txt": {
+      "sha256": "ffa7d05ab3673e139ea8ab42716a6d0f1b6ae72010412a2f3c038992c03668fa",
+      "bytes": 3510,
+      "origin": "working-source"
+    },
+    "README.md": {
+      "sha256": "c4a63ba85675c03f69af89aadbfa954016ccf013dbf2024ad158cf61dd4d72d0",
+      "bytes": 828,
+      "origin": "working-source"
+    },
+    "THIRD-PARTY-NOTICES.txt": {
+      "sha256": "429df0e58681f5b3b5b156605dc4d386ef389759366f46aa794b8c61b95a74ae",
+      "bytes": 4282,
+      "origin": "working-source"
+    },
+    "docs/PC_RECONSTRUCTION.md": {
+      "sha256": "83cb57d4ff911dcd2293a9be143d481799d9eefcbc6e658008b7b71f8f745fab",
+      "bytes": 5282,
+      "origin": "working-source"
+    },
+    "licenses/0530cbedd4-LICENSE": {
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "origin": "working-source"
+    },
+    "licenses/07b0517a30-LICENSE": {
+      "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "licenses/0c34463d08-LICENSE": {
+      "sha256": "5ce68de7ce0f15f934746a70ead3cf9999ed902443554648801e4230638c503a",
+      "bytes": 1092,
+      "origin": "working-source"
+    },
+    "licenses/16b008239b-LICENSE-odashi-encoding.txt": {
+      "sha256": "497dbe776317cf83af8f4b3d62ac09b4cdfd927475c02db8dac4fd4dacb8d03e",
+      "bytes": 1144,
+      "origin": "working-source"
+    },
+    "licenses/1b790bec9b-LICENSE.txt": {
+      "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
+      "bytes": 1110,
+      "origin": "working-source"
+    },
+    "licenses/31de7f3e77-LICENSE": {
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "origin": "working-source"
+    },
+    "licenses/337f91b9d7-COPYING": {
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+      "bytes": 35823,
+      "origin": "working-source"
+    },
+    "licenses/4047e7c8a7-LICENSE.MIT": {
+      "sha256": "46a65cffd1ea955132d95a8dd921640714a8d6b537d2e4e482d31145ae95b603",
+      "bytes": 1076,
+      "origin": "working-source"
+    },
+    "licenses/46d9eea800-COPYING": {
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "origin": "working-source"
+    },
+    "licenses/4d4e6e1a83-LICENSE": {
+      "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "licenses/51a6960a22-LICENSE-PerfectDarkVR-reference.txt": {
+      "sha256": "33efa0ef96a7e69f0aeb755b01f6b846cdadd750f725a32a19f4612b2b86c03c",
+      "bytes": 1067,
+      "origin": "working-source"
+    },
+    "licenses/530ca09e5c-LICENSE-Fast3D-reference.txt": {
+      "sha256": "f26e9084000ec95baf5fbec41998b95c26a686c4f9179e95fa05fb550bc6a0d2",
+      "bytes": 1074,
+      "origin": "working-source"
+    },
+    "licenses/5864596295-LICENSE": {
+      "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
+      "bytes": 1458,
+      "origin": "working-source"
+    },
+    "licenses/670b97c1ac-LICENSE.txt": {
+      "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
+      "bytes": 1110,
+      "origin": "working-source"
+    },
+    "licenses/6a413a28ea-LICENSE": {
+      "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "licenses/717fad8efc-LICENSE": {
+      "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "licenses/7886c05d73-LICENSE-Ares-RSP.txt": {
+      "sha256": "7a84c51809a26a0f3a12a09b79f5157321211f758d340642ef120cff0018f973",
+      "bytes": 1067,
+      "origin": "working-source"
+    },
+    "licenses/7b5c2d9da4-LICENSE": {
+      "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+      "bytes": 1389,
+      "origin": "working-source"
+    },
+    "licenses/7d404da449-LICENSE": {
+      "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
+      "bytes": 1469,
+      "origin": "working-source"
+    },
+    "licenses/8130e3fbe7-LICENSE": {
+      "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
+      "bytes": 1095,
+      "origin": "working-source"
+    },
+    "licenses/a68c4e11a1-LICENSE": {
+      "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
+      "bytes": 1469,
+      "origin": "working-source"
+    },
+    "licenses/a7dc098df0-LICENSE": {
+      "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
+      "bytes": 1458,
+      "origin": "working-source"
+    },
+    "licenses/a85d3b168e-LICENSE": {
+      "sha256": "0115478d567121238cf6cc1c0c361926cf07a49d9e4c9e66da97fac6a01646b3",
+      "bytes": 1184,
+      "origin": "working-source"
+    },
+    "licenses/concurrentqueue.txt": {
+      "sha256": "0aebadfb9129e91eced4f0c317f7b1aa80225484acc443062c91f1cd9ab2ba08",
+      "bytes": 3723,
+      "origin": "working-source"
+    },
+    "licenses/e7a9216367-LICENSE": {
+      "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
+      "bytes": 1095,
+      "origin": "working-source"
+    },
+    "licenses/Microsoft-VCRedist.txt": {
+      "sha256": "ce2a7b886aa53e438df0a80027bec346ffeb85988e9b01dc40212d3e27f8a1bc",
+      "bytes": 580,
+      "origin": "working-source"
+    },
+    "licenses/OpenXR-Apache-2.0.txt": {
+      "sha256": "d3910dee6fe9fe134856d76268fe82adb1ade1ecf51b3568b7da6b94894b88f3",
+      "bytes": 10283,
+      "origin": "working-source"
+    },
+    "licenses/OpenXR-ATTRIBUTION.txt": {
+      "sha256": "9175861a75b86b28ae6b0887f4f7ea471eee0c642e6206ce586d8f395e7e28d7",
+      "bytes": 896,
+      "origin": "working-source"
+    },
+    "licenses/OpenXR-JsonCpp.txt": {
+      "sha256": "cec0db5f6d7ed6b3a72647bd50aed02e13c3377fd44382b96dc2915534c042ad",
+      "bytes": 2714,
+      "origin": "working-source"
+    },
+    "licenses/OpenXR-MIT.txt": {
+      "sha256": "8f25018489d6fe0dec34a352314c38dc146247b7de65735790f4398a92afa84b",
+      "bytes": 1108,
+      "origin": "working-source"
+    },
+    "licenses/SDL2.txt": {
+      "sha256": "97f35b302b361680ec1e891e95d2d52097bb95abff361434916d99dc1305f127",
+      "bytes": 884,
+      "origin": "working-source"
+    },
+    "reconstruction/canonical-functions.json": {
+      "sha256": "d68826cccb290e3d8de4c6d48ed72537dad798c42bdeda7424cbefbad9031bc8",
+      "bytes": 386041,
+      "origin": "private-recipe"
+    },
+    "reconstruction/closure-generator-replay.json": {
+      "sha256": "62ab9a9b820e305950530372d0bf98b9bf76abb69b97ceb6f443eedb2fbc00d4",
+      "bytes": 2197,
+      "origin": "private-recipe"
+    },
+    "reconstruction/expected-guest-inputs.json": {
+      "sha256": "f610a89fd62a29caa8f9c31cf649c07af3e92b50b1a7aab93e2723d7ef0bc056",
+      "bytes": 9052,
+      "origin": "private-recipe"
+    },
+    "reconstruction/generator-local.patch": {
+      "sha256": "b396fcb90e6710c6a79e673a340a80daed63ed87739b2d05aa4b8dd8329c3a99",
+      "bytes": 5228,
+      "origin": "private-recipe"
+    },
+    "reconstruction/generator-provenance.json": {
+      "sha256": "c27da8d473d6335666ea1036f963a42d0a6fc42e092f4ff41a3295332dc3a90e",
+      "bytes": 4721,
+      "origin": "private-recipe"
+    },
+    "reconstruction/guest-function-edits.json": {
+      "sha256": "94b980cc2c36413dd25174994cca8d5e129b16be3aee7425937dfee7a03885ce",
+      "bytes": 420395,
+      "origin": "private-recipe"
+    },
+    "reconstruction/guest-layout.json": {
+      "sha256": "f0114e026dfba86b9d9e6c8472ed472ff7a770f9688bc6c4bdc99f07a4debc0a",
+      "bytes": 381177,
+      "origin": "private-recipe"
+    },
+    "reconstruction/guest-metadata-edits.json": {
+      "sha256": "9e279c0a00c6291217ebb9ef6846e3e64872c99b7486b274a16e440c0087ee0c",
+      "bytes": 3547101,
+      "origin": "private-recipe"
+    },
+    "reconstruction/integration-review.json": {
+      "sha256": "a22aadad9f0ff6a3299886081c55cba56286be17a0429d4593b2cb860f558f67",
+      "bytes": 828,
+      "origin": "private-recipe"
+    },
+    "reconstruction/integration.patch": {
+      "sha256": "7278cae9d9f90e9d4de1c20b1cc91ce46235bf50f2018810b52c4de12a6e8e72",
+      "bytes": 3666297,
+      "origin": "private-recipe"
+    },
+    "reconstruction/reconstruction.lock.json": {
+      "sha256": "baf6789a9f1a7dbb862721264defadf5072b68bb8724af5192da9c4e70cb9235",
+      "bytes": 3369,
+      "origin": "private-recipe"
+    },
+    "reconstruction/recovery496-full-generator-differences.json": {
+      "sha256": "1b107cfc91bcf8206eff0b3ed7de238b86a9d564439dec641914ebe348a4ce89",
+      "bytes": 34047,
+      "origin": "private-recipe"
+    },
+    "reconstruction/recovery496-full-generator-differences.md": {
+      "sha256": "67a1fd28899147d14ca28b2006fea3f1a7abc7f102fb0b9e50f15600ebb3e7cb",
+      "bytes": 25454,
+      "origin": "private-recipe"
+    },
+    "reconstruction/rom-function-recoveries.json": {
+      "sha256": "f11ed7b5a2d441dd9fcb167f1f84e779098ff5fdfcd3dd863c6e442577c1054f",
+      "bytes": 488341,
+      "origin": "private-recipe"
+    },
+    "reconstruction/rom-table-provenance.json": {
+      "sha256": "0672ef4ff044f5485f0e3905dffe6e533e9d9cba6ad537cf6071e945b425ab4e",
+      "bytes": 19130,
+      "origin": "private-recipe"
+    },
+    "reconstruction/rom-tables.json": {
+      "sha256": "edbc475557d76490b45afe39d7c8c2c660cf8b8bec819f46788dcadbe457d6d4",
+      "bytes": 18981,
+      "origin": "private-recipe"
+    },
+    "reconstruction/runtime-local.patch": {
+      "sha256": "0573ba166603cbddcc3900d68ba3d990a6d3413dde7d4fb80a7fb3af9da56b81",
+      "bytes": 140722,
+      "origin": "private-recipe"
+    },
+    "reconstruction/runtime-provenance.json": {
+      "sha256": "8314e792d465794b87cb6057f67e5daa27081c10994a738384333b41e16aebfa",
+      "bytes": 3821,
+      "origin": "private-recipe"
+    },
+    "scripts/apply_modern_controls_hooks.py": {
+      "sha256": "dc52900ac93d1942f977cb1bb0d38b0fa05ad70423fabc8528f261428c1c6b32",
+      "bytes": 1500,
+      "origin": "working-source"
+    },
+    "scripts/audio_rsp_manifest.json": {
+      "sha256": "7992bc19072824f945a42dfa4d088ed212a05bd03fc58ea085af30747e00e511",
+      "bytes": 1276,
+      "origin": "working-source"
+    },
+    "scripts/audit_demo_build.py": {
+      "sha256": "060c5e5834a65c675b6f82594c649162e11989cb70e4bd4a56e80c014179b58b",
+      "bytes": 5398,
+      "origin": "working-source"
+    },
+    "scripts/audit_pc_dependency_inputs.py": {
+      "sha256": "df0756fcbe2f582c2f67b9c0b71d057f161228bceb65f18dc2938e4445539991",
+      "bytes": 3825,
+      "origin": "working-source"
+    },
+    "scripts/audit_release_privacy.py": {
+      "sha256": "0fc241ad502d065349cbac5110ee97cdd4a7d36b519d96e8f630ae5cef84e246",
+      "bytes": 1516,
+      "origin": "working-source"
+    },
+    "scripts/build_pc_candidate.ps1": {
+      "sha256": "cda77588e923ca64a90fe116a80214a6e16d0ef11b0f740112ce12bfa3fe3ea2",
+      "bytes": 3157,
+      "origin": "working-source"
+    },
+    "scripts/export_pc_source_candidate.py": {
+      "sha256": "956f1ea07bd25206cd821e63f026fcb0d69aa79f999ea8e2a251501b44e3a714",
+      "bytes": 7332,
+      "origin": "working-source"
+    },
+    "scripts/instrument_damage_reversal.py": {
+      "sha256": "b1b94e672218b3a51bb8ade975048b24eac27158de9dbd5f277455156092e23a",
+      "bytes": 5330,
+      "origin": "working-source"
+    },
+    "scripts/modern_controls_hooks.json": {
+      "sha256": "c520e6a70fa729f233461c16991b05b7b1d427daad8bf0e10dd4f5df6a90d7e1",
+      "bytes": 6738,
+      "origin": "working-source"
+    },
+    "scripts/package_rage_wars_release.py": {
+      "sha256": "0c98966eae8bfa2ac65cbecc314e82f6ed0d143220cf64a6713f1120413a847d",
+      "bytes": 21197,
+      "origin": "working-source"
+    },
+    "scripts/pc_dependencies.lock.json": {
+      "sha256": "46e711824952bbb111241ebef3cf06d9d35fa762736f1ff7dda556159cfffcba",
+      "bytes": 1400,
+      "origin": "working-source"
+    },
+    "scripts/prepare_demo_source.py": {
+      "sha256": "e394c3c505276bc55652a31689293d7f83d891a71a562723060271d1a4b4e7e0",
+      "bytes": 10500,
+      "origin": "working-source"
+    },
+    "scripts/prepare_pc_dependencies.py": {
+      "sha256": "648f0cf9cb74d93a96990d906fab53cb68cdc2a27b5bcec9e7fb1c0d293abc2e",
+      "bytes": 9323,
+      "origin": "working-source"
+    },
+    "scripts/prepare_pc_reconstruction_recipe.py": {
+      "sha256": "4dd9fe7dab518d5778a0db7bf12a7a44da6c1c71a88501efbcb35270a84883dd",
+      "bytes": 18225,
+      "origin": "working-source"
+    },
+    "scripts/prepare_recomp_host_overlay.py": {
+      "sha256": "6f063140b42196853360085ebc2a465aac4882a2fdff72f8f01b794302d87d73",
+      "bytes": 1998,
+      "origin": "working-source"
+    },
+    "scripts/reconstruction_common.py": {
+      "sha256": "6eefbca62bb766989b8eddbe0edc31433d76567a71479deed196f86311a9b64b",
+      "bytes": 3882,
+      "origin": "working-source"
+    },
+    "scripts/reconstruct_pc_candidate.py": {
+      "sha256": "229e1e4e6e99c7e5fa97f9a513e1215845922af8f7f0441b0ae759583e5ad350",
+      "bytes": 23506,
+      "origin": "working-source"
+    },
+    "scripts/regenerate_audio_rsp.py": {
+      "sha256": "4f924418bf59040caba09d5a954de9e98cb1e94a17a8e4d2be5a0ab4910018f6",
+      "bytes": 5746,
+      "origin": "working-source"
+    },
+    "scripts/test_crash_reporting.py": {
+      "sha256": "3f491fc30e17cd36088a39273e6cbdd5ab4d47cde8cd2cf69b2ca28cc44a52f4",
+      "bytes": 11603,
+      "origin": "working-source"
+    },
+    "scripts/test_package_rage_wars_release.py": {
+      "sha256": "1395302effdb6998e6ffaad291ddf532dc5926ed5f937de664041007ab2e912a",
+      "bytes": 10339,
+      "origin": "working-source"
+    },
+    "scripts/test_pc_dependencies.py": {
+      "sha256": "a2db0d7e43d687b79be39677c5f112b9a889894ccd3191d72d7e1d66d0e1f726",
+      "bytes": 2100,
+      "origin": "working-source"
+    },
+    "scripts/test_reconstruction.py": {
+      "sha256": "72a7a9785947bb256f578f9ec5f0c4bc970d4e6a6845217fb95b689ce86063d1",
+      "bytes": 2140,
+      "origin": "working-source"
+    },
+    "scripts/weapon_calibration_contract.cpp": {
+      "sha256": "110b3096b9faeaaf4dba655c23b8bf36013fb53e645a7e3dfb92bd6726227a75",
+      "bytes": 2339,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/configs/rage_wars.us.ares_boot_to_combat.toml": {
+      "sha256": "502a7db87bcc7e513505fab62749827c0e2b059a1d08237ef7a32376be129751",
+      "bytes": 5386,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/CMakeLists.txt": {
+      "sha256": "6d3b26fe9e2c0bd3f448abaa56fdd1bf3588dd95c7a4888ec3dfd5b434aa901e",
+      "bytes": 1125,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/symbols/rage_wars.us.ares_boot_to_combat.toml": {
+      "sha256": "e84d360cbf2620a4a00a40e41fce264cf1ba4c62e48c58ac9a7ae24e3da3ad86",
+      "bytes": 774954,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/cmake/demo_release.cmake": {
+      "sha256": "614e869b48b7f91b2abd22adf02c1e0ef9d0e5459e6b7326c8b64cd07d14bebe",
+      "bytes": 3682,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/cmake/gate2_setup_once.cmake": {
+      "sha256": "413e7e6fe46293afa136579c1797a9d90801367845f5bdca3775534637973196",
+      "bytes": 2865,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/cmake/gate3_setup_once.cmake": {
+      "sha256": "bcbf9ed4ca8e3d71713b5b3d3b322205bb9197e68ac2db1fe1d3800b15578b93",
+      "bytes": 1139,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/cmake/gate4_setup_once.cmake": {
+      "sha256": "7e2d08a4267c80b8d94ed52d81266653666bf68abb5d056d9492f6206b84df5e",
+      "bytes": 1048,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/cmake/gate5_hash_setup_once.cmake": {
+      "sha256": "9a0dc43f0410823551127136ab1c9b3a4112084fd915071461496f3dab806087",
+      "bytes": 652,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/cmake/gate5_setup_once.cmake": {
+      "sha256": "444aa90a135d20aa034ad4f155835fe00d9f7a5de62d4f67dd531fbf562396e6",
+      "bytes": 25770,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/cmake/pc_dependencies.cmake": {
+      "sha256": "15c9d78b0618128e8593d22e08ae2d244144ac9d6f5239155badd13246752fcc",
+      "bytes": 1785,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/cmake/rage_wars_generated_source_manifest.json": {
+      "sha256": "5412ca4a636e0c63293771e0520ec28a96b8fc9c368d0ec817ac14fcdfbdda20",
+      "bytes": 1248,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/cmake/release_package.cmake": {
+      "sha256": "18a90c65eca182178df5cddd2aab1620fe0789f4aac7dc10669460911acd04dd",
+      "bytes": 1156,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/gate5_main.cpp": {
+      "sha256": "9ad7c4d58379e6b39da24ccf1fb98837e4560bad9b0e5048458d0f40185ee9e6",
+      "bytes": 117897,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/gate5_overlay.cpp": {
+      "sha256": "27c8927ddc1b53adfa7770b2d093fd05621bbfdf9737f3c45f535f520d17749b",
+      "bytes": 432,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/gate5_runtime.hpp": {
+      "sha256": "890f53c987b12f35313693a7cdc40cd2a929a090a640fc9cfed3b3652aa590e5",
+      "bytes": 526,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/link_probe_main.cpp": {
+      "sha256": "533b9c10603cf372d36cb244e2566ee86181fbe1f8fb905335a7eda20349e8e9",
+      "bytes": 238,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/main.cpp": {
+      "sha256": "e8e803565a9686fbd2f5a7af9a862cbe09a8e3a7b1b2156227fec96a17ca1796",
+      "bytes": 570,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_asset_loader.cpp": {
+      "sha256": "1f4465c8a51be2a0c86181ffccfddedbb1d2020c33663dc10b95ce3ade9fe21a",
+      "bytes": 1985,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_asset_loader.hpp": {
+      "sha256": "24b118c32274982eadf3909a097331b76c70c702e09df880f6433897ee02ad92",
+      "bytes": 1467,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_code_residency.cpp": {
+      "sha256": "6b684265c2662f25955f137c6d29eafa3ee5c33797fc60317eb13228cbd8b2aa",
+      "bytes": 4016,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_code_residency.hpp": {
+      "sha256": "f41f6998586f59ece9c5577a7f22daa1d75d71027c4d364f8001d36251406984",
+      "bytes": 2303,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_code_residency_runtime.cpp": {
+      "sha256": "13696a1a519b45d0014c8bd175c01c10edc4eac917ceab7c782a5adfc81e4df0",
+      "bytes": 2491,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_controller_service.cpp": {
+      "sha256": "5251f67eb18da6499d594bbee09eda81df16ae65216bdc96af50bf3fcfddc53a",
+      "bytes": 13348,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_controller_service.hpp": {
+      "sha256": "e271c5ef3524b352b24dbbd1855dba00f688b5496c8e65123cd7128555157ed7",
+      "bytes": 2495,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_godot_live_backend.cpp": {
+      "sha256": "e2fb817c030c21d6235398d752365d06185426c2e2460317b130ad5d03c5116e",
+      "bytes": 6392,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_godot_live_backend.hpp": {
+      "sha256": "e94329d80c74f3355fcbde20270060db968d7b847288d7b3cf0e88580b1899f1",
+      "bytes": 986,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_graphics_bridge.cpp": {
+      "sha256": "82cdc4c1adc730477eba466c684567f689bfd1441d7c05b675477c7cdeb7a61c",
+      "bytes": 8647,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_graphics_bridge.hpp": {
+      "sha256": "9bd27b014afa71251f47c79f8b088fb6f3a2c81b42a3223ab6bab8f660fe13fe",
+      "bytes": 2419,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_input_replay.cpp": {
+      "sha256": "815c88335b59922ce63d95aeff49b33db622dd18f26e4f2849dc53e96ff05128",
+      "bytes": 6886,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_input_replay.hpp": {
+      "sha256": "2d9cce5a2d80961323cdef164c399e3b964beaf6401e7870e6747e9085e1486f",
+      "bytes": 1473,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_live_frame_channel.hpp": {
+      "sha256": "f9ded6c23ffe65024f8886efa09f93ffacf52facb3658820b1a99ab54eefb6e1",
+      "bytes": 1551,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_scheduler.cpp": {
+      "sha256": "4d40a00fb586913050b0357f9b3a774de5bb0f5856c84e4b5acb66302514f05f",
+      "bytes": 6019,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_scheduler.hpp": {
+      "sha256": "0f637b8ca3f0b9b503a557f53d8399ecff13f0cd3617526e4b87df10aa7e67cd",
+      "bytes": 2212,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/rage_wars_scheduler_runtime.cpp": {
+      "sha256": "a6c2f6e63663d97ceceaaf42600b16c1714edf95fa52fba1b9f2ebb5e25776c3",
+      "bytes": 482,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/CMakeLists.txt": {
+      "sha256": "08c22ff47f6866ca842ae42022fb063a102fe7c4bc67e6f04777f00383e5f98a",
+      "bytes": 2088,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_asset_loader_test.cpp": {
+      "sha256": "d18c219ceafcdab2e9e0c8b7698837f1fbe7823daee40574fa578f0a12d540f8",
+      "bytes": 2862,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_audio_device_test.cpp": {
+      "sha256": "7bd7b7ec852eabbc70c551fc03c6341aca97896b0d4c1646ef5873727004699c",
+      "bytes": 2392,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_audio_output_test.cpp": {
+      "sha256": "86d32a78ee61c9201ed0adf034442431208b8739888178f567674602006e9304",
+      "bytes": 9953,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_code_residency_test.cpp": {
+      "sha256": "cc78e0699ad9455d2ab30e47b77c8ed4ba573384a230001074b04208cb6becae",
+      "bytes": 8194,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_controller_mapping_test.cpp": {
+      "sha256": "07295823caf097118968fedb7d5acdeb8ae468f19e71476854864967fd30fa0c",
+      "bytes": 3549,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_controller_service_test.cpp": {
+      "sha256": "e1deba1e7294b0e450bd0dd67fcd021d9823eb1a584837c4485012ccc3cb96fe",
+      "bytes": 6597,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_controls_persistence_test.cpp": {
+      "sha256": "7caa65f20a523d3a761cc11f270f3e22792b50000e8f6c6a83d01315b378e219",
+      "bytes": 6164,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_decoded_frame_test.cpp": {
+      "sha256": "65bb6eb8629bf0004eadbc4a0e2c0a44ee08a50d019150154c6e25217d73e310",
+      "bytes": 8734,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_guest_clock_test.cpp": {
+      "sha256": "e791e550b9527440a13de21a276c2b1233f52a9f5369bf5900076006f6d94a40",
+      "bytes": 1618,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_input_replay_test.cpp": {
+      "sha256": "ffb15d4a07c3f738a0013e792340edf9dbb39aba9afabdefe600712fe2df196b",
+      "bytes": 3467,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_modern_controls_test.cpp": {
+      "sha256": "e37d9fb41d64638eb5850528e46aa24a5535164381551e3aa7fff2da4a857a97",
+      "bytes": 11082,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_port_options_test.cpp": {
+      "sha256": "3f2d234fb754f08b40961d7089bceb98b7ccb6eb8bd514f5018e74cb2f52b477",
+      "bytes": 2700,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_presentation_clock_test.cpp": {
+      "sha256": "cd7516600e7461b65c49054d6888d467be96da7dc2723618b67ea7d33b9b6ac7",
+      "bytes": 1577,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_scheduler_test.cpp": {
+      "sha256": "28184413e7abbb77b62761d20cb1fa4355288a20a964dee46efd760a6cb514df",
+      "bytes": 2664,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_camera_test.cpp": {
+      "sha256": "9d943cd98beb5b4c7dc67a68fc510cd1a8d3b1b338a65dacb83c81b024b4632e",
+      "bytes": 23804,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_controls_test.cpp": {
+      "sha256": "4b6c3007f84614ffedabc511301a12e49177aeddb710c64bb3cbe4d6fe5faf80",
+      "bytes": 4710,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/recomp_output_audit.cpp": {
+      "sha256": "7d1412d790535021763bcf631013ad8d8e89f19b35564eccd5ecb2a2523f5ff4",
+      "bytes": 1953,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tools/build_generated_source_manifest.py": {
+      "sha256": "127e26bb38720810a189fb2c812b657d8dcfb2965b6f410cfc9ce1525d479145",
+      "bytes": 3712,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tools/rom_xxh3.cpp": {
+      "sha256": "ff1390b76c5f2a3efebac9dce0f578dcc9cc3b7fa67c749336c0d7a9541e5e47",
+      "bytes": 685,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/fast3d_scene_decoder.cpp": {
+      "sha256": "e6e4a269b39ec0672a612439b8fe061a228df46524670f47be73d86f3c72050d",
+      "bytes": 85530,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/fast3d_scene_decoder.hpp": {
+      "sha256": "5241e56450947370cb972e4fcdcd1db74fd28234967ca698194d65469ca6e75f",
+      "bytes": 1494,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_decoded_frame.hpp": {
+      "sha256": "2ab9622f9211960b3fed6ffdf9de00c086d273f31ea0d652a924968a1d4cd861",
+      "bytes": 10580,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_emulator_render_bridge.hpp": {
+      "sha256": "c486b7d4f9a7e6c68304288e6e87cc4b424503b4edab8a4fd6a817db2a8f3d7f",
+      "bytes": 8730,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_frame_mailbox.hpp": {
+      "sha256": "da2f03224647561de98c59e40f200831d54c5660b5f61784292555ac4df1ba1f",
+      "bytes": 1550,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_homogeneous_clip.hpp": {
+      "sha256": "c4dae6b73a87658fbdd5995c112bd62f65ebcd522b67cd99a3966f1b50615cd4",
+      "bytes": 2906,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_live_fast3d_task_adapter.cpp": {
+      "sha256": "0c622dd2339d1bf6d990e4b64861a96b73935aa94a7ef461583b64a5d7b19418",
+      "bytes": 14570,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_live_fast3d_task_adapter.hpp": {
+      "sha256": "32e8e571fc5d293b7e337d8544190a0da5f8e170b469922990fd18694fa087d1",
+      "bytes": 777,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_microcode_registry.cpp": {
+      "sha256": "2b668c3e9b07837edc4fc8f68aa17a0799d330e05435a06f47a0d744dbdb007c",
+      "bytes": 6139,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_microcode_registry.hpp": {
+      "sha256": "12652428c2af3247166ba48c9adf8d3800646ce68715beeef6a2f78f9d45f4ba",
+      "bytes": 1091,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_raw_fast3d_renderer.cpp": {
+      "sha256": "3e9d639bda1d62a318b80b774a77f676cb5fee09ae6d634612d10bf31c59a808",
+      "bytes": 87938,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_raw_fast3d_renderer.hpp": {
+      "sha256": "1234fd6e10fdad2295872448a5d0cfe95e56c88fce12d5ba64f5e93fdb70e962",
+      "bytes": 12593,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_segment_map.cpp": {
+      "sha256": "e8d4788314da563ddb36c83396676c295c1a5fb339bf0fe7915d0859b7013a05",
+      "bytes": 283,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_segment_map.hpp": {
+      "sha256": "dc49062734960fa5235c5151fbe002aa68c94920640f626a50ba55c480071707",
+      "bytes": 668,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/render_diagnostics.hpp": {
+      "sha256": "ea2cc29cd55134ac3a7b5bb5fb62a43053cebdf25afdef0abdf19601b1a91ffc",
+      "bytes": 2074,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/render_scene_data.hpp": {
+      "sha256": "675e1da3f370f6668f4320bcd34bf4ffdb8b7c8768eccbfb7396bca84260b99f",
+      "bytes": 6703,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/render_scene_replay.cpp": {
+      "sha256": "148c2be2c195f5a33406110b9d9218d6b13753574ea18f1e8331a5b815141b94",
+      "bytes": 93436,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/render_scene_replay.hpp": {
+      "sha256": "1a61dc6bf6a535ac07f46fe1c6cf6b00dff25040e91c035732cdf4c642b9b733",
+      "bytes": 7871,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/CMakeLists.txt": {
+      "sha256": "9fb7732d7fea069db02ef264f1c1fad891db485f813083247bd6702cd21124e5",
+      "bytes": 198,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/COPYING": {
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+      "bytes": 35823,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/LICENSE-Fast3D-reference.txt": {
+      "sha256": "f26e9084000ec95baf5fbec41998b95c26a686c4f9179e95fa05fb550bc6a0d2",
+      "bytes": 1074,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/LICENSE-PerfectDarkVR-reference.txt": {
+      "sha256": "33efa0ef96a7e69f0aeb755b01f6b846cdadd750f725a32a19f4612b2b86c03c",
+      "bytes": 1067,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/CMakeLists.txt": {
+      "sha256": "d292e792325e8695e1812d3ddfb84cb09f48487264a377e4ad67c4548338ced8",
+      "bytes": 8691,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/LICENSE": {
+      "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
+      "bytes": 1095,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/CMakeLists.txt": {
+      "sha256": "fa7c8f1efe79f358006037d05eb3b84f77395bf787e7b81436cc2a7fa2a5b8d9",
+      "bytes": 2677,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/CMakeLists.txt": {
+      "sha256": "d292e792325e8695e1812d3ddfb84cb09f48487264a377e4ad67c4548338ced8",
+      "bytes": 8691,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/LICENSE": {
+      "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
+      "bytes": 1095,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/CMakeLists.txt": {
+      "sha256": "a51d8fe940e1abca05ba0d4e94a6e144e6fe37f70af25eab14d2179f08180866",
+      "bytes": 1909,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/ai.cpp": {
+      "sha256": "4c12d4ea818418834abebdab20c7c368725bce4ebbd0769bed83260980686b1e",
+      "bytes": 1014,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/config.cpp": {
+      "sha256": "ef6842d938b4264f50393c62b5c42ed1d457f5804ae5adfae9fafd75199b649c",
+      "bytes": 24678,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/config_option.cpp": {
+      "sha256": "645d962104516849d789c1a3d4015c0b32496c6b80c6fdf5a68fd777eb17f496",
+      "bytes": 3429,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/cont.cpp": {
+      "sha256": "2800ff4e5f2172cdc52e537ea7c67ac6d9f222c8a19a2f1e25cffa86182244bc",
+      "bytes": 7217,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/dp.cpp": {
+      "sha256": "ba3545c6cfce0441f765fe19d8e48266df733fc1d951b1f433f934f595feeb02",
+      "bytes": 1193,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/eep.cpp": {
+      "sha256": "d407c8ba21cb45bfc9d92085c4dd84d30c5c360c3b77dd5871ce6d5b959200e3",
+      "bytes": 2713,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/euc-jp.cpp": {
+      "sha256": "3864532fb37b0f8d40ffc0ca37f64faf1d8658059ff31cdff1e6142e0178dd67",
+      "bytes": 208738,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/extensions.cpp": {
+      "sha256": "8fbd47b37cd0c8925ebcf80d06c47376016f713c8b6f9a0d772d1e92e74c4ae9",
+      "bytes": 495,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/files.cpp": {
+      "sha256": "22e519981a9583e1d9455b62f5c2c686b69fb1813a9d5910b3bba467638b0085",
+      "bytes": 1779,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/flash.cpp": {
+      "sha256": "6dcde00d6545779e4769ea07f99c745c5924114a9e3ab342e02316c362520240",
+      "bytes": 7090,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/heap.cpp": {
+      "sha256": "4a85ab12aeaf6f50be5d5913b3e0ccb8c3bf512627c3880c0be0d212aa9dc2d6",
+      "bytes": 1677,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/LICENSE-odashi-encoding.txt": {
+      "sha256": "497dbe776317cf83af8f4b3d62ac09b4cdfd927475c02db8dac4fd4dacb8d03e",
+      "bytes": 1144,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/math_routines.cpp": {
+      "sha256": "c17568804733d5265dc3d06436763f0ea241c9907a2554ca08a76ff181ad761c",
+      "bytes": 3878,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mods.cpp": {
+      "sha256": "526353dfae032db30c751ccce0d0585e7ca4ef03a24f75c34a8c4aa36169c345",
+      "bytes": 114136,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mod_config_api.cpp": {
+      "sha256": "745f5744ac458dde580d48db5cae62fe5fa0c59ea166396a83f7d80e9d294680",
+      "bytes": 5611,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mod_events.cpp": {
+      "sha256": "1701e1ce9c5b2b15ec124a1afc59e1d2b3b2beed2f0430a143931cedc87ee18d",
+      "bytes": 2560,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mod_hooks.cpp": {
+      "sha256": "7984389f78bf5569e21f945cd1089a9fa48f352d208d36595325cac3905ce479",
+      "bytes": 5641,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mod_manifest.cpp": {
+      "sha256": "56e816257822a7451862ef6119f98103b473fc44a7130d8cbe449c80f3820a9f",
+      "bytes": 45420,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/overlays.cpp": {
+      "sha256": "f321947423a8000980c0eda1646359befe7f17511a08eb875b22761287500c00",
+      "bytes": 42518,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/pak.cpp": {
+      "sha256": "313f2a3d5e6e6f9be8e8e2482080d667cff477533d82ef5056dc218021aef776",
+      "bytes": 23141,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/patcher.cpp": {
+      "sha256": "f29c66d3f1492e727c77260af98c764bf218ce16b2c40d9c68ee9daa22d5adda",
+      "bytes": 11854,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/pi.cpp": {
+      "sha256": "f37b8816ef7e7417830b8010886d8f07f4cb4895d64183a6200d0defc812b0c1",
+      "bytes": 17363,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/print.cpp": {
+      "sha256": "3258f626770caad429e7531299497fa0b5ccfb93075fd6dea9acbfe19fba19d7",
+      "bytes": 2078,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/recomp.cpp": {
+      "sha256": "bbf52b3f9b69dfcb69342aef1e7776e2372c618018d1e8b28804f54665a3d45b",
+      "bytes": 33931,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/rsp.cpp": {
+      "sha256": "5719fc22ec868b087e2f73b37e2f80acb640526deabc3e85b590ba082822a066",
+      "bytes": 1986,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/sp.cpp": {
+      "sha256": "436a254311d54b307236cb437ad0641dafdebfe1050e5708da77d42fba0972a3",
+      "bytes": 1808,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/ultra_stubs.cpp": {
+      "sha256": "ee45233ba54853e105cfbad7bf3151d19cf54aefa6afba491da97e822b873ce3",
+      "bytes": 1348,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/ultra_translation.cpp": {
+      "sha256": "4712c3ac66b0d7273bbfc9c955f72ba5609c3320efa525b00b4f4b78e0a9e1a9",
+      "bytes": 5964,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/vi.cpp": {
+      "sha256": "b6bfedcb5c3e791bd72bc18ff916abf6d7d23ba16fb3671fabf944d0209980e5",
+      "bytes": 1588,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/addresses.hpp": {
+      "sha256": "7e1a523c75dc0b8b9b27cb8b4c7075717ab9e94d26a6330c00de11fa7f12283b",
+      "bytes": 1711,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/config.hpp": {
+      "sha256": "17728518f1ad93ca874e48a96a20500b29e0e7835b4bc3ace76a2023be8c25eb",
+      "bytes": 17166,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/euc-jp.hpp": {
+      "sha256": "1daf62fdf64418e8d9a673be336f05eb5d16183eea96a24c7f2f1c4283cd4532",
+      "bytes": 179,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/files.hpp": {
+      "sha256": "488bd103f5810bd0cf76b0083e28b68ac2d9ea8d38f4e52b42b75022306da90b",
+      "bytes": 628,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/game.hpp": {
+      "sha256": "c277049c012e1d889be261b6a79f03fe173fd3a60bc188abb6004dcbaa9efb2f",
+      "bytes": 5031,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/helpers.hpp": {
+      "sha256": "a6889e0877726838621a328c50ff725aa7cefecde9952cd825d7e4183c7591dc",
+      "bytes": 3271,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/LICENSE-Ares-RSP.txt": {
+      "sha256": "7a84c51809a26a0f3a12a09b79f5157321211f758d340642ef120cff0018f973",
+      "bytes": 1067,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/mods.hpp": {
+      "sha256": "13f158d05a7c054f28b5c21ca36e610e68d849003086d657c058418046b8b116",
+      "bytes": 33259,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/overlays.hpp": {
+      "sha256": "bd39f25d7d4342731ada81512f31466db229bc8f5b868cbb973b468f7f2522bc",
+      "bytes": 6240,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/patcher.hpp": {
+      "sha256": "60120c01b58ec95d9e495be96e11eb2b851338947dbb0c7d640340bfea2d5e00",
+      "bytes": 455,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/rsp.hpp": {
+      "sha256": "aa1c0f4dbf782148a2db1b2e58604ccdc9a067f3177ad45bdfbe32564964737f",
+      "bytes": 4491,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/rsp_vu.hpp": {
+      "sha256": "b8238ed38cfac3dfd4f9f02280758434ab5495fd4696f80a3194f8a7831e64af",
+      "bytes": 10452,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/rsp_vu_impl.hpp": {
+      "sha256": "0beeb6732e1311be58447c17d404057b78267628a9550e144b3d89e4abdbff41",
+      "bytes": 50872,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/include/librecomp/sections.h": {
+      "sha256": "a8466a9b7dc4566ac2782a58f43fbeb1458df52ebab6f807d17ddee3292db7e2",
+      "bytes": 1203,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/include/recomp.h": {
+      "sha256": "d42a572ec50e15f8196fdeb7a37ff62e62f30c80d80bf87c454298ece8fce9d6",
+      "bytes": 15439,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/LiveRecomp/live_generator.cpp": {
+      "sha256": "e1e10a82b7a22b26fe199fb0e7eee592bfe8808cabb9fcbe2a2d5aad03a1b096",
+      "bytes": 85586,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/LiveRecomp/live_recompiler_test.cpp": {
+      "sha256": "7730934b063a775ca48a88dc8ed36e7156346ca13bf006c9f29d070868531d37",
+      "bytes": 13558,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/OfflineModRecomp/main.cpp": {
+      "sha256": "3c20fdd280c2534197b2de84b17fc6563911c6fb112ecc0be1438fa42de3a9e3",
+      "bytes": 11759,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/RecompModMerger/main.cpp": {
+      "sha256": "2d775cb1c552534465b95ee2c2a1fe367880ee0569ccb063ba83683574303abc",
+      "bytes": 12678,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/RecompModTool/main.cpp": {
+      "sha256": "08767d14b638356c76f0d5ca0b97914e36d91731c4f854efc1703c5563cd6398",
+      "bytes": 58871,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/analysis.cpp": {
+      "sha256": "c060bd09f73a82f703f6c25ed87c50cd66c6b7d0fcabeea3a2a09a5dd2c23a07",
+      "bytes": 15115,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/analysis.h": {
+      "sha256": "a9ba3a0454c9037c26c6281c6e7b4d5d1c660357c3c1a95fe61a0d56c73d4c1e",
+      "bytes": 661,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/cgenerator.cpp": {
+      "sha256": "edb178c83b5cedc1943082f8fc3f448b6dc883b546e23fd3530a140627b43afa",
+      "bytes": 28652,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/config.cpp": {
+      "sha256": "314292412e0e35e72e96a4420155fec5ef831262cb9208a8082840fa336720c2",
+      "bytes": 39456,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/elf.cpp": {
+      "sha256": "1575f99deb63a1691a9042b1ba4c60380318f8f4ea4ea6d67ba90173fd7e6713",
+      "bytes": 37009,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/main.cpp": {
+      "sha256": "27d8d2f65e6b6ff7d355fb97f706bedcee3050a14305c11b10f563c636162ab8",
+      "bytes": 50663,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/mdebug.cpp": {
+      "sha256": "80a83de9a5cf38c30947bd6c16a7994ac61e1c3b941d6a451bdadbf10aa14830",
+      "bytes": 32063,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/mod_symbols.cpp": {
+      "sha256": "29ad96e2431dc3ee6f0930b7f8281ba3b2d3d7a6e88a26b78b66631fe226b0a0",
+      "bytes": 35730,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/operations.cpp": {
+      "sha256": "8d5f2ef2ec1c3499af02ebc273416a0d83fb51b4eb7a2780f28df3a4518817d1",
+      "bytes": 23348,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/recompilation.cpp": {
+      "sha256": "302bf66addfa23fb7d81b25c5968f98fb8de01ee49f92454657a76c47a111afa",
+      "bytes": 37888,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/symbol_lists.cpp": {
+      "sha256": "25b1bb7d63cba3d22f5b2239ef14b9301126e70d84b57c706b9b79c718cf2fe1",
+      "bytes": 15147,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/include/recompiler/context.h": {
+      "sha256": "8c86393e22d60dab1ef055670e18422a199c986284d4cc90dba68eafe748436d",
+      "bytes": 27235,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/include/recompiler/generator.h": {
+      "sha256": "4e32eb74ae54c478e3fa5d80c1371eb73919112e91e4f3607e152734519e00f7",
+      "bytes": 6429,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/include/recompiler/live_recompiler.h": {
+      "sha256": "9ddf1f2ca8e2ddf0ae4e70b3c639bcd31a5076f6443de630a34f305433cbad40",
+      "bytes": 8668,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/include/recompiler/operations.h": {
+      "sha256": "4fafbc9dfb57bea6b3e5de16c7483ba52649ae3169735deaad713f15c49ca04f",
+      "bytes": 5250,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/CMakeLists.txt": {
+      "sha256": "10f5006485ff569dc09da361ea87412ebee3a7e819b0af34e06108fe47560761",
+      "bytes": 5165,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/LICENSE.txt": {
+      "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
+      "bytes": 1110,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/ChangeLog.md": {
+      "sha256": "c114c7ec4b4ea4f70e92138a9e494c2a47ad054210f405fa24fca70cac3bd15c",
+      "bytes": 123907,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/CMakeLists.txt": {
+      "sha256": "5b82067a0caea95a88274b7e04d60542198d3c3774a8d9f47bb82a551b753a26",
+      "bytes": 20214,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/LICENSE": {
+      "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
+      "bytes": 1458,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/README.md": {
+      "sha256": "0647c8654668b4961f88dfeadbadc6ae744105c947122e88e554a6c58c4d439e",
+      "bytes": 20167,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/LICENSE": {
+      "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/CMakeLists.txt": {
+      "sha256": "0c165eb248e1018650867f3e96b1d369160d3caeb1f6a0e2d97db054f12d3f0e",
+      "bytes": 1560,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/LICENSE": {
+      "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
+      "bytes": 1469,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/CMakeLists.txt": {
+      "sha256": "3af7131a2038870dfe310f3577a54ad0930061a3e48b4cf8dbdc3c16eee225b2",
+      "bytes": 1187,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/LICENSE": {
+      "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/CMakeLists.txt": {
+      "sha256": "a13faf9428188348975b0b00b200df304dcf5d56f457b7d818e7e677ff2a21a1",
+      "bytes": 227,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/add_section/CMakeLists.txt": {
+      "sha256": "7c303e440b7019a3e5ff0641eaccab2639f766853ab81c5fa3e344056559c210",
+      "bytes": 104,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/anonymizer/CMakeLists.txt": {
+      "sha256": "54f1bcc85724724eb43aa9e98758d2a6e0ef701e1a96660aa8e5954c4359a3ed",
+      "bytes": 101,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/c_wrapper/CMakeLists.txt": {
+      "sha256": "f83b42ac53015cbba3ae97f097b99bdec88bd7ce7fa0339597f75fb87d24e4fe",
+      "bytes": 134,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/elfdump/CMakeLists.txt": {
+      "sha256": "a20e90dd6de6fbb9ac7346c0314da6eecc3475f327115c8c2bd5ba94ac813a69",
+      "bytes": 92,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/proc_mem/CMakeLists.txt": {
+      "sha256": "072f4f739dc1cba37b498d3ff00017abd741b73e6e7bf69699d83a4d2fb3191e",
+      "bytes": 95,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/tutorial/CMakeLists.txt": {
+      "sha256": "c92a417fb42284db91d96d628e7e7b5c8e2a661b6d728da21f70e5f2d27f6a3a",
+      "bytes": 95,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/writer/CMakeLists.txt": {
+      "sha256": "f9861c440b206e305248e9c091a1fd0eabcdac94a8bf134b64bb68cbda3ab084",
+      "bytes": 89,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/write_obj/CMakeLists.txt": {
+      "sha256": "cd551b369ee90518a36edc28719ff26e10508eb4414cd638965f8d1699c13a80",
+      "bytes": 98,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/src/format.cc": {
+      "sha256": "934931a6b753c038daf5c0965da6b68cb027b6ced7862af4d3299979d380f616",
+      "bytes": 1264,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/src/os.cc": {
+      "sha256": "575ace8b746cbaabec3a8b007cc961213feaff9851e47cb9f7c9a6efbbb92c8b",
+      "bytes": 11786,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/CMakeLists.txt": {
+      "sha256": "2bfef2841af81ba93ae35672c8d091cf0226e791170cac9f4002d7002b7380ad",
+      "bytes": 9405,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/args.h": {
+      "sha256": "02f1406b0736b53154982f570ec2f95ac46b3d8283c2e869a2752ceb5eaf09be",
+      "bytes": 7419,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/base.h": {
+      "sha256": "2af7b54189b9c81383800ed170b827737bbe7780a9c95673184d4ab8944c93bc",
+      "bytes": 108041,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/chrono.h": {
+      "sha256": "3cc67aafe858fbde0bbbaf84a11e306d7a50d97cee3dd1371e066b99bd33c4fc",
+      "bytes": 79700,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/color.h": {
+      "sha256": "755ab15a3411889ed81f7de05114ad087cb5831320b2432e7e65a271baedc26d",
+      "bytes": 24782,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/compile.h": {
+      "sha256": "b08f180128e94ed91ddcb3f3ea7d005b2be961a5a5db031a2b660bfe7731f9ca",
+      "bytes": 21081,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/core.h": {
+      "sha256": "0b5bab04745964219a01a097c9c9975309b198c938abe57a4dd185c8cd24ea12",
+      "bytes": 192,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/format-inl.h": {
+      "sha256": "43fe5420d110b1f8928014dc1a8f392c91b6b8e92b262738c61b6c9360f4cf22",
+      "bytes": 82956,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/format.h": {
+      "sha256": "55d0a18a67244fd48a2544c57f4e243711ee96a0edb0f6a6a1f4d5562a4a2482",
+      "bytes": 167061,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/os.h": {
+      "sha256": "40ee37866e2ab03cd91316f5e09ba640d77fec2b659e68a004c9b094ab538afb",
+      "bytes": 13287,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/ostream.h": {
+      "sha256": "708f7b041916d93d29d5661f2975920d2a14ab59584ce4638befb4320d5c77a5",
+      "bytes": 5194,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/printf.h": {
+      "sha256": "49707b4332e6bb0946d23d46b2af37efb99c4aaf8444c02fd6eaa93554797408",
+      "bytes": 20615,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/ranges.h": {
+      "sha256": "d545f1789f99216bcc305aeba418aafd21f6b68ecf4a3f777a65dd703708b34f",
+      "bytes": 28977,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/std.h": {
+      "sha256": "c6feb0b75238c619be9f8a2606db0d0168196b299a43b3131ddb7ef58d942628",
+      "bytes": 24259,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/xchar.h": {
+      "sha256": "4e6733a236a26cb5bafcfe69adfbc487c1f1649b3c788aaedb04c2acfc2a9481",
+      "bytes": 13454,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/support/cmake/FindSetEnv.cmake": {
+      "sha256": "eb73df3d87a30b64a2830433eeb24b1a827387405185239424c74acbbd8b9273",
+      "bytes": 306,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/support/cmake/JoinPaths.cmake": {
+      "sha256": "ec6d5f27c135c075dcd3a9e1f8c8b97ce88758399e480c2cc50464dbffd86d09",
+      "bytes": 985,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/add-subdirectory-test/CMakeLists.txt": {
+      "sha256": "dae26d0c7208ce959195f9e2cb920cb116adc841c30ef1279bd2ff06d0e01d46",
+      "bytes": 612,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/compile-error-test/CMakeLists.txt": {
+      "sha256": "c33eaa44d1a3a60b97e853f9e8435f9703772faa4d86743d3336e6a1e44d87d2",
+      "bytes": 7084,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/cuda-test/CMakeLists.txt": {
+      "sha256": "9fc1613c37b61a6dc67056ad67868828924ec60a4429837ca8ef9d2ed6ab7813",
+      "bytes": 3437,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/find-package-test/CMakeLists.txt": {
+      "sha256": "adb399bad0355162ce33e020010cbc6ee7b665f57d775df7b51fdc537f5190cc",
+      "bytes": 607,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/fuzzing/CMakeLists.txt": {
+      "sha256": "633ccc354d61732b2687c2dbe8e82fbb4aa61a1831103a335829824749b39e79",
+      "bytes": 1255,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/gtest/CMakeLists.txt": {
+      "sha256": "41650710980e80d9f2dc2e7fede459b1b68cb672d3108199eaef07f140ba4ac8",
+      "bytes": 1323,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/static-export-test/CMakeLists.txt": {
+      "sha256": "f4b5ca4bd427857f2ef3751069230cfb299fd3f5287ec7761fc563b2095b7fa5",
+      "bytes": 843,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/rabbitizer.hpp": {
+      "sha256": "e202ecfdfaf9fa4d8b0a5dfffcecee28907b62bb3a45dfd43ac1f2b5d047f3ce",
+      "bytes": 774,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/analysis/LoPairingInfo.hpp": {
+      "sha256": "dbb28899983a0d138a77c9b88a777d7674a6486ce5ac83f1d0fdecfb96698893",
+      "bytes": 949,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/analysis/RegistersTracker.hpp": {
+      "sha256": "c6a2d713ade3bd51b88d63638308f4ed3083a6dfb807e675c5437bdd7c6f8e18",
+      "bytes": 2051,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/generated/AccessType_enum_class.hpp": {
+      "sha256": "55cf22c6bba2868843d2428c4f9ec31df81db8d91339086495e928b07622f603",
+      "bytes": 383,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/generated/InstrIdType_enum_class.hpp": {
+      "sha256": "7abe32235b15c82bfc1c4e060797c3354a6c11bcbbe6985b34979ddfa271c8f0",
+      "bytes": 1244,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/generated/OperandType_enum_class.hpp": {
+      "sha256": "a1516bc3f3776bbd9930f9e27447363da10a9a357826497d9809d44946fa26fb",
+      "bytes": 1612,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/generated/Registers_enum_classes.hpp": {
+      "sha256": "de10b33f95e025e7253f9c59b0075b575e80272348435cd0610d7ce55b9bb9cf",
+      "bytes": 9903,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/generated/UniqueId_enum_class.hpp": {
+      "sha256": "685dcf5072d563f25640967e72d4a2f5ac4b992596f7b32729873e8ace7323b4",
+      "bytes": 12948,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/AccessType.hpp": {
+      "sha256": "85b9b7e2e449a8f5db47152f0fea8b7511e968705ffce7781eb6b2b725645bf6",
+      "bytes": 277,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstrId.hpp": {
+      "sha256": "6d6f49f6403b6f476984113d659098bc7bdfe040fdf285d605b2960165bd0136",
+      "bytes": 378,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstrIdType.hpp": {
+      "sha256": "f32e8194fe07ff63f44ce5240d7ffd8b54f20a93421c172d016d691ea7e52b92",
+      "bytes": 387,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionBase.hpp": {
+      "sha256": "df3d3ce1dcc95ee674e8a8b19032458f1cd968085a466235d712c99b82362c8d",
+      "bytes": 8229,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionCpu.hpp": {
+      "sha256": "6511b4491700545bcbdaf7c0e1bf8fe9b9b92a17af634df5c4f26c05147d475f",
+      "bytes": 436,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionR3000GTE.hpp": {
+      "sha256": "45064843403be387bb3d70662a70e65d3eab681588a8185bc3342d32c2973f56",
+      "bytes": 713,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionR5900.hpp": {
+      "sha256": "da60768d9d4290510abd9ac25ad6cb9c24457f468acd691edaf9d413f56a113f",
+      "bytes": 1178,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionRsp.hpp": {
+      "sha256": "6f6b9429450b5f28beb611ec0bcf04a693ad2f9a696f1af32763218f7323a24c",
+      "bytes": 1075,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/OperandType.hpp": {
+      "sha256": "666ae3eefcbe813b9ec5f37d0dceb9767f7692dd2c973f16a54992e340d5456a",
+      "bytes": 280,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/Registers.hpp": {
+      "sha256": "0a56031c311e4e2867074574b5dee0ca212fcc4ec370948f78eb8e9d304085c3",
+      "bytes": 307,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/analysis/LoPairingInfo.cpp": {
+      "sha256": "7d3027c65ba61336d0dc2c1b408b291e0f9017a50ad212682422fcc9276f09e2",
+      "bytes": 959,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/analysis/RegistersTracker.cpp": {
+      "sha256": "99e22c83a4db18051e57e41a1a69a4f2a8dfc4abadbbc2adfdb5287175cb276d",
+      "bytes": 3401,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstrId.cpp": {
+      "sha256": "e6edd4cfe7736716c28be0db322deb8bfeb212b223eac9cd121b39d3264a7052",
+      "bytes": 419,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstrIdType.cpp": {
+      "sha256": "c3c80a87b0b9119e8ddea6b0fd6ed9f0cae6ef55c99604afbd9ee0f625e0efa3",
+      "bytes": 390,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionBase.cpp": {
+      "sha256": "d9cf51fdd6d5dccedf3d94272650996aaf2052a264634758ece0fd16af7f835a",
+      "bytes": 39933,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionCpu.cpp": {
+      "sha256": "aaa42abbd3d9b6b85f183d87631b81cf3724309380ef58cdebe509b1cde17830",
+      "bytes": 472,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionR3000GTE.cpp": {
+      "sha256": "b1b8fff42d2b0e7a27851b01404fe9fa952f1166d2313d0135fbc1f83828d24b",
+      "bytes": 1262,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionR5900.cpp": {
+      "sha256": "6d06678e0c3c112d9ec67fff9f912f4608514d5197f54682ff8c16c4523fb003",
+      "bytes": 4087,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionRsp.cpp": {
+      "sha256": "effb53d51828ec806005083d7300ea1993efaf82c3ea5f62b92900d201a782dd",
+      "bytes": 4577,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/analysis/RabbitizerLoPairingInfo.h": {
+      "sha256": "754f55691ad2b1e3a886290abb38eaeeb60e7592518e5efe23d4e1bbf6cd5731",
+      "bytes": 690,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/analysis/RabbitizerRegistersTracker.h": {
+      "sha256": "64ee90f57c0b0a767c933d765e987f1ebe13c52545d76f18435d0283d502218c",
+      "bytes": 3211,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/analysis/RabbitizerTrackedRegisterState.h": {
+      "sha256": "08b0f7eaa7d7c80018f0b4d942b2a8ee986a4c41b85412a127f51aafd966ec72",
+      "bytes": 2582,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/common/RabbitizerConfig.h": {
+      "sha256": "f63e3d98fa137d86120af38a48ded50a00d1360f8847051e3e861ec5a6f63753",
+      "bytes": 3047,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/common/RabbitizerVersion.h": {
+      "sha256": "adcb2edcf1ff32bbbf1d9891b4f71ea8623d2a70733ebc0a67d292a8c17bf6ff",
+      "bytes": 786,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/common/Utils.h": {
+      "sha256": "eeca5227b170f41d1368d81ffc6b2873badd7595cba36dda0a14f6995c758ddf",
+      "bytes": 4069,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/Abi_enum.h": {
+      "sha256": "237bff232555968e9a9c3603a312fb8c0d86401dd5e80682a3e6a40b2a04fbf1",
+      "bytes": 396,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/AccessType_enum.h": {
+      "sha256": "0a076c71965d238caeb25a53ec209379e6934d5e01bf5949e892bdc155e76fd3",
+      "bytes": 520,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrCategory_enum.h": {
+      "sha256": "d22f6fad28162e9eaad1f4bc2a281e4555341d36fca2d09481ef26fd62d4d934",
+      "bytes": 464,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrCategory_Names_array.h": {
+      "sha256": "8750b1074b21bdae04b633b704b32197e44c5961bf88f1bc5cb7e48153bc6fa6",
+      "bytes": 486,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrDescriptor_Descriptors_array.h": {
+      "sha256": "f6c6bf6e753f0a615518091c5062b05d0bdd52475f5179ca123ad2e6ca2ae665",
+      "bytes": 114791,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_enum.h": {
+      "sha256": "98e5e30533c86b9763c2dc9b9a4a829885c80ea6f9171baecea6581982a3baaf",
+      "bytes": 2171,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_Names_array.h": {
+      "sha256": "7d16c87aae887cf02385c4ebb9f1c96110972af2a1666993316bfa00cde2ae41",
+      "bytes": 3453,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrId_enum.h": {
+      "sha256": "fa0b1ed2e21e735ce3828b6fa77ea7d3c1683e5a73100b797fdbafa6fcf3c483",
+      "bytes": 27499,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrId_Names_array.h": {
+      "sha256": "8adfe9a8767444095f0ef1c929488a5c406abb6ae128006a919034b9954b154f",
+      "bytes": 36402,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/instrOpercandCallbacks_array.h": {
+      "sha256": "a0c4048b7db44d412a2c79ed50d91b4b2699c8b3f4797ff89bf4e5d62918e87e",
+      "bytes": 5833,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrSuffix_enum.h": {
+      "sha256": "0d21d400286f22da925b916b5bc3ece6c2e9ff230ecf27009d457c1d8d0cebd3",
+      "bytes": 390,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/OperandType_enum.h": {
+      "sha256": "9bfd5a66e8fea5e8b6d59b8631d4fc46bdc17280fb2f53b6b2ef1a7439df4915",
+      "bytes": 2530,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/OperandType_function_declarations.h": {
+      "sha256": "08db88613b86be86d9926a5ef3f93c0d7f8116a57553b96c6745ca3e168eca0d",
+      "bytes": 11934,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/RegisterDescriptor_Descriptors_arrays.h": {
+      "sha256": "1f997de13382fc437c46879e7b2531d4599930fc463594b82a275433711ea7ca",
+      "bytes": 24026,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/Registers_enums.h": {
+      "sha256": "25fb8a8217e19388b274a222dfe8bb2845cac6ee3b9c52b975102e9c4ebada64",
+      "bytes": 17265,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/Registers_Names_arrays.h": {
+      "sha256": "ad3a09ff0c171813abb611bfa89454fd2a0df9e91a15fc41ddb5bb4094ab64c7",
+      "bytes": 29902,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerAccessType.h": {
+      "sha256": "63518ab26818e4bf482135a91da15246dbb6b68eeda580da32c8c0f0e44b136b",
+      "bytes": 310,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrCategory.h": {
+      "sha256": "d9ea6a9495233c87439080173d7d28f061a7560ca78e57ed6b104492b3d5d95a",
+      "bytes": 460,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrDescriptor.h": {
+      "sha256": "03c1b262a3a7bbbceca70f5f1e697367d95faadde3cc1e930eef1d81283f664d",
+      "bytes": 9182,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrId.h": {
+      "sha256": "c276b9396c72e1eb91feb22c3d37b08a95bcc6d07240e79664a74f39ad8f20f0",
+      "bytes": 595,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrIdType.h": {
+      "sha256": "d25c4ce5d1c4776a862b51eda070fbfc1918e845f1df291f982a8036b5d624c2",
+      "bytes": 485,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrSuffix.h": {
+      "sha256": "9b849a469e867aea1fd5a1fe8d61cdf57bc3495abe912d9b0a7789db4c014c2f",
+      "bytes": 700,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstruction.h": {
+      "sha256": "000814e0f3013c3418db1a3124fb94c9c0d45a5a86064d8ab798bfa2dc4cb108",
+      "bytes": 12195,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstructionR3000GTE.h": {
+      "sha256": "d6a6fbd111f76fe5f67ca010fa73c86ca602a872d0941f04abdb1440e805beea",
+      "bytes": 2412,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstructionR5900.h": {
+      "sha256": "83dfe2818b346168abed28c05164a755abe94ed91a1014de35d9e303242d4a59",
+      "bytes": 4513,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstructionRsp.h": {
+      "sha256": "7582d3a0149827ffb1fa42033fecd9bad9369b36afcb64666093c5e0c471a4f9",
+      "bytes": 2758,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerOperandType.h": {
+      "sha256": "2dbdb2b4d158c08960f6a536ebed8afd0e1fe2150c86e42f3f4f962f3c433d00",
+      "bytes": 629,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerRegister.h": {
+      "sha256": "705dea96d1f5168cbe7032e62045b5ec1784e1a5bade726de8f965b31b487466",
+      "bytes": 4060,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerRegisterDescriptor.h": {
+      "sha256": "4ac2873626d7fdd7cd2990c879e9de17eb3bae90474ef3fcd36543d9e8f0212a",
+      "bytes": 3782,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/analysis/RabbitizerLoPairingInfo.c": {
+      "sha256": "390b419e966b1e2678cbb2715e7232dd598d05d7ca01afe539728ab01b40d36e",
+      "bytes": 402,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/analysis/RabbitizerRegistersTracker.c": {
+      "sha256": "7d9fa472002dc9fab96255fc14ce173769299c6d4ce96fa0da3b4948148272fd",
+      "bytes": 14039,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/analysis/RabbitizerTrackedRegisterState.c": {
+      "sha256": "b047fa2f1c15c944f632d3464aba5c1229f3e1d2dcbfd9cdcdc4eaf925aa289b",
+      "bytes": 5098,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/common/RabbitizerConfig.c": {
+      "sha256": "08fb356899e36911d407cb0ed90369cee9157987793a00e2de0091ae1d6ed4a0",
+      "bytes": 1519,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/common/RabbitizerVersion.c": {
+      "sha256": "3747a8776d3444ab2062435dc9cf14b00eb03fb4d936aaea8fc8a3864a9eee5d",
+      "bytes": 393,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/common/Utils.c": {
+      "sha256": "5daa29f1bbb0d13175f9bfc93a0b0891d070b0a545f45dcabd41431ceba1b11e",
+      "bytes": 2295,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrCategory.c": {
+      "sha256": "ad76762731d4c32bb6fe360b804357e5e4232057b770ba38e2fdc132500af7a2",
+      "bytes": 615,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrDescriptor.c": {
+      "sha256": "063e66a606e3d7b1916dc5b60bb9a93c67c3adf18671ecdf3ce7cf38e8e5a913",
+      "bytes": 22619,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrId.c": {
+      "sha256": "48dc76ff7148edb81cc05ef3a5c8b8c096ad262935709e3462d6c68d336224d7",
+      "bytes": 1127,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrIdType.c": {
+      "sha256": "59f4d947b9c3e3e8a665353b85b1f0866fe8b4645b68cec7d02f40f4f9de6e3a",
+      "bytes": 501,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrSuffix.c": {
+      "sha256": "89373bd3227964289bac16eb7e174cd0f3994eb281b77cd726d21f7306b13a0c",
+      "bytes": 2298,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegister.c": {
+      "sha256": "70f44608b3a4117f53377b7df19c7d324855c47b2ad889899d43f874555aada3",
+      "bytes": 8380,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegisterDescriptor.c": {
+      "sha256": "13aa76881dbbcde48c1c445d9cde688bcbbbb9f5c9968e48099b97caede8a55c",
+      "bytes": 1705,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction.c": {
+      "sha256": "764af5906a7e26934d6ff92d8684f45bbfdaaaebb8ad8a126168b670fda2d08b",
+      "bytes": 16637,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction_Disassemble.c": {
+      "sha256": "c75e8d73942daaf93106dc90774d6e25cace83b34f13fa75bcbe5c286cb2f1f2",
+      "bytes": 8109,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction_Examination.c": {
+      "sha256": "bde4628a92b72632cd28b1afd98d57c8cdee71765e85e78c16d1fdb21a6ee66b",
+      "bytes": 18445,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction_Operand.c": {
+      "sha256": "0eb1f857802d8094e74e9471dfdabb0d3423dc52b7f9faa31c500ed3eb03567d",
+      "bytes": 2687,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction_ProcessUniqueId.c": {
+      "sha256": "befa4516a9d48b915727e9a89a6a10facb5655fabef355524e00118816569c90",
+      "bytes": 11384,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionCpu/RabbitizerInstructionCpu_OperandType.c": {
+      "sha256": "fcd7a888fe72be19e76f8f191f0095fb239e39122ac3015e5d588fc52f5e8de9",
+      "bytes": 11448,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR3000GTE/RabbitizerInstructionR3000GTE.c": {
+      "sha256": "a1e3907aaf4e5ccef7a5c2613af654aec6a8241ab47ce198882d85b8b67aad62",
+      "bytes": 627,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR3000GTE/RabbitizerInstructionR3000GTE_OperandType.c": {
+      "sha256": "7af06fd25e8b2704bebaeeba82f3d5b1157980c9cfd7e4c55ad5438d1d01f427",
+      "bytes": 2051,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR3000GTE/RabbitizerInstructionR3000GTE_ProcessUniqueId.c": {
+      "sha256": "66b16cd928dd304ec1f000bf460477dfa09ae432984d0277c183773c21137605",
+      "bytes": 4878,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR5900/RabbitizerInstructionR5900.c": {
+      "sha256": "eb756ced1084cd69abb1cd4847ce0e91098fbfbbf160297ad5e5b4daec480418",
+      "bytes": 617,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR5900/RabbitizerInstructionR5900_OperandType.c": {
+      "sha256": "81eecd9ea0dd894d194300121356a79d99e88f7bd78ab3702b6c4a7b341ac322",
+      "bytes": 19166,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR5900/RabbitizerInstructionR5900_ProcessUniqueId.c": {
+      "sha256": "a637c79448112564fe558dcf199583e28688ce70b0b46cadd01cfe2081a3ed3a",
+      "bytes": 11506,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionRsp/RabbitizerInstructionRsp.c": {
+      "sha256": "5bc61af95181464adc091d8cc8f9a512d33751c74f16b49985864c8e3157189f",
+      "bytes": 1935,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionRsp/RabbitizerInstructionRsp_OperandType.c": {
+      "sha256": "2eabbd4845ef8fe71bf641bed9587dbd521904d29b9c8ef694a91efd240d0ff4",
+      "bytes": 9333,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionRsp/RabbitizerInstructionRsp_ProcessUniqueId.c": {
+      "sha256": "24e4d5ec5aec6adc05cd2e11bd6e2e51d60b6e6f8d455bb2c4ae7eab9bfbab82",
+      "bytes": 8512,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop0.inc": {
+      "sha256": "94731b4d12a2d48c8abd54d663ac2daebfc3315a6ee5b9993007450a88f34fc4",
+      "bytes": 1719,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop0_bc0.inc": {
+      "sha256": "53c645225a6f5103bd27541504ae0866d9e0eb924d2c929ff5b8ea9f582ad43a",
+      "bytes": 1062,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop0_tlb.inc": {
+      "sha256": "724b09b7b8925afe9dd8e8adda2d8da1a7171003d7f7d19b529e7c087240a20d",
+      "bytes": 1091,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1.inc": {
+      "sha256": "5fd80ebce843b818c026e620191cd83a0d4a9b5cb43b70a5b650fdb800c1839f",
+      "bytes": 1814,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_bc1.inc": {
+      "sha256": "9374bc44b8f7066aabf7ee3b21db30097e69676ec07415c5642d6e536126d164",
+      "bytes": 962,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_fpu_d.inc": {
+      "sha256": "805274ba9660639363115fe33e6159283fa2d685d05cbb6c8a0185f717b5c0af",
+      "bytes": 10392,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_fpu_l.inc": {
+      "sha256": "202c31c2accdd00ec0f1ef697740963ee9a542ad7a88ebdfd27e03a578601030",
+      "bytes": 680,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_fpu_s.inc": {
+      "sha256": "3e8f62e7b450c888dd4ff4faa45b8ba7c795f2c1799554119b3c6afad9b711f3",
+      "bytes": 10342,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_fpu_w.inc": {
+      "sha256": "12bb82e28d3df48287af91aa1ce251654ece50361cc9a35050c70adbc014d280",
+      "bytes": 680,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop2.inc": {
+      "sha256": "92baf7b849a3b19c7188e49f5780a8c35ace55c5f971c91055882b67e0c2e49c",
+      "bytes": 755,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_normal.inc": {
+      "sha256": "4e78925eb9e31bf591f45584225c3616ac38a108df20110efffbf1f2a4ee2007",
+      "bytes": 18921,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_regimm.inc": {
+      "sha256": "404fd643ac07c41caec86988e7b01da59b6749c39ffbb82c6cb7e8595f34ad95",
+      "bytes": 4594,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_special.inc": {
+      "sha256": "cc2d653ec1f27fda22ce29b3c5e709d874eb5574a8fd7e28608cee66b6526f61",
+      "bytes": 17863,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r3000gte/r3000gte_cop2_gte.inc": {
+      "sha256": "2ca12a819e586d7a7016781102f00ec5e7f3af8f922f84f11660f914496d4146",
+      "bytes": 2385,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop0_tlb.inc": {
+      "sha256": "2e242ce4758e4f0965e35cf428e871df032fc34b753fa52707e4e09a4e3d5b9f",
+      "bytes": 1281,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop1_fpu_s.inc": {
+      "sha256": "0f270f04472236125cd3c969e029aac0cc74e2ba1a7bc89c2db51bff7b60800e",
+      "bytes": 4453,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop2.inc": {
+      "sha256": "47aeb5be3bac844c4a671fcb126fa3d0696e2b1dc492957b9e4b8557c5c07898",
+      "bytes": 1458,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop2_bc2.inc": {
+      "sha256": "4931d70bceeba9e8a26f57327920d9b0f902cf83fe374ce8aadd89a63fd3bf5e",
+      "bytes": 1443,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop2_special1.inc": {
+      "sha256": "10273ca206ce714432b93096c01f7727b2d4d03090da12daf75254b1f505b456",
+      "bytes": 14522,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop2_special2.inc": {
+      "sha256": "47f28e397311f3ed6406a98ffd0b9f029359f4d426f588130a44de2eeddd5b53",
+      "bytes": 17833,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi.inc": {
+      "sha256": "f1e3e3dbafd2039062266c9a86dc46cbf21ea1d014a51a3e059b65d3685c23af",
+      "bytes": 5802,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi_0.inc": {
+      "sha256": "1e63cae1ce065804b6c67a3968d2a9073d037663952ecd1c9ce54ea7407ed6b1",
+      "bytes": 7043,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi_1.inc": {
+      "sha256": "8bc407f9c17c8a6fc492cba9c0011139e8a35a733dc62cae1df6b62ad18aea1f",
+      "bytes": 5334,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi_2.inc": {
+      "sha256": "02909174ed28d5e0a0f583ac0cae28eb6ad3ee9e69189d191de67bf7cb7c86d8",
+      "bytes": 5896,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi_3.inc": {
+      "sha256": "3ef2e2ea71fbd1b684f73faee118d897808f59ac46521dd2cc3879b5f7898813",
+      "bytes": 3662,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_normal.inc": {
+      "sha256": "68d995a90985fb4c6816324738763d170765aca9be57d154e9025be86cb4a0d6",
+      "bytes": 2437,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_regimm.inc": {
+      "sha256": "b6a56fa14b6ddbb44dc2ee59b5d33afebda50ec40df5fd38f7d8005be80084ac",
+      "bytes": 1258,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_special.inc": {
+      "sha256": "888e6e7d935e472e42050da917a8fb7126fe95d020adab8874d529e7c3688de5",
+      "bytes": 1885,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_cop0.inc": {
+      "sha256": "3034adbe21273321acf6002420005e10d9c8f2d84cff05f7c37448eedcd55482",
+      "bytes": 643,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_cop2.inc": {
+      "sha256": "dc6d128d6926b8bac3350364a6188aaa4356c99095a9702d44eff3a29f67ca92",
+      "bytes": 720,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_cop2_vu.inc": {
+      "sha256": "97331d002903cb82350114c8ff1bf49b4cd11328f6b9cb36ddf2050600b0e9df",
+      "bytes": 6859,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_normal.inc": {
+      "sha256": "e0453a90e484276494d97dc7030a33d92252a877750a7dd24c3bf4a60cce7f0f",
+      "bytes": 8323,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_normal_lwc2.inc": {
+      "sha256": "1335bc6e41614b275c0fc7f862e0a232f0ef841968865b4003bbd0e6e4a582c8",
+      "bytes": 1941,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_normal_swc2.inc": {
+      "sha256": "2e4536686783295436fcb850097154d9b3572cf71c9b58b5171db1e51e7a6c0e",
+      "bytes": 2108,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_regimm.inc": {
+      "sha256": "66fe5e14dc3886101e997f1533a0b9cd7a4d26342e5a0ecb6efcfc7bcca39cdb",
+      "bytes": 1674,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_special.inc": {
+      "sha256": "882a3717abc1fd43b7624cad7be872cfd5266665f87f0f3a086ad0379749aa51",
+      "bytes": 7021,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitConfig.h": {
+      "sha256": "541808ae34fc0cea3cc3458276bf9f2056e139ffa5a23eb271128e9a94ca8ac2",
+      "bytes": 5407,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitConfigCPU.h": {
+      "sha256": "82e11222782421df22e95fa7b41f1961ee37fda2148526970392ef643eefad04",
+      "bytes": 8354,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitConfigInternal.h": {
+      "sha256": "6e8d0f59383baf5355b237e97cff8abea5d87d0badafa13344f18a753909b54e",
+      "bytes": 35631,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitLir.c": {
+      "sha256": "4c0942cc7b83be2c88d3c52cf782ae773e3762c3e1d737b801047e00f620d966",
+      "bytes": 123336,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitLir.h": {
+      "sha256": "a7ef7129353671463679d5734b88a5b4fd1b0c108fcca58fc161e5bd1e8c321e",
+      "bytes": 116071,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitNativeX86_64.c": {
+      "sha256": "76cda87b414a51eb5e1f4f20c2617ae61c990ee6e83a37ea3cf1c9539ec379ee",
+      "bytes": 39956,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitNativeX86_common.c": {
+      "sha256": "1a14da833248e1775f8ee9a4f5ac70f2a9a69ebb0780e343e0db38009f5d6e58",
+      "bytes": 158791,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitSerialize.c": {
+      "sha256": "60fbb68e8504935a25ac266980c99a30a8dcc2a8730b490212a1c2de83ca3644",
+      "bytes": 17594,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitUtils.c": {
+      "sha256": "cc9b272a96caee4871b6d1f467b943ac99f9559fef19550d1bd255839a3855c8",
+      "bytes": 10774,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/allocator_src/sljitExecAllocatorCore.c": {
+      "sha256": "0a7603d61943218feadfe755f63445d43d07e8534622433ff67a65bcfe17303e",
+      "bytes": 11473,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/allocator_src/sljitExecAllocatorWindows.c": {
+      "sha256": "a45c6933e3d6524b21f790110a64bc674b22f033d73a519ef8e5f95e91a00e9f",
+      "bytes": 1848,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/cmake/install-rules.cmake": {
+      "sha256": "7ed72e74208296034948bbdfa6cff5d91f1a2d6195196e1d142eb1f8a8044c9a",
+      "bytes": 1316,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/cmake/project-is-top-level.cmake": {
+      "sha256": "c980f1ad9c0628f47af49b7101b7800571f09f351df2fe2e90234fbfc1d4589c",
+      "bytes": 154,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/cmake/tomlplusplusConfig.cmake": {
+      "sha256": "24872b2425ecd4accabd4f6b150b55bf02516aa2637603c29a0445c3d810f7bb",
+      "bytes": 61,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/cmake/variables.cmake": {
+      "sha256": "2b6c41bab7222a4473095a82b1b3e83e9748d692d3b01fc9a05d2e00a0908aac",
+      "bytes": 674,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/examples/CMakeLists.txt": {
+      "sha256": "8e82789b204106c401df132077768d86227221f7a38874d93593235d57353562",
+      "bytes": 848,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/fuzzing/CMakeLists.txt": {
+      "sha256": "204aa43bb3c9fa8fb3629f90f7464bed1461dcbf0751d34a327e53f4a50b8729",
+      "bytes": 979,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/RSPRecomp/src/rsp_recomp.cpp": {
+      "sha256": "eff0a52bc3be7e3fe3abbb9b7c1bf994e364e55ed2dce5c45bde0a1cf0240d8a",
+      "bytes": 53230,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/concurrentqueue/blockingconcurrentqueue.h": {
+      "sha256": "526c7392a10f8c26bc615fac2fa03b6ce25bc62a2ab6e36cbed8dcb49598b3cf",
+      "bytes": 22098,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/concurrentqueue/concurrentqueue.h": {
+      "sha256": "cdc3daa8b185a6b68f97db8c657c12f2e4b4dd29b76ecde45122f5286fff8a1a",
+      "bytes": 156583,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/concurrentqueue/lightweightsemaphore.h": {
+      "sha256": "6454b8165042bbc5708ef933ebfc63c0b8266d3de832d3e0ebc6cd85490a5380",
+      "bytes": 12181,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/json/json.hpp": {
+      "sha256": "5f09d1eebe9b3557f21df155869af13bcde79b74a0748f82ca946e8cc088aaa0",
+      "bytes": 978962,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/json/LICENSE.MIT": {
+      "sha256": "46a65cffd1ea955132d95a8dd921640714a8d6b537d2e4e482d31145ae95b603",
+      "bytes": 1076,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/CMakeLists.txt": {
+      "sha256": "03e3b1bd5b16d174a77ca74d312897a0446f7bb5f8942d2a39a4ea2eed5cb916",
+      "bytes": 13001,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/LICENSE": {
+      "sha256": "0115478d567121238cf6cc1c0c361926cf07a49d9e4c9e66da97fac6a01646b3",
+      "bytes": 1184,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz.c": {
+      "sha256": "6a0314b68c9b804f33e27d89aa3144ef7724fd787043ba8c95d1b19be2d64afd",
+      "bytes": 26637,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz.h": {
+      "sha256": "27b69ddf7296b7541c843b4d118d341d38cf467b008753f4959b79c5242e81b9",
+      "bytes": 25993,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz.pc.in": {
+      "sha256": "6953f44b2526cb6f6f8770fe862a20825cf0a6dcd98007c8fe241fb4d1c283fe",
+      "bytes": 344,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz_common.h": {
+      "sha256": "a138f04b888199107ba689f9cf13fb09c14b6151a1dfefbffba54c1d146a5a81",
+      "bytes": 2835,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz_tdef.c": {
+      "sha256": "b368132832eebb4680d8849e3b313876c4833bcc9e03f32821665edef9d3f191",
+      "bytes": 76958,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz_tdef.h": {
+      "sha256": "4794b7bb9bd713e7f137244b89a38f3d833d02eb9eea7fb168cd0822107bc796",
+      "bytes": 10921,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz_tinfl.c": {
+      "sha256": "ced7aa650454250544a02f107fad4790c76924cce68d19e9496dcd25588e89b5",
+      "bytes": 41029,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz_tinfl.h": {
+      "sha256": "ef18f995b0151095a0e9ed718114bd03437c607b302ee979a9d371f157bacf8a",
+      "bytes": 8845,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz_zip.c": {
+      "sha256": "29596e5c771bf759dc18d739d23fb520ddd33d4ee206f37f097c1281b353a026",
+      "bytes": 212888,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/miniz/miniz_zip.h": {
+      "sha256": "8c18cb8e0e7644d93dff9b820413bf5feef9fe1806378482614563d7128798ef",
+      "bytes": 27145,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/o1heap/LICENSE": {
+      "sha256": "5ce68de7ce0f15f934746a70ead3cf9999ed902443554648801e4230638c503a",
+      "bytes": 1092,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/LICENSE": {
+      "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+      "bytes": 1389,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/xxh3.h": {
+      "sha256": "a927ee0e6e0800835baed52b16bc981ec39f46287271a1a3f77c22cc48634430",
+      "bytes": 2394,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/xxhash.h": {
+      "sha256": "ccc7934d982bfd4f51624e7fdd93a6c40bc3d5c33f66463b54e70c21932d9129",
+      "bytes": 264481,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/o1heap/o1heap/o1heap.c": {
+      "sha256": "3d165d5a481aac22fbcfd825bc02312f96e136f58cfe086386f94909c938ed65",
+      "bytes": 23366,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/o1heap/o1heap/o1heap.h": {
+      "sha256": "6b17ff0070b6041446781d8bfaa79d4ec19e026aa71e68357da33de2e2461acc",
+      "bytes": 6481,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/o1heap/tests/CMakeLists.txt": {
+      "sha256": "055d9ed0c6d7f83840a109c015c2522cf90d4d97fde93290f829f30f096b4d0b",
+      "bytes": 5227,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/cli/COPYING": {
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/cmake_unofficial/JoinPaths.cmake": {
+      "sha256": "794b0d8fa62a3b798c7df12d50114580d1a47a234bfb6b4d83092eb646a6ecc4",
+      "bytes": 817,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/tests/bench/LICENSE": {
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/tests/collisions/LICENSE": {
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/audio.cpp": {
+      "sha256": "8c101029004d3bbd897063fffefd85a57b6de815707fbe51c0f67e887fcb62ad",
+      "bytes": 2635,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/error_handling.cpp": {
+      "sha256": "9acf9a8eb8b4c1395d50508d11b9a64da2a6f0a255c9cfedb1a4437a75eb7050",
+      "bytes": 969,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/events.cpp": {
+      "sha256": "75010d6546e8a121c6e61c072d4345a9e301e6365359137873dca4e1a71e1386",
+      "bytes": 31283,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/extensions.cpp": {
+      "sha256": "4ba1f9effb332cac06d2177a0c0f92d378431dfbb14187b1053a7009761489a4",
+      "bytes": 2245,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/input.cpp": {
+      "sha256": "f1062f26fed40e395f6cffe37b1846dfcbf81290a62f1b4d8e65cb66ce3fd75c",
+      "bytes": 7889,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/mesgqueue.cpp": {
+      "sha256": "84c8d2af416581237b068c98165b6f3035df03503b4112367a85004bf8c43155",
+      "bytes": 18872,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/misc_ultra.cpp": {
+      "sha256": "0c07e6cd7428b02a4581b516e61a2dc91e014a24e1dd42ebe0888ce76827072c",
+      "bytes": 1338,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/renderer_context.cpp": {
+      "sha256": "5292708947ebbc7fb8b7628f985d2cd0216482830f8b198c58e1e1bd9aa3df35",
+      "bytes": 1922,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/rsp.cpp": {
+      "sha256": "806ac557fc4c06fa1a66da2f5ca42133bfae98e4e3da4fc759f445d3093130a5",
+      "bytes": 530,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/scheduling.cpp": {
+      "sha256": "4b69b9cd2f3b2951a1b3f2b22e177d95e0d1c6918bf5652bfb597667b12a9656",
+      "bytes": 4712,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/task_win32.cpp": {
+      "sha256": "512e3bdb144fc6316b397c0a7f285f02f732055efbc2caa6bad8e9ac646ace57",
+      "bytes": 226,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/threadqueue.cpp": {
+      "sha256": "7bbb4ee1bcaf91a3928b8076dd5875bad83815a3a9092c0603f8d7c867220d4b",
+      "bytes": 7122,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/threads.cpp": {
+      "sha256": "eedb4e3112b1f212b4f73bfb23a6127db22bdb88b2b1f1c4e7cd2a2d5ed717ad",
+      "bytes": 18931,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/timer.cpp": {
+      "sha256": "73f7755bab109fd99cbc5a9bafb4e18122ace5c661a4de3d04d6463442fa52c8",
+      "bytes": 8252,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/src/ultrainit.cpp": {
+      "sha256": "79b50ed07192d3aed7eeba7c081b2411ae6e69bfc736d19e791276345fd9e393",
+      "bytes": 1337,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/config.hpp": {
+      "sha256": "090f7b95c3f438e630482191f485a85bfb57c1fd6a870bc9cece049effd85da0",
+      "bytes": 4658,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/error_handling.hpp": {
+      "sha256": "80e5544bc89129e6c936e78b0e08fc8a5a4f3b58e683a33d9f681372a4311aba",
+      "bytes": 811,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/events.hpp": {
+      "sha256": "a0981686c89587651707a96435fe7840327e8b59eaebe0fda8ec4ee54391aca0",
+      "bytes": 573,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/extensions.h": {
+      "sha256": "4078e5397fadddf07bb316ea4ff577cd26bfc9e5150581a47384b458488565d6",
+      "bytes": 1615,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/input.hpp": {
+      "sha256": "f93f85d4cc788ab88e7ff862f08d8613f747bb561b0bbfa7d87d7c191b138046",
+      "bytes": 2797,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/renderer_context.hpp": {
+      "sha256": "5c24502412e02632d1a22770c3a0c81fb9d8286fb70c68a8d2a7a7c556c7919e",
+      "bytes": 4552,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/rsp.hpp": {
+      "sha256": "784b245e646f4a1958fa9bec5ecb0e939726fce7b082f1e1e699ecb8bb601f89",
+      "bytes": 702,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/threads.hpp": {
+      "sha256": "95f1f01245c0fa07561b2de4c4fc0f5fc03ae8016e8ca9718aa875d19f0fd9a8",
+      "bytes": 1038,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/ultra64.h": {
+      "sha256": "f8cd21c09e2fbc0cdd3ec67ce7c071f2d3bc089f89417be95dfbcb36117cf61b",
+      "bytes": 9631,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/ultramodern.hpp": {
+      "sha256": "0bc26bd14cc662ee3fd497a59420cb66f9e2f7b1132e428c2738f0d72851dae6",
+      "bytes": 7632,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/include/recomp.h": {
+      "sha256": "4efdb9d4dce905618cdd119fffd701fada0d302ad5a7ec1d55059b955be7cebd",
+      "bytes": 16047,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/LiveRecomp/live_generator.cpp": {
+      "sha256": "e1e10a82b7a22b26fe199fb0e7eee592bfe8808cabb9fcbe2a2d5aad03a1b096",
+      "bytes": 85586,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/LiveRecomp/live_recompiler_test.cpp": {
+      "sha256": "7730934b063a775ca48a88dc8ed36e7156346ca13bf006c9f29d070868531d37",
+      "bytes": 13558,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/OfflineModRecomp/main.cpp": {
+      "sha256": "3c20fdd280c2534197b2de84b17fc6563911c6fb112ecc0be1438fa42de3a9e3",
+      "bytes": 11759,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/RecompModMerger/main.cpp": {
+      "sha256": "2d775cb1c552534465b95ee2c2a1fe367880ee0569ccb063ba83683574303abc",
+      "bytes": 12678,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/RecompModTool/main.cpp": {
+      "sha256": "08767d14b638356c76f0d5ca0b97914e36d91731c4f854efc1703c5563cd6398",
+      "bytes": 58871,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/analysis.cpp": {
+      "sha256": "869efd55a4e3dbdb909511327490b10311d9aa484f1c4f3afd60d05bcf39ab60",
+      "bytes": 16373,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/analysis.h": {
+      "sha256": "a9ba3a0454c9037c26c6281c6e7b4d5d1c660357c3c1a95fe61a0d56c73d4c1e",
+      "bytes": 661,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/cgenerator.cpp": {
+      "sha256": "b25a5985d41166b910db2ab54da195543f97befc3d224204f5a6e2ee632220cf",
+      "bytes": 29184,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/config.cpp": {
+      "sha256": "314292412e0e35e72e96a4420155fec5ef831262cb9208a8082840fa336720c2",
+      "bytes": 39456,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/config.h": {
+      "sha256": "fb75e2a321a06ce18da88f908daa54c8168d8e50f406daf1478ffb0edd497276",
+      "bytes": 2772,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/elf.cpp": {
+      "sha256": "1575f99deb63a1691a9042b1ba4c60380318f8f4ea4ea6d67ba90173fd7e6713",
+      "bytes": 37009,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/main.cpp": {
+      "sha256": "50e783992f9ac69eb17d921d5fafa7386f7937bac832c4ce21da353986c50312",
+      "bytes": 52317,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/mdebug.cpp": {
+      "sha256": "80a83de9a5cf38c30947bd6c16a7994ac61e1c3b941d6a451bdadbf10aa14830",
+      "bytes": 32063,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/mdebug.h": {
+      "sha256": "81dc4f35df95e5c19ea06f892519bbedc0eda77dd27426c9b4d17dcfcd76ce5d",
+      "bytes": 18778,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/mod_symbols.cpp": {
+      "sha256": "29ad96e2431dc3ee6f0930b7f8281ba3b2d3d7a6e88a26b78b66631fe226b0a0",
+      "bytes": 35730,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/operations.cpp": {
+      "sha256": "8d5f2ef2ec1c3499af02ebc273416a0d83fb51b4eb7a2780f28df3a4518817d1",
+      "bytes": 23348,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/recompilation.cpp": {
+      "sha256": "302bf66addfa23fb7d81b25c5968f98fb8de01ee49f92454657a76c47a111afa",
+      "bytes": 37888,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/symbol_lists.cpp": {
+      "sha256": "25b1bb7d63cba3d22f5b2239ef14b9301126e70d84b57c706b9b79c718cf2fe1",
+      "bytes": 15147,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/include/recompiler/context.h": {
+      "sha256": "8c86393e22d60dab1ef055670e18422a199c986284d4cc90dba68eafe748436d",
+      "bytes": 27235,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/include/recompiler/generator.h": {
+      "sha256": "4e32eb74ae54c478e3fa5d80c1371eb73919112e91e4f3607e152734519e00f7",
+      "bytes": 6429,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/include/recompiler/operations.h": {
+      "sha256": "4fafbc9dfb57bea6b3e5de16c7483ba52649ae3169735deaad713f15c49ca04f",
+      "bytes": 5250,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/CMakeLists.txt": {
+      "sha256": "10f5006485ff569dc09da361ea87412ebee3a7e819b0af34e06108fe47560761",
+      "bytes": 5165,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/LICENSE.txt": {
+      "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
+      "bytes": 1110,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/ChangeLog.md": {
+      "sha256": "c114c7ec4b4ea4f70e92138a9e494c2a47ad054210f405fa24fca70cac3bd15c",
+      "bytes": 123907,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/CMakeLists.txt": {
+      "sha256": "5b82067a0caea95a88274b7e04d60542198d3c3774a8d9f47bb82a551b753a26",
+      "bytes": 20214,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/LICENSE": {
+      "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
+      "bytes": 1458,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/README.md": {
+      "sha256": "0647c8654668b4961f88dfeadbadc6ae744105c947122e88e554a6c58c4d439e",
+      "bytes": 20167,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/LICENSE": {
+      "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/sljit/CMakeLists.txt": {
+      "sha256": "0c165eb248e1018650867f3e96b1d369160d3caeb1f6a0e2d97db054f12d3f0e",
+      "bytes": 1560,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/sljit/LICENSE": {
+      "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
+      "bytes": 1469,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/CMakeLists.txt": {
+      "sha256": "3af7131a2038870dfe310f3577a54ad0930061a3e48b4cf8dbdc3c16eee225b2",
+      "bytes": 1187,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/LICENSE": {
+      "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio.hpp": {
+      "sha256": "598fa1eb0ff44aaf2d3ac2db55ca8cc6526c7ca14086c8732128d53fb5cf1dda",
+      "bytes": 42538,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_array.hpp": {
+      "sha256": "c0081f5aadf452c68270bdbe140a3c1d87d94408f82e8986dd449b217492fae2",
+      "bytes": 3331,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_dynamic.hpp": {
+      "sha256": "39c4404104f7b16a2cebce505b57added524bb01086e67719a358945a6871804",
+      "bytes": 9225,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_header.hpp": {
+      "sha256": "79e266ffa9b75461a60edbef29610e646cf144efdb9174b6fa4086d62a5b1d3c",
+      "bytes": 6722,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_modinfo.hpp": {
+      "sha256": "8157c1947d945fa7b93db9effe90e558d8cb185f3dd42c17361b51d16ee7f083",
+      "bytes": 4460,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_note.hpp": {
+      "sha256": "17fd9c2366fa930bf2323f129dca5b7629473a73a0d4f131bd0420f077034cff",
+      "bytes": 7491,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_relocation.hpp": {
+      "sha256": "e0579db4f9c2a04c10891c097bbe3683b53eca4bd9cc31a337e296e2f914face",
+      "bytes": 17711,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_section.hpp": {
+      "sha256": "749542c00f4b24bfb2af56a732c0a7a960b1e4acde2b84d8ac6842f7a9632e2e",
+      "bytes": 13465,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_segment.hpp": {
+      "sha256": "aa5a6c393adf235cef473148d8ac8a5a20674386d636f47f6cd4caeb945899c3",
+      "bytes": 9491,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_strings.hpp": {
+      "sha256": "57ba4b69652725fdf2222130d9096fe0d4b21bd9b26a8a254f8cbfb2645e5960",
+      "bytes": 3532,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_symbols.hpp": {
+      "sha256": "0ac986e150db608d3ff3a42fa9df7f11d19b1f79453d0de6a323e4f8a2ed6d63",
+      "bytes": 21859,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_utils.hpp": {
+      "sha256": "cddc1efd945d61e18e08b4f9aa7182864398b3e6c664a6083c21b9a0170563f7",
+      "bytes": 10853,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_version.hpp": {
+      "sha256": "3581f1a568cb5b6cc03bdd0099065cfd23448cf6d05fcbd44bc378f46a24e886",
+      "bytes": 30,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elfio_versym.hpp": {
+      "sha256": "997143a9b6f6b7e19d86c0f1b96015af5dcbb74a96a41b2e8adf33b4b5534dbc",
+      "bytes": 6598,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elf_types.hpp": {
+      "sha256": "a06a2dfdcd3bfcf3f547ef5761fc971a15d0e07a1426023761acfcefb16e5dd3",
+      "bytes": 69954,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/CMakeLists.txt": {
+      "sha256": "a13faf9428188348975b0b00b200df304dcf5d56f457b7d818e7e677ff2a21a1",
+      "bytes": 227,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/add_section/CMakeLists.txt": {
+      "sha256": "7c303e440b7019a3e5ff0641eaccab2639f766853ab81c5fa3e344056559c210",
+      "bytes": 104,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/anonymizer/CMakeLists.txt": {
+      "sha256": "54f1bcc85724724eb43aa9e98758d2a6e0ef701e1a96660aa8e5954c4359a3ed",
+      "bytes": 101,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/c_wrapper/CMakeLists.txt": {
+      "sha256": "f83b42ac53015cbba3ae97f097b99bdec88bd7ce7fa0339597f75fb87d24e4fe",
+      "bytes": 134,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/elfdump/CMakeLists.txt": {
+      "sha256": "a20e90dd6de6fbb9ac7346c0314da6eecc3475f327115c8c2bd5ba94ac813a69",
+      "bytes": 92,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/proc_mem/CMakeLists.txt": {
+      "sha256": "072f4f739dc1cba37b498d3ff00017abd741b73e6e7bf69699d83a4d2fb3191e",
+      "bytes": 95,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/tutorial/CMakeLists.txt": {
+      "sha256": "c92a417fb42284db91d96d628e7e7b5c8e2a661b6d728da21f70e5f2d27f6a3a",
+      "bytes": 95,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/writer/CMakeLists.txt": {
+      "sha256": "f9861c440b206e305248e9c091a1fd0eabcdac94a8bf134b64bb68cbda3ab084",
+      "bytes": 89,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/write_obj/CMakeLists.txt": {
+      "sha256": "cd551b369ee90518a36edc28719ff26e10508eb4414cd638965f8d1699c13a80",
+      "bytes": 98,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/src/format.cc": {
+      "sha256": "934931a6b753c038daf5c0965da6b68cb027b6ced7862af4d3299979d380f616",
+      "bytes": 1264,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/src/os.cc": {
+      "sha256": "575ace8b746cbaabec3a8b007cc961213feaff9851e47cb9f7c9a6efbbb92c8b",
+      "bytes": 11786,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/test/CMakeLists.txt": {
+      "sha256": "2bfef2841af81ba93ae35672c8d091cf0226e791170cac9f4002d7002b7380ad",
+      "bytes": 9405,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/args.h": {
+      "sha256": "02f1406b0736b53154982f570ec2f95ac46b3d8283c2e869a2752ceb5eaf09be",
+      "bytes": 7419,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/base.h": {
+      "sha256": "2af7b54189b9c81383800ed170b827737bbe7780a9c95673184d4ab8944c93bc",
+      "bytes": 108041,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/chrono.h": {
+      "sha256": "3cc67aafe858fbde0bbbaf84a11e306d7a50d97cee3dd1371e066b99bd33c4fc",
+      "bytes": 79700,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/color.h": {
+      "sha256": "755ab15a3411889ed81f7de05114ad087cb5831320b2432e7e65a271baedc26d",
+      "bytes": 24782,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/compile.h": {
+      "sha256": "b08f180128e94ed91ddcb3f3ea7d005b2be961a5a5db031a2b660bfe7731f9ca",
+      "bytes": 21081,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/core.h": {
+      "sha256": "0b5bab04745964219a01a097c9c9975309b198c938abe57a4dd185c8cd24ea12",
+      "bytes": 192,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/format-inl.h": {
+      "sha256": "43fe5420d110b1f8928014dc1a8f392c91b6b8e92b262738c61b6c9360f4cf22",
+      "bytes": 82956,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/format.h": {
+      "sha256": "55d0a18a67244fd48a2544c57f4e243711ee96a0edb0f6a6a1f4d5562a4a2482",
+      "bytes": 167061,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/os.h": {
+      "sha256": "40ee37866e2ab03cd91316f5e09ba640d77fec2b659e68a004c9b094ab538afb",
+      "bytes": 13287,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/ostream.h": {
+      "sha256": "708f7b041916d93d29d5661f2975920d2a14ab59584ce4638befb4320d5c77a5",
+      "bytes": 5194,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/printf.h": {
+      "sha256": "49707b4332e6bb0946d23d46b2af37efb99c4aaf8444c02fd6eaa93554797408",
+      "bytes": 20615,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/ranges.h": {
+      "sha256": "d545f1789f99216bcc305aeba418aafd21f6b68ecf4a3f777a65dd703708b34f",
+      "bytes": 28977,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/std.h": {
+      "sha256": "c6feb0b75238c619be9f8a2606db0d0168196b299a43b3131ddb7ef58d942628",
+      "bytes": 24259,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/include/fmt/xchar.h": {
+      "sha256": "4e6733a236a26cb5bafcfe69adfbc487c1f1649b3c788aaedb04c2acfc2a9481",
+      "bytes": 13454,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/support/cmake/FindSetEnv.cmake": {
+      "sha256": "eb73df3d87a30b64a2830433eeb24b1a827387405185239424c74acbbd8b9273",
+      "bytes": 306,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/support/cmake/JoinPaths.cmake": {
+      "sha256": "ec6d5f27c135c075dcd3a9e1f8c8b97ce88758399e480c2cc50464dbffd86d09",
+      "bytes": 985,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/test/add-subdirectory-test/CMakeLists.txt": {
+      "sha256": "dae26d0c7208ce959195f9e2cb920cb116adc841c30ef1279bd2ff06d0e01d46",
+      "bytes": 612,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/test/compile-error-test/CMakeLists.txt": {
+      "sha256": "c33eaa44d1a3a60b97e853f9e8435f9703772faa4d86743d3336e6a1e44d87d2",
+      "bytes": 7084,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/test/cuda-test/CMakeLists.txt": {
+      "sha256": "9fc1613c37b61a6dc67056ad67868828924ec60a4429837ca8ef9d2ed6ab7813",
+      "bytes": 3437,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/test/find-package-test/CMakeLists.txt": {
+      "sha256": "adb399bad0355162ce33e020010cbc6ee7b665f57d775df7b51fdc537f5190cc",
+      "bytes": 607,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/test/fuzzing/CMakeLists.txt": {
+      "sha256": "633ccc354d61732b2687c2dbe8e82fbb4aa61a1831103a335829824749b39e79",
+      "bytes": 1255,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/test/gtest/CMakeLists.txt": {
+      "sha256": "41650710980e80d9f2dc2e7fede459b1b68cb672d3108199eaef07f140ba4ac8",
+      "bytes": 1323,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/test/static-export-test/CMakeLists.txt": {
+      "sha256": "f4b5ca4bd427857f2ef3751069230cfb299fd3f5287ec7761fc563b2095b7fa5",
+      "bytes": 843,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/rabbitizer.hpp": {
+      "sha256": "e202ecfdfaf9fa4d8b0a5dfffcecee28907b62bb3a45dfd43ac1f2b5d047f3ce",
+      "bytes": 774,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/analysis/LoPairingInfo.hpp": {
+      "sha256": "dbb28899983a0d138a77c9b88a777d7674a6486ce5ac83f1d0fdecfb96698893",
+      "bytes": 949,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/analysis/RegistersTracker.hpp": {
+      "sha256": "c6a2d713ade3bd51b88d63638308f4ed3083a6dfb807e675c5437bdd7c6f8e18",
+      "bytes": 2051,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/generated/AccessType_enum_class.hpp": {
+      "sha256": "55cf22c6bba2868843d2428c4f9ec31df81db8d91339086495e928b07622f603",
+      "bytes": 383,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/generated/InstrIdType_enum_class.hpp": {
+      "sha256": "7abe32235b15c82bfc1c4e060797c3354a6c11bcbbe6985b34979ddfa271c8f0",
+      "bytes": 1244,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/generated/OperandType_enum_class.hpp": {
+      "sha256": "a1516bc3f3776bbd9930f9e27447363da10a9a357826497d9809d44946fa26fb",
+      "bytes": 1612,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/generated/Registers_enum_classes.hpp": {
+      "sha256": "de10b33f95e025e7253f9c59b0075b575e80272348435cd0610d7ce55b9bb9cf",
+      "bytes": 9903,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/generated/UniqueId_enum_class.hpp": {
+      "sha256": "685dcf5072d563f25640967e72d4a2f5ac4b992596f7b32729873e8ace7323b4",
+      "bytes": 12948,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/AccessType.hpp": {
+      "sha256": "85b9b7e2e449a8f5db47152f0fea8b7511e968705ffce7781eb6b2b725645bf6",
+      "bytes": 277,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstrId.hpp": {
+      "sha256": "6d6f49f6403b6f476984113d659098bc7bdfe040fdf285d605b2960165bd0136",
+      "bytes": 378,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstrIdType.hpp": {
+      "sha256": "f32e8194fe07ff63f44ce5240d7ffd8b54f20a93421c172d016d691ea7e52b92",
+      "bytes": 387,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionBase.hpp": {
+      "sha256": "df3d3ce1dcc95ee674e8a8b19032458f1cd968085a466235d712c99b82362c8d",
+      "bytes": 8229,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionCpu.hpp": {
+      "sha256": "6511b4491700545bcbdaf7c0e1bf8fe9b9b92a17af634df5c4f26c05147d475f",
+      "bytes": 436,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionR3000GTE.hpp": {
+      "sha256": "45064843403be387bb3d70662a70e65d3eab681588a8185bc3342d32c2973f56",
+      "bytes": 713,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionR5900.hpp": {
+      "sha256": "da60768d9d4290510abd9ac25ad6cb9c24457f468acd691edaf9d413f56a113f",
+      "bytes": 1178,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/InstructionRsp.hpp": {
+      "sha256": "6f6b9429450b5f28beb611ec0bcf04a693ad2f9a696f1af32763218f7323a24c",
+      "bytes": 1075,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/OperandType.hpp": {
+      "sha256": "666ae3eefcbe813b9ec5f37d0dceb9767f7692dd2c973f16a54992e340d5456a",
+      "bytes": 280,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/Registers.hpp": {
+      "sha256": "0a56031c311e4e2867074574b5dee0ca212fcc4ec370948f78eb8e9d304085c3",
+      "bytes": 307,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/analysis/LoPairingInfo.cpp": {
+      "sha256": "7d3027c65ba61336d0dc2c1b408b291e0f9017a50ad212682422fcc9276f09e2",
+      "bytes": 959,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/analysis/RegistersTracker.cpp": {
+      "sha256": "99e22c83a4db18051e57e41a1a69a4f2a8dfc4abadbbc2adfdb5287175cb276d",
+      "bytes": 3401,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstrId.cpp": {
+      "sha256": "e6edd4cfe7736716c28be0db322deb8bfeb212b223eac9cd121b39d3264a7052",
+      "bytes": 419,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstrIdType.cpp": {
+      "sha256": "c3c80a87b0b9119e8ddea6b0fd6ed9f0cae6ef55c99604afbd9ee0f625e0efa3",
+      "bytes": 390,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionBase.cpp": {
+      "sha256": "d9cf51fdd6d5dccedf3d94272650996aaf2052a264634758ece0fd16af7f835a",
+      "bytes": 39933,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionCpu.cpp": {
+      "sha256": "aaa42abbd3d9b6b85f183d87631b81cf3724309380ef58cdebe509b1cde17830",
+      "bytes": 472,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionR3000GTE.cpp": {
+      "sha256": "b1b8fff42d2b0e7a27851b01404fe9fa952f1166d2313d0135fbc1f83828d24b",
+      "bytes": 1262,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionR5900.cpp": {
+      "sha256": "6d06678e0c3c112d9ec67fff9f912f4608514d5197f54682ff8c16c4523fb003",
+      "bytes": 4087,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/instructions/InstructionRsp.cpp": {
+      "sha256": "effb53d51828ec806005083d7300ea1993efaf82c3ea5f62b92900d201a782dd",
+      "bytes": 4577,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/analysis/RabbitizerLoPairingInfo.h": {
+      "sha256": "754f55691ad2b1e3a886290abb38eaeeb60e7592518e5efe23d4e1bbf6cd5731",
+      "bytes": 690,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/analysis/RabbitizerRegistersTracker.h": {
+      "sha256": "64ee90f57c0b0a767c933d765e987f1ebe13c52545d76f18435d0283d502218c",
+      "bytes": 3211,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/analysis/RabbitizerTrackedRegisterState.h": {
+      "sha256": "08b0f7eaa7d7c80018f0b4d942b2a8ee986a4c41b85412a127f51aafd966ec72",
+      "bytes": 2582,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/common/RabbitizerConfig.h": {
+      "sha256": "f63e3d98fa137d86120af38a48ded50a00d1360f8847051e3e861ec5a6f63753",
+      "bytes": 3047,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/common/RabbitizerVersion.h": {
+      "sha256": "adcb2edcf1ff32bbbf1d9891b4f71ea8623d2a70733ebc0a67d292a8c17bf6ff",
+      "bytes": 786,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/common/Utils.h": {
+      "sha256": "eeca5227b170f41d1368d81ffc6b2873badd7595cba36dda0a14f6995c758ddf",
+      "bytes": 4069,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/Abi_enum.h": {
+      "sha256": "237bff232555968e9a9c3603a312fb8c0d86401dd5e80682a3e6a40b2a04fbf1",
+      "bytes": 396,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/AccessType_enum.h": {
+      "sha256": "0a076c71965d238caeb25a53ec209379e6934d5e01bf5949e892bdc155e76fd3",
+      "bytes": 520,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrCategory_enum.h": {
+      "sha256": "d22f6fad28162e9eaad1f4bc2a281e4555341d36fca2d09481ef26fd62d4d934",
+      "bytes": 464,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrCategory_Names_array.h": {
+      "sha256": "8750b1074b21bdae04b633b704b32197e44c5961bf88f1bc5cb7e48153bc6fa6",
+      "bytes": 486,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrDescriptor_Descriptors_array.h": {
+      "sha256": "f6c6bf6e753f0a615518091c5062b05d0bdd52475f5179ca123ad2e6ca2ae665",
+      "bytes": 114791,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_enum.h": {
+      "sha256": "98e5e30533c86b9763c2dc9b9a4a829885c80ea6f9171baecea6581982a3baaf",
+      "bytes": 2171,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_Names_array.h": {
+      "sha256": "7d16c87aae887cf02385c4ebb9f1c96110972af2a1666993316bfa00cde2ae41",
+      "bytes": 3453,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrId_enum.h": {
+      "sha256": "fa0b1ed2e21e735ce3828b6fa77ea7d3c1683e5a73100b797fdbafa6fcf3c483",
+      "bytes": 27499,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrId_Names_array.h": {
+      "sha256": "8adfe9a8767444095f0ef1c929488a5c406abb6ae128006a919034b9954b154f",
+      "bytes": 36402,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/instrOpercandCallbacks_array.h": {
+      "sha256": "a0c4048b7db44d412a2c79ed50d91b4b2699c8b3f4797ff89bf4e5d62918e87e",
+      "bytes": 5833,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrSuffix_enum.h": {
+      "sha256": "0d21d400286f22da925b916b5bc3ece6c2e9ff230ecf27009d457c1d8d0cebd3",
+      "bytes": 390,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/OperandType_enum.h": {
+      "sha256": "9bfd5a66e8fea5e8b6d59b8631d4fc46bdc17280fb2f53b6b2ef1a7439df4915",
+      "bytes": 2530,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/OperandType_function_declarations.h": {
+      "sha256": "08db88613b86be86d9926a5ef3f93c0d7f8116a57553b96c6745ca3e168eca0d",
+      "bytes": 11934,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/RegisterDescriptor_Descriptors_arrays.h": {
+      "sha256": "1f997de13382fc437c46879e7b2531d4599930fc463594b82a275433711ea7ca",
+      "bytes": 24026,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/Registers_enums.h": {
+      "sha256": "25fb8a8217e19388b274a222dfe8bb2845cac6ee3b9c52b975102e9c4ebada64",
+      "bytes": 17265,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/Registers_Names_arrays.h": {
+      "sha256": "ad3a09ff0c171813abb611bfa89454fd2a0df9e91a15fc41ddb5bb4094ab64c7",
+      "bytes": 29902,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerAccessType.h": {
+      "sha256": "63518ab26818e4bf482135a91da15246dbb6b68eeda580da32c8c0f0e44b136b",
+      "bytes": 310,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrCategory.h": {
+      "sha256": "d9ea6a9495233c87439080173d7d28f061a7560ca78e57ed6b104492b3d5d95a",
+      "bytes": 460,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrDescriptor.h": {
+      "sha256": "03c1b262a3a7bbbceca70f5f1e697367d95faadde3cc1e930eef1d81283f664d",
+      "bytes": 9182,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrId.h": {
+      "sha256": "c276b9396c72e1eb91feb22c3d37b08a95bcc6d07240e79664a74f39ad8f20f0",
+      "bytes": 595,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrIdType.h": {
+      "sha256": "d25c4ce5d1c4776a862b51eda070fbfc1918e845f1df291f982a8036b5d624c2",
+      "bytes": 485,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstrSuffix.h": {
+      "sha256": "9b849a469e867aea1fd5a1fe8d61cdf57bc3495abe912d9b0a7789db4c014c2f",
+      "bytes": 700,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstruction.h": {
+      "sha256": "000814e0f3013c3418db1a3124fb94c9c0d45a5a86064d8ab798bfa2dc4cb108",
+      "bytes": 12195,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstructionR3000GTE.h": {
+      "sha256": "d6a6fbd111f76fe5f67ca010fa73c86ca602a872d0941f04abdb1440e805beea",
+      "bytes": 2412,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstructionR5900.h": {
+      "sha256": "83dfe2818b346168abed28c05164a755abe94ed91a1014de35d9e303242d4a59",
+      "bytes": 4513,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerInstructionRsp.h": {
+      "sha256": "7582d3a0149827ffb1fa42033fecd9bad9369b36afcb64666093c5e0c471a4f9",
+      "bytes": 2758,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerOperandType.h": {
+      "sha256": "2dbdb2b4d158c08960f6a536ebed8afd0e1fe2150c86e42f3f4f962f3c433d00",
+      "bytes": 629,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerRegister.h": {
+      "sha256": "705dea96d1f5168cbe7032e62045b5ec1784e1a5bade726de8f965b31b487466",
+      "bytes": 4060,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/instructions/RabbitizerRegisterDescriptor.h": {
+      "sha256": "4ac2873626d7fdd7cd2990c879e9de17eb3bae90474ef3fcd36543d9e8f0212a",
+      "bytes": 3782,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/analysis/RabbitizerLoPairingInfo.c": {
+      "sha256": "390b419e966b1e2678cbb2715e7232dd598d05d7ca01afe539728ab01b40d36e",
+      "bytes": 402,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/analysis/RabbitizerRegistersTracker.c": {
+      "sha256": "7d9fa472002dc9fab96255fc14ce173769299c6d4ce96fa0da3b4948148272fd",
+      "bytes": 14039,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/analysis/RabbitizerTrackedRegisterState.c": {
+      "sha256": "b047fa2f1c15c944f632d3464aba5c1229f3e1d2dcbfd9cdcdc4eaf925aa289b",
+      "bytes": 5098,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/common/RabbitizerConfig.c": {
+      "sha256": "08fb356899e36911d407cb0ed90369cee9157987793a00e2de0091ae1d6ed4a0",
+      "bytes": 1519,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/common/RabbitizerVersion.c": {
+      "sha256": "3747a8776d3444ab2062435dc9cf14b00eb03fb4d936aaea8fc8a3864a9eee5d",
+      "bytes": 393,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/common/Utils.c": {
+      "sha256": "5daa29f1bbb0d13175f9bfc93a0b0891d070b0a545f45dcabd41431ceba1b11e",
+      "bytes": 2295,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrCategory.c": {
+      "sha256": "ad76762731d4c32bb6fe360b804357e5e4232057b770ba38e2fdc132500af7a2",
+      "bytes": 615,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrDescriptor.c": {
+      "sha256": "063e66a606e3d7b1916dc5b60bb9a93c67c3adf18671ecdf3ce7cf38e8e5a913",
+      "bytes": 22619,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrId.c": {
+      "sha256": "48dc76ff7148edb81cc05ef3a5c8b8c096ad262935709e3462d6c68d336224d7",
+      "bytes": 1127,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrIdType.c": {
+      "sha256": "59f4d947b9c3e3e8a665353b85b1f0866fe8b4645b68cec7d02f40f4f9de6e3a",
+      "bytes": 501,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrSuffix.c": {
+      "sha256": "89373bd3227964289bac16eb7e174cd0f3994eb281b77cd726d21f7306b13a0c",
+      "bytes": 2298,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegister.c": {
+      "sha256": "70f44608b3a4117f53377b7df19c7d324855c47b2ad889899d43f874555aada3",
+      "bytes": 8380,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegisterDescriptor.c": {
+      "sha256": "13aa76881dbbcde48c1c445d9cde688bcbbbb9f5c9968e48099b97caede8a55c",
+      "bytes": 1705,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction.c": {
+      "sha256": "764af5906a7e26934d6ff92d8684f45bbfdaaaebb8ad8a126168b670fda2d08b",
+      "bytes": 16637,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction_Disassemble.c": {
+      "sha256": "c75e8d73942daaf93106dc90774d6e25cace83b34f13fa75bcbe5c286cb2f1f2",
+      "bytes": 8109,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction_Examination.c": {
+      "sha256": "bde4628a92b72632cd28b1afd98d57c8cdee71765e85e78c16d1fdb21a6ee66b",
+      "bytes": 18445,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction_Operand.c": {
+      "sha256": "0eb1f857802d8094e74e9471dfdabb0d3423dc52b7f9faa31c500ed3eb03567d",
+      "bytes": 2687,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction_ProcessUniqueId.c": {
+      "sha256": "befa4516a9d48b915727e9a89a6a10facb5655fabef355524e00118816569c90",
+      "bytes": 11384,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionCpu/RabbitizerInstructionCpu_OperandType.c": {
+      "sha256": "fcd7a888fe72be19e76f8f191f0095fb239e39122ac3015e5d588fc52f5e8de9",
+      "bytes": 11448,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR3000GTE/RabbitizerInstructionR3000GTE.c": {
+      "sha256": "a1e3907aaf4e5ccef7a5c2613af654aec6a8241ab47ce198882d85b8b67aad62",
+      "bytes": 627,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR3000GTE/RabbitizerInstructionR3000GTE_OperandType.c": {
+      "sha256": "7af06fd25e8b2704bebaeeba82f3d5b1157980c9cfd7e4c55ad5438d1d01f427",
+      "bytes": 2051,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR3000GTE/RabbitizerInstructionR3000GTE_ProcessUniqueId.c": {
+      "sha256": "66b16cd928dd304ec1f000bf460477dfa09ae432984d0277c183773c21137605",
+      "bytes": 4878,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR5900/RabbitizerInstructionR5900.c": {
+      "sha256": "eb756ced1084cd69abb1cd4847ce0e91098fbfbbf160297ad5e5b4daec480418",
+      "bytes": 617,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR5900/RabbitizerInstructionR5900_OperandType.c": {
+      "sha256": "81eecd9ea0dd894d194300121356a79d99e88f7bd78ab3702b6c4a7b341ac322",
+      "bytes": 19166,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionR5900/RabbitizerInstructionR5900_ProcessUniqueId.c": {
+      "sha256": "a637c79448112564fe558dcf199583e28688ce70b0b46cadd01cfe2081a3ed3a",
+      "bytes": 11506,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionRsp/RabbitizerInstructionRsp.c": {
+      "sha256": "5bc61af95181464adc091d8cc8f9a512d33751c74f16b49985864c8e3157189f",
+      "bytes": 1935,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionRsp/RabbitizerInstructionRsp_OperandType.c": {
+      "sha256": "2eabbd4845ef8fe71bf641bed9587dbd521904d29b9c8ef694a91efd240d0ff4",
+      "bytes": 9333,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionRsp/RabbitizerInstructionRsp_ProcessUniqueId.c": {
+      "sha256": "24e4d5ec5aec6adc05cd2e11bd6e2e51d60b6e6f8d455bb2c4ae7eab9bfbab82",
+      "bytes": 8512,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop0.inc": {
+      "sha256": "94731b4d12a2d48c8abd54d663ac2daebfc3315a6ee5b9993007450a88f34fc4",
+      "bytes": 1719,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop0_bc0.inc": {
+      "sha256": "53c645225a6f5103bd27541504ae0866d9e0eb924d2c929ff5b8ea9f582ad43a",
+      "bytes": 1062,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop0_tlb.inc": {
+      "sha256": "724b09b7b8925afe9dd8e8adda2d8da1a7171003d7f7d19b529e7c087240a20d",
+      "bytes": 1091,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1.inc": {
+      "sha256": "5fd80ebce843b818c026e620191cd83a0d4a9b5cb43b70a5b650fdb800c1839f",
+      "bytes": 1814,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_bc1.inc": {
+      "sha256": "9374bc44b8f7066aabf7ee3b21db30097e69676ec07415c5642d6e536126d164",
+      "bytes": 962,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_fpu_d.inc": {
+      "sha256": "805274ba9660639363115fe33e6159283fa2d685d05cbb6c8a0185f717b5c0af",
+      "bytes": 10392,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_fpu_l.inc": {
+      "sha256": "202c31c2accdd00ec0f1ef697740963ee9a542ad7a88ebdfd27e03a578601030",
+      "bytes": 680,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_fpu_s.inc": {
+      "sha256": "3e8f62e7b450c888dd4ff4faa45b8ba7c795f2c1799554119b3c6afad9b711f3",
+      "bytes": 10342,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop1_fpu_w.inc": {
+      "sha256": "12bb82e28d3df48287af91aa1ce251654ece50361cc9a35050c70adbc014d280",
+      "bytes": 680,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop2.inc": {
+      "sha256": "92baf7b849a3b19c7188e49f5780a8c35ace55c5f971c91055882b67e0c2e49c",
+      "bytes": 755,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_normal.inc": {
+      "sha256": "4e78925eb9e31bf591f45584225c3616ac38a108df20110efffbf1f2a4ee2007",
+      "bytes": 18921,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_regimm.inc": {
+      "sha256": "404fd643ac07c41caec86988e7b01da59b6749c39ffbb82c6cb7e8595f34ad95",
+      "bytes": 4594,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_special.inc": {
+      "sha256": "cc2d653ec1f27fda22ce29b3c5e709d874eb5574a8fd7e28608cee66b6526f61",
+      "bytes": 17863,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r3000gte/r3000gte_cop2_gte.inc": {
+      "sha256": "2ca12a819e586d7a7016781102f00ec5e7f3af8f922f84f11660f914496d4146",
+      "bytes": 2385,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop0_tlb.inc": {
+      "sha256": "2e242ce4758e4f0965e35cf428e871df032fc34b753fa52707e4e09a4e3d5b9f",
+      "bytes": 1281,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop1_fpu_s.inc": {
+      "sha256": "0f270f04472236125cd3c969e029aac0cc74e2ba1a7bc89c2db51bff7b60800e",
+      "bytes": 4453,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop2.inc": {
+      "sha256": "47aeb5be3bac844c4a671fcb126fa3d0696e2b1dc492957b9e4b8557c5c07898",
+      "bytes": 1458,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop2_bc2.inc": {
+      "sha256": "4931d70bceeba9e8a26f57327920d9b0f902cf83fe374ce8aadd89a63fd3bf5e",
+      "bytes": 1443,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop2_special1.inc": {
+      "sha256": "10273ca206ce714432b93096c01f7727b2d4d03090da12daf75254b1f505b456",
+      "bytes": 14522,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_cop2_special2.inc": {
+      "sha256": "47f28e397311f3ed6406a98ffd0b9f029359f4d426f588130a44de2eeddd5b53",
+      "bytes": 17833,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi.inc": {
+      "sha256": "f1e3e3dbafd2039062266c9a86dc46cbf21ea1d014a51a3e059b65d3685c23af",
+      "bytes": 5802,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi_0.inc": {
+      "sha256": "1e63cae1ce065804b6c67a3968d2a9073d037663952ecd1c9ce54ea7407ed6b1",
+      "bytes": 7043,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi_1.inc": {
+      "sha256": "8bc407f9c17c8a6fc492cba9c0011139e8a35a733dc62cae1df6b62ad18aea1f",
+      "bytes": 5334,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi_2.inc": {
+      "sha256": "02909174ed28d5e0a0f583ac0cae28eb6ad3ee9e69189d191de67bf7cb7c86d8",
+      "bytes": 5896,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_mmi_3.inc": {
+      "sha256": "3ef2e2ea71fbd1b684f73faee118d897808f59ac46521dd2cc3879b5f7898813",
+      "bytes": 3662,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_normal.inc": {
+      "sha256": "68d995a90985fb4c6816324738763d170765aca9be57d154e9025be86cb4a0d6",
+      "bytes": 2437,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_regimm.inc": {
+      "sha256": "b6a56fa14b6ddbb44dc2ee59b5d33afebda50ec40df5fd38f7d8005be80084ac",
+      "bytes": 1258,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/r5900/r5900_special.inc": {
+      "sha256": "888e6e7d935e472e42050da917a8fb7126fe95d020adab8874d529e7c3688de5",
+      "bytes": 1885,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_cop0.inc": {
+      "sha256": "3034adbe21273321acf6002420005e10d9c8f2d84cff05f7c37448eedcd55482",
+      "bytes": 643,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_cop2.inc": {
+      "sha256": "dc6d128d6926b8bac3350364a6188aaa4356c99095a9702d44eff3a29f67ca92",
+      "bytes": 720,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_cop2_vu.inc": {
+      "sha256": "97331d002903cb82350114c8ff1bf49b4cd11328f6b9cb36ddf2050600b0e9df",
+      "bytes": 6859,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_normal.inc": {
+      "sha256": "e0453a90e484276494d97dc7030a33d92252a877750a7dd24c3bf4a60cce7f0f",
+      "bytes": 8323,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_normal_lwc2.inc": {
+      "sha256": "1335bc6e41614b275c0fc7f862e0a232f0ef841968865b4003bbd0e6e4a582c8",
+      "bytes": 1941,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_normal_swc2.inc": {
+      "sha256": "2e4536686783295436fcb850097154d9b3572cf71c9b58b5171db1e51e7a6c0e",
+      "bytes": 2108,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_regimm.inc": {
+      "sha256": "66fe5e14dc3886101e997f1533a0b9cd7a4d26342e5a0ecb6efcfc7bcca39cdb",
+      "bytes": 1674,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/rsp/rsp_special.inc": {
+      "sha256": "882a3717abc1fd43b7624cad7be872cfd5266665f87f0f3a086ad0379749aa51",
+      "bytes": 7021,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/sljit/sljit_src/sljitLir.c": {
+      "sha256": "4c0942cc7b83be2c88d3c52cf782ae773e3762c3e1d737b801047e00f620d966",
+      "bytes": 123336,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/cmake/install-rules.cmake": {
+      "sha256": "7ed72e74208296034948bbdfa6cff5d91f1a2d6195196e1d142eb1f8a8044c9a",
+      "bytes": 1316,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/cmake/project-is-top-level.cmake": {
+      "sha256": "c980f1ad9c0628f47af49b7101b7800571f09f351df2fe2e90234fbfc1d4589c",
+      "bytes": 154,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/cmake/tomlplusplusConfig.cmake": {
+      "sha256": "24872b2425ecd4accabd4f6b150b55bf02516aa2637603c29a0445c3d810f7bb",
+      "bytes": 61,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/cmake/variables.cmake": {
+      "sha256": "2b6c41bab7222a4473095a82b1b3e83e9748d692d3b01fc9a05d2e00a0908aac",
+      "bytes": 674,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/examples/CMakeLists.txt": {
+      "sha256": "8e82789b204106c401df132077768d86227221f7a38874d93593235d57353562",
+      "bytes": 848,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/fuzzing/CMakeLists.txt": {
+      "sha256": "204aa43bb3c9fa8fb3629f90f7464bed1461dcbf0751d34a327e53f4a50b8729",
+      "bytes": 979,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/toml.hpp": {
+      "sha256": "9fa7642b0f266c1cc6406dbfc0d4ea604e7e552264724c0607f7a76357fcf19a",
+      "bytes": 6355,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/array.hpp": {
+      "sha256": "f4d13f5a6262607c57af804a80b6a36374d790e85f002124a7a51868f5949973",
+      "bytes": 52619,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/array.inl": {
+      "sha256": "2616ee942b8effe076ed762178cc85ffccf6dd191d8cbeebff04472393a831cc",
+      "bytes": 8036,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/at_path.hpp": {
+      "sha256": "ff0ada9e9e97e6610851219479751e342f76bc399dd1994026af2f305e7bdc14",
+      "bytes": 3253,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/at_path.inl": {
+      "sha256": "af691f70c3f60fa765b412815b8e27b17cabee9bff5a898dcd95b0126ac2fa87",
+      "bytes": 7417,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/date_time.hpp": {
+      "sha256": "bfb60718be281bef3fb73314f08f8bca24a1043728bf59dd2b872a341dedabb3",
+      "bytes": 12633,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/formatter.hpp": {
+      "sha256": "e1102d0c6db8e1c855188b341823757b1a32563a9c0c00c4bc5693dcf1dfd97e",
+      "bytes": 4338,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/formatter.inl": {
+      "sha256": "4e42a31e99bff727ec6de713c1ee6b31cf59be73ec39ec11486257434d615958",
+      "bytes": 14744,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/forward_declarations.hpp": {
+      "sha256": "41ded5e521fbd1d30558e9e3e5f879ad6b7fbda455d282f3da3b9fb653a80af9",
+      "bytes": 34770,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/header_end.hpp": {
+      "sha256": "e58a60dca57522535c93230881b4dc1387a5bdc72058ffa8242c9a67b67da419",
+      "bytes": 220,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/header_start.hpp": {
+      "sha256": "5d19c79a80453c6453af1686820aefa026852601d04c334cd7d0f6ab89c28145",
+      "bytes": 244,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/json_formatter.hpp": {
+      "sha256": "8dc49b13ee802e621cbdca76fb92138fcd5eedd000147a1cb48037f8a25af194",
+      "bytes": 4173,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/json_formatter.inl": {
+      "sha256": "e9884f9d89809a69018ed3e8c8eb1e2d14bd69019d171a72c1c1ef7994c3aa0f",
+      "bytes": 2767,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/key.hpp": {
+      "sha256": "fddc405d6489d32c6a3cdeb6ecc95aed19f4d7ee2b54d6e6f6e50c73dbf4529e",
+      "bytes": 9009,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/make_node.hpp": {
+      "sha256": "49c8cc84e771c89d05a2d7844e598aed1aaf43d8500f0a77ac16202e918de1f0",
+      "bytes": 5494,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/node.hpp": {
+      "sha256": "2f3944fe3d20319fd644fd0b92ceffea74a5bbd513613279d8134db20d06d29a",
+      "bytes": 40401,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/node.inl": {
+      "sha256": "b8415a8e9087e29039ca291607ec38c772080e10bc01c62fd587abbb1f8d5b74",
+      "bytes": 3134,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/node_view.hpp": {
+      "sha256": "1b21f45101d3a7ef8f5998cae27a2a22a913def15fdc02f33df67c7b238a561f",
+      "bytes": 26422,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parser.hpp": {
+      "sha256": "6c3a2adf728dc2f360bb97e265e21b331547f627588d9fa6a6b0c6554be1000e",
+      "bytes": 11725,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parser.inl": {
+      "sha256": "147519f449768891a343309c1ab4c31b593e3c222d3fc3ec752b0ba8050b14ca",
+      "bytes": 115774,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parse_error.hpp": {
+      "sha256": "eda5953e165f3034e3229b4dd01fb03ca8490068b4fdd2b86fcce58f8b713693",
+      "bytes": 3762,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parse_result.hpp": {
+      "sha256": "337f2459fc5cb3c652419749d5f69a25a589013a459defc6861034b30b509997",
+      "bytes": 14559,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/path.hpp": {
+      "sha256": "f15a17e3289879bd8c1cb9616dc5b206b853b8b1412a79b5259c384c4b792e44",
+      "bytes": 22750,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/path.inl": {
+      "sha256": "e68d2b4cf4194a567050e64cdfaeff45663cd35298863e26a9cde16bcdb91ccd",
+      "bytes": 12209,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/preprocessor.hpp": {
+      "sha256": "e3515345b1b1a9c9add25761dd0497f97528645e4ead964cdfaf3ee4612a5c22",
+      "bytes": 61358,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/print_to_stream.hpp": {
+      "sha256": "f932648baa5f4c0b698c026bd537b95b77db5ac6741c685558ca93bc1e6fa8f2",
+      "bytes": 4744,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/print_to_stream.inl": {
+      "sha256": "a6f803aa368c622f4ef89a1549ac242b09e9da32f6e04026fef2a526f85dde5a",
+      "bytes": 13549,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/simd.hpp": {
+      "sha256": "9765caa6853c5ea7efc3ed13046bd5861e0d26820feae7256251c3f5353d1bf2",
+      "bytes": 1006,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/source_region.hpp": {
+      "sha256": "b899f45fdeb22b658793e3d37f46700e9635044396448fcd7120834348264b9c",
+      "bytes": 6853,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/std_except.hpp": {
+      "sha256": "f35415ed024347fd2665b9e8a27967877192eb511cca6e7111d4febd78b49e1d",
+      "bytes": 408,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/std_initializer_list.hpp": {
+      "sha256": "56eaa36eab613bc832de79795aaee34895aed5c9b3ac4ef5d3b882da4562499f",
+      "bytes": 388,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/std_map.hpp": {
+      "sha256": "e337c9fcf6babef8a02a2a2ea60a02f040b8feb7dd1b26e00ae2b0227df05d27",
+      "bytes": 395,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/std_new.hpp": {
+      "sha256": "2c6313983c1965f81262c6b4b89b824a630e8b4a9b76aa7f7902e0000aae0c2a",
+      "bytes": 681,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/std_optional.hpp": {
+      "sha256": "2e99fcfb048d543d50dac0113255912dc42ad0fe92db5581920f84bdb9adb450",
+      "bytes": 872,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/std_string.hpp": {
+      "sha256": "1c8126394c97030eae5ce56795a05ca54ac3281e4ec1249904d2d5241822ca3a",
+      "bytes": 1320,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/std_string.inl": {
+      "sha256": "c8669565058f7e2c2aed94c868e63e7d89a90c01c1809cf1684c62578ac496d6",
+      "bytes": 2541,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/std_utility.hpp": {
+      "sha256": "db576e01d23120b7c95c252021feb8d0d127a8b0e6e2a56d8b21c802d88ba740",
+      "bytes": 379,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/std_vector.hpp": {
+      "sha256": "fcfcc180910b1b5027886ae9ca05dea031998ea751a57e3cddd769ac3c592d82",
+      "bytes": 398,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/table.hpp": {
+      "sha256": "0cc2b974496dccc3b6dbba922ef83d6765df86105242330b8596b884bffad3cf",
+      "bytes": 57130,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/table.inl": {
+      "sha256": "8115e2c842742451659467b0e7e1fb65aa74631327340303491137bba0ae3b48",
+      "bytes": 6289,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/toml_formatter.hpp": {
+      "sha256": "e4483d32e05abff9ab78c1432824d4f23e2473af1ec23c2cb93cd727b28d0908",
+      "bytes": 4982,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/toml_formatter.inl": {
+      "sha256": "405c96d5cec8fbf69f806cdd15da5b677f53049fd3c56a233368a306728f7280",
+      "bytes": 9440,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/unicode.hpp": {
+      "sha256": "9be66d4e647046967fb311855e6f607e67327bd369c8976559ea769b8fef9308",
+      "bytes": 5607,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/unicode.inl": {
+      "sha256": "ed929116121162ce9c78eac2a7a9276fdaa08fb3ba54942fefcaf586e8edcfad",
+      "bytes": 1552,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/unicode_autogenerated.hpp": {
+      "sha256": "247224f35a6cfe563e70d2d41135103218b4b29d0b73bb6ace02e5b7840e3079",
+      "bytes": 8769,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/value.hpp": {
+      "sha256": "1021cd86098b62b05bd567a968d0d85bf74735f079c0c3f6815a756375872535",
+      "bytes": 35461,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/version.hpp": {
+      "sha256": "1bddfee6f882b610c0023ee0261ba115dc93ce5f50b393102829ea6c1ee4322b",
+      "bytes": 441,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/yaml_formatter.hpp": {
+      "sha256": "e9a7b1878328093122d4f8bcbbc4fadc84f74089c82ea05e32522ff233c23ec5",
+      "bytes": 4168,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/yaml_formatter.inl": {
+      "sha256": "11b184d1471cbbf95a119c1cafc071a2eb51c17c0cfba3233602c2256ef89c22",
+      "bytes": 3867,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/RSPRecomp/src/rsp_recomp.cpp": {
+      "sha256": "eff0a52bc3be7e3fe3abbb9b7c1bf994e364e55ed2dce5c45bde0a1cf0240d8a",
+      "bytes": 53230,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/main.cpp": {
+      "sha256": "bb7260d35c55f40cae1b73dc27995abbb0588132f7288deae5615a9c43008d0d",
+      "bytes": 121289,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/pcrage_recovery_asset.h": {
+      "sha256": "d202948ba384a751391dcbd067ad662331ba43cd425e3bfc72660b18f5973309",
+      "bytes": 713,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_audio.cpp": {
+      "sha256": "3d43a923a2ed44090d11f1d2696e67c8b849d6bc03ce545cad8c8f631683fe04",
+      "bytes": 6218,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_audio.hpp": {
+      "sha256": "6702ee8e9fba1f7f5a9fc6d26a0261e7730f61d21a3fdbdda62972e404616180",
+      "bytes": 519,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_audio_output.cpp": {
+      "sha256": "62e618b07026038cf023daf84d9cad7a8442ef79f2cf0fd3329fcf28281ab83d",
+      "bytes": 9680,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_audio_output.hpp": {
+      "sha256": "53122fe79273d567f6a04ba81cdd1080d64971fad007258b68267c031f4e8a80",
+      "bytes": 3326,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_audio_producer.cpp": {
+      "sha256": "fd66f6fa37d19fbef5e8891b2079f4af527ad7d615564c7f8e9b295ba83b5476",
+      "bytes": 433,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_audio_telemetry.cpp": {
+      "sha256": "04618d97ef70e5a269db0773179daaad5f72913ba7ded447228e69f339188354",
+      "bytes": 16972,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_audio_telemetry.hpp": {
+      "sha256": "7ead3b0874d8805900ec09ac8fe2ab68c4fbdcf0280fa322903c2c6b0a08a16e",
+      "bytes": 2562,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_bindings.hpp": {
+      "sha256": "4b0378618ee177d31c6906bf07be2851fa8a4ec641a8cbe08473bcaeee73e4ed",
+      "bytes": 8792,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_body_policy.h": {
+      "sha256": "61731218129ceaac70e3812b4313e2590a5fc38d2b9e17715bae465a578ea200",
+      "bytes": 888,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_body_toggle.hpp": {
+      "sha256": "03301acc8e664e060ba9b9c5eb35d72b7f335adf9dd2d6500b0309daaa4a9888",
+      "bytes": 728,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_controller_mapping.hpp": {
+      "sha256": "9bac15d575b3a029527dd3ed01a4e2767d5208b01b1cdde256d8d6f2aa0db455",
+      "bytes": 8260,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_controls.hpp": {
+      "sha256": "dee1686348a90986846baadbc75a4e14c9e56e0ac4b785c0613f1dba8475bbf5",
+      "bytes": 10926,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_control_sample.hpp": {
+      "sha256": "ceba16b1f92bc15f65df786f91e628f97662b157e2c926643876bc2203937f8a",
+      "bytes": 1330,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_crash_report.cpp": {
+      "sha256": "22f7cf358770a66566611a04642772b61b370b249b76fcd71335ddbda2c5bcf0",
+      "bytes": 21359,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_crash_report.hpp": {
+      "sha256": "bc1e456040d11ef931f2b9e60e4297afe9619ea52a520c16896bfe86310497d0",
+      "bytes": 1328,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_demo_launcher.cpp": {
+      "sha256": "969c8120e97220499c1aa68a564d254c068038ab2c0185e57ed330725cf22a60",
+      "bytes": 32437,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_demo_launcher.hpp": {
+      "sha256": "e7e597cce0a06fb72f8c2774f8190d6ab02f3be03b953a84191a62af12b42050",
+      "bytes": 1660,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_demo_rom.hpp": {
+      "sha256": "3f07f8d8407b4a307747060cddaf094d44f1df0bf457b179d2250c891de9ec46",
+      "bytes": 2100,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_demo_storage.hpp": {
+      "sha256": "738eb7032961db80c48cb4e3955aa93bfc7a79b937af1c2d386a8a3b7c69f144",
+      "bytes": 8875,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_desktop_renderer.cpp": {
+      "sha256": "c7ecc4110bf499e00f766f30e4142911e1be728dc2b44b75a2f94858e685c033",
+      "bytes": 201276,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_desktop_renderer.hpp": {
+      "sha256": "11f1fe6563c22008cad394bdc97de9f56bb875bd02855026a1ece7b311093dad",
+      "bytes": 4675,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_guest_clock.hpp": {
+      "sha256": "6cfc452ccf3756340fbe8bcb59dd466d2a90f63061b4c74ab860f7c3bab52912",
+      "bytes": 810,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_local_presentation.hpp": {
+      "sha256": "79497968ac057cf73c4698f756264d7a479f670385de72db6dd182982d659eb6",
+      "bytes": 10919,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_local_telemetry.hpp": {
+      "sha256": "bccd9bdb0684b83f396889b71a77e8534da4e8e56e169ff37b22fd9687c09c3c",
+      "bytes": 1812,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_look_policy.hpp": {
+      "sha256": "cefd6e3e534113ae5025c18fee7f57509f2440553e847c396bec97755f664ec1",
+      "bytes": 6088,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_modern_look.cpp": {
+      "sha256": "a20a5533c908de8d850c49b6af945bb22e983112819c9207004b1eddd9b7db13",
+      "bytes": 22633,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_native_actions.c": {
+      "sha256": "226e2e09445ecb18c54c23c6c6abe22ee3d329423a0931390530aebd30648964",
+      "bytes": 2222,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_native_pc_options.c": {
+      "sha256": "b8c73451ba4d84a1c2dd4be8e7652aad70f395ab7d0ab477c81c7f3d0fea6d87",
+      "bytes": 25106,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_native_pc_options.h": {
+      "sha256": "51146376b82602acae49589218a6a3ae1db97442e3b7742737c7a0d72e5250db",
+      "bytes": 1573,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_native_pc_option_ids.h": {
+      "sha256": "ddc40a948e09e90519e3154ac157a171660a546948164200280e374db2ab4025",
+      "bytes": 1579,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_openxr.cpp": {
+      "sha256": "98b687c8a110d3a8ed3a503be30fcedd836f8b7fbc062fb49456d8556e0d7b9d",
+      "bytes": 40336,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_openxr.hpp": {
+      "sha256": "98e5f4f28f8535efe02483475755fc25ad320966e14fad0649489a4d1673ba1c",
+      "bytes": 3373,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_port_options.cpp": {
+      "sha256": "259d44d71a150dbb81793f7cbb9d648b3c57d6971bce4d3c3b321dd908feb278",
+      "bytes": 36052,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_port_options.hpp": {
+      "sha256": "0fde0ef82f621edc62a3ab8c1b45c2d8bd098e8405fe40966c6dd53e4643003e",
+      "bytes": 2378,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_presentation_clock.hpp": {
+      "sha256": "43cb7a07bc5203dc8d2262099aefa00153d555ad1b12441571f110ce193685ce",
+      "bytes": 2687,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_presentation_policy.hpp": {
+      "sha256": "ebab5c2867cbc4b845b01ff0581597c9a005f5cbfd5110a3f8c1c4461624fecd",
+      "bytes": 1822,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_preview_frame.hpp": {
+      "sha256": "15fa7361fd1f5be176f95c9c4b02a3c71736e1048d5a6db4dd57063af506ed30",
+      "bytes": 1026,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_preview_weapon.hpp": {
+      "sha256": "34653dfcf44202a4931f5d8524e84540507adc9010c15d9dc1bbe728b5af6509",
+      "bytes": 6082,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_release.rc": {
+      "sha256": "06c865843d75ba5b30943690bab1389f0b0e5d8a7e8bd17e1f6b980b65acf30a",
+      "bytes": 681,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_startup_transition.hpp": {
+      "sha256": "9943ffb04715e0ae575f08f3f3eb1b4671a9299d0be0180d95a9f35cb07f597c",
+      "bytes": 1330,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_type1d.cpp": {
+      "sha256": "3fc53bafcd609be068a88f4918dbc902c3c908b24c55ddc376732b52d01d8810",
+      "bytes": 2923,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_type1d.hpp": {
+      "sha256": "9685391b85d6f3582bd6372fced4d7389eae55dbe36ae2e29cddbacfe2640f24",
+      "bytes": 419,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_weapon_calibration.hpp": {
+      "sha256": "789c4b5c56d9fd690713abb4a96ba4354746427865b28fa1d05d98bcf9327948",
+      "bytes": 6116,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_weapon_calibration_room.inl": {
+      "sha256": "8704d80ee40505dd23b41975e8a117530180edf67f41a0872d68d27025bd8029",
+      "bytes": 10201,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_calibration.hpp": {
+      "sha256": "78236963de24f84472317b2ada3e307f419d7d1649fa2e9b48ef9bce591bd34f",
+      "bytes": 1717,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_camera.hpp": {
+      "sha256": "52a5c507ec3bef7e5899c88a2e183d8ecc2291e0512b29a9eec5dd9a104d5fc1",
+      "bytes": 1095,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_color.hpp": {
+      "sha256": "67a05c5e1f2ae7c22273737c47e5b5e5d7b361a4e3d482d2b18270e12069930f",
+      "bytes": 2376,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_controls.hpp": {
+      "sha256": "98e32dea5e27fe28d820e0ffa806d566ae77a0446553882c580578e4295542b2",
+      "bytes": 5628,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_guest_input.hpp": {
+      "sha256": "0fcd3f2fbb9bba0d86796f5a385f48695cd7d2e60905897f42cdfb601114787e",
+      "bytes": 1752,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_hand_ray.hpp": {
+      "sha256": "8c51cf6dda744c2de92be97e868f3785838d82b56bb8a8a9320dd3a086131c8b",
+      "bytes": 1533,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_menu.hpp": {
+      "sha256": "c029c7498cc78f0989089b7468545b97d38d85b8bf601117f71895aca514d7fc",
+      "bytes": 595,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_shot.hpp": {
+      "sha256": "456c24ea5e314aead0973c5212ef6e607cb80c11041bf185458e3267b1809831",
+      "bytes": 6038,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rdram_profile.hpp": {
+      "sha256": "94b2a64b4faedc84a2ff0e40b5e1bed9c7183f530b889ed685b1712e4e96ce02",
+      "bytes": 808,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/recomp_memory_shim.h": {
+      "sha256": "1647b56f448ff9b1b600fd33cb337437f829b3a1852f4c04d3dba8629b91e592",
+      "bytes": 5475,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/recomp_runtime.hpp": {
+      "sha256": "ec822fff96f082d109c738bbe45eaafc7f6315f0d5f90212f43d5198f3505542",
+      "bytes": 881,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/runtime_boundary.cpp": {
+      "sha256": "99d38e20fc19919c96220a64f123c1f3e69a0a1c5064d6651ec42fb9675301fd",
+      "bytes": 6722,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/runtime_boundary.hpp": {
+      "sha256": "f62bd814d4f4a701e1bbc439d6f7da721837a82892d79456e6aa49b05ef9abed",
+      "bytes": 2051,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/scripted_input.hpp": {
+      "sha256": "5dfdf9c738bd3a604c43914a85a1bc253ed88031a218131e6b7bd4189c101113",
+      "bytes": 1725,
+      "origin": "working-source"
+    }
+  },
+  "excluded": [
+    "Git history",
+    "generated guest/audio outputs",
+    "ROM",
+    "captures",
+    "saves",
+    "profiles",
+    "extracted assets",
+    "build products",
+    "unrelated development output"
+  ],
+  "notice_provenance": {
+    "origin": "Exact notices copied from the clean-B Windows program ZIP and checked against its embedded package-manifest.json.",
+    "program_zip": "RageWarsRecompiled-v0.2.0-beta.1-windows.zip",
+    "program_zip_sha256": "89FD11695D9D39D47BDAA7A63E505E29C40A53345AD17EC69B64556010BFE84F",
+    "package_manifest_sha256": "0B84155D801812C58E89BEBE0BA19C2FED451D27D7B19DFF790CEBAC0E46FF73",
+    "added_file_count": 32,
+    "license_file_count": 31,
+    "notice_files": [
+      "THIRD-PARTY-NOTICES.txt",
+      "licenses/0530cbedd4-LICENSE",
+      "licenses/07b0517a30-LICENSE",
+      "licenses/0c34463d08-LICENSE",
+      "licenses/16b008239b-LICENSE-odashi-encoding.txt",
+      "licenses/1b790bec9b-LICENSE.txt",
+      "licenses/31de7f3e77-LICENSE",
+      "licenses/337f91b9d7-COPYING",
+      "licenses/4047e7c8a7-LICENSE.MIT",
+      "licenses/46d9eea800-COPYING",
+      "licenses/4d4e6e1a83-LICENSE",
+      "licenses/51a6960a22-LICENSE-PerfectDarkVR-reference.txt",
+      "licenses/530ca09e5c-LICENSE-Fast3D-reference.txt",
+      "licenses/5864596295-LICENSE",
+      "licenses/670b97c1ac-LICENSE.txt",
+      "licenses/6a413a28ea-LICENSE",
+      "licenses/717fad8efc-LICENSE",
+      "licenses/7886c05d73-LICENSE-Ares-RSP.txt",
+      "licenses/7b5c2d9da4-LICENSE",
+      "licenses/7d404da449-LICENSE",
+      "licenses/8130e3fbe7-LICENSE",
+      "licenses/Microsoft-VCRedist.txt",
+      "licenses/OpenXR-ATTRIBUTION.txt",
+      "licenses/OpenXR-Apache-2.0.txt",
+      "licenses/OpenXR-JsonCpp.txt",
+      "licenses/OpenXR-MIT.txt",
+      "licenses/SDL2.txt",
+      "licenses/a68c4e11a1-LICENSE",
+      "licenses/a7dc098df0-LICENSE",
+      "licenses/a85d3b168e-LICENSE",
+      "licenses/concurrentqueue.txt",
+      "licenses/e7a9216367-LICENSE"
+    ]
+  },
+  "source_delta_provenance": {
+    "schema": "xr64.rage-wars.source-delta.v1",
+    "delta_id": "startup-transition-final5",
+    "parent_source_archive": "RageWarsRecompiled-v0.2.0-beta.1-source-final4.zip",
+    "parent_source_archive_sha256": "D521B6FCF6BE9800B0CF7DC71201A45C532F29CEE570F33E0C49FE6C1A19ACDD",
+    "parent_source_manifest_sha256": "CF9332184942518C6E3BF766699C8B8ECDA8B49E709F87A86F2B6501DFCDEEB8",
+    "replacement_count": 4,
+    "added_file_count": 1,
+    "source_change_receipt_schema": "xr64.startup-transition-source-change.v1",
+    "files": [
+      {
+        "path": "MODIFICATIONS.txt",
+        "action": "replaced",
+        "before_sha256": "420B113523B2651E84475276C84019F195CB4A3975F9A88174E7F2458E92BA07",
+        "after_sha256": "8071AB72A511BF983AE81AAF1077D4F4E4C42789D1690BABF5392740DC8D2392",
+        "bytes": 3060,
+        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
+      },
+      {
+        "path": "xr64/games/rage_wars/recomp_host/src/rage_wars_desktop_renderer.cpp",
+        "action": "replaced",
+        "before_sha256": "6296BAA2712E1EAF04CA53B8CE54D73C6D2D4A1AA9496886CE34E03896B154F6",
+        "after_sha256": "C316C3B9111561F5612B2C776B14472CC1FB46E87B92132613A5B46AFFCF9FB2",
+        "bytes": 205092,
+        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
+      },
+      {
+        "path": "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_menu.hpp",
+        "action": "replaced",
+        "before_sha256": "6F76E5427966F5AA4D018212F7AF6AC9464351200A04AC145D81DF287E504223",
+        "after_sha256": "C029C7498CC78F0989089B7468545B97D38D85B8BF601117F71895ACA514D7FC",
+        "bytes": 595,
+        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
+      },
+      {
+        "path": "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_camera_test.cpp",
+        "action": "replaced",
+        "before_sha256": "2ACB0CBB2FD4AE8CC960CC46EE47D58B228231D5FFB5CF0DD78E71E0A5A5A2A3",
+        "after_sha256": "9D943CD98BEB5B4C7DC67A68FC510CD1A8D3B1B338A65DACB83C81B024B4632E",
+        "bytes": 23804,
+        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
+      },
+      {
+        "path": "xr64/games/rage_wars/recomp_host/src/rage_wars_startup_transition.hpp",
+        "action": "added",
+        "before_sha256": null,
+        "after_sha256": "9943FFB04715E0AE575F08F3F3EB1B4671A9299D0BE0180D95A9F35CB07F597C",
+        "bytes": 1330,
+        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
+      }
+    ],
+    "notice_payloads": "All 32 existing B program notice files are preserved byte-for-byte from final4.",
+    "build_scope": "A4 guarded consumer build and source contracts passed; a fresh B2 reconstruction and owner runtime acceptance remain pending."
+  },
+  "release_version": "0.2.0-beta.1"
+}

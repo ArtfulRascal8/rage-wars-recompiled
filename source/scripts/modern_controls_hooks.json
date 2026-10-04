@@ -1,0 +1,152 @@
+[
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_19.c",
+    "symbol": "trace_func_00226A10_r00027610",
+    "rom": 161296,
+    "size": 556,
+    "rom_body_sha256": "130790e6fbb211f3040576ab7924372647b94c39c2a8c9e56a694616deed1f21",
+    "anchor": "    // 0x00226A90: lw          $v0, 0x24($s1)",
+    "code": "    xr64_controls_begin_player(rdram, (uint32_t)ctx->r16);\n",
+    "before": true
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_19.c",
+    "symbol": "trace_func_002231B0_r00023DB0",
+    "rom": 146864,
+    "size": 540,
+    "rom_body_sha256": "23e9f64dfa14fe59287d386bf8a75ea2dd5f0da057b9da14a5d17481d874d88e",
+    "anchor": "L_002232E8:\n",
+    "code": "    if (xr64_controls_apply_yaw(rdram, (uint32_t)ctx->r16, (uint32_t)ctx->r18, (uint32_t)ctx->r17)) goto L_0022333C;\n",
+    "before": false
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_19.c",
+    "symbol": "trace_func_002231B0_r00023DB0",
+    "rom": 146864,
+    "size": 540,
+    "rom_body_sha256": "23e9f64dfa14fe59287d386bf8a75ea2dd5f0da057b9da14a5d17481d874d88e",
+    "anchor": "L_0022333C:\n",
+    "code": "    if (xr64_controls_apply_pitch(rdram, (uint32_t)ctx->r16, (uint32_t)ctx->r18, (uint32_t)ctx->r17)) goto L_002233AC;\n",
+    "before": false
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_54.c",
+    "symbol": "trace_func_00423B68_r00187B68",
+    "rom": 1604456,
+    "size": 32,
+    "rom_body_sha256": "d4366f50813e64d6189a2ea95eef5cb00470a83dd95062a010bc73950fb48e72",
+    "anchor": "    after_0:\n",
+    "code": "    if (xr64_page16_handle_back(rdram)) { ctx->r31 = MEM_W(ctx->r29, 0X10); ctx->r29 = ADD32(ctx->r29, 0X18); ctx->r2 = 0; return; }\n",
+    "before": false
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_26.c",
+    "symbol": "trace_func_00263150_r00063D50",
+    "rom": 408912,
+    "size": 1228,
+    "rom_body_sha256": "982911bfcff078e81523efa2ecfab6b5d42fb0d0f58f3aef236a2bc9dbcce266",
+    "anchor": "// 0x00263398: lbu         $v0, 0x7D($s1)\n    ctx->r2 = MEM_BU(ctx->r17, 0X7D);\n",
+    "code": "    ctx->r2 = xr64_controls_spring_value(rdram, (uint32_t)ctx->r5, (uint32_t)ctx->r2);\n",
+    "before": false
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_19.c",
+    "symbol": "trace_func_002231B0_r00023DB0",
+    "rom": 146864,
+    "size": 540,
+    "rom_body_sha256": "23e9f64dfa14fe59287d386bf8a75ea2dd5f0da057b9da14a5d17481d874d88e",
+    "anchor": "// 0x002232B4: lbu         $v0, 0x7D($a0)\n    ctx->r2 = MEM_BU(ctx->r4, 0X7D);\n",
+    "code": "    ctx->r2 = xr64_controls_spring_value(rdram, (uint32_t)ctx->r16, (uint32_t)ctx->r2);\n",
+    "before": false
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_46.c",
+    "symbol": "trace_func_0025E324_r0005EF24",
+    "rom": 388900,
+    "size": 36,
+    "rom_body_sha256": "fb1ec32dbb74af424be05341ed0b948a723c1116c31d81390f1cbf28fab33432",
+    "anchor": "    after_0:\n",
+    "code": "    xr64_page16_restore_gameplay_music(rdram,ctx);\n",
+    "before": false
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_17.c",
+    "symbol": "trace_func_00217F4C_r00018B4C",
+    "rom": 101196,
+    "size": 688,
+    "rom_body_sha256": "dbfc8130b2d275a069abbb993d8d293111336941bc55a1cb8faa0125ef93d58c",
+    "anchor": "L_00218074:\n",
+    "code": "    xr64_controls_weapon_cycle(rdram,ctx,(uint32_t)ctx->r16,xr64_pc_weapon_cycle);\n",
+    "before": false
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_17.c",
+    "symbol": "trace_func_00217F4C_r00018B4C",
+    "rom": 101196,
+    "size": 688,
+    "rom_body_sha256": "dbfc8130b2d275a069abbb993d8d293111336941bc55a1cb8faa0125ef93d58c",
+    "anchor": "RECOMP_FUNC void trace_func_00217F4C_r00018B4C(uint8_t* rdram, recomp_context* ctx) {\n",
+    "code": "    const uint32_t xr64_pc_weapon_cycle=xr64_controls_read_weapon_cycle(rdram,(uint32_t)ctx->r5);\n",
+    "before": false
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_36.c",
+    "symbol": "trace_func_0040D350_r00171350",
+    "rom": 1512272,
+    "size": 2100,
+    "rom_body_sha256": "961cdfa6584f839c30c47af506bcad319618ddd98459febb640ce6e328afa2cb",
+    "anchor": "    ctx->r20 = ADD32(ctx->r2, 0);\n",
+    "code": "    ctx->r20 = (gpr)(int32_t)xr64_pause_focus_text(rdram, ctx, (uint32_t)ctx->r17, (uint32_t)ctx->r20);\n",
+    "before": false
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_19.c",
+    "symbol": "trace_func_00226A10_r00027610",
+    "rom": 161296,
+    "size": 556,
+    "rom_body_sha256": "130790e6fbb211f3040576ab7924372647b94c39c2a8c9e56a694616deed1f21",
+    "anchor": "    // 0x00226ADC: lw          $s0, 0x16E0($s0)",
+    "code": "    xr64_controls_publish_player(rdram, (uint32_t)ctx->r16);\n",
+    "before": true
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_54.c",
+    "symbol": "trace_func_00422510_r00186510",
+    "rom": 1598736,
+    "size": 536,
+    "rom_body_sha256": "f403fc55ea612f1b96d62b75c65e790efad7c21b1821559c9ad6e5bacb65d0f2",
+    "anchor": "    // 0x00422714: lw          $ra, 0x14($sp)",
+    "code": "    xr64_title_add_pc_options(rdram, ctx);\n",
+    "before": true
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_54.c",
+    "symbol": "trace_func_004233DC_r001873DC",
+    "rom": 1602524,
+    "size": 48,
+    "rom_body_sha256": "d226c361229e3c1bd459abeef1d54fab2382b32c0ca20cae65db3be14d7d48e6",
+    "anchor": "    // 0x004233DC: lui         $a0, 0x800E",
+    "code": "    xr64_title_remove_pc_options(rdram, ctx);\n",
+    "before": true
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_54.c",
+    "symbol": "trace_func_00423488_r00187488",
+    "rom": 1602696,
+    "size": 192,
+    "rom_body_sha256": "a69af2c345395384169dbf0e0687b0f7526997ed938ea2e04eb9b00be1d21de8",
+    "anchor": "    // 0x004234A0: addu        $v1, $v0, $zero",
+    "code": "    if (xr64_title_handle_selection(rdram, ctx, (uint32_t)ctx->r2)) goto L_00423534;\n",
+    "before": true
+  },
+  {
+    "file": "staging/rage-wars-recomp-spike/generated/ares_boot_to_combat/funcs_54.c",
+    "symbol": "trace_func_00423548_r00187548",
+    "rom": 1602888,
+    "size": 68,
+    "rom_body_sha256": "8bd7515647065c1349c07205d1a92375046b9e18aeef4526a7e6d6e0ec458025",
+    "anchor": "    // 0x00423548: addiu       $sp, $sp, -0x18",
+    "code": "    if (xr64_page16_handle_back(rdram)) { ctx->r2 = 0; return; }\n",
+    "before": true
+  }
+]

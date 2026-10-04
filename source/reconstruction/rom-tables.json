@@ -1,0 +1,544 @@
+[
+  {
+    "name": "mode_object_team_jumps",
+    "rom": 796040,
+    "vram": 2148276616,
+    "size": 20,
+    "sha256": "46f2aeffaf1ce9a12095ad712caf586a4a448e169a405c2448e618fe26fbf88c",
+    "source_configuration": "scripts/mode_object_coverage_group.json"
+  },
+  {
+    "name": "preview_object_motion_jumps",
+    "rom": 796192,
+    "vram": 2148276768,
+    "size": 20,
+    "sha256": "341df648b57d171d1e44780082d9b61efba3065d21d9a0d785e8aade3df703b5",
+    "source_configuration": "scripts/preview_object_coverage_group.json"
+  },
+  {
+    "name": "preview_object_resource_jumps",
+    "rom": 796344,
+    "vram": 2148276920,
+    "size": 20,
+    "sha256": "c2804b218c9be747c926dee6569adc4a3034d530d943e01439285c19c3102899",
+    "source_configuration": "scripts/preview_object_coverage_group.json"
+  },
+  {
+    "name": "turret_lifecycle_mode_jump_table",
+    "rom": 797808,
+    "vram": 2148278384,
+    "size": 28,
+    "sha256": "029ca059c1fb8fd364bb8241bd522e8d003a8602374b462e7dcbeac2d462f4b9",
+    "source_configuration": "scripts/turret_lifecycle_coverage_group.json"
+  },
+  {
+    "name": "pak_menu_selection_jumps",
+    "rom": 904848,
+    "vram": 2148385424,
+    "size": 24,
+    "sha256": "7b7dd6be14559fdfe0833bc5c3106c21cbca42efa47d4dced5b81431d28b04d6",
+    "source_configuration": "scripts/pak_menu_coverage_group.json"
+  },
+  {
+    "name": "results_00424FC8_jtbl",
+    "rom": 905032,
+    "vram": 2148385608,
+    "size": 200,
+    "sha256": "6763b3b1782fda0a3e055fe78f17e88722183ec81b035c9816bfbd56c520d134",
+    "source_configuration": "scripts/results_menu_coverage_group.json"
+  },
+  {
+    "name": "results_004251F4_jtbl",
+    "rom": 905232,
+    "vram": 2148385808,
+    "size": 232,
+    "sha256": "e80c97fd5ef41a99c98cdd17b896f4516d6fb639293a7aabf2e8e452703e7130",
+    "source_configuration": "scripts/results_menu_coverage_group.json"
+  },
+  {
+    "name": "results_004255A8_jtbl",
+    "rom": 905464,
+    "vram": 2148386040,
+    "size": 228,
+    "sha256": "0dfe243ee7db3fe8a9399b39ba43931395d219ee0aa9b492bbc082ed1c69b696",
+    "source_configuration": "scripts/results_menu_coverage_group.json"
+  },
+  {
+    "name": "results_00425854_jtbl",
+    "rom": 905696,
+    "vram": 2148386272,
+    "size": 76,
+    "sha256": "792734cad1833503aaf7a66921342ad1433a3ba04db1423cb3a5178c8192236a",
+    "source_configuration": "scripts/results_menu_coverage_group.json"
+  },
+  {
+    "name": "character_confirm_00426AF8_jtbl",
+    "rom": 905776,
+    "vram": 2148386352,
+    "size": 36,
+    "sha256": "818a36d418937ab3655d7a5f95375ef1b3f97a348e4430006c44b06a42743e60",
+    "source_configuration": "scripts/character_confirm_coverage_group.json"
+  },
+  {
+    "name": "character_confirm_0042872C_jtbl",
+    "rom": 905864,
+    "vram": 2148386440,
+    "size": 20,
+    "sha256": "3ba93e19f5a43f456e31c06c7eb4774dd692b0d4fd00d0b1345a9713e8a2fc61",
+    "source_configuration": "scripts/character_confirm_coverage_group.json"
+  },
+  {
+    "name": "character_confirm_004288E0_jtbl",
+    "rom": 905888,
+    "vram": 2148386464,
+    "size": 20,
+    "sha256": "215a0cec3173d7788fa5b0b9bcc804e5021185dba64062dfb0d014b7deb1de67",
+    "source_configuration": "scripts/character_confirm_coverage_group.json"
+  },
+  {
+    "name": "map_select_return_jumps",
+    "rom": 905920,
+    "vram": 2148386496,
+    "size": 20,
+    "sha256": "ffce710841e18d3c8c2dc56fc95e334a1d63ea4508c8eee18b4bb616c42bda21",
+    "source_configuration": "scripts/map_select_return_coverage_group.json"
+  },
+  {
+    "name": "bot_menu_navigation_jumps",
+    "rom": 905952,
+    "vram": 2148386528,
+    "size": 56,
+    "sha256": "e829227b0667a73b77492bbbf1e5434ead47204c3ca0ebb71bd30e5a393cb193",
+    "source_configuration": "scripts/bot_menu_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DC830",
+    "rom": 906288,
+    "vram": 2148386864,
+    "size": 20,
+    "sha256": "0b166fb22e92481d7ffd54504ce31d64ce53a4b51f7ff3cbcaa5f7af89d2d16a",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DC848",
+    "rom": 906312,
+    "vram": 2148386888,
+    "size": 20,
+    "sha256": "9a32f0bc72b4c7d49042afa19dd242c1889c3d1ea11e946ccd397e37e75e281a",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DC860",
+    "rom": 906336,
+    "vram": 2148386912,
+    "size": 32,
+    "sha256": "692f8cdc1230c87e502781d79be1df37cdf14a6c454dd61570f37d627a7adae5",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DC880",
+    "rom": 906368,
+    "vram": 2148386944,
+    "size": 96,
+    "sha256": "73c2d8a2e4a8572deb6f8b774e1cbf34e5a9b12ca95d9a197a66330ecbe10404",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DC8E0",
+    "rom": 906464,
+    "vram": 2148387040,
+    "size": 96,
+    "sha256": "15c5472ced47f1383515377ac875e0022772eae0c717bd69ff809f22a4cb64c5",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DC940",
+    "rom": 906560,
+    "vram": 2148387136,
+    "size": 116,
+    "sha256": "33e67af6e8dc79d86c12feb071796a8b6661c81e9f891c4a86b3036d82e64e27",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DC9B8",
+    "rom": 906680,
+    "vram": 2148387256,
+    "size": 32,
+    "sha256": "65c86f4fefdb73dd2d361fe1caece4dab00486a5264b4ea848fa479263fdb593",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DC9D8",
+    "rom": 906712,
+    "vram": 2148387288,
+    "size": 32,
+    "sha256": "9db454323e4a81b14f313fb14456d43187372401d97061da8de34dae2de33d40",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DC9F8",
+    "rom": 906744,
+    "vram": 2148387320,
+    "size": 32,
+    "sha256": "8debcea588ab702c33f945226fcfd5a2a681a893b9f9c93ce58915204ac1d99d",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DCA18",
+    "rom": 906776,
+    "vram": 2148387352,
+    "size": 32,
+    "sha256": "d128dc0c9717ce8f171f8e67412d485aff4660a17782d0113ed39fc7bb3b7258",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DCA38",
+    "rom": 906808,
+    "vram": 2148387384,
+    "size": 32,
+    "sha256": "21a8467d2dd5837866b26a25b002cf36254301e5541f627652c97d5d4258a1b6",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DCA58",
+    "rom": 906840,
+    "vram": 2148387416,
+    "size": 32,
+    "sha256": "cf5c2f57941ef4483c6562fbe4f25433c2a24c4daa348e5275c32085f5d78ce4",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DCB28",
+    "rom": 907048,
+    "vram": 2148387624,
+    "size": 24,
+    "sha256": "3aba71704d4401f1622a460ad8b9dc3423dda3434a6a3b1ce369f641db650227",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "single_player_jtbl_800DCB40",
+    "rom": 907072,
+    "vram": 2148387648,
+    "size": 32,
+    "sha256": "79af0519b70a9893d742061578313d87f2551f65d893d541cbcccc36f88b4f8c",
+    "source_configuration": "scripts/single_player_entry_coverage_group.json"
+  },
+  {
+    "name": "pause_quit_mode_jumps",
+    "rom": 907168,
+    "vram": 2148387744,
+    "size": 20,
+    "sha256": "b01e8e92b28cb01f44fcdb9a18cc1ea24350dd3e5775445606a248cdaeb77d44",
+    "source_configuration": "scripts/pause_quit_coverage_group.json"
+  },
+  {
+    "name": "closure_jtbl_800C61E8",
+    "rom": 814568,
+    "vram": 2148295144,
+    "size": 32,
+    "sha256": "bf53fadf624764f622e0939264a913ee8e35533a0cd8cdc874f281d1a8ac594f",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_002ACD68_r000AD968",
+    "source_indirect_jump_pc": 2805176
+  },
+  {
+    "name": "closure_jtbl_800C7380",
+    "rom": 819072,
+    "vram": 2148299648,
+    "size": 96,
+    "sha256": "08dbeba77686be2a3bf672f36729cea1cd757717c051a80d41966182e9960a31",
+    "source_configuration": "scripts/targeted_jal_rom_closure_20261003.json",
+    "source_function": "rom_jal_002B0484_r000B1084",
+    "source_indirect_jump_pc": 2819284
+  },
+  {
+    "name": "closure_jtbl_800C76B8",
+    "rom": 819896,
+    "vram": 2148300472,
+    "size": 32,
+    "sha256": "65ad9c7df115c7c4161f291b2ba60990cf028a260159004e65028dc65930f691",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_002B5AC4_r000B66C4",
+    "source_indirect_jump_pc": 2841352
+  },
+  {
+    "name": "closure_jtbl_800C7850",
+    "rom": 820304,
+    "vram": 2148300880,
+    "size": 28,
+    "sha256": "57354a76ca43fb15086509f014e0d623beba8184edaa0b8130f0bd0966e05153",
+    "source_configuration": "scripts/targeted_nonreturn_worker_rom_closure_20261003.json",
+    "source_function": "rom_worker_002B8F40_r000B9B40",
+    "source_indirect_jump_pc": 2855324
+  },
+  {
+    "name": "closure_jtbl_800DBA58",
+    "rom": 902744,
+    "vram": 2148383320,
+    "size": 20,
+    "sha256": "bde3cd11ba6857d60a3069e534c67405f85467f75504615391c38883bc0942d9",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_00409170_r0016D170",
+    "source_indirect_jump_pc": 4231604
+  },
+  {
+    "name": "closure_jtbl_800DBA70",
+    "rom": 902768,
+    "vram": 2148383344,
+    "size": 20,
+    "sha256": "3f33b4718cd0d2ccc466391c216ce336784a361aeb23db0a791ea78d4dc79c99",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_00409474_r0016D474",
+    "source_indirect_jump_pc": 4232356
+  },
+  {
+    "name": "closure_jtbl_800DBA88",
+    "rom": 902792,
+    "vram": 2148383368,
+    "size": 60,
+    "sha256": "d6216da9cb015fb0fcfd6aa1471cb917cd78e1c3d0198d24c6f0428d02b6d751",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040A928_r0016E928",
+    "source_indirect_jump_pc": 4237696
+  },
+  {
+    "name": "closure_jtbl_800DBAC8",
+    "rom": 902856,
+    "vram": 2148383432,
+    "size": 64,
+    "sha256": "afc38da6f1be9ad68abaf78067638ca793cc425431e20d6e8f24274a0b9a9ed3",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040ACD4_r0016ECD4",
+    "source_indirect_jump_pc": 4238580
+  },
+  {
+    "name": "closure_jtbl_800DBB08",
+    "rom": 902920,
+    "vram": 2148383496,
+    "size": 64,
+    "sha256": "651c58f5c68ee9f0c6523330690afcb116ed36dd815775b7bb2f1e4c9b5b2c84",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040AD20_r0016ED20",
+    "source_indirect_jump_pc": 4238656
+  },
+  {
+    "name": "closure_jtbl_800DBB48",
+    "rom": 902984,
+    "vram": 2148383560,
+    "size": 64,
+    "sha256": "f00873dec41f56f947609fc5b0039ed4156c4628bb0d73cec82195ae634e9d54",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040AE4C_r0016EE4C",
+    "source_indirect_jump_pc": 4238956
+  },
+  {
+    "name": "closure_jtbl_800DBB88",
+    "rom": 903048,
+    "vram": 2148383624,
+    "size": 64,
+    "sha256": "ea2987f68ed3bbf6cb8393401bd942d0141a9d21f8f7d5b12a8896928aa7b8c9",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040AF78_r0016EF78",
+    "source_indirect_jump_pc": 4239256
+  },
+  {
+    "name": "closure_jtbl_800DBBC8",
+    "rom": 903112,
+    "vram": 2148383688,
+    "size": 64,
+    "sha256": "25182ed67850bfa8b310dd2b42813a1ec52acc91b556cdb435889e1541eda1fc",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040B0A4_r0016F0A4",
+    "source_indirect_jump_pc": 4239556
+  },
+  {
+    "name": "closure_jtbl_800DBC08",
+    "rom": 903176,
+    "vram": 2148383752,
+    "size": 64,
+    "sha256": "886a74176c5beb4ff20f2aa521f4a473b41adc2ac72d4451368b9c5bf8c19fc2",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040B1D0_r0016F1D0",
+    "source_indirect_jump_pc": 4239856
+  },
+  {
+    "name": "closure_jtbl_800DBC48",
+    "rom": 903240,
+    "vram": 2148383816,
+    "size": 64,
+    "sha256": "8b20ef2ef6cd7267acbdf2a4de5403c93ad290274df3e7289a02cfc5e1a3cbd6",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040B2FC_r0016F2FC",
+    "source_indirect_jump_pc": 4240156
+  },
+  {
+    "name": "closure_jtbl_800DBC88",
+    "rom": 903304,
+    "vram": 2148383880,
+    "size": 20,
+    "sha256": "e6a2993f0455f4377a568205ac5f43ed09f7cdf2a29a2e242292314bc238ad5c",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040B8E8_r0016F8E8",
+    "source_indirect_jump_pc": 4241672
+  },
+  {
+    "name": "closure_jtbl_800DBCA0",
+    "rom": 903328,
+    "vram": 2148383904,
+    "size": 20,
+    "sha256": "c2233a9e13fef549bfacadd69b90a9447280fa3a57376e2fd27e5d6155c4f067",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040B964_r0016F964",
+    "source_indirect_jump_pc": 4241796
+  },
+  {
+    "name": "closure_jtbl_800DBCB8",
+    "rom": 903352,
+    "vram": 2148383928,
+    "size": 20,
+    "sha256": "def82e9827fae47e0d75c75f6e5b8b376915cdbbece30fef87076afd4e9326d3",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040B9E0_r0016F9E0",
+    "source_indirect_jump_pc": 4241920
+  },
+  {
+    "name": "closure_jtbl_800DBCD0",
+    "rom": 903376,
+    "vram": 2148383952,
+    "size": 20,
+    "sha256": "ea8bc7172f98940fc95e3512ac581a465488aa1c73116bbda519e1e93a84e4ee",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040BA5C_r0016FA5C",
+    "source_indirect_jump_pc": 4242044
+  },
+  {
+    "name": "closure_jtbl_800DBCE8",
+    "rom": 903400,
+    "vram": 2148383976,
+    "size": 20,
+    "sha256": "260fced8aec082088106f5bcbb19270c580cb95a39950ea103071fb9e0767368",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040BAD8_r0016FAD8",
+    "source_indirect_jump_pc": 4242168
+  },
+  {
+    "name": "closure_jtbl_800DBD00",
+    "rom": 903424,
+    "vram": 2148384000,
+    "size": 20,
+    "sha256": "96b068eb8bd3746184ded7a8294a1bdf2f8085a7f41c7d205560eebeb8cf5a68",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040BB54_r0016FB54",
+    "source_indirect_jump_pc": 4242292
+  },
+  {
+    "name": "closure_jtbl_800DBD18",
+    "rom": 903448,
+    "vram": 2148384024,
+    "size": 20,
+    "sha256": "2c16364a7089ec2d6b9310ce0edd4eda96923e45915b6b7e8723cbac96fadda8",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0040BBC0_r0016FBC0",
+    "source_indirect_jump_pc": 4242400
+  },
+  {
+    "name": "closure_jtbl_800DC150",
+    "rom": 904528,
+    "vram": 2148385104,
+    "size": 28,
+    "sha256": "12f321457b9f02209fff162b7276bcae4238b5e7f7ad0adfaefa354ad157b386",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0041D1A4_r001811A4",
+    "source_indirect_jump_pc": 4313564
+  },
+  {
+    "name": "closure_jtbl_800DC180",
+    "rom": 904576,
+    "vram": 2148385152,
+    "size": 56,
+    "sha256": "32b4ae29631c15d76e934694f1b76180d1b5b840afefd75d2a25a1ec66944b8f",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0041D550_r00181550",
+    "source_indirect_jump_pc": 4314644
+  },
+  {
+    "name": "closure_jtbl_800DCC20",
+    "rom": 907296,
+    "vram": 2148387872,
+    "size": 20,
+    "sha256": "bdd4b1c55130afa91bd9596de4c0da0df1dcd5e97977dcfec5bfbe85ad37b9b8",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_00439F38_r0019DF38",
+    "source_indirect_jump_pc": 4431760
+  },
+  {
+    "name": "closure_jtbl_800DCE38",
+    "rom": 907832,
+    "vram": 2148388408,
+    "size": 44,
+    "sha256": "5373fa8050b881d2a4cf1440e8b888f71f770d0bfab3351fdd31a3335d19839a",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0043C730_r001A0730",
+    "source_indirect_jump_pc": 4441952
+  },
+  {
+    "name": "closure_jtbl_800DCE68",
+    "rom": 907880,
+    "vram": 2148388456,
+    "size": 44,
+    "sha256": "51760de0792ea6bf31f5e1ce111886430c98ca51087d095ef4abd53f7d4f77dc",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0043C868_r001A0868",
+    "source_indirect_jump_pc": 4442268
+  },
+  {
+    "name": "closure_jtbl_800DCE98",
+    "rom": 907928,
+    "vram": 2148388504,
+    "size": 44,
+    "sha256": "85724cc0cc0a1319d74cf2581a39e06ab81e1d4e15b3a365c921e4dabf17b419",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0043C868_r001A0868",
+    "source_indirect_jump_pc": 4442616
+  },
+  {
+    "name": "closure_jtbl_800DCEC8",
+    "rom": 907976,
+    "vram": 2148388552,
+    "size": 44,
+    "sha256": "a5512d9220e76987377da2e02b62f937894d2f9be59ad93919099848daa739af",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0043C868_r001A0868",
+    "source_indirect_jump_pc": 4442848
+  },
+  {
+    "name": "closure_jtbl_800DCF38",
+    "rom": 908088,
+    "vram": 2148388664,
+    "size": 44,
+    "sha256": "517c6da33506b2bdf52040a0a4b29bce81a2f45b3de278f4dfdabc3462c88c00",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0043D2D0_r001A12D0",
+    "source_indirect_jump_pc": 4444912
+  },
+  {
+    "name": "closure_jtbl_800DCFB0",
+    "rom": 908208,
+    "vram": 2148388784,
+    "size": 32,
+    "sha256": "86d6694c41f8cdd65ad44f889f275b507f1622d616086345f366d9767853bfc9",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0043DD30_r001A1D30",
+    "source_indirect_jump_pc": 4447568
+  },
+  {
+    "name": "closure_jtbl_800DCFF0",
+    "rom": 908272,
+    "vram": 2148388848,
+    "size": 32,
+    "sha256": "45240723acbaec969ea250fb3a132d8d062b7db08de0e0bdbc896c1010f9659b",
+    "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+    "source_function": "rom_closure_0043E9A8_r001A29A8",
+    "source_indirect_jump_pc": 4450760
+  }
+]

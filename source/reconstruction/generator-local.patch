@@ -1,0 +1,111 @@
+--- upstream/include/recomp.h
++++ modified/include/recomp.h
+@@ -446,9 +446,18 @@
+ typedef void (recomp_func_ext_t)(uint8_t* rdram, recomp_context* ctx, uintptr_t arg);
+ 
+ recomp_func_t* get_function(int32_t vram);
++recomp_func_t* get_function_with_context(uint8_t* rdram, recomp_context* ctx, int32_t vram);
++recomp_func_t* xr64_rage_wars_get_function_with_context_trace(
++    uint8_t* rdram, recomp_context* ctx, int32_t vram, const char* file, int line);
++
++void xr64_rage_wars_note_recovered_rom_entry(uint32_t original_vram, uint32_t source_rom, uint32_t logical_section, recomp_context* ctx);
++void xr64_rage_wars_invoke_function_with_context_trace(
++    uint8_t* rdram, recomp_context* ctx, int32_t vram, uint32_t caller_pc,
++    uint32_t caller_rom, uint32_t caller_function_rom, uint32_t caller_section_rom,
++    uint32_t caller_section, const char* file, int line);
+ 
+ #define LOOKUP_FUNC(val) \
+-    get_function((int32_t)(val))
++    xr64_rage_wars_get_function_with_context_trace(rdram, ctx, (int32_t)(val), __FILE__, __LINE__)
+ 
+ extern int32_t* section_addresses;
+ 
+--- upstream/src/analysis.cpp
++++ modified/src/analysis.cpp
+@@ -314,14 +314,39 @@
+             end_address = stats.jump_tables[i + 1].vram;
+         }
+ 
+-        // TODO this assumes that the jump table is in the same section as the function itself
+-        cur_jtbl.rom = cur_jtbl.vram + func.rom - func.vram;
+-        cur_jtbl.section_index = func.section_index;
++        const Section* jump_table_section = nullptr;
++        uint16_t jump_table_section_index = (uint16_t)-1;
++        for (uint16_t section_index = 0; section_index < context.sections.size(); section_index++) {
++            const Section& candidate = context.sections[section_index];
++            const uint64_t candidate_end =
++                static_cast<uint64_t>(candidate.ram_addr) + candidate.size;
++            if (cur_jtbl.vram >= candidate.ram_addr && cur_jtbl.vram < candidate_end) {
++                jump_table_section = &candidate;
++                jump_table_section_index = section_index;
++                break;
++            }
++        }
++
++        if (jump_table_section == nullptr) {
++            fmt::print("Failed to find section for jump table at 0x{:08X} used by instruction at 0x{:08X}\n",
++                cur_jtbl.vram, cur_jtbl.jr_vram);
++            return false;
++        }
++
++        cur_jtbl.rom = jump_table_section->rom_addr +
++            (cur_jtbl.vram - jump_table_section->ram_addr);
++        cur_jtbl.section_index = jump_table_section_index;
++        const uint64_t section_vram_end =
++            static_cast<uint64_t>(jump_table_section->ram_addr) + jump_table_section->size;
++        end_address = static_cast<uint32_t>(std::min<uint64_t>(end_address, section_vram_end));
+ 
+         while (vram < end_address) {
+             // Retrieve the current entry of the jump table
+-            // TODO same as above
+-            uint32_t rom_addr = vram + func.rom - func.vram;
++            uint32_t rom_addr = jump_table_section->rom_addr +
++                (vram - jump_table_section->ram_addr);
++            if (static_cast<uint64_t>(rom_addr) + sizeof(uint32_t) > context.rom.size()) {
++                break;
++            }
+             uint32_t jtbl_word = byteswap(*reinterpret_cast<const uint32_t*>(&context.rom[rom_addr]));
+ 
+             if (cur_jtbl.got_offset.has_value() && got_ram_addr.has_value()) {
+--- upstream/src/cgenerator.cpp
++++ modified/src/cgenerator.cpp
+@@ -562,6 +562,11 @@
+     fmt::print(output_file, "// {}\n", comment);
+ }
+ 
++static bool discarded_gpr_output(N64Recomp::Operand operand, const N64Recomp::InstructionContext& context) {
++    return (operand == N64Recomp::Operand::Rd && context.rd == 0) ||
++           (operand == N64Recomp::Operand::Rt && context.rt == 0);
++}
++
+ void N64Recomp::CGenerator::process_binary_op(const BinaryOp& op, const InstructionContext& ctx) const {
+     // Thread local variables to prevent allocations when possible.
+     // TODO these thread locals probably don't actually help right now, so figure out a better way to prevent allocations.
+@@ -569,7 +574,12 @@
+     thread_local std::string expression{};
+     get_operand_string(op.output, UnaryOpType::None, ctx, output);
+     get_binary_expr_string(op.type, op.operands, ctx, output, expression);
+-    fmt::print(output_file, "{} = {};\n", output, expression);
++    if (discarded_gpr_output(op.output, ctx)) {
++        fmt::print(output_file, "(void)({});\n", expression);
++    }
++    else {
++        fmt::print(output_file, "{} = {};\n", output, expression);
++    }
+ }
+ 
+ void N64Recomp::CGenerator::process_unary_op(const UnaryOp& op, const InstructionContext& ctx) const {
+@@ -579,7 +589,12 @@
+     thread_local std::string input{};
+     get_operand_string(op.output, UnaryOpType::None, ctx, output);
+     get_operand_string(op.input, op.operation, ctx, input);
+-    fmt::print(output_file, "{} = {};\n", output, input);
++    if (discarded_gpr_output(op.output, ctx)) {
++        fmt::print(output_file, "(void)({});\n", input);
++    }
++    else {
++        fmt::print(output_file, "{} = {};\n", output, input);
++    }
+ }
+ 
+ void N64Recomp::CGenerator::process_store_op(const StoreOp& op, const InstructionContext& ctx) const {

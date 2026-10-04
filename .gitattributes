@@ -1,0 +1,4 @@
+# Keep the manifested reconstruction kit byte-exact in Git and source ZIPs.
+/source/** -text
+/*.md text eol=lf
+/*.txt text eol=lf

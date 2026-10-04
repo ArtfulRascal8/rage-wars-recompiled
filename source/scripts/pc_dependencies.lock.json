@@ -1,0 +1,35 @@
+{
+  "schema": "xr64.pc-dependencies.lock.v1",
+  "sdl2": {
+    "version": "2.30.11",
+    "url": "https://github.com/libsdl-org/SDL/releases/download/release-2.30.11/SDL2-devel-2.30.11-VC.zip",
+    "archive_sha256": "6e524b5f0e3ecd9fe3b439336b5e7c3fe597e8823e8e62c8e3074d335e9ca7d9",
+    "directory": "SDL2-2.30.11",
+    "dll_sha256": "9f4c17a07638b711f13704adcb0847e2227099f899fa810bfa5b34dd2ad20ec9"
+  },
+  "openxr": {
+    "version": "1.1.58",
+    "tag": "release-1.1.58",
+    "commit": "472d817ffe066d5be09a351b0d39ff420141208b",
+    "url": "https://codeload.github.com/KhronosGroup/OpenXR-SDK/zip/472d817ffe066d5be09a351b0d39ff420141208b",
+    "archive_sha256": "0c40ea75d07863458650cd7639dd1e92754e5d7e5696f95b67477c7bf36c80a2",
+    "directory": "OpenXR-SDK-472d817ffe066d5be09a351b0d39ff420141208b",
+    "generator": "Visual Studio 17 2022",
+    "architecture": "x64",
+    "configuration": "Release",
+    "options": {
+      "BUILD_LOADER": "ON",
+      "DYNAMIC_LOADER": "ON",
+      "BUILD_API_LAYERS": "OFF",
+      "BUILD_TESTS": "OFF",
+      "BUILD_CONFORMANCE_TESTS": "OFF",
+      "BUILD_SDK_TESTS": "OFF",
+      "BUILD_FORCE_GENERATION": "OFF",
+      "BUILD_WITH_SYSTEM_JSONCPP": "OFF",
+      "BUILD_WITH_STD_FILESYSTEM": "ON",
+      "CMAKE_DISABLE_FIND_PACKAGE_JsonCpp": "ON",
+      "CMAKE_DISABLE_FIND_PACKAGE_Vulkan": "ON",
+      "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreadedDLL"
+    }
+  }
+}

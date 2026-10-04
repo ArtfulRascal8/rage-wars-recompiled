@@ -1,72 +1,53 @@
-# Rage Wars Recompiled - v0.1.0-beta.1
+# Rage Wars Recompiled — Beta 0.2.0 (`v0.2.0-beta.1`)
 
-**First public beta — Windows x64 desktop PC and experimental PCVR.**
-XR64 Studios / non-commercial fan recompilation / build **47385556**.
+Windows x64 desktop and experimental PC VR by XR64 Studios. **VR requires alternate weapon models and motion controls to be enabled.** See [SETUP.md](SETUP.md) for the complete VR guide.
 
-## Download and setup
+## Fixes
 
-Download **RageWarsRecompiled-v0.1.0-beta.1-windows-x64.zip**, extract it and open
-**RageWarsRecompiled.exe**. Select your own supported **Turok: Rage Wars US v1.0
-ROM** and choose PC. Keep every included DLL beside the executable.
+- Fixed a timer-wrap bug that could make rotating pickups disappear. Ammo and health pickup visibility was confirmed in two desktop matches on the earlier 0.2.0 clock-corrected candidate; this newly built executable has not received that gameplay check. Power-ups and all items/maps are not claimed verified.
+- Carried forward the accepted fixes for Syra defeat, the specifically reported Warclubs path, and choosing Quit instead of Save or Continue after a mission. This is not an all-bodyguards fix.
+- Carried forward black transitions between splash cards for both desktop and VR rendering.
+- Preserved the accepted desktop controls/audio behavior. These were already included in the initial beta; they are not presented as new controls/audio repairs in this release.
+- Removed candidate tracing/developer launch options from the consumer runtime and preserved F12 VR recentering. Normal settings, fullscreen, gameplay controls and bounded versioned error reports remain available.
 
-**At the game's start screen, press Escape. Enter and Space do not advance it.**
+The pickup correction returns the existing native timer owner's full monotonic counter through the guest 64-bit return ABI. The native VI adapter leaves the original VI manager dormant; using only 32-bit Count could create an invalid unsigned frame interval at wrap. The source recipe reproduces the corrected generated function from the user's ROM. Original item transforms and trigonometry are unchanged.
 
-[Setup](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/SETUP.md) · [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues/new?template=bug_report.yml) · [Known issues](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/KNOWN_ISSUES.md) · [Discussions](https://github.com/ArtfulRascal8/rage-wars-recompiled/discussions)
+## Installation and safe update
 
-## Included changes
+Close the game and back up the whole existing profile. Extract the complete Windows ZIP into a fresh program folder; keep the executable and every required DLL together. Continue using the existing profile rather than replacing it with defaults. Update your shortcut and keep the old program folder plus backup as a fallback.
 
-- Consistent Rage Wars Recompiled executable, window, setup and download naming.
-- Existing PC Options connected to pause and title/lobby Options. Pause Options was owner-confirmed on earlier build 39B82289; title/lobby paths passed native lifecycle tests. Complete live menu coverage and persistence remain open.
-- ROM-only source reconstruction with pinned public generator/dependency source and explicit integration patches. Snapshot comparison is optional; audio generation preserves ROM/region/handler checks.
-- Preview audio repair, portable allowlisted packaging, corrected complete component notices and matching source alongside the binary.
-- Dedicated project page, bug reports, Discussions and release comments.
+Default profile: `%LOCALAPPDATA%\XR64\RageWars`. Optional whole-profile override: `XR64_PROFILE_DIR`. Game data resides under `user-data`. No profile, Controller Pak, save, ROM or extracted model asset is bundled. There is no automatic updater or save migration. Launch **RageWarsRecompiled.exe**, select your own supported US v1.0 ROM and choose PC or VR. At the start screen press Escape; Enter and Space do not advance it.
 
-## Tested evidence and limits
+## How to play in VR
 
-On exact executable **47385556**, the owner confirmed normal four-player preview
-and one-player/three-bot desktop combat rendering, working controls and good audio.
-Local empty-output source reconstruction passed exact comparison of all **60**
-guest/audio inputs, the host build, **eight targeted CTest contracts**, consumer
-production auditing and declared/read input auditing with **zero unexpected inputs**.
-All **3,206** callback definitions were preserved.
+**VR requires alternate weapon models and motion controls to be enabled.**
 
-The final notice/doc repack retains every tested executable/DLL byte. Package
-contracts (**10 tests**) and reconstruction helper contracts (**6 tests**) passed.
-Both archives passed full manifest hashes, explicit inventories and ZIP CRC/byte
-checks, plus bounded privacy checks. Raw local build/runtime evidence stays private.
-These checks do not prove every possible privacy issue or independent OS isolation.
+Connect the PC headset and make its OpenXR runtime active, then launch the normal executable and select VR in setup. This ZIP is a Windows PC VR program, not a standalone Quest application.
 
-Known beta limits: Escape-only start progression; incomplete live menu/persistence
-coverage; inherited missing callback **0x00231F4C** outside tested scenarios;
-broader gameplay/save/device-recovery regressions; unaccepted headset attachment,
-recenter, tracking-extension support, near-wall and fallback weapon behavior,
-barrel/aim-origin agreement and moving-shot impact/damage. Calibrated models need
-your own extracted inputs; automatic extraction is unavailable. No Quest APK.
-**Independent-machine or donor-denying sandbox validation remains open.**
-See [Known issues](https://github.com/ArtfulRascal8/rage-wars-recompiled/blob/main/KNOWN_ISSUES.md).
+In **Options → PC OPTIONS** (during play: **Pause → Options → PC OPTIONS**), select **MODELS: CALIBRATED** for the required alternate weapon models. Supply your own `.rwpm`, `.placement`, `.muzzle`, and calibration files; extraction is not automatic. Under **PC OPTIONS → VR** enable **MOTION CONTROLS: ON**. Use **ENTER VR** from desktop and **RETURN TO PC** to leave VR. For Touch use Auto input selection.
 
-## Matching source, licensing and provenance
+Face forward and press F12 on the PC keyboard to recenter. Default Touch gameplay controls: left stick moves, right stick turns, right trigger fires, A jumps, right grip/B secondary-fire, X/Y cycle weapons and Menu pauses. In menus: left stick navigates, A confirms, B goes back, Menu sends Start. Press Escape on the PC keyboard at the start screen. Bindings are under **VR → MORE VR OPTIONS → VR CONTROLLER BINDINGS**. If detection fails, check the connection and active runtime and retry ENTER VR. Desktop play remains available without a headset. See SETUP.md for the full guide.
 
-Download **RageWarsRecompiled-v0.1.0-beta.1-source.zip** beside the Windows ZIP.
-Its **docs/PC_RECONSTRUCTION.md** explains the pinned Windows toolchain and ordered
-rebuild using your own ROM. It includes reviewed port/runtime/generator sources,
-patches, configurations and scripts. GitHub's automatic “Source code” archives
-contain this documentation repository only; use the explicitly named source asset.
+## Evidence and beta limits
 
-GNU GPLv3 and dated modification/source-access notices are in **COPYING.txt** and
-**MODIFICATIONS.txt**. Component licenses and attribution are preserved in both
-archives and indexed in **THIRD-PARTY-NOTICES.txt** in the Windows package.
-The binary contains translated guest code; source includes ROM-derived
-reconstruction edits. No ROM file, extracted assets, saves, profiles, RAM captures
-or old Git history are supplied. Original game copyrights remain with their owners.
-XR64 Studios has chosen non-commercial fan distribution; this records its decision
-and does not claim rights-holder permission, endorsement or a legal finding.
+**This exact release executable:** SHA-256 `A40C5E5403BFC0AE8EF5337791DA2C19FDED92F32DB5EBFFC2582CC9B3524C9C`. It differs from the earlier owner-tested candidate because consumer cleanup and recentering were rebuilt.
 
-## Build identity
+- The exact extracted Windows ZIP launched a responsive normal setup window and closed with exit code 0 using a fresh disposable profile and twice using a disposable older-profile copy. These are launcher checks, not an in-game save/upgrade round trip. The copied Pak remained byte-identical.
+- All nine release contracts passed: clock wrap/o32 return, XR controls/camera, decoded frame ownership, audio output, weapon calibration, modern controls, package safety and CLI help.
+- Existing settings write/read and legacy migration contracts passed. Existing reconstruction/dependency/package tests and the consumer-transformed synthetic startup/Pak contract passed; the latter uses a dialog stub.
+- Source-built generators reproduced all 60 guest/audio inputs, including the corrected clock body. The final host was built from the matching source kit. Compiler-input closure, all 133 consumer-transformed sources, 3,751 guest definitions, GUI/no-CodeView checks, executable privacy filtering, required DLL/notice identities and ZIP contents passed.
+- The public source, source ZIP and Windows ZIP were recursively checked: zero Controller Pak files, zero populated profile/user-data directories, zero save files and zero files copied from the owner's profile/backups. The four generic path-detector/test-string scan hits were reviewed; no actual personal path or credential was present. These technical checks are not legal clearance.
 
-Executable SHA-256:
-`47385556a13586971c341e770d7053b1503b668b5f0748b85fcfe56a27edd659`
+**Earlier owner acceptance:** preceding 0.2.0 candidates passed Syra, the reported Warclubs path, post-mission Quit, controls/audio, and black splash transitions on desktop and Quest 3 through Virtual Desktop. The clock-corrected candidate passed reported ammo/health visibility in two desktop matches. An earlier consumer candidate retained new saved progress after close/relaunch. Those outcomes are carried forward as earlier evidence, not relabeled as tests on this executable.
 
-Version: **0.1.0-beta.1**. This is a successor to selected baseline **F67637BF**.
-Download hashes are in **SHA256SUMS.txt**; per-file hashes are in each archive's
-manifest. This is an experimental beta with the acceptance boundaries above.
+**Not tested on these final bytes:** live gameplay/physical controls/audio, ammo/health or power-up visibility, all items/maps, individual prior-fix regressions, in-game save/close/relaunch, a complete copied Beta 0.1 save upgrade round trip, VR startup/head/controller tracking and Quest 3 through Virtual Desktop. Interactive automation was unavailable in the release environment; no headset execution is claimed. Synthetic clock/audio/controls tests do not substitute for those checks.
+
+Broader campaign/menu, eight dynamic destinations, worker PI-register support, VR weapon attachment/near-wall/shot accuracy and audio-device recovery coverage remain beta limitations. Independent-machine and donor-denying OS validation remain unperformed. No complete playthrough or blanket PCVR compatibility is claimed. See KNOWN_ISSUES.md.
+
+## Downloads and matching source
+
+- `RageWarsRecompiled-v0.2.0-beta.1-windows-x64.zip`: complete portable program, DLLs, instructions and licenses.
+- `RageWarsRecompiled-v0.2.0-beta.1-source.zip`: the matching reviewed public repository snapshot, including `source/` and [BYO-ROM build instructions](source/docs/PC_RECONSTRUCTION.md).
+- `SHA256SUMS.txt`: SHA-256 for both immutable ZIPs.
+
+Required third-party notices and GPLv3/modification texts are included in both downloads. No ROM/proprietary asset download is provided; original rights remain with their respective holders. The original [Beta 0.1 release and assets](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.1.0-beta.1) are preserved.

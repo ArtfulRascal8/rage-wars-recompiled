@@ -1,0 +1,10 @@
+Microsoft Visual C++ Runtime components
+
+This package contains unmodified Microsoft Visual C++ 2015-2022 x64 runtime
+files: MSVCP140.dll, VCRUNTIME140.dll, and VCRUNTIME140_1.dll. They were copied
+from the Microsoft Visual Studio x64 CRT redistributable directory.
+
+Redistribution is subject to the applicable Microsoft Visual Studio license
+terms. See Microsoft's current redistribution guidance:
+https://learn.microsoft.com/en-us/cpp/windows/redistributing-visual-cpp-files?view=msvc-170
+and the license terms for the Visual Studio edition used to build this package.

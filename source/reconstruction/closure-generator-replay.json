@@ -1,0 +1,36 @@
+{
+  "schema": "xr64.pc-closure-generator-replay.v1",
+  "rom_sha256": "0433043aaba2649bdd1fe717c4020550ac663c0362527aa082490f5977a3e46b",
+  "closures": [
+    {
+      "source_configuration": "scripts/gameplay_menu_rom_closure_20261003.json",
+      "source_configuration_sha256": "9bb65b0430bd3e33d39aff2f319847b5bb3ba74687dbb1d1a7b341490f28636c",
+      "source_built_generator_sha256": "43056ce6947c2d6aad291b413015087abc720b4e22ba8d2a60d0868cd15a21a2",
+      "authoring_generator_sha256": "b47af74141c71b2aad45088254865b4ed31b021bad19dd45a0130bf8690f1ca2",
+      "function_count": 496,
+      "saved_generated_sha256": "e208df091c715458f65a887238aeaf449ef3cb451a5de3d8074c85f7c36201df",
+      "reconstructed_generated_sha256": "e208df091c715458f65a887238aeaf449ef3cb451a5de3d8074c85f7c36201df",
+      "aggregate_exact": true
+    },
+    {
+      "source_configuration": "scripts/targeted_jal_rom_closure_20261003.json",
+      "source_configuration_sha256": "749000e4cc51d9c33afbf4f5fd4ff109b0b47509fd4e33e6cce00c48087ddaf3",
+      "source_built_generator_sha256": "43056ce6947c2d6aad291b413015087abc720b4e22ba8d2a60d0868cd15a21a2",
+      "authoring_generator_sha256": "b47af74141c71b2aad45088254865b4ed31b021bad19dd45a0130bf8690f1ca2",
+      "function_count": 46,
+      "saved_generated_sha256": "ce146a52db4bbebf8e535d310f7d46263eb852f4bc22a7606150ee19e2ba4623",
+      "reconstructed_generated_sha256": "ce146a52db4bbebf8e535d310f7d46263eb852f4bc22a7606150ee19e2ba4623",
+      "aggregate_exact": true
+    },
+    {
+      "source_configuration": "scripts/targeted_nonreturn_worker_rom_closure_20261003.json",
+      "source_configuration_sha256": "b2832e7450f1c036c6f336bab2f4f725ced750e697538c1787601033cdf25ea4",
+      "source_built_generator_sha256": "43056ce6947c2d6aad291b413015087abc720b4e22ba8d2a60d0868cd15a21a2",
+      "authoring_generator_sha256": "b47af74141c71b2aad45088254865b4ed31b021bad19dd45a0130bf8690f1ca2",
+      "function_count": 3,
+      "saved_generated_sha256": "c57e028547e702e5bae72e76bde6b1a2884f74471579c933c99ebe8e938a77cc",
+      "reconstructed_generated_sha256": "c57e028547e702e5bae72e76bde6b1a2884f74471579c933c99ebe8e938a77cc",
+      "aggregate_exact": true
+    }
+  ]
+}

@@ -1,9 +1,14 @@
-# Documentation release hub. Matching reviewed source is attached to releases.
-*
-!/.gitignore
-!/*.md
-!/COPYING.txt
-!/MODIFICATIONS.txt
-!/.github/
-!/.github/ISSUE_TEMPLATE/
-!/.github/ISSUE_TEMPLATE/*.yml
+# Build/reconstruction products stay outside the public source kit.
+**/__pycache__/
+**/*.pyc
+/source/build/
+/source/staging/rage-wars-recomp-spike/generated/
+/source/staging/rage-wars-recomp-spike/input/
+*.z64
+*.v64
+*.n64
+*.pak
+*.sav
+*.dmp
+*.pdb
+*.obj

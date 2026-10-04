@@ -1,0 +1,48 @@
+Rage Wars Recompiled consumer package - third-party notices
+
+This package contains RageWarsRecompiled.exe, SDL2.dll, openxr_loader.dll, app-local Microsoft Visual C++ runtime DLLs, documentation, and license texts.
+No ROM file, extracted assets, Controller Pak, user configuration, PDB, capture, or OpenXR vendor runtime is included; the executable contains translated guest code.
+
+N64ModernRuntime and N64Recomp dependency license files are copied into licenses/.
+nlohmann JSON 3.12.0 (Niels Lohmann), Ares RSP vector implementation (ares team, Near et al), and odashi/encoding EUC-JP conversion (Yusuke Oda): full notices in licenses/.
+GNU GPLv3, dated modifications and matching-source access: COPYING.txt and MODIFICATIONS.txt.
+SDL2 2.30.11: official SDL VC archive, x64 DLL unchanged; license in licenses/SDL2.txt.
+Microsoft Visual C++ runtime DLLs are copied unmodified from the installed x64 CRT redistributable; see licenses/Microsoft-VCRedist.txt for the notice and redistribution guidance.
+OpenXR 1.1.58: built from KhronosGroup/OpenXR-SDK commit 472d817ffe066d5be09a351b0d39ff420141208b; source unmodified.
+Loader/headers: Apache-2.0 OR MIT. Full licenses, per-file attribution and vendored JsonCpp license are in licenses/OpenXR-*.txt.
+moodycamel concurrentqueue and its semaphore adaptation: notices retained in licenses/concurrentqueue.txt.
+Exact shipped DLL hashes, source/archive pins and build options: dependency-provenance.json.
+The OpenXR runtime is provided and installed separately by the end user.
+
+Dependency license file map:
+  toolchain/N64ModernRuntime/COPYING -> licenses/337f91b9d7-COPYING
+  toolchain/N64ModernRuntime/librecomp/include/librecomp/LICENSE-Ares-RSP.txt -> licenses/7886c05d73-LICENSE-Ares-RSP.txt
+  toolchain/N64ModernRuntime/librecomp/src/LICENSE-odashi-encoding.txt -> licenses/16b008239b-LICENSE-odashi-encoding.txt
+  toolchain/N64ModernRuntime/LICENSE-Fast3D-reference.txt -> licenses/530ca09e5c-LICENSE-Fast3D-reference.txt
+  toolchain/N64ModernRuntime/LICENSE-PerfectDarkVR-reference.txt -> licenses/51a6960a22-LICENSE-PerfectDarkVR-reference.txt
+  toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/LICENSE.txt -> licenses/1b790bec9b-LICENSE.txt
+  toolchain/N64ModernRuntime/N64Recomp/lib/fmt/LICENSE -> licenses/5864596295-LICENSE
+  toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/LICENSE -> licenses/6a413a28ea-LICENSE
+  toolchain/N64ModernRuntime/N64Recomp/lib/sljit/LICENSE -> licenses/7d404da449-LICENSE
+  toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/LICENSE -> licenses/717fad8efc-LICENSE
+  toolchain/N64ModernRuntime/N64Recomp/LICENSE -> licenses/8130e3fbe7-LICENSE
+  toolchain/N64ModernRuntime/thirdparty/json/LICENSE.MIT -> licenses/4047e7c8a7-LICENSE.MIT
+  toolchain/N64ModernRuntime/thirdparty/miniz/LICENSE -> licenses/a85d3b168e-LICENSE
+  toolchain/N64ModernRuntime/thirdparty/o1heap/LICENSE -> licenses/0c34463d08-LICENSE
+  toolchain/N64ModernRuntime/thirdparty/xxHash/cli/COPYING -> licenses/46d9eea800-COPYING
+  toolchain/N64ModernRuntime/thirdparty/xxHash/LICENSE -> licenses/7b5c2d9da4-LICENSE
+  toolchain/N64ModernRuntime/thirdparty/xxHash/tests/bench/LICENSE -> licenses/0530cbedd4-LICENSE
+  toolchain/N64ModernRuntime/thirdparty/xxHash/tests/collisions/LICENSE -> licenses/31de7f3e77-LICENSE
+  toolchain/N64Recomp/lib/ELFIO/LICENSE.txt -> licenses/670b97c1ac-LICENSE.txt
+  toolchain/N64Recomp/lib/fmt/LICENSE -> licenses/a7dc098df0-LICENSE
+  toolchain/N64Recomp/lib/rabbitizer/LICENSE -> licenses/07b0517a30-LICENSE
+  toolchain/N64Recomp/lib/sljit/LICENSE -> licenses/a68c4e11a1-LICENSE
+  toolchain/N64Recomp/lib/tomlplusplus/LICENSE -> licenses/4d4e6e1a83-LICENSE
+  toolchain/N64Recomp/LICENSE -> licenses/e7a9216367-LICENSE
+  Pinned dependency notice: SDL2.txt -> licenses/SDL2.txt
+  Pinned dependency notice: OpenXR-MIT.txt -> licenses/OpenXR-MIT.txt
+  Pinned dependency notice: OpenXR-Apache-2.0.txt -> licenses/OpenXR-Apache-2.0.txt
+  Pinned dependency notice: OpenXR-JsonCpp.txt -> licenses/OpenXR-JsonCpp.txt
+  Pinned dependency notice: OpenXR-ATTRIBUTION.txt -> licenses/OpenXR-ATTRIBUTION.txt
+  Compiled concurrentqueue headers (BSD/Zlib) -> licenses/concurrentqueue.txt
+  Microsoft Visual C++ Runtime notice -> licenses/Microsoft-VCRedist.txt

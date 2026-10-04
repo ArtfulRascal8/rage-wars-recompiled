@@ -1,0 +1,19 @@
+{
+  "canonical_callables": 3751,
+  "accepted_callables": 3751,
+  "preserved_v1_canonical_callables": 3206,
+  "function_edits": 306,
+  "prior_v1_function_edits": 288,
+  "added_function_edits_since_v1": 18,
+  "rom_recovery_functions": 545,
+  "existing_controls_hooks_applied_separately": 15,
+  "layout_literal_bytes": 13929,
+  "metadata_edits": [
+    "funcs.h",
+    "recomp_overlays.inl",
+    "lookup.cpp"
+  ],
+  "rom_table_count": 60,
+  "policy": "Exact callable inventories, old canonical digests, original-ROM extents/hashes, explicit patch preimages/results, and final raw-file hashes; no semantic-equivalence waiver.",
+  "review_note": "The 18 additional differences are individually listed with ROM/function identities and exact canonical-versus-accepted call-target diffs in recovery496-full-generator-differences.json."
+}

@@ -1,31 +1,29 @@
-# Setup
+# Setup — Beta 0.2.0 (`v0.2.0-beta.1`)
 
-## Windows PC
+## Install or update
 
-Use 64-bit Windows and extract every file from the release ZIP. Keep SDL2.dll, openxr_loader.dll, and the included Microsoft runtime DLLs beside RageWarsRecompiled.exe.
+Use 64-bit Windows. Close the game and back up the existing whole profile. Extract the **complete** Windows ZIP into a fresh program folder. Keep `RageWarsRecompiled.exe`, `SDL2.dll`, `openxr_loader.dll`, and all included Microsoft runtime DLLs together. Launch the normal executable, select your own supported Turok: Rage Wars US v1.0 ROM and choose PC for desktop play. No development tools are needed to play.
 
-Launch RageWarsRecompiled.exe, select your own supported Turok: Rage Wars US v1.0 ROM, choose PC, and start the game. The loader appears on ordinary launches and accepts supported ROM byte orders through its file picker. No ROM download is provided.
+Continue using the existing profile; do not replace it with packaged defaults. No populated profile or Controller Pak is bundled. Saves/settings default to `%LOCALAPPDATA%\XR64\RageWars`, with game data under `user-data`. The optional `XR64_PROFILE_DIR` environment variable selects a different **whole profile**. Moving the program does not reset it. Keep the old program folder and backup as a fallback, and update your shortcut. There is no automatic updater or save migration.
 
-**Start-screen exception (v0.1.0-beta.1): press Escape to advance past the game's start screen. Enter and Space do not advance that screen.** This limitation was reported during earlier owner keyboard testing and remains documented for this beta.
+At the start screen press Escape. After it, arrows/WASD navigate menus and Enter/Space or left click confirms; Escape goes back. Modern mouse aim is the default for a fresh profile; existing preferences are preserved. Use Pause → Options → PC OPTIONS for display, controls, devices, models and VR. Keyboard Pause defaults to Enter; mouse buttons fire/secondary-fire, Space jumps, Q/E or wheel cycle weapons, Tab opens the weapon wheel. Controller defaults: right trigger fires, A jumps, B secondary-fire, shoulders cycle weapons, Start pauses and X opens the weapon wheel.
 
-After the start screen, menu navigation uses arrow keys or WASD, controller sticks or D-pad, and Enter/Space or left click to confirm. Escape or controller Back/B normally returns to the previous menu. Modern mouse aim is the default for a new profile; existing preferences are preserved.
+## How to play in VR
 
-## PC Options
+**VR requires alternate weapon models and motion controls to be enabled.**
 
-Use Pause â†’ Options â†’ PC Options. The owner confirmed the pause Options submenu works on candidate 39B82289. Display settings include resolution, display mode, aspect ratio, FOV, and master volume. Controls and Input Devices provide sensitivity, inversion, profile/device selection, and bindings. Models selects Original or Calibrated.
+This is Windows PC VR through OpenXR, not a standalone Quest application. Install your headset/PC connection software, connect the headset, and make its OpenXR runtime active before launching. For Quest through Virtual Desktop, connect to the PC and select the intended PC OpenXR runtime in that software. Quest 3 through Virtual Desktop has not been retested on this release executable.
 
-The title/lobby Options path passed captured native lifecycle tests. Live title/lobby rendering and navigation, settings persistence, and complete Options-menu coverage remain pending.
+1. Launch **RageWarsRecompiled.exe**, select your supported ROM, and choose **VR** in setup. Choose **PC** for normal desktop play without a headset.
+2. Open **Options → PC OPTIONS** (during play: **Pause → Options → PC OPTIONS**). Select the required alternate weapon models by changing **MODELS: ORIGINAL** to **MODELS: CALIBRATED**. Calibrated models require your own `.rwpm`, `.placement`, `.muzzle`, and weapon calibration files; these are not bundled or automatically extracted.
+3. Open **PC OPTIONS → VR** and enable **MOTION CONTROLS: ON**. Both this and **MODELS: CALIBRATED** are required for the supported VR setup.
+4. From desktop mode use **PC OPTIONS → VR → ENTER VR**. **VR STARTUP** controls the saved startup preference. Choose **Auto** for input device selection with Touch controllers; explicitly selecting Keyboard/Mouse can take precedence.
+5. Face forward and press **F12** on the PC keyboard to recenter. Default Touch gameplay bindings: left stick moves, right stick turns, right trigger fires, A jumps, right grip or B uses secondary fire, X/Y select previous/next weapon, and Menu pauses. Menus use the left stick, A to confirm, B to go back and Menu for Start. Customize bindings under **VR → MORE VR OPTIONS → VR CONTROLLER BINDINGS**.
+6. At the game's start screen use **Escape** on the PC keyboard to advance. Enter and Space do not advance that screen. After it, arrows/WASD navigate menus, Enter/Space confirms, and Escape goes back.
+7. Use **PC OPTIONS → VR → RETURN TO PC** to return to desktop. If no headset is detected, check the connection and active OpenXR runtime, then retry **ENTER VR**. Desktop mode remains available.
 
-## VR (experimental)
+Head/controller tracking, calibrated weapon attachment, near-wall behavior and shot impacts remain experimental. A calibration ray alone does not establish projectile accuracy.
 
-Install the headset vendor's OpenXR runtime separately, make it active, and choose VR in the loader. The same Windows executable supplies PC and PCVR modes. There is no standalone Quest APK in this release.
+## Feedback and files
 
-For Touch input, choose Auto in Input Devices; an explicitly selected Keyboard/Mouse device can take precedence. VR settings expose motion controls and controller bindings. Runtime support for the current-time tracking conversion extension still needs verification on the target headset.
-
-Calibrated weapon models require your own extracted .rwpm, .placement, .muzzle, and calibration files. Automatic ROM extraction is not implemented. These assets are not supplied. Missing models/anchors and native model fallback have known limitations. A calibration-room aiming ray does not verify actual projectile impacts or damage. Read [Known issues](KNOWN_ISSUES.md) before VR testing.
-
-## Saves and settings
-
-The existing profile location remains %LOCALAPPDATA%\XR64\RageWars, with game data under user-data. Renaming the executable does not migrate or reset this profile. Back up saves before testing a prerelease.
-
-The optional XR64_PROFILE_DIR environment variable selects a separate local test profile. Do not attach ROMs, extracted assets, Controller Paks, or unreviewed full logs to public reports. Redact account names and machine paths from diagnostic excerpts.
+Report version `v0.2.0-beta.1` and the executable SHA-256 with reproducible bugs. Do not upload ROMs, extracted assets, Controller Paks or unreviewed logs. See the release notes and known issues for evidence limits. Licenses/attributions are in COPYING.txt, MODIFICATIONS.txt, THIRD-PARTY-NOTICES.txt and licenses/.
