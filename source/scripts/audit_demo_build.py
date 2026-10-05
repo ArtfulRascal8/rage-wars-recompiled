@@ -2,7 +2,7 @@ from pathlib import Path
 import json,re,struct,hashlib,collections
 import argparse
 root=Path(__file__).resolve().parents[1]
-parser=argparse.ArgumentParser();parser.add_argument('--build',type=Path,default=root/'build/demo-release-20260911');parser.add_argument('--exe',type=Path);parser.add_argument('--version',default='0.2.0-beta.1');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--build',type=Path,default=root/'build/demo-release-20260911');parser.add_argument('--exe',type=Path);parser.add_argument('--version',default='0.2.1-beta.1');args=parser.parse_args()
 build=args.build.resolve();exe=args.exe if args.exe else build/'Release/RageWarsDemo.exe'
 data=exe.read_bytes()
 forbidden=[b'XR64_CALL_FAULT_JOURNAL',b'XR64_FAULT_FRAME_CAPTURE',b'XR64_RW_REPLAY_DIAGNOSTICS',

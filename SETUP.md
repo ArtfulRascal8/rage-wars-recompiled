@@ -1,4 +1,4 @@
-# Setup — Beta 0.2.0 (`v0.2.0-beta.1`)
+# Setup — Beta 0.2.1 (`v0.2.1-beta.1`)
 
 ## Install or update
 
@@ -26,4 +26,4 @@ Head/controller tracking, calibrated weapon attachment, near-wall behavior and s
 
 ## Feedback and files
 
-Report version `v0.2.0-beta.1` and the executable SHA-256 with reproducible bugs. Do not upload ROMs, extracted assets, Controller Paks or unreviewed logs. See the release notes and known issues for evidence limits. Licenses/attributions are in COPYING.txt, MODIFICATIONS.txt, THIRD-PARTY-NOTICES.txt and licenses/.
+Report version `v0.2.1-beta.1` and the executable SHA-256 with reproducible bugs. Do not upload ROMs, extracted assets, Controller Paks or unreviewed logs. See the release notes and known issues for evidence limits. Licenses/attributions are in COPYING.txt, MODIFICATIONS.txt, THIRD-PARTY-NOTICES.txt and licenses/.

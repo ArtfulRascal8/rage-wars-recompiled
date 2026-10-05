@@ -236,7 +236,7 @@ def main():
     refresh_generator_provenance(repo, base_recipe, output)
     shutil.copyfile(args.rom_tables.resolve(), output / "rom-tables.json")
     shutil.copyfile(args.table_provenance.resolve(), output / "rom-table-provenance.json")
-    evidence_dir = repo / "build/release-v0.2.0-beta.1-20261003/source-reconstruction"
+    evidence_dir = repo / "build/release-v0.2.1-beta.1-20261003/source-reconstruction"
     for evidence_name in ("closure-generator-replay.json", "recovery496-full-generator-differences.json",
                           "recovery496-full-generator-differences.md"):
         evidence_path = evidence_dir / evidence_name
@@ -274,7 +274,7 @@ def main():
     new_lock = dict(lock)
     new_lock.update({
         "schema": "xr64.pc-reconstruction.v2",
-        "release_version": "0.2.0-beta.1",
+        "release_version": "0.2.1-beta.1",
         "canonical_function_count": len(canonical),
         "recovered_rom_function_count": len(records),
         "rom_table_count": len(rom_tables),

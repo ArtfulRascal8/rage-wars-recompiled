@@ -1,5 +1,6 @@
-# Beta 0.2.0 limitations
+# Beta 0.2.1 limitations
 
+- The reported intermittent match-end/results failure could not be reliably reproduced. This patch repairs a verified narrow dispatch path and includes Save-path changes; player confirmation and broader residency/overlay investigation remain open. Issue #12 is not declared conclusively resolved.
 - Start screen: press Escape; Enter and Space do not advance it.
 - Power-ups, every item/map, complete campaign/menu coverage and all prior-fix regressions have not been demonstrated on the final executable.
 - Quest 3 through Virtual Desktop and broader headset/runtime combinations have not been retested on this release executable. VR requires alternate weapon models and motion controls enabled; calibrated models require user-supplied files. No standalone Quest build is supplied.

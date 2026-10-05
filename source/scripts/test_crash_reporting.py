@@ -99,8 +99,8 @@ int wmain(int argc,wchar_t** argv) {
   BEGIN
    BLOCK "040904B0"
    BEGIN
-    VALUE "ProductVersion", "0.2.0-beta.1"
-    VALUE "FileVersion", "0.2.0-beta.1"
+    VALUE "ProductVersion", "0.2.1-beta.1"
+    VALUE "FileVersion", "0.2.1-beta.1"
    END
   END
   BLOCK "VarFileInfo"
@@ -127,7 +127,7 @@ int wmain(int argc,wchar_t** argv) {
             assert run.returncode==0 and not directory.exists();passed.append('resident/resolver success has no report');continue
         assert run.returncode!=0,(mode,run.returncode)
         text=(directory/'crash-latest.txt').read_text(encoding='utf-8')
-        assert digest in text and '0.2.0-beta.1' in text
+        assert digest in text and '0.2.1-beta.1' in text
         assert 'C:/Users/' not in text and 'C:\\\\Users\\\\' not in text and 'PRIVATE' not in text
         assert 'Guest registers' not in text and 'A0=' not in text and 'SP=' not in text
         assert 'Active indirect calls:' not in text and 'Invocation registers (raw):' not in text
@@ -137,7 +137,7 @@ int wmain(int argc,wchar_t** argv) {
         if mode in ('context','plain'):
             assert run.returncode==1 and 'Failure: unresolved guest callable' in text
             assert 'Missing guest function: 0x00231F4C' in text
-        if mode=='context':assert 'Version: 0.2.0-beta.1' in text
+        if mode=='context':assert 'Version: 0.2.1-beta.1' in text
         if mode=='plain':assert 'Guest registers' not in text
         if mode=='native':assert 'unhandled native exception' in text and '0xC0000005' in text and 'Fault module: ' in text and '.dll' in text and 'Fault module RVA:' not in text and 'Access address:' not in text
         if mode=='terminate':assert 'Failure: C++ terminate' in text
@@ -175,7 +175,7 @@ int wmain(int argc,wchar_t** argv) {
         pointer=k.GlobalLock(handle);assert pointer
         copied=ctypes.wstring_at(pointer);k.GlobalUnlock(handle);u.CloseClipboard()
         assert copied.encode('utf-8')==(directory/'crash-latest.txt').read_bytes()
-        assert digest in copied and '0.2.0-beta.1' in copied and 'Missing guest function: 0x00231F4C' in copied
+        assert digest in copied and '0.2.1-beta.1' in copied and 'Missing guest function: 0x00231F4C' in copied
         assert 'Guest registers' not in copied and str(run_root) not in copied
         u.SendMessageW(window,0x400+102,102,0)
         assert process.wait(timeout=10)==1

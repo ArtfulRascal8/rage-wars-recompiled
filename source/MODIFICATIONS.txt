@@ -1,4 +1,4 @@
-Rage Wars Recompiled - v0.2.0-beta.1
+Rage Wars Recompiled - v0.2.1-beta.1
 XR64 Studios modifications and distribution notice - 2026-10-03
 
 XR64 Studios modified the N64ModernRuntime runtime and N64Recomp generator
@@ -21,8 +21,8 @@ development call journals, replay diagnostics and frame/memory captures are
 excluded from consumer distribution. Original game rights remain separate.
 
 Matching source and reconstruction instructions are provided alongside the
-binary download as RageWarsRecompiled-v0.2.0-beta.1-source.zip at:
-https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.2.0-beta.1
+binary download as RageWarsRecompiled-v0.2.1-beta.1-source.zip at:
+https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.2.1-beta.1
 The source includes the modified runtime, port code, generator source,
 configuration and scripts. Rebuilding requires your own supported US v1.0 ROM.
 
@@ -55,3 +55,23 @@ trigonometry are unchanged. Matching source includes the generated-body
 reconstruction edit and synthetic clock-boundary contract. Earlier owner
 desktop play confirmed ammo and health visibility. See the release page for
 final-package checks and remaining beta limitations.
+
+October 4, 2026 private issue-12 candidate: nine original fixed JAL sites in
+function 0x00449B20 call their unique existing ROM-translated bodies directly.
+Duplicate ignored boundary symbols had made the generator emit runtime
+lookups for these sites. Dynamic calls and target bodies are unchanged.
+This candidate has not passed a live post-match Save/close/relaunch gate.
+It does not establish that saving caused the reported lookup failure.
+
+2026-10-05: Preserve the original locally selected three-decoder callback family at 0x0025F21C when transient guest callable mappings are unavailable. No decoder body or game data changed.
+
+October 5 patch: the resource decoder's three locally selected original-ROM
+callbacks now invoke their existing compiled bodies directly. Unrecognized
+targets retain normal callable lookup. The previously prepared Save-path
+change similarly restores nine fixed calls to five existing original-ROM
+bodies. No guessed addresses, no-op stubs, or newly invented bodies are added.
+The matching recipe reproduces both scoped changes from the user's ROM.
+Builds and targeted automated checks passed; the reported intermittent
+gameplay crash could not be reliably reproduced and player confirmation is
+pending. Underlying overlay/code-residency lifecycle causation is unproven.
+Normal production crash reporting remains enabled.

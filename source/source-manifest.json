@@ -9,12 +9,12 @@
       "origin": "working-source"
     },
     "MODIFICATIONS.txt": {
-      "sha256": "ffa7d05ab3673e139ea8ab42716a6d0f1b6ae72010412a2f3c038992c03668fa",
-      "bytes": 3510,
+      "sha256": "6f06a722b235aad5709e5fea7e27814d7b5cd60aa4c54a3ca80436c2c17f8813",
+      "bytes": 4866,
       "origin": "working-source"
     },
     "README.md": {
-      "sha256": "c4a63ba85675c03f69af89aadbfa954016ccf013dbf2024ad158cf61dd4d72d0",
+      "sha256": "5f9038690117f34ef34df27425391a0117cc1da80045e56a9cf71293676615bd",
       "bytes": 828,
       "origin": "working-source"
     },
@@ -24,8 +24,8 @@
       "origin": "working-source"
     },
     "docs/PC_RECONSTRUCTION.md": {
-      "sha256": "83cb57d4ff911dcd2293a9be143d481799d9eefcbc6e658008b7b71f8f745fab",
-      "bytes": 5282,
+      "sha256": "579e241ae42598f3b668b8c44bfe9488411288cf0529e0fc453df8fe8f2f458a",
+      "bytes": 5320,
       "origin": "working-source"
     },
     "licenses/0530cbedd4-LICENSE": {
@@ -194,7 +194,7 @@
       "origin": "private-recipe"
     },
     "reconstruction/expected-guest-inputs.json": {
-      "sha256": "f610a89fd62a29caa8f9c31cf649c07af3e92b50b1a7aab93e2723d7ef0bc056",
+      "sha256": "9b901a2b9acc1ab8f11db50fe4a4ef922d8b9116b16c3cc0b7626a4e1119e353",
       "bytes": 9052,
       "origin": "private-recipe"
     },
@@ -209,8 +209,8 @@
       "origin": "private-recipe"
     },
     "reconstruction/guest-function-edits.json": {
-      "sha256": "94b980cc2c36413dd25174994cca8d5e129b16be3aee7425937dfee7a03885ce",
-      "bytes": 420395,
+      "sha256": "fe4b1bb1c599aa5f7b7c1523c696864733c219c5ae0ed4948e79fcb6fc90471f",
+      "bytes": 423682,
       "origin": "private-recipe"
     },
     "reconstruction/guest-layout.json": {
@@ -234,8 +234,8 @@
       "origin": "private-recipe"
     },
     "reconstruction/reconstruction.lock.json": {
-      "sha256": "baf6789a9f1a7dbb862721264defadf5072b68bb8724af5192da9c4e70cb9235",
-      "bytes": 3369,
+      "sha256": "d5ea160bd37c5f70e8a136bed0ab63efafe7963cf6406f5002103fd395cb9cc3",
+      "bytes": 3465,
       "origin": "private-recipe"
     },
     "reconstruction/recovery496-full-generator-differences.json": {
@@ -284,7 +284,7 @@
       "origin": "working-source"
     },
     "scripts/audit_demo_build.py": {
-      "sha256": "060c5e5834a65c675b6f82594c649162e11989cb70e4bd4a56e80c014179b58b",
+      "sha256": "ece1371d7f9602b9bcf558ac54d966cdda0eca10da7fb9e0a552dfbc8ca238e7",
       "bytes": 5398,
       "origin": "working-source"
     },
@@ -319,7 +319,7 @@
       "origin": "working-source"
     },
     "scripts/package_rage_wars_release.py": {
-      "sha256": "0c98966eae8bfa2ac65cbecc314e82f6ed0d143220cf64a6713f1120413a847d",
+      "sha256": "5edaa9dbeb10141938fed7e41b1d50f1f16383da4ffe4e750999a01f4498b4a5",
       "bytes": 21197,
       "origin": "working-source"
     },
@@ -339,7 +339,7 @@
       "origin": "working-source"
     },
     "scripts/prepare_pc_reconstruction_recipe.py": {
-      "sha256": "4dd9fe7dab518d5778a0db7bf12a7a44da6c1c71a88501efbcb35270a84883dd",
+      "sha256": "07ed181531c283379973fe0aabcbdb14c45fc29dcd869a7a4449fcdebcae67f9",
       "bytes": 18225,
       "origin": "working-source"
     },
@@ -354,7 +354,7 @@
       "origin": "working-source"
     },
     "scripts/reconstruct_pc_candidate.py": {
-      "sha256": "229e1e4e6e99c7e5fa97f9a513e1215845922af8f7f0441b0ae759583e5ad350",
+      "sha256": "a1e52279b05076516445e3a93232b2d3337040ef2ae297cda8e6f092272f19f6",
       "bytes": 23506,
       "origin": "working-source"
     },
@@ -364,7 +364,7 @@
       "origin": "working-source"
     },
     "scripts/test_crash_reporting.py": {
-      "sha256": "3f491fc30e17cd36088a39273e6cbdd5ab4d47cde8cd2cf69b2ca28cc44a52f4",
+      "sha256": "39c84567e24fcbdaea03a0a304a52373f4944f14bb1b5969d1eba44686317614",
       "bytes": 11603,
       "origin": "working-source"
     },
@@ -3864,7 +3864,7 @@
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_release.rc": {
-      "sha256": "06c865843d75ba5b30943690bab1389f0b0e5d8a7e8bd17e1f6b980b65acf30a",
+      "sha256": "bb684e87cdf8669a61b621bc9644610aa8174ae7fc09d7f7712156057252952d",
       "bytes": 681,
       "origin": "working-source"
     },
@@ -3962,6 +3962,16 @@
       "sha256": "5dfdf9c738bd3a604c43914a85a1bc253ed88031a218131e6b7bd4189c101113",
       "bytes": 1725,
       "origin": "working-source"
+    },
+    "scripts/apply_results_decoder_callbacks.py": {
+      "sha256": "712217c35acd3fd4890589100c6f982808bd780703a5a43578fd181d811a6ea8",
+      "bytes": 4489,
+      "origin": "focused-original-ROM-verified-callback-recipe"
+    },
+    "scripts/results_decoder_callback_dispatch.json": {
+      "sha256": "83b41b765664f68c6b17f4cc5536ec2e96e59a29fd8dd22ad7dd1672e348b265",
+      "bytes": 4495,
+      "origin": "focused-original-ROM-verified-callback-recipe"
     }
   },
   "excluded": [
@@ -4071,5 +4081,18 @@
     "notice_payloads": "All 32 existing B program notice files are preserved byte-for-byte from final4.",
     "build_scope": "A4 guarded consumer build and source contracts passed; a fresh B2 reconstruction and owner runtime acceptance remain pending."
   },
-  "release_version": "0.2.0-beta.1"
+  "release_version": "0.2.1-beta.1",
+  "callback_dispatch_patch": {
+    "release": "v0.2.1-beta.1",
+    "caller": "0x0025F074",
+    "call_site": "0x0025F21C",
+    "existing_callbacks": [
+      "0x00261120",
+      "0x0025EED4",
+      "0x002611D8"
+    ],
+    "save_path": "Nine fixed calls in existing caller 0x00449B20 restored to five registered ROM-backed bodies.",
+    "new_guest_function_count": 0,
+    "runtime_acceptance": "Intermittent reporter failure not reliably reproduced; player confirmation pending."
+  }
 }

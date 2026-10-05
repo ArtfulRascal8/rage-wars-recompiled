@@ -1,0 +1,113 @@
+{
+  "rom_sha256": "0433043aaba2649bdd1fe717c4020550ac663c0362527aa082490f5977a3e46b",
+  "caller": "trace_func_0025F074_r0005FC74",
+  "call_pc": 2486812,
+  "targets": {
+    "0x00261120": "trace_func_00261120_r00061D20",
+    "0x0025EED4": "rom_closure_0025EED4_r0005FAD4",
+    "0x002611D8": "trace_func_002611D8_r00061DD8"
+  },
+  "functions": {
+    "trace_func_0025F074_r0005FC74": {
+      "vram": 2486388,
+      "rom": 392308,
+      "size": 864,
+      "rom_sha256": "b4782ac81bea1f52df7aabef9c022be6306a8fd5aa387b67d7ac35adce36a4ae",
+      "generated_sha256": "c14177a3e4bdf8888696e68284858b39208e1af5218aa1d1d9e592f72fee067d"
+    },
+    "rom_closure_0025EED4_r0005FAD4": {
+      "vram": 2485972,
+      "rom": 391892,
+      "size": 416,
+      "rom_sha256": "f4b84f8feb348e1e11fc406e3a88b5df510cc5e7e25c3c822c5cd93deeaf2111",
+      "generated_sha256": "e29b24ea5e3857b62e00f2e5bb3310cd7ed53bbd0cb9abdb35255d75cdbe8fa9"
+    },
+    "rom_closure_00260B20_r00061720": {
+      "vram": 2493216,
+      "rom": 399136,
+      "size": 236,
+      "rom_sha256": "21ccfdb65a70e1b9487a1821bb30bc7806491750f5e97546d982a1f9dfc319b7",
+      "generated_sha256": "a74fff957c2fc1b8310fb170dd695cd32c988f4b4fe53844b333084b69e07b19"
+    },
+    "trace_func_0025FD14_r00060914": {
+      "vram": 2489620,
+      "rom": 395540,
+      "size": 572,
+      "rom_sha256": "06c12231b96d4a24b147dde651abc5cc48a4e43d0e27bc4209b14f452a5ccb79",
+      "generated_sha256": "22d0be3d48e92534bf8e79563e641991a14a64a0cac7ff287770542efb00be30"
+    },
+    "trace_func_0025FF50_r00060B50": {
+      "vram": 2490192,
+      "rom": 396112,
+      "size": 392,
+      "rom_sha256": "8c9b8b56835ae965253c94eb70c37c64f8664ac21230e10a0ef56378a5c4e9e2",
+      "generated_sha256": "7fbacbf14b1ae798d488f4b89fc7e5ba5edd2f68bdb40d533120b0f7a49dca84"
+    },
+    "trace_func_002600D8_r00060CD8": {
+      "vram": 2490584,
+      "rom": 396504,
+      "size": 516,
+      "rom_sha256": "545c7f10c5fe543d7cf61a0c2548e5bc092e56cd42acb93875a68bf710e27a4e",
+      "generated_sha256": "659a95ebefae593b3a3ffd64d3a29b31bd12555603272e9fd303aa0dfded6837"
+    },
+    "trace_func_002605D4_r000611D4": {
+      "vram": 2491860,
+      "rom": 397780,
+      "size": 28,
+      "rom_sha256": "ffa2e9ceee2ab920722690092afa7a2dcd9c86f7123d15811b25f0f4c35b8db6",
+      "generated_sha256": "0da132b00111f973a7e11ecacb26ebec4667d204e73e91552733503537d6d29f"
+    },
+    "trace_func_002605F0_r000611F0": {
+      "vram": 2491888,
+      "rom": 397808,
+      "size": 20,
+      "rom_sha256": "3fc3ff82ecd29d1e7555f44f2757d161d4166a8a3a0fa3ebc86d405d85ad408e",
+      "generated_sha256": "3f03ec58c503ce5bc17c98c6dd4eede6ec1d3345a5ea01279f287fd3409e2371"
+    },
+    "trace_func_00260664_r00061264": {
+      "vram": 2492004,
+      "rom": 397924,
+      "size": 96,
+      "rom_sha256": "2d128bb6de0a0db0155687646f897972c785f8878e87f6487c8163afba8fa82b",
+      "generated_sha256": "374fd5e28ba900e839604301abfff5c6be191a09bc7fdb892b9a86169dd51c4b"
+    },
+    "trace_func_00260758_r00061358": {
+      "vram": 2492248,
+      "rom": 398168,
+      "size": 112,
+      "rom_sha256": "ffbfd862e254028c01c286b64baee7d9dd5a1613db8da2eea7be8a0f45b049a7",
+      "generated_sha256": "9fe317059e439c1fe7b5edd5597efe04dbeb77ca8789664f7eb2db0d5162536e"
+    },
+    "trace_func_0026102C_r00061C2C": {
+      "vram": 2494508,
+      "rom": 400428,
+      "size": 28,
+      "rom_sha256": "b597cc4c5e849c0f8d929079f9c958ec0b3f6dfcec545accdd87a8172e8d1da3",
+      "generated_sha256": "0ab82d06c90a880195a47c02f8bf25bc26b1991c7318e8e0774133d10d073a81"
+    },
+    "trace_func_00261120_r00061D20": {
+      "vram": 2494752,
+      "rom": 400672,
+      "size": 184,
+      "rom_sha256": "c136c10814f8df61e9730046387135026a503a15254dc42369b6e5c0f9dea775",
+      "generated_sha256": "24abc9a83c27ec0ea29d107e0301c19529693d47bd2309f36f2fad7aded0a74d"
+    },
+    "trace_func_002611D8_r00061DD8": {
+      "vram": 2494936,
+      "rom": 400856,
+      "size": 112,
+      "rom_sha256": "3a71fcff345025dcb6c8aec0581ca7351a09f58b32d0d2fb6f53effce55c16b6",
+      "generated_sha256": "7006c7f17044d3ea6d56cf00bf367d0e68234f7e2c0bfb2c6173d699a4fbc150"
+    }
+  },
+  "selection_words": {
+    "0x25f0f0": "0x3c170026",
+    "0x25f0f4": "0x26f71120",
+    "0x25f100": "0x3c170026",
+    "0x25f104": "0x26f7eed4",
+    "0x25f110": "0x3c170026",
+    "0x25f114": "0x26f711d8",
+    "0x25f21c": "0x2e0f809",
+    "0x25f220": "0x26310001"
+  }
+}

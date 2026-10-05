@@ -54,7 +54,7 @@ def symbol_identities(path):
 
 def verify_recipe_pins(recipe, lock, rom):
     require(lock["schema"] == "xr64.pc-reconstruction.v2", "Wrong reconstruction lock")
-    require(lock["release_version"] == "0.2.0-beta.1", "Wrong reconstruction release version")
+    require(lock["release_version"] == "0.2.1-beta.1", "Wrong reconstruction release version")
     require(lock["canonical_function_count"] == 3751, "Wrong canonical guest function count")
     require(lock["recovered_rom_function_count"] == 545, "Wrong ROM-closed function count")
     require(lock["rom_table_count"] == 60, "Wrong reviewed ROM table count")

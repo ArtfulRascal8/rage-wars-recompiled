@@ -16486,5 +16486,114 @@
         ]
       }
     ]
+  },
+  "trace_func_00449B20_r001ADB20": {
+    "before_sha256": "76531b98735d96df1ff45961af1c326ef269fa4e83768b65716c07bf4b84bbed",
+    "after_sha256": "2eb879fa1496e8f448a041dc5505c39eea8f0dfed98712c32a1776825a41aa1f",
+    "changes": [
+      {
+        "line": 111,
+        "delete": [
+          "    LOOKUP_FUNC(0x0022692C)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    trace_func_0022692C_r0002752C(rdram, ctx);\n"
+        ]
+      },
+      {
+        "line": 311,
+        "delete": [
+          "    LOOKUP_FUNC(0x002097E8)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    trace_func_002097E8_r0000A3E8(rdram, ctx);\n"
+        ]
+      },
+      {
+        "line": 370,
+        "delete": [
+          "    LOOKUP_FUNC(0x0021A78C)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    trace_func_0021A78C_r0001B38C(rdram, ctx);\n"
+        ]
+      },
+      {
+        "line": 382,
+        "delete": [
+          "    LOOKUP_FUNC(0x002A6E98)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    trace_func_002A6E98_r000A7A98(rdram, ctx);\n"
+        ]
+      },
+      {
+        "line": 402,
+        "delete": [
+          "    LOOKUP_FUNC(0x00449064)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    trace_func_00449064_r001AD064(rdram, ctx);\n"
+        ]
+      },
+      {
+        "line": 544,
+        "delete": [
+          "    LOOKUP_FUNC(0x002097E8)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    trace_func_002097E8_r0000A3E8(rdram, ctx);\n"
+        ]
+      },
+      {
+        "line": 605,
+        "delete": [
+          "    LOOKUP_FUNC(0x0021A78C)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    trace_func_0021A78C_r0001B38C(rdram, ctx);\n"
+        ]
+      },
+      {
+        "line": 617,
+        "delete": [
+          "    LOOKUP_FUNC(0x002A6E98)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    trace_func_002A6E98_r000A7A98(rdram, ctx);\n"
+        ]
+      },
+      {
+        "line": 629,
+        "delete": [
+          "    LOOKUP_FUNC(0x00449064)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    trace_func_00449064_r001AD064(rdram, ctx);\n"
+        ]
+      }
+    ]
+  },
+  "trace_func_0025F074_r0005FC74": {
+    "before_sha256": "c14177a3e4bdf8888696e68284858b39208e1af5218aa1d1d9e592f72fee067d",
+    "after_sha256": "812c3efb4a32f5786a6a87fa1e6f58f4b23d003589ba88301328b75c42b2ae35",
+    "changes": [
+      {
+        "line": 308,
+        "delete": [
+          "    LOOKUP_FUNC(ctx->r23)(rdram, ctx);\n"
+        ],
+        "insert": [
+          "    // The original instructions select only these three ROM-backed decoders.\n",
+          "    // Resolve this closed family like fixed JALs; unrelated targets retain lookup.\n",
+          "    switch ((uint32_t)ctx->r23) {\n",
+          "        case 0x00261120U: trace_func_00261120_r00061D20(rdram, ctx); break;\n",
+          "        case 0x0025EED4U: rom_closure_0025EED4_r0005FAD4(rdram, ctx); break;\n",
+          "        case 0x002611D8U: trace_func_002611D8_r00061DD8(rdram, ctx); break;\n",
+          "        default: LOOKUP_FUNC(ctx->r23)(rdram, ctx); break;\n",
+          "    }\n"
+        ]
+      }
+    ]
   }
 }

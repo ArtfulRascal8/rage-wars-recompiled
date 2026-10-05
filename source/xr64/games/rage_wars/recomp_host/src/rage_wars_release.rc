@@ -1,7 +1,7 @@
 #include <windows.h>
 1 VERSIONINFO
- FILEVERSION 0,2,0,1
- PRODUCTVERSION 0,2,0,1
+ FILEVERSION 0,2,1,1
+ PRODUCTVERSION 0,2,1,1
  FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
  FILEFLAGS VS_FF_PRERELEASE
  FILEOS VOS_NT_WINDOWS32
@@ -14,11 +14,11 @@ BEGIN
   BEGIN
    VALUE "CompanyName", "XR64 Studios\0"
    VALUE "FileDescription", "Rage Wars Recompiled\0"
-   VALUE "FileVersion", "0.2.0-beta.1\0"
+   VALUE "FileVersion", "0.2.1-beta.1\0"
    VALUE "InternalName", "RageWarsRecompiled\0"
    VALUE "OriginalFilename", "RageWarsRecompiled.exe\0"
    VALUE "ProductName", "Rage Wars Recompiled\0"
-   VALUE "ProductVersion", "0.2.0-beta.1\0"
+   VALUE "ProductVersion", "0.2.1-beta.1\0"
   END
  END
  BLOCK "VarFileInfo"

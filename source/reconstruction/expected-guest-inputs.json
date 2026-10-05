@@ -100,8 +100,8 @@
     "newline": "crlf"
   },
   "funcs_25.c": {
-    "sha256": "0e0519617ccb3cb26f5d2ce40b4286986a8ac69113c30b92fa7044e3112c65fa",
-    "bytes": 283634,
+    "sha256": "92533a97f33f541138c732f3c757fa254ce03a8310ac0cb1a4565e740d530453",
+    "bytes": 284092,
     "newline": "crlf"
   },
   "funcs_26.c": {
@@ -205,8 +205,8 @@
     "newline": "crlf"
   },
   "funcs_44.c": {
-    "sha256": "262bf54b7dcb7436221cd8e8ae617e174042da33043f4a936e320912bef7f57b",
-    "bytes": 471031,
+    "sha256": "10d0e8071049e7926a2ad0633501cb3fad27726fdfd9d629c7714b2b9903bc48",
+    "bytes": 471085,
     "newline": "crlf"
   },
   "funcs_45.c": {

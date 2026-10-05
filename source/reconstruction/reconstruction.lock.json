@@ -15,7 +15,7 @@
   "windows_sdk": "10.0.22621.0",
   "audio_output_sha256": "730ac4be090a62c97915979f0f8c733a583fb302fc6ab1598282f8f418c62a27",
   "historical_rsp_generator_sha256": "7739851844fb096e3deac5a2dfb9aa28ae6587cd4556762b0b6f2b61c9cff7df",
-  "candidate_fallback_executable_sha256": "76344739720954689CFB69A7D102BFC2FCAB96BFA84BD0446FC87DBFAAA4AED4",
+  "candidate_fallback_executable_sha256": "A40C5E5403BFC0AE8EF5337791DA2C19FDED92F32DB5EBFFC2582CC9B3524C9C",
   "phases": [
     "reviewed source verification",
     "ROM verification",
@@ -29,8 +29,8 @@
     "package identity/notices"
   ],
   "os_isolation": "open until independent Windows/sandbox validation; never change host security",
-  "publication": "not cleared",
-  "release_version": "0.2.0-beta.1",
+  "publication": "Owner-authorized v0.2.1-beta.1 prerelease; intermittent gameplay reproduction/confirmation remains pending.",
+  "release_version": "0.2.1-beta.1",
   "canonical_function_count": 3751,
   "recovered_rom_function_count": 545,
   "rom_table_count": 60,

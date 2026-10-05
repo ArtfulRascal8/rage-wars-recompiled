@@ -2,13 +2,13 @@
 
 **Turok: Rage Wars for Windows PC, with experimental OpenXR VR support.** A non-commercial fan recompilation by XR64 Studios.
 
-[Download Beta 0.2.0](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.2.0-beta.1) · [Setup](SETUP.md) · [Release notes](RELEASE_NOTES.md) · [Known issues](KNOWN_ISSUES.md) · [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues)
+[Download Beta 0.2.1](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.2.1-beta.1) · [Setup](SETUP.md) · [Release notes](RELEASE_NOTES.md) · [Known issues](KNOWN_ISSUES.md) · [Report a bug](https://github.com/ArtfulRascal8/rage-wars-recompiled/issues)
 
 **VR requires alternate weapon models and motion controls to be enabled.** Select **MODELS: CALIBRATED** under PC OPTIONS and **MOTION CONTROLS: ON** under VR. Required user-supplied model/calibration files are not bundled.
 
-## Beta 0.2.0 (`v0.2.0-beta.1`)
+## Beta 0.2.1 (`v0.2.1-beta.1`)
 
-Fixes the timer-wrap bug that could make rotating pickups disappear, carrying forward fixes for Syra defeat, the reported Warclubs path, post-mission Quit and black splash transitions. Earlier C1 desktop play confirmed ammo and health visibility. See RELEASE_NOTES.md for exact final-package checks and their limits.
+Repairs a narrow callback-dispatch path associated with the reported match-end/results crash and includes the earlier Save-path call repairs. Builds and targeted automated checks passed. The intermittent gameplay failure could not be reliably reproduced; player confirmation is pending. Prior pickup, Syra, reported Warclubs, post-mission Quit, and splash fixes are retained. See RELEASE_NOTES.md for scope and verification limits.
 
 ## How to play
 
@@ -38,4 +38,4 @@ The reviewed build/reconstruction kit is in [source/](source/README.md). The mat
 
 See [COPYING.txt](COPYING.txt), [MODIFICATIONS.txt](MODIFICATIONS.txt), [third-party notices](source/THIRD-PARTY-NOTICES.txt) and [Credits](CREDITS.md). Original game code/content remain copyrighted by their respective rights holders. XR64 Studios' non-commercial fan-distribution decision does not claim rights-holder permission or legal clearance. The binary contains translated guest code and the reconstruction recipe contains edits derived from the original program.
 
-[Beta 0.1 and its original downloads](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.1.0-beta.1) remain available.
+[Beta 0.2.0 and its original downloads](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.2.0-beta.1) remain available as a fallback. Beta 0.1 is also retained.

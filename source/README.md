@@ -1,4 +1,4 @@
-# Rage Wars Recompiled source — v0.2.0-beta.1
+# Rage Wars Recompiled source — v0.2.1-beta.1
 
 The reviewed build/reconstruction kit. From this directory follow [PC reconstruction](docs/PC_RECONSTRUCTION.md), supplying your own supported US v1.0 ROM. The source manifest excludes generated original-game inputs; the recipe regenerates and checks them before building the public consumer executable.
 
