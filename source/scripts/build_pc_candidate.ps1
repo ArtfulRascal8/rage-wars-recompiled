@@ -6,7 +6,14 @@ param(
     [string]$Toolset,
     [string]$WindowsSDK,
     [int]$Jobs = 6,
-    [switch]$Offline
+    [switch]$Offline,
+    [switch]$NativePlayerEase,
+    [switch]$NativePlayerGroundContact,
+    [switch]$NativePlayerDamageDescriptor,
+    [switch]$NativePlayerFloorHeight,
+    [switch]$NativePlayerSurfaceLookup,
+    [switch]$NativePlayerMovementSpeed,
+    [switch]$NativePlayerIdleEntry
 )
 $ErrorActionPreference = "Stop"
 $repo = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))
@@ -31,6 +38,13 @@ $configure = @("-S", (Join-Path $repo "staging/rage-wars-recomp-spike/pc_runtime
 if ($Toolset) { $configure += @("-T", $Toolset) }
 if ($WindowsSDK) { $configure += "-DCMAKE_SYSTEM_VERSION=$WindowsSDK" }
 if ($Offline) { $configure += "-DXR64_DEPENDENCIES_OFFLINE=ON" }
+if ($NativePlayerEase) { $configure += "-DXR64_NATIVE_PLAYER_EASE=ON" }
+if ($NativePlayerGroundContact) { $configure += "-DXR64_NATIVE_PLAYER_GROUND_CONTACT=ON" }
+if ($NativePlayerDamageDescriptor) { $configure += "-DXR64_NATIVE_PLAYER_DAMAGE_DESCRIPTOR=ON" }
+if ($NativePlayerFloorHeight) { $configure += "-DXR64_NATIVE_PLAYER_FLOOR_HEIGHT=ON" }
+if ($NativePlayerSurfaceLookup) { $configure += "-DXR64_NATIVE_PLAYER_SURFACE_LOOKUP=ON" }
+if ($NativePlayerMovementSpeed) { $configure += "-DXR64_NATIVE_PLAYER_MOVEMENT_SPEED=ON" }
+if ($NativePlayerIdleEntry) { $configure += "-DXR64_NATIVE_PLAYER_IDLE_ENTRY=ON" }
 Invoke-Checked $CMake $configure
 $audit = @("$repo/scripts/audit_pc_dependency_inputs.py", "--repo", $repo,
     "--build", $BuildDir, "--dependencies", $deps, "--output", "$BuildDir/dependency-input-audit.json")
@@ -38,14 +52,14 @@ Invoke-Checked $Python $audit
 Invoke-Checked $CMake @("--build", $BuildDir, "--config", "Release", "--target",
     "rage_wars_pc", "rage_wars_xr_controls_test", "rage_wars_xr_camera_test",
     "rage_wars_decoded_frame_test", "rage_wars_audio_output_test", "rage_wars_weapon_calibration_test",
-    "rage_wars_modern_controls_test", "rage_wars_guest_clock_test", "--parallel", "$Jobs")
+    "rage_wars_modern_controls_test", "rage_wars_guest_clock_test", "rage_wars_presentation_clock_test", "rage_wars_body_interpolation_test", "rage_wars_animation_blend_test", "rage_wars_generic_combiner_test", "rage_wars_clip_equivalence_test", "rage_wars_xr_hud_test", "rage_wars_xr_laser_test", "rage_wars_player_view_bridge_test", "rage_wars_ground_movement_bridge_test", "rage_wars_player_ease_bridge_test", "rage_wars_player_ground_contact_bridge_test", "rage_wars_player_damage_descriptor_bridge_test", "rage_wars_player_floor_height_bridge_test", "rage_wars_player_surface_lookup_bridge_test", "rage_wars_player_movement_speed_bridge_test", "rage_wars_player_idle_entry_bridge_test", "rage_wars_native_focus_test", "rage_wars_model_filter_test", "--parallel", "$Jobs")
 Invoke-Checked $Python ($audit + "--require-read-logs")
 $ctest = Join-Path (Split-Path (Get-Command $CMake).Source) "ctest.exe"
 Invoke-Checked $ctest @("--test-dir", $BuildDir, "-C", "Release", "-R",
-    "^rage_wars_(xr_controls_contract|xr_camera_math|decoded_frame_ownership|audio_output_contract|weapon_calibration_contract|modern_controls_contract|guest_clock_contract|release_package_contract|gate5_cli_help)$",
+    "^rage_wars_(xr_controls_contract|xr_camera_math|decoded_frame_ownership|audio_output_contract|weapon_calibration_contract|modern_controls_contract|guest_clock_contract|presentation_clock_contract|body_interpolation_contract|animation_blend_contract|generic_combiner_contract|clip_equivalence_contract|xr_hud_contract|xr_laser_contract|player_view_original_default|player_view_bridge_contract|ground_movement_original_default|ground_movement_bridge_contract|player_ease_disabled_fallback|player_ease_bridge_contract|player_ground_contact_disabled_fallback|player_ground_contact_bridge_contract|player_damage_descriptor_disabled_fallback|player_damage_descriptor_bridge_contract|player_floor_height_disabled_fallback|player_floor_height_bridge_contract|player_surface_lookup_disabled_fallback|player_surface_lookup_bridge_contract|player_movement_speed_disabled_fallback|player_movement_speed_bridge_contract|player_idle_entry_disabled_fallback|player_idle_entry_bridge_contract|native_focus_contract|model_filter_gpu_contract|release_package_contract|gate5_cli_help)$",
     "--output-on-failure")
 Invoke-Checked $Python @("$repo/scripts/audit_demo_build.py", "--build", $BuildDir, "--exe", "$BuildDir/Release/RageWarsRecompiled.exe")
 Invoke-Checked $CMake @("--build", $BuildDir, "--config", "Release", "--target", "rage_wars_package")
 Invoke-Checked $Python @("$repo/scripts/audit_release_privacy.py", $stage, "--report", "$BuildDir/package-privacy.json")
 Write-Output "Build-local package artifact: $stage"
-Write-Output "Runtime acceptance must be attributed to this executable; see release notes."
+Write-Output "Runtime/owner acceptance is still required in the existing TESTING slot."

@@ -34,6 +34,8 @@ constexpr std::uint8_t kWindowPresetCount = 5;
 float master_gain() noexcept;
 void initialize();
 Settings snapshot();
+// One-shot VR recenter requested from the MOVEMENT & TURNING page.
+bool take_recenter_request();
 void replace(Settings settings);
 void reset_to_defaults();
 

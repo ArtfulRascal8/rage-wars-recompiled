@@ -8,7 +8,7 @@ namespace {
 // 55 funcs_*.c units contain 3,012 definitions; section count is a different metric.
 // Plus pak_menu (6), turret_transform (1), turret_lifecycle (32):
 // scripts/*_coverage_group.json pin ROM/snapshot provenance for each addition.
-constexpr std::size_t kExpectedFunctions = 3012 + 6 + 1 + 32 + 4;
+constexpr std::size_t kExpectedFunctions = 4537;  // 3,759 base + 691 + 19 helpers + 3 shims + 65 whole-ROM recovery
 constexpr std::size_t kExpectedTranslationUnits = 55;
 
 std::size_t count_markers(const std::filesystem::path &file) {

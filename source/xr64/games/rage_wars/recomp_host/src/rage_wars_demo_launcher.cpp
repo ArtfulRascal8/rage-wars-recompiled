@@ -438,7 +438,7 @@ StartupOutcome resolve_startup(int argc,wchar_t** argv,Startup& startup,std::str
             setup=true;
         }
     }
-    if(setup&&startup.headless){error="Setup requires visible presentation.";return StartupOutcome::InvalidArgs;}
+    if(setup&&startup.headless){error="--setup cannot open with --headless.";return StartupOutcome::InvalidArgs;}
     if(startup.headless&&startup.rom.empty()){
         error="Headless startup requires an explicit --rom path.";return StartupOutcome::InvalidArgs;
     }
@@ -448,7 +448,7 @@ StartupOutcome resolve_startup(int argc,wchar_t** argv,Startup& startup,std::str
             if(!show_setup_dialog(startup,paths))return StartupOutcome::SetupCancelled;
             return StartupOutcome::Ready;
         }
-        if(!startup.headless||setup){if(startup.headless){error="Setup requires visible presentation.";return StartupOutcome::InvalidArgs;}if(!show_setup_dialog(startup,paths))return StartupOutcome::SetupCancelled;}
+        if(!startup.headless||setup){if(startup.headless){error="--setup cannot open with --headless.";return StartupOutcome::InvalidArgs;}if(!show_setup_dialog(startup,paths))return StartupOutcome::SetupCancelled;}
         return StartupOutcome::Ready;
     }
     std::string pak_error;const auto pak_state=inspect_controller_pak(startup.controller_pak,pak_error);

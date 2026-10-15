@@ -1,7 +1,23 @@
 #pragma once
 #include "rage_wars_controls.hpp"
+#include <atomic>
 #include <cstring>
 namespace xr64::rage_wars::controls {
+// Guest address of each port's processed-input block (0x80109328 + port * 0x224). The
+// enhancements that follow one human (mouse look, native movement, VR camera) are bound to
+// the port that owns that input source; with the default assignment both stay on port 0.
+inline constexpr std::uint32_t kPort0InputBlock = 0x80109328U;
+inline constexpr std::uint32_t kInputBlockStride = 0x224U;
+inline std::atomic<std::uint32_t>& look_block_slot() { static std::atomic<std::uint32_t> v{kPort0InputBlock}; return v; }
+inline std::atomic<std::uint32_t>& xr_block_slot() { static std::atomic<std::uint32_t> v{kPort0InputBlock}; return v; }
+inline std::uint32_t look_input_block() { return look_block_slot().load(std::memory_order_relaxed); }
+inline std::uint32_t xr_input_block() { return xr_block_slot().load(std::memory_order_relaxed); }
+inline void set_local_input_ports(int look_port, int xr_port) {
+    if (look_port < 0 || look_port > 3) look_port = 0;
+    if (xr_port < 0 || xr_port > 3) xr_port = look_port;
+    look_block_slot().store(kPort0InputBlock + kInputBlockStride * static_cast<std::uint32_t>(look_port), std::memory_order_relaxed);
+    xr_block_slot().store(kPort0InputBlock + kInputBlockStride * static_cast<std::uint32_t>(xr_port), std::memory_order_relaxed);
+}
 inline std::uint32_t guest_word(const std::uint8_t* ram, std::uint32_t offset) {
     std::uint32_t value; std::memcpy(&value, ram + offset, 4); return value;
 }
@@ -19,7 +35,7 @@ inline std::uint32_t spring_value(const std::uint8_t* ram,std::uint32_t actor,
         std::uint32_t original,const Settings& settings) {
     if(!local_actor(ram,actor))return original;
     // Port 0's real controller block distinguishes the human from other actor records.
-    if(guest_word(ram,actor-0x80000000U+0x698)!=0x80109328U)return original;
+    if(guest_word(ram,actor-0x80000000U+0x698)!=look_input_block())return original;
     return settings.look_spring ? 1U : 0U;
 }
 inline bool live_view(const std::uint8_t* ram, std::uint32_t actor, std::uint32_t view) {
@@ -60,7 +76,7 @@ public:
         spring_ = settings.look_spring;
         actor_ = actor; yaw_used_ = pitch_used_ = yaw_allowed_ = false;
         enabled_ = settings.profile == Profile::Modern && local_actor(ram, actor) &&
-            guest_word(ram,actor-0x80000000U+0x698)==0x80109328U;
+            guest_word(ram,actor-0x80000000U+0x698)==look_input_block();
         delta_ = enabled_ ? look_delta(sample, settings, guest_float(ram, 0xCD648)) : LookDelta{};
     }
     bool apply(std::uint8_t* ram, std::uint32_t actor, std::uint32_t view,

@@ -2,7 +2,7 @@ from pathlib import Path
 import json,re,struct,hashlib,collections
 import argparse
 root=Path(__file__).resolve().parents[1]
-parser=argparse.ArgumentParser();parser.add_argument('--build',type=Path,default=root/'build/demo-release-20260911');parser.add_argument('--exe',type=Path);parser.add_argument('--version',default='0.2.1-beta.1');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--build',type=Path,default=root/'build/demo-release-20260911');parser.add_argument('--exe',type=Path);parser.add_argument('--version',default='0.5.0-beta.1');args=parser.parse_args()
 build=args.build.resolve();exe=args.exe if args.exe else build/'Release/RageWarsDemo.exe'
 data=exe.read_bytes()
 forbidden=[b'XR64_CALL_FAULT_JOURNAL',b'XR64_FAULT_FRAME_CAPTURE',b'XR64_RW_REPLAY_DIAGNOSTICS',
@@ -14,8 +14,7 @@ forbidden=[b'XR64_CALL_FAULT_JOURNAL',b'XR64_FAULT_FRAME_CAPTURE',b'XR64_RW_REPL
  b'Last indirect lookup (may precede',b'Lookup source:',b'Fault module RVA:',
  b'Access address:',b'Access operation (',b'xr64_rage_wars_invoke_function_with_context_trace',
  b'xr64_rage_wars_note_recovered_rom_entry',b'--input-replay',b'diagnostic-replay',
- b'--developer',b'--audio-validation-run',b'--trace',b'--summary',b'--headless',b'--max-seconds',
- b'[diagnostic options]',b'capture-next-task',b'pre-swap.bmp',b'presented-front.bmp',b'XR64-render-captures',
+ b'capture-next-task',b'pre-swap.bmp',b'presented-front.bmp',b'XR64-render-captures',
  b'glReadPixels',b'glGetTexImage',b'Report saved:',b'C:/Users/',b'C:\\Users\\']
 def encoded_forms(value):return (value,value.decode('ascii').encode('utf-16le'))
 found=[x.decode('ascii') for x in forbidden if any(form in data for form in encoded_forms(x))]

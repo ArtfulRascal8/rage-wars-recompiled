@@ -1,41 +1,27 @@
-# Rage Wars PC source reconstruction â€” v0.2.1-beta.1
+# Build Rage Wars Recompiled - v0.5.0-beta.1
 
-XR64 Studios uses this workflow to recreate the reviewed v0.2.1-beta.1 guest and audio inputs from a manifested source kit and the separately supplied US v1.0 ROM. The generated executable and its complete Windows ZIP must come from this clean reconstruction before that ZIP is treated as the player release. Version 0.2.0-beta.1 remains available as the previous-release fallback.
+Use the complete `source/` directory from the matching public snapshot or named source ZIP. It contains an explicit SHA-256 manifest and recipes; it excludes ROMs, generated game/audio source, assets, saves and build products.
 
-The source archive has an explicit SHA256 manifest. It excludes Git history, generated guest/audio source, ROMs, maps, profiles, saves, captures, logs, dependency build products and the previous install. The ROM is never copied into the source or package directory. The package retains the projectâ€™s existing copyright and permission notices; release preparation does not grant rights to original game material.
+## Requirements
 
-Extract the matching source ZIP, then change directory to its `source/` folder (the manifested kit). Run from Windows x64 with Visual Studio 2022, MSVC 14.43.34808 / compiler 19.43.34809.0, Windows SDK 10.0.22621.0, Python 3.11 or later and CMake. Use a new, empty work directory outside the extracted source. Keep it short so MSVC FileTracker can complete the OpenXR compiler check. For example:
+- Windows x64, Visual Studio 2022 with Desktop development with C++, MSVC v143 **14.43.34808** (compiler **19.43.34809.0**), and Windows SDK **10.0.22621.0**.
+- Python 3.11 or later, CMake, and your own supported Turok: Rage Wars US v1.0 `.z64` ROM.
+- An empty work directory outside `source/`. Use a short path because MSVC FileTracker has path-length limits.
 
-```powershell
-python scripts/reconstruct_pc_candidate.py `
-  --source-candidate . `
-  --rom <owner-supplied-US-v1.0-ROM.z64> `
-  --work C:/rw-v021/run1 `
-  --cmake <cmake.exe>
-```
-
-Add `--offline` only when the new projectâ€™s public dependency cache is already populated. Dependency sourcing uses the pinned public archives and notices; it does not consult an installed donor SDK or sibling source tree. The normal bootstrap sets `XR64_PUBLIC_RELEASE=ON` and turns call journals, replay diagnostics and frame capture off.
-
-The recipe validates the whole ROM identity, the original 29 ROM table pins and the 31 reviewed table additions. It checks ROM bytes for 545 recovered function records, verifies their symbol and canonical-code identities, and replays the saved 496-, 46- and 3-function closure generations with the source-built N64Recomp tool. It then generates all 3,751 canonical guest functions and checks every function digest, including the 3,206 pins preserved from the prior recipe. Explicit reviewed edits reconstruct the accepted layout, registration metadata and the original 15 controls hooks. The 18 extra recovered-body edits are kept as exact call-target spelling patches; the evidence records them without asserting behavioral equivalence. Audio is regenerated from the pinned ROM regions and handler targets. The optional historical RAM snapshot is never opened.
-
-The bootstrap compares every reconstructed guest file and the audio C++ file against the reviewed raw-byte manifest. It then configures the consumer build in public-release mode, runs the existing nine CTest contracts, the build-input audit, production audit, package checks and privacy audit. The packaging target produces the complete `project/build/reconstructed-pc/package-stage` folder, with all required DLLs and component notices. It is built in a fresh program folder so an existing install can remain available as a fallback; player saves and settings remain under `%LOCALAPPDATA%\XR64\RageWars` unless `XR64_PROFILE_DIR` selects a separate profile.
-
-Run `--generate-only` to stop after source-built generator and exact guest/audio comparison. That mode does not build or validate the player ZIP. Full reconstruction produces `generator-build-provenance.json`, `closure-generator-replay.json`, `reconstruction-result.json`, phase logs, the reconstructed guest/audio inventory, the consumer package, dependency-input audit and privacy report under the work directory.
-
-## Validation and limits
-
-The bootstrap regenerates and compares all 60 guest/audio inputs, including the full 64-bit osGetTime edit, before compiling. The synthetic clock contract covers counter wrap and the o32 v0:v1 result. The public build disables private diagnostics and applies consumer filtering. Source-built generators and pinned public dependency archives are used; generated original-game files and a donor checkout are not required inputs.
-
-Build contracts do not establish gameplay or headset acceptance. See release notes for final-package checks and earlier owner acceptance. Independent-machine and OS donor-denying validation remain untested. Tracked compiler reads are bounded evidence, not an OS isolation barrier.
-
-## Create the Windows ZIP
-
-After the full bootstrap succeeds, package its complete staged program folder. For the example work directory above:
+From the source directory, run in PowerShell (replace the example ROM and CMake paths):
 
 ```powershell
-Copy-Item -LiteralPath C:/rw-v021/run1/project/build/reconstructed-pc/package-stage -Destination C:/rw-v021/RageWarsRecompiled -Recurse
-Compress-Archive -LiteralPath C:/rw-v021/RageWarsRecompiled -DestinationPath C:/rw-v021/RageWarsRecompiled-v0.2.1-beta.1-windows-x64.zip
-Get-FileHash -LiteralPath C:/rw-v021/RageWarsRecompiled-v0.2.1-beta.1-windows-x64.zip -Algorithm SHA256
+python scripts/reconstruct_pc_candidate.py --source-candidate . --rom "D:/Games/owner-supplied-rage-wars.z64" --work "D:/rw050/run" --cmake "C:/Program Files/CMake/bin/cmake.exe"
 ```
 
-Use a fresh destination and distribute the entire program folder. Local builds can have different PE/archive bytes due to compiler paths, timestamps and packaging metadata; the ROM-derived guest/audio inputs must match their pinned hashes exactly. No byte-identical independent-machine executable claim is made.
+Use `--generate-only` to stop after the source-built generators and all exact guest/audio input checks. Without it, the script also builds the Windows player, runs its selected contracts, prepares the complete package, and audits dependencies and privacy. Public SDL2/OpenXR archives are hash-pinned; no donor game folder is used. `--offline` requires those archives already in the new work directory's dependency cache.
+
+## Reconstruction gates
+
+The recipe validates the whole ROM hash, 60 reviewed ROM table pins, 545 recovered closure records, the three saved closure generations and 3,751 canonical function hashes before applying changes. Existing layout/hooks are restored, then the bounded October 6 recovery layer is replayed, followed by the two-stage whole-ROM layer. The inner layer's admitted symbols are restored before it runs; no baseline pins are relaxed. The final 4,537 guest definitions and all 60 guest/audio files must match the reviewed raw-byte inventory exactly. The optional historical RAM snapshot is not used.
+
+The default consumer build enables the accepted presentation features and keeps experimental native player leaf replacements off. Build switches exist for developers to opt in; those are not gameplay acceptance. Production mode disables private tracing, capture and replay facilities.
+
+Outputs and logs remain in the supplied work directory. The program package is under `project/build/reconstructed-pc/package-stage`, with `RageWarsRecompiled.exe`, required DLLs, instructions and notices. Keep the whole package together. Game data stays in the existing profile location documented in SETUP.md.
+
+The published executable is the owner-selected TESTING binary, SHA-256 `7E5E22ABBEDFC8B2B3E1B8C5404B5CB2D8E78A1908FE6C0F158C61C779B1E0A2`. The final source kit reproduces its pinned generated inputs. Native PE hashes may differ across clean builds; building/installing a program does not establish gameplay or headset acceptance. Independent-machine/donor-denying OS validation is separate from the local input audit. See the release's Known Issues page for coverage limits.

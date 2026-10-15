@@ -22,6 +22,8 @@ if(XR64_PUBLIC_RELEASE)
 endif()
 option(XR64_OPENXR "Build opt-in Windows OpenXR prototype" OFF)
 option(XR64_AUDIO "Experimental authentic RSP audio path" OFF)
+option(XR64_NATIVE_PLAYER_MOVEMENT_SPEED "Compile the opt-in native Player_Tick movement-speed helper" OFF)
+option(XR64_NATIVE_PLAYER_IDLE_ENTRY "Compile the opt-in native idle-state entry callback" OFF)
 set(XR64_RELEASE_PACKAGE_DIR "" CACHE PATH
     "New or tool-owned external output directory for the portable consumer package")
 
@@ -155,6 +157,199 @@ function(rage_wars_gate5_setup)
         VERBATIM)
     add_custom_target(rage_wars_gate5_overlay DEPENDS "${normalized_overlay}")
 
+    add_library(rage_wars_player_view STATIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player/player_view.cpp")
+    target_include_directories(rage_wars_player_view PUBLIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_compile_features(rage_wars_player_view PUBLIC cxx_std_20)
+    if(MSVC)
+        target_compile_options(rage_wars_player_view PRIVATE /EHsc /fp:strict /W4)
+    else()
+        target_compile_options(rage_wars_player_view PRIVATE -fno-fast-math -ffp-contract=off)
+    endif()
+
+    add_library(rage_wars_player_view_bridge STATIC
+        "${host_dir}/src/rage_wars_player_view_bridge.cpp")
+    target_include_directories(rage_wars_player_view_bridge PUBLIC
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_player_view_bridge PUBLIC rage_wars_player_view)
+    if(MSVC)
+        # Guest helper failures can unwind across their compatibility C ABI.
+        target_compile_options(rage_wars_player_view_bridge PRIVATE /EHsc /EHc- /fp:strict /W4)
+    endif()
+
+    add_library(rage_wars_ground_movement STATIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player/ground_movement.cpp")
+    target_include_directories(rage_wars_ground_movement PUBLIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_compile_features(rage_wars_ground_movement PUBLIC cxx_std_20)
+    if(MSVC)
+        target_compile_options(rage_wars_ground_movement PRIVATE /EHsc /fp:strict /W4)
+    else()
+        target_compile_options(rage_wars_ground_movement PRIVATE -fno-fast-math -ffp-contract=off)
+    endif()
+
+    add_library(rage_wars_ground_movement_bridge STATIC
+        "${host_dir}/src/rage_wars_ground_movement_bridge.cpp")
+    target_include_directories(rage_wars_ground_movement_bridge PUBLIC
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_ground_movement_bridge PUBLIC rage_wars_ground_movement)
+    if(MSVC)
+        target_compile_options(rage_wars_ground_movement_bridge PRIVATE /EHsc /EHc- /fp:strict /W4)
+    endif()
+
+    add_library(rage_wars_player_ease STATIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player/ease_toward.cpp")
+    target_include_directories(rage_wars_player_ease PUBLIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_compile_features(rage_wars_player_ease PUBLIC cxx_std_20)
+    if(MSVC)
+        target_compile_options(rage_wars_player_ease PRIVATE /EHsc /fp:strict /W4)
+    else()
+        target_compile_options(rage_wars_player_ease PRIVATE -fno-fast-math -ffp-contract=off)
+    endif()
+
+    add_library(rage_wars_player_ease_bridge STATIC
+        "${host_dir}/src/rage_wars_player_ease_bridge.cpp")
+    target_include_directories(rage_wars_player_ease_bridge PUBLIC
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include"
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_link_libraries(rage_wars_player_ease_bridge PUBLIC rage_wars_player_ease)
+    if(MSVC)
+        target_compile_options(rage_wars_player_ease_bridge PRIVATE /EHsc /EHc- /fp:strict /W4)
+    endif()
+
+    add_library(rage_wars_player_ground_contact STATIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player/ground_contact.cpp")
+    target_include_directories(rage_wars_player_ground_contact PUBLIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_compile_features(rage_wars_player_ground_contact PUBLIC cxx_std_20)
+    if(MSVC)
+        target_compile_options(rage_wars_player_ground_contact PRIVATE /EHsc /fp:strict /W4)
+    endif()
+
+    add_library(rage_wars_player_ground_contact_bridge STATIC
+        "${host_dir}/src/rage_wars_player_ground_contact_bridge.cpp")
+    target_include_directories(rage_wars_player_ground_contact_bridge PUBLIC
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include"
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_link_libraries(rage_wars_player_ground_contact_bridge PUBLIC rage_wars_player_ground_contact)
+    if(MSVC)
+        target_compile_options(rage_wars_player_ground_contact_bridge PRIVATE /EHsc /EHc- /fp:strict /W4)
+    endif()
+
+    add_library(rage_wars_player_damage_descriptor STATIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player/damage_descriptor.cpp")
+    target_include_directories(rage_wars_player_damage_descriptor PUBLIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_compile_features(rage_wars_player_damage_descriptor PUBLIC cxx_std_20)
+    if(MSVC)
+        target_compile_options(rage_wars_player_damage_descriptor PRIVATE /EHsc /fp:strict /W4)
+    endif()
+
+    add_library(rage_wars_player_damage_descriptor_bridge STATIC
+        "${host_dir}/src/rage_wars_player_damage_descriptor_bridge.cpp")
+    target_include_directories(rage_wars_player_damage_descriptor_bridge PUBLIC
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include"
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_link_libraries(rage_wars_player_damage_descriptor_bridge PUBLIC
+        rage_wars_player_damage_descriptor)
+    if(MSVC)
+        target_compile_options(rage_wars_player_damage_descriptor_bridge PRIVATE /EHsc /EHc- /fp:strict /W4)
+    endif()
+
+    add_library(rage_wars_player_floor_height STATIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player/floor_height.cpp")
+    target_include_directories(rage_wars_player_floor_height PUBLIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_compile_features(rage_wars_player_floor_height PUBLIC cxx_std_20)
+    if(MSVC)
+        target_compile_options(rage_wars_player_floor_height PRIVATE /EHsc /fp:strict /W4)
+    else()
+        target_compile_options(rage_wars_player_floor_height PRIVATE -fno-fast-math -ffp-contract=off)
+    endif()
+
+    add_library(rage_wars_player_floor_height_bridge STATIC
+        "${host_dir}/src/rage_wars_player_floor_height_bridge.cpp")
+    target_include_directories(rage_wars_player_floor_height_bridge PUBLIC
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include"
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_link_libraries(rage_wars_player_floor_height_bridge PUBLIC rage_wars_player_floor_height)
+    if(MSVC)
+        target_compile_options(rage_wars_player_floor_height_bridge PRIVATE /EHsc /EHc- /fp:strict /W4)
+    endif()
+
+    add_library(rage_wars_player_surface_lookup STATIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player/surface_lookup.cpp")
+    target_include_directories(rage_wars_player_surface_lookup PUBLIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_compile_features(rage_wars_player_surface_lookup PUBLIC cxx_std_20)
+    if(MSVC)
+        target_compile_options(rage_wars_player_surface_lookup PRIVATE /EHsc /W4)
+    endif()
+
+    add_library(rage_wars_player_surface_lookup_bridge STATIC
+        "${host_dir}/src/rage_wars_player_surface_lookup_bridge.cpp")
+    target_include_directories(rage_wars_player_surface_lookup_bridge PUBLIC
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include"
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_link_libraries(rage_wars_player_surface_lookup_bridge PUBLIC rage_wars_player_surface_lookup)
+    if(MSVC)
+        target_compile_options(rage_wars_player_surface_lookup_bridge PRIVATE /EHsc /EHc- /W4)
+    endif()
+
+    add_library(rage_wars_player_movement_speed STATIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player/movement_speed.cpp")
+    target_include_directories(rage_wars_player_movement_speed PUBLIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_compile_features(rage_wars_player_movement_speed PUBLIC cxx_std_20)
+    target_link_libraries(rage_wars_player_movement_speed PUBLIC rage_wars_player_ground_contact)
+    if(MSVC)
+        target_compile_options(rage_wars_player_movement_speed PRIVATE /EHsc /fp:strict /W4)
+    else()
+        target_compile_options(rage_wars_player_movement_speed PRIVATE -fno-fast-math -ffp-contract=off)
+    endif()
+
+    add_library(rage_wars_player_movement_speed_bridge STATIC
+        "${host_dir}/src/rage_wars_player_movement_speed_bridge.cpp")
+    target_include_directories(rage_wars_player_movement_speed_bridge PUBLIC
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include"
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_link_libraries(rage_wars_player_movement_speed_bridge PUBLIC rage_wars_player_movement_speed)
+    if(MSVC)
+        target_compile_options(rage_wars_player_movement_speed_bridge PRIVATE /EHsc /EHc- /fp:strict /W4)
+    endif()
+
+    add_library(rage_wars_player_idle_entry STATIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player/idle_entry.cpp")
+    target_include_directories(rage_wars_player_idle_entry PUBLIC
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_compile_features(rage_wars_player_idle_entry PUBLIC cxx_std_20)
+    if(MSVC)
+        target_compile_options(rage_wars_player_idle_entry PRIVATE /EHsc /fp:strict /W4)
+    else()
+        target_compile_options(rage_wars_player_idle_entry PRIVATE -fno-fast-math -ffp-contract=off)
+    endif()
+
+    add_library(rage_wars_player_idle_entry_bridge STATIC
+        "${host_dir}/src/rage_wars_player_idle_entry_bridge.cpp")
+    target_include_directories(rage_wars_player_idle_entry_bridge PUBLIC
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include"
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_link_libraries(rage_wars_player_idle_entry_bridge PUBLIC rage_wars_player_idle_entry)
+    if(MSVC)
+        target_compile_options(rage_wars_player_idle_entry_bridge PRIVATE /EHsc /EHc- /fp:strict /W4)
+    endif()
+
     add_executable(rage_wars_pc
         ${CMAKE_SOURCE_DIR}/src/rage_wars_controller_service.cpp
         ${CMAKE_SOURCE_DIR}/src/rage_wars_input_replay.cpp
@@ -176,6 +371,7 @@ function(rage_wars_gate5_setup)
         "${host_dir}/src/main.cpp"
         "${host_dir}/src/rage_wars_crash_report.cpp"
         "${host_dir}/src/rage_wars_native_pc_options.c"
+        "${host_dir}/src/rage_wars_native_focus.c"
         "${host_dir}/src/rage_wars_native_actions.c"
         "${host_dir}/src/rage_wars_type1d.cpp"
         "${host_dir}/src/rage_wars_desktop_renderer.cpp"
@@ -201,6 +397,12 @@ function(rage_wars_gate5_setup)
         target_compile_definitions(ultramodern PRIVATE XR64_RAGE_WARS_CLEAN_RUN=1)
     endif()
     add_dependencies(rage_wars_pc rage_wars_gate5_overlay)
+    target_link_libraries(rage_wars_pc PRIVATE rage_wars_player_view_bridge rage_wars_ground_movement_bridge
+        rage_wars_player_ease_bridge rage_wars_player_ground_contact_bridge
+        rage_wars_player_damage_descriptor_bridge rage_wars_player_floor_height_bridge
+        rage_wars_player_surface_lookup_bridge rage_wars_player_movement_speed_bridge
+        rage_wars_player_idle_entry_bridge)
+    target_include_directories(rage_wars_recompiled PRIVATE "${host_dir}/src")
     target_include_directories(rage_wars_pc PRIVATE
         "${CMAKE_SOURCE_DIR}/src"
         "${normalized_dir}"
@@ -263,6 +465,48 @@ function(rage_wars_gate5_setup)
         target_compile_features(rage_wars_presentation_clock_test PRIVATE cxx_std_17)
         add_test(NAME rage_wars_presentation_clock_contract
             COMMAND rage_wars_presentation_clock_test)
+        add_executable(rage_wars_body_interpolation_test
+            "${CMAKE_SOURCE_DIR}/tests/rage_wars_body_interpolation_test.cpp")
+        target_include_directories(rage_wars_body_interpolation_test PRIVATE
+            "${host_dir}/src" "${CMAKE_SOURCE_DIR}/src")
+        target_compile_features(rage_wars_body_interpolation_test PRIVATE cxx_std_20)
+        add_test(NAME rage_wars_body_interpolation_contract
+            COMMAND rage_wars_body_interpolation_test)
+        add_executable(rage_wars_animation_blend_test
+            "${CMAKE_SOURCE_DIR}/tests/rage_wars_animation_blend_test.cpp")
+        target_include_directories(rage_wars_animation_blend_test PRIVATE
+            "${host_dir}/src" "${CMAKE_SOURCE_DIR}/src" "${CMAKE_SOURCE_DIR}/src/xr64_fast3d")
+        target_compile_features(rage_wars_animation_blend_test PRIVATE cxx_std_20)
+        add_test(NAME rage_wars_animation_blend_contract
+            COMMAND rage_wars_animation_blend_test)
+        add_executable(rage_wars_generic_combiner_test
+            "${CMAKE_SOURCE_DIR}/tests/rage_wars_generic_combiner_test.cpp")
+        target_include_directories(rage_wars_generic_combiner_test PRIVATE
+            "${host_dir}/src" "${CMAKE_SOURCE_DIR}/src" "${CMAKE_SOURCE_DIR}/src/xr64_fast3d")
+        target_compile_features(rage_wars_generic_combiner_test PRIVATE cxx_std_20)
+        add_test(NAME rage_wars_generic_combiner_contract
+            COMMAND rage_wars_generic_combiner_test)
+        add_executable(rage_wars_clip_equivalence_test
+            "${CMAKE_SOURCE_DIR}/tests/n64_clip_equivalence_test.cpp")
+        target_include_directories(rage_wars_clip_equivalence_test PRIVATE
+            "${CMAKE_SOURCE_DIR}/src" "${CMAKE_SOURCE_DIR}/src/xr64_fast3d")
+        target_compile_features(rage_wars_clip_equivalence_test PRIVATE cxx_std_20)
+        add_test(NAME rage_wars_clip_equivalence_contract
+            COMMAND rage_wars_clip_equivalence_test)
+        add_executable(rage_wars_xr_hud_test
+            "${CMAKE_SOURCE_DIR}/tests/rage_wars_xr_hud_test.cpp")
+        target_include_directories(rage_wars_xr_hud_test PRIVATE
+            "${host_dir}/src" "${CMAKE_SOURCE_DIR}/src" "${CMAKE_SOURCE_DIR}/src/xr64_fast3d")
+        target_compile_features(rage_wars_xr_hud_test PRIVATE cxx_std_20)
+        add_test(NAME rage_wars_xr_hud_contract
+            COMMAND rage_wars_xr_hud_test)
+        add_executable(rage_wars_xr_laser_test
+            "${CMAKE_SOURCE_DIR}/tests/rage_wars_xr_laser_test.cpp")
+        target_include_directories(rage_wars_xr_laser_test PRIVATE
+            "${host_dir}/src" "${CMAKE_SOURCE_DIR}/src" "${CMAKE_SOURCE_DIR}/src/xr64_fast3d")
+        target_compile_features(rage_wars_xr_laser_test PRIVATE cxx_std_20)
+        add_test(NAME rage_wars_xr_laser_contract
+            COMMAND rage_wars_xr_laser_test)
 
         target_sources(rage_wars_pc PRIVATE "${host_dir}/src/rage_wars_openxr.cpp")
         target_include_directories(rage_wars_pc PRIVATE "${XR64_OPENXR_INCLUDE_DIR}")
@@ -392,6 +636,168 @@ function(rage_wars_gate5_setup)
     endif()
     add_test(NAME rage_wars_input_replay_contract
         COMMAND rage_wars_input_replay_test)
+    add_executable(rage_wars_player_view_bridge_test
+        "${RAGE_WARS_REPO_ROOT}/scripts/player_view_bridge_contract.cpp")
+    target_include_directories(rage_wars_player_view_bridge_test PRIVATE
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_player_view_bridge_test PRIVATE rage_wars_player_view_bridge)
+    if(MSVC)
+        target_compile_options(rage_wars_player_view_bridge_test PRIVATE /EHsc /EHc- /fp:strict)
+    endif()
+    add_test(NAME rage_wars_player_view_original_default COMMAND rage_wars_player_view_bridge_test)
+    set_tests_properties(rage_wars_player_view_original_default PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_VIEW=0")
+    add_test(NAME rage_wars_player_view_bridge_contract COMMAND rage_wars_player_view_bridge_test enabled)
+    set_tests_properties(rage_wars_player_view_bridge_contract PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_VIEW=1")
+    add_executable(rage_wars_ground_movement_bridge_test
+        "${RAGE_WARS_REPO_ROOT}/scripts/ground_movement_bridge_contract.cpp")
+    target_include_directories(rage_wars_ground_movement_bridge_test PRIVATE
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_ground_movement_bridge_test PRIVATE rage_wars_ground_movement_bridge)
+    if(MSVC)
+        target_compile_options(rage_wars_ground_movement_bridge_test PRIVATE /EHsc /EHc- /fp:strict)
+    endif()
+    add_test(NAME rage_wars_ground_movement_original_default COMMAND rage_wars_ground_movement_bridge_test)
+    set_tests_properties(rage_wars_ground_movement_original_default PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_GROUND_MOVEMENT=0")
+    add_test(NAME rage_wars_ground_movement_bridge_contract COMMAND rage_wars_ground_movement_bridge_test enabled)
+    set_tests_properties(rage_wars_ground_movement_bridge_contract PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_GROUND_MOVEMENT=1")
+
+    add_executable(rage_wars_player_ease_bridge_test
+        "${RAGE_WARS_REPO_ROOT}/scripts/player_ease_bridge_contract.cpp")
+    target_include_directories(rage_wars_player_ease_bridge_test PRIVATE
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include"
+        "${RAGE_WARS_REPO_ROOT}/xr64/games/rage_wars/native_player")
+    target_link_libraries(rage_wars_player_ease_bridge_test PRIVATE rage_wars_player_ease_bridge)
+    if(MSVC)
+        target_compile_options(rage_wars_player_ease_bridge_test PRIVATE /EHsc /EHc- /fp:strict)
+    endif()
+    add_test(NAME rage_wars_player_ease_disabled_fallback COMMAND rage_wars_player_ease_bridge_test)
+    set_tests_properties(rage_wars_player_ease_disabled_fallback PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_EASE=0")
+    add_test(NAME rage_wars_player_ease_bridge_contract COMMAND rage_wars_player_ease_bridge_test enabled)
+    set_tests_properties(rage_wars_player_ease_bridge_contract PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_EASE=1")
+
+    add_executable(rage_wars_player_ground_contact_bridge_test
+        "${RAGE_WARS_REPO_ROOT}/scripts/player_ground_contact_bridge_contract.cpp")
+    target_include_directories(rage_wars_player_ground_contact_bridge_test PRIVATE
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_player_ground_contact_bridge_test PRIVATE
+        rage_wars_player_ground_contact_bridge)
+    if(MSVC)
+        target_compile_options(rage_wars_player_ground_contact_bridge_test PRIVATE /EHsc /EHc- /fp:strict)
+    endif()
+    add_test(NAME rage_wars_player_ground_contact_disabled_fallback
+        COMMAND rage_wars_player_ground_contact_bridge_test)
+    set_tests_properties(rage_wars_player_ground_contact_disabled_fallback PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_GROUND_CONTACT=0")
+    add_test(NAME rage_wars_player_ground_contact_bridge_contract
+        COMMAND rage_wars_player_ground_contact_bridge_test enabled)
+    set_tests_properties(rage_wars_player_ground_contact_bridge_contract PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_GROUND_CONTACT=1")
+
+    add_executable(rage_wars_player_damage_descriptor_bridge_test
+        "${RAGE_WARS_REPO_ROOT}/scripts/player_damage_descriptor_bridge_contract.cpp")
+    target_include_directories(rage_wars_player_damage_descriptor_bridge_test PRIVATE
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_player_damage_descriptor_bridge_test PRIVATE
+        rage_wars_player_damage_descriptor_bridge)
+    if(MSVC)
+        target_compile_options(rage_wars_player_damage_descriptor_bridge_test PRIVATE /EHsc /EHc- /fp:strict)
+    endif()
+    add_test(NAME rage_wars_player_damage_descriptor_disabled_fallback
+        COMMAND rage_wars_player_damage_descriptor_bridge_test)
+    set_tests_properties(rage_wars_player_damage_descriptor_disabled_fallback PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_DAMAGE_DESCRIPTOR=0")
+    add_test(NAME rage_wars_player_damage_descriptor_bridge_contract
+        COMMAND rage_wars_player_damage_descriptor_bridge_test enabled)
+    set_tests_properties(rage_wars_player_damage_descriptor_bridge_contract PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_DAMAGE_DESCRIPTOR=1")
+
+    add_executable(rage_wars_player_floor_height_bridge_test
+        "${RAGE_WARS_REPO_ROOT}/scripts/player_floor_height_bridge_contract.cpp")
+    target_include_directories(rage_wars_player_floor_height_bridge_test PRIVATE
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_player_floor_height_bridge_test PRIVATE
+        rage_wars_player_floor_height_bridge)
+    if(MSVC)
+        target_compile_options(rage_wars_player_floor_height_bridge_test PRIVATE /EHsc /EHc- /fp:strict)
+    endif()
+    add_test(NAME rage_wars_player_floor_height_disabled_fallback
+        COMMAND rage_wars_player_floor_height_bridge_test)
+    set_tests_properties(rage_wars_player_floor_height_disabled_fallback PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_FLOOR_HEIGHT=0")
+    add_test(NAME rage_wars_player_floor_height_bridge_contract
+        COMMAND rage_wars_player_floor_height_bridge_test enabled)
+    set_tests_properties(rage_wars_player_floor_height_bridge_contract PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_FLOOR_HEIGHT=1")
+
+    add_executable(rage_wars_player_surface_lookup_bridge_test
+        "${RAGE_WARS_REPO_ROOT}/scripts/player_surface_lookup_bridge_contract.cpp")
+    target_include_directories(rage_wars_player_surface_lookup_bridge_test PRIVATE
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_player_surface_lookup_bridge_test PRIVATE
+        rage_wars_player_surface_lookup_bridge)
+    if(MSVC)
+        target_compile_options(rage_wars_player_surface_lookup_bridge_test PRIVATE /EHsc /EHc-)
+    endif()
+    add_test(NAME rage_wars_player_surface_lookup_disabled_fallback
+        COMMAND rage_wars_player_surface_lookup_bridge_test)
+    set_tests_properties(rage_wars_player_surface_lookup_disabled_fallback PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_SURFACE_LOOKUP=0")
+    add_test(NAME rage_wars_player_surface_lookup_bridge_contract
+        COMMAND rage_wars_player_surface_lookup_bridge_test enabled)
+    set_tests_properties(rage_wars_player_surface_lookup_bridge_contract PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_SURFACE_LOOKUP=1")
+
+    add_executable(rage_wars_player_movement_speed_bridge_test
+        "${RAGE_WARS_REPO_ROOT}/scripts/player_movement_speed_bridge_contract.cpp")
+    target_include_directories(rage_wars_player_movement_speed_bridge_test PRIVATE
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_player_movement_speed_bridge_test PRIVATE
+        rage_wars_player_movement_speed_bridge)
+    if(MSVC)
+        target_compile_options(rage_wars_player_movement_speed_bridge_test PRIVATE /EHsc /EHc- /fp:strict)
+    endif()
+    add_test(NAME rage_wars_player_movement_speed_disabled_fallback
+        COMMAND rage_wars_player_movement_speed_bridge_test)
+    set_tests_properties(rage_wars_player_movement_speed_disabled_fallback PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_MOVEMENT_SPEED=0")
+    add_test(NAME rage_wars_player_movement_speed_bridge_contract
+        COMMAND rage_wars_player_movement_speed_bridge_test enabled)
+    set_tests_properties(rage_wars_player_movement_speed_bridge_contract PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_MOVEMENT_SPEED=1")
+
+    add_executable(rage_wars_player_idle_entry_bridge_test
+        "${RAGE_WARS_REPO_ROOT}/scripts/player_idle_entry_bridge_contract.cpp")
+    target_include_directories(rage_wars_player_idle_entry_bridge_test PRIVATE
+        "${host_dir}/src" "${generated_dir}"
+        "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_link_libraries(rage_wars_player_idle_entry_bridge_test PRIVATE
+        rage_wars_player_idle_entry_bridge)
+    if(MSVC)
+        target_compile_options(rage_wars_player_idle_entry_bridge_test PRIVATE /EHsc /EHc- /fp:strict)
+    endif()
+    add_test(NAME rage_wars_player_idle_entry_disabled_fallback
+        COMMAND rage_wars_player_idle_entry_bridge_test)
+    set_tests_properties(rage_wars_player_idle_entry_disabled_fallback PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_IDLE_ENTRY=0")
+    add_test(NAME rage_wars_player_idle_entry_bridge_contract
+        COMMAND rage_wars_player_idle_entry_bridge_test enabled)
+    set_tests_properties(rage_wars_player_idle_entry_bridge_contract PROPERTIES
+        ENVIRONMENT "XR64_NATIVE_PLAYER_IDLE_ENTRY=1")
+
     add_executable(rage_wars_controller_mapping_test
         ${CMAKE_SOURCE_DIR}/tests/rage_wars_controller_mapping_test.cpp)
     target_include_directories(rage_wars_controller_mapping_test PRIVATE
@@ -401,6 +807,28 @@ function(rage_wars_gate5_setup)
     endif()
     add_test(NAME rage_wars_controller_mapping_contract
         COMMAND rage_wars_controller_mapping_test)
+    if(WIN32)
+        add_executable(rage_wars_model_filter_test
+            "${CMAKE_SOURCE_DIR}/tests/rage_wars_model_filter_test.cpp")
+        target_include_directories(rage_wars_model_filter_test PRIVATE
+            "${host_dir}/src" "${CMAKE_SOURCE_DIR}/src")
+        target_link_libraries(rage_wars_model_filter_test PRIVATE opengl32 gdi32 user32)
+        target_compile_features(rage_wars_model_filter_test PRIVATE cxx_std_20)
+        target_compile_options(rage_wars_model_filter_test PRIVATE /EHsc)
+        add_test(NAME rage_wars_model_filter_gpu_contract COMMAND rage_wars_model_filter_test)
+    endif()
+
+    add_executable(rage_wars_native_focus_test
+        "${CMAKE_SOURCE_DIR}/tests/rage_wars_native_focus_test.cpp"
+        "${host_dir}/src/rage_wars_native_focus.c")
+    target_include_directories(rage_wars_native_focus_test PRIVATE
+        "${host_dir}/src" "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
+    target_compile_features(rage_wars_native_focus_test PRIVATE cxx_std_20)
+    if(MSVC)
+        target_compile_options(rage_wars_native_focus_test PRIVATE /EHsc /UNDEBUG)
+    endif()
+    add_test(NAME rage_wars_native_focus_contract COMMAND rage_wars_native_focus_test)
+
     add_executable(rage_wars_port_options_test
         "${CMAKE_SOURCE_DIR}/tests/rage_wars_port_options_test.cpp"
         "${host_dir}/src/rage_wars_port_options.cpp")
@@ -448,6 +876,11 @@ function(rage_wars_gate5_setup)
     target_include_directories(rage_wars_guest_clock_test PRIVATE
         "${host_dir}/src" "${RAGE_WARS_REPO_ROOT}/toolchain/N64Recomp/include")
     add_test(NAME rage_wars_guest_clock_contract COMMAND rage_wars_guest_clock_test)
+    add_executable(rage_wars_input_assignment_test
+        "${CMAKE_SOURCE_DIR}/tests/rage_wars_input_assignment_test.cpp")
+    target_include_directories(rage_wars_input_assignment_test PRIVATE "${host_dir}/src")
+    target_compile_features(rage_wars_input_assignment_test PRIVATE cxx_std_20)
+    add_test(NAME rage_wars_input_assignment_contract COMMAND rage_wars_input_assignment_test)
 
     add_executable(rage_wars_scheduler_test
         "${CMAKE_SOURCE_DIR}/tests/rage_wars_scheduler_test.cpp"

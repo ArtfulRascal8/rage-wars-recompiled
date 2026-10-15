@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reconstruct and build the public PC release from reviewed source and a user-supplied ROM."""
+"""Ordered private PC bootstrap from reviewed source plus the pinned owner-supplied ROM."""
 import argparse
 import json
 import os
@@ -54,7 +54,7 @@ def symbol_identities(path):
 
 def verify_recipe_pins(recipe, lock, rom):
     require(lock["schema"] == "xr64.pc-reconstruction.v2", "Wrong reconstruction lock")
-    require(lock["release_version"] == "0.2.1-beta.1", "Wrong reconstruction release version")
+    require(lock["release_version"] == "0.5.0-beta.1", "Wrong reconstruction release version")
     require(lock["canonical_function_count"] == 3751, "Wrong canonical guest function count")
     require(lock["recovered_rom_function_count"] == 545, "Wrong ROM-closed function count")
     require(lock["rom_table_count"] == 60, "Wrong reviewed ROM table count")
@@ -265,6 +265,18 @@ def reconstruct(source, rom_path, work, cmake, generate_only=False, offline=Fals
     canonical = work / "canonical-guest"
     symbols = work / "generation.symbols.toml"
     original_symbols = (project / lock["symbols"]).read_text(encoding="utf-8")
+    layer_path = project / "scripts/bounded_recovery_20261006.json"
+    layer_spec = load(layer_path) if layer_path.is_file() else None
+    full_path = project / "scripts/full_rom_recovery_20261014.json"
+    full_spec = load(full_path) if full_path.is_file() else None
+    if full_spec is not None:
+        # The shipped symbols carry the outermost (whole-ROM) layer; peel it first.
+        from apply_full_rom_recovery import baseline_symbol_text as full_baseline_symbols
+        original_symbols = full_baseline_symbols(original_symbols, full_spec)
+    if layer_spec is not None:
+        from apply_bounded_recovery import baseline_symbol_text
+        original_symbols = baseline_symbol_text(original_symbols, layer_spec)
+
     prefix = ""
     for i, table in enumerate(tables):
         prefix += ('[[section]]\nname="reconstruction_table_' + str(i) + '"\nrom=' + str(table["rom"]) +
@@ -307,6 +319,32 @@ def reconstruct(source, rom_path, work, cmake, generate_only=False, offline=Fals
         write_candidate(output / filename, text, record)
     verify_inventory(output, expected)
     require({p.name for p in output.iterdir()} == set(expected), "Reconstructed guest inventory differs")
+    # Replay the inner layer against its admitted symbol base, not the shipped outer layer.
+    (project / lock["symbols"]).write_text(original_symbols, encoding="utf-8", newline="\n")
+    layer_receipt = None
+    if layer_spec is not None:
+        from apply_bounded_recovery import apply_layer
+        qualification = {
+            "generator_sha256": digest(generators["N64Recomp"].read_bytes()),
+            "rom_sha256": digest(rom), "canonical_functions_verified": len(functions),
+            "canonical_manifest_sha256": digest((recipe / "canonical-functions.json").read_bytes()),
+            "recovered_closure_functions_verified": len(recoveries["functions"]),
+            "source_manifest_sha256": provenance["source_manifest_sha256"],
+        }
+        layer_receipt = apply_layer(project, layer_spec, rom_path, generators["N64Recomp"],
+                                    work / "bounded-recovery-replay", apply=True,
+                                    qualification=qualification)
+        expected = layer_spec["expected_result"]["inputs"]
+        verify_inventory(output, expected)
+    full_receipt = None
+    if full_spec is not None:
+        from apply_full_rom_recovery import apply_layer as apply_full_layer
+        full_receipt = apply_full_layer(project, full_spec, rom_path, generators["N64Recomp"],
+                                        work / "full-rom-recovery-replay", apply=True,
+                                        qualification=qualification if layer_spec is not None else None)
+        expected = full_spec["expected_result"]["inputs"]
+        verify_inventory(output, expected)
+
 
     audio_manifest = load(project / "scripts/audio_rsp_manifest.json")
     verify_rom(rom, audio_manifest)
@@ -339,6 +377,21 @@ def reconstruct(source, rom_path, work, cmake, generate_only=False, offline=Fals
         "reconstructed_input_manifest": inputs, "candidate_input_comparison": "all exact raw bytes",
         "generator_provenance": "generator-build-provenance.json", "os_isolation": "open; no OS access barrier claimed",
         "runtime_acceptance": "pending on resulting executable", "build": "not requested" if generate_only else "pending"}
+    if layer_receipt is not None:
+        result["bounded_recovery"] = {
+            "recipe_sha256": digest(layer_path.read_bytes()),
+            "receipt_sha256": digest((work / "bounded-recovery-replay/receipt.json").read_bytes()),
+            "rom_verified_functions": layer_receipt["generated_functions"],
+            "direct_JAL_receipts": layer_receipt["original_direct_JAL_receipts"],
+            "effective_guest_function_count": len(functions) + layer_receipt["added_registrations"],
+        }
+    if full_receipt is not None:
+        result["full_rom_recovery"] = {
+            "recipe_sha256": digest(full_path.read_bytes()),
+            "receipt_sha256": digest((work / "full-rom-recovery-replay/receipt.json").read_bytes()),
+            "stage1_functions": full_receipt["stage1_functions"], "stage2_functions": full_receipt["stage2_functions"],
+            "effective_guest_definitions": full_spec["expected_definition_count"],
+        }
     save(work / "reconstruction-result.json", result)
     if generate_only:
         print("PASS: all", len(inputs), "candidate guest/audio inputs reconstructed with exact pinned bytes.")

@@ -7,9 +7,12 @@
 #include "rage_wars_weapon_calibration.hpp"
 #include <mutex>
 #include <array>
+#include <atomic>
+#include <string>
 #include <chrono>
 #include <cstring>
 #include <cstdlib>
+#include <bit>
 #include <cmath>
 #include <cstdio>
 #include <filesystem>
@@ -70,14 +73,14 @@ std::int64_t xr_now() {
 extern "C" void xr64_xr_observe_player(std::uint8_t* ram,std::uint32_t actor) {
  using namespace xr64::rage_wars;
  if(!controls::local_actor(ram,actor) ||
-     controls::guest_word(ram,actor-0x80000000U+0x698)!=0x80109328U) return;
+     controls::guest_word(ram,actor-0x80000000U+0x698)!=controls::xr_input_block()) return;
  std::lock_guard lock(xr_actor_mutex);xr_actor=actor;xr_actor_time=xr_now();
 }
 namespace xr64::rage_wars::recomp {
 LocalPresentationMailbox& local_presentation() { static LocalPresentationMailbox state;return state; }
 LocalPlayerPresentation read_local_player(const std::uint8_t* ram,std::uint32_t actor) {
  LocalPlayerPresentation player;
- if(!controls::local_actor(ram,actor) || controls::guest_word(ram,actor-0x80000000U+0x698)!=0x80109328U)return player;
+ if(!controls::local_actor(ram,actor) || controls::guest_word(ram,actor-0x80000000U+0x698)!=controls::look_input_block())return player;
  const auto a=actor-0x80000000U,view=controls::guest_word(ram,a+0x5DC);
  if(!controls::live_view(ram,actor,view))return player;
  player.valid=true;player.actor=actor;player.sampled_ns=xr_now();
@@ -107,11 +110,19 @@ bool gate5_xr_guest_gameplay(const std::uint8_t* ram,bool base_gameplay) {
  }
  return state==XrGuestContext::Playing;
 }
+// Desktop routing: true only for a positively identified team-select overlay.
+// Unknown states keep gameplay input, so WASD movement is never lost.
+bool gate5_guest_team_select(const std::uint8_t* ram,bool base_gameplay) {
+ if(!base_gameplay) return false;
+ std::lock_guard lock(xr_actor_mutex);
+ const auto age=xr_now()-xr_actor_time;
+ return xr_guest_context(ram,age>=0 && age<=250'000'000LL?xr_actor:0,true)==XrGuestContext::Team;
+}
 }
 extern "C" void xr64_controls_begin_player(std::uint8_t* ram, std::uint32_t actor) {
     using namespace xr64::rage_wars;
-    if (!controls::local_actor(ram, actor) || controls::guest_word(ram,actor-0x80000000U+0x698)!=0x80109328U) return;
-    if(controls::guest_word(ram,actor-0x80000000U+0x698)==0x80109328U &&
+    if (!controls::local_actor(ram, actor) || controls::guest_word(ram,actor-0x80000000U+0x698)!=controls::look_input_block()) return;
+    if(controls::guest_word(ram,actor-0x80000000U+0x698)==controls::look_input_block() &&
        (static_cast<std::int32_t>(controls::guest_word(ram,actor-0x80000000U+0x5E4))<=0 ||
         controls::guest_word(ram,0x1407D4)!=0))
         (void)recomp::consume_gate5_desktop_weapon_cycle();
@@ -159,7 +170,7 @@ extern "C" int xr64_controls_apply_pitch(std::uint8_t* ram, std::uint32_t actor,
 
 extern "C" void xr64_controls_publish_player(std::uint8_t* ram,std::uint32_t actor) {
  using namespace xr64::rage_wars;
- if(!controls::local_actor(ram,actor) || controls::guest_word(ram,actor-0x80000000U+0x698)!=0x80109328U)return;
+ if(!controls::local_actor(ram,actor) || controls::guest_word(ram,actor-0x80000000U+0x698)!=controls::look_input_block())return;
  // Rejected/locked axes consume their interval without retaining it for a
  // later recovery. Newer host input remains pending at its own endpoint.
  if(!frame.yaw_applied())recomp::local_presentation().applied_mouse(look_sample,false);
@@ -172,7 +183,7 @@ extern "C" std::uint32_t xr64_controls_spring_value(std::uint8_t* ram,std::uint3
     const auto effective=controls::spring_value(ram,actor,original,settings);
     static int reported=-1;
     if(controls::local_actor(ram,actor) &&
-            controls::guest_word(ram,actor-0x80000000U+0x698)==0x80109328U &&
+            controls::guest_word(ram,actor-0x80000000U+0x698)==controls::look_input_block() &&
             reported!=int(effective)) {
         reported=int(effective);
         std::fprintf(stderr,"RW103_LOOK_SPRING actor=%08X original=%u effective=%u\n",actor,original,effective);
@@ -184,15 +195,105 @@ extern "C" std::uint32_t xr64_controls_take_weapon_cycle() {
     return xr64::rage_wars::recomp::consume_gate5_desktop_weapon_cycle();
 }
 
+// The view projection (view+0x1E0) is committed by PlayerView after the player
+// tick, but shots fire during the tick: at that moment the camera still sits at
+// the previous end-of-tick position (actor+0x774..0x77C). Shift it by the
+// actor's movement since then so shots start at the current (displayed) hand.
+extern "C" int xr64_xr_display_camera(float* out, long long max_age_ns);
+// Prefer the camera the VR view is displaying (smoothed, presentation-corrected):
+// shots and muzzle effects then start from the gun the player sees.
+static void xr_shot_camera_from_display(const std::uint8_t* ram, std::uint32_t a, std::array<float,16>& camera);
+static void xr_shot_camera_to_current(const std::uint8_t* ram, std::uint32_t a, std::array<float,16>& camera) {
+    using namespace xr64::rage_wars;
+    float delta[3];
+    for (int i = 0; i < 3; ++i) {
+        const float now = std::bit_cast<float>(controls::guest_word(ram, a + 0x08 + 4 * i));
+        const float prev = std::bit_cast<float>(controls::guest_word(ram, a + 0x774 + 4 * i));
+        delta[i] = now - prev;
+        if (!std::isfinite(delta[i]) || std::fabs(delta[i]) > 500.0F) return;
+    }
+    for (int i = 0; i < 3; ++i) camera[12 + i] += delta[i];
+}
+
+enum class XrShotOrigin { Lead, Display, Current };
+static XrShotOrigin xr_shot_origin_mode() {
+    static const XrShotOrigin mode = [] {
+        const char* v = std::getenv("XR64_XR_SHOT_ORIGIN");
+        const std::string s = v ? v : "";
+        return s == "display" ? XrShotOrigin::Display : s == "current" ? XrShotOrigin::Current : XrShotOrigin::Lead;
+    }();
+    return mode;
+}
+extern "C" int xr64_xr_display_origin(float* out);
+extern "C" void xr64_xr_note_shot(int barrel, float lead_units);
+thread_local float xr_shot_lead_units = 0;
+// A/B experiment, XR64_XR_SHOT_LEAD_SCALE: how much of the lead (simulated minus
+// displayed origin) is added to the shot/muzzle origin. 1 = full simulation
+// anchor (default, the accepted behaviour), 0 = displayed origin, above 1 also
+// covers decode/present latency beyond the body-smoothing delay.
+static float xr_shot_lead_scale() {
+    static const float scale = [] {
+        const char* v = std::getenv("XR64_XR_SHOT_LEAD_SCALE");
+        if (!v) return 1.0F;
+        char* end = nullptr;
+        const float parsed = std::strtof(v, &end);
+        return end != v && *end == 0 && std::isfinite(parsed) && parsed >= -1.0F && parsed <= 4.0F ? parsed : 1.0F;
+    }();
+    return scale;
+}
+// Orientation always comes from the displayed (smoothed, level) camera, so aim
+// matches the view. Body smoothing shows the player ~40 ms behind the
+// simulation, and the game draws a new shot, flash or impact in its newer
+// frames; placing them at the displayed position makes them trail while
+// strafing. Lead mode shifts the displayed camera by exactly the simulated
+// origin minus the displayed origin, so the effect is at the gun when the view
+// reaches that simulation time. XR64_XR_SHOT_ORIGIN=display|current: A/B.
+static void xr_shot_camera_from_display(const std::uint8_t* ram, std::uint32_t a, std::array<float,16>& camera) {
+    using namespace xr64::rage_wars;
+    xr_shot_lead_units = 0;
+    std::array<float,16> display{};
+    const auto mode = xr_shot_origin_mode();
+    if (mode == XrShotOrigin::Current) xr_shot_camera_to_current(ram, a, camera);
+    if (!xr64_xr_display_camera(display.data(), 100'000'000LL)) return;
+    if (mode == XrShotOrigin::Current) {
+        for (int i = 12; i < 15; ++i) display[i] = camera[i];
+    } else if (mode == XrShotOrigin::Lead) {
+        std::array<float,3> shown{};
+        if (xr64_xr_display_origin(shown.data())) {
+            std::array<float,3> lead{};
+            float length = 0;
+            for (int i = 0; i < 3; ++i) {
+                lead[i] = controls::guest_float(ram, a + 0x08 + 4 * i) - shown[i];
+                length += lead[i] * lead[i];
+            }
+            length = std::sqrt(length);
+            if (std::isfinite(length) && length < 100.0F) {
+                const float scale = xr_shot_lead_scale();
+                for (int i = 0; i < 3; ++i) display[12 + i] += lead[i] * scale;
+                xr_shot_lead_units = length * std::fabs(scale);
+            }
+        }
+    }
+    camera = display;
+}
+
 // Guest 0x0021A9A4 copies actor+0x7D8..0x7E4 into a stack-local quaternion
 // passed to 0x00280014. The tracked target and origin replace only that
 // local weapon call; actor orientation and stereo camera remain guest-owned.
+// Shot-hook outcome counters, read by the VR frame-stats reporter: index 0 is
+// entries; 1..9 are the early-out reasons in xr64_xr_shot_override.
+std::array<std::atomic<std::uint64_t>,10> xr_shot_outcomes{};
+static int xr_shot_reject(int reason) { ++xr_shot_outcomes[reason]; return 0; }
+extern "C" void xr64_xr_shot_outcomes(unsigned long long* out) {
+    for (std::size_t i = 0; i < xr_shot_outcomes.size(); ++i) out[i] = xr_shot_outcomes[i].load();
+}
 extern "C" int xr64_xr_shot_override(std::uint8_t* ram, std::uint32_t actor,
         std::uint32_t action, std::uint32_t* shot_quaternion,
         const std::uint32_t* actor_position, std::uint32_t* weapon_position,
         std::uint32_t* target_position) {
     using namespace xr64::rage_wars;
     const bool enabled=port_options::snapshot().controls.xr_motion_controls;
+    ++xr_shot_outcomes[0];
     if (enabled) {
         static unsigned entry_logged=0;
         if (entry_logged<16) {
@@ -201,36 +302,56 @@ extern "C" int xr64_xr_shot_override(std::uint8_t* ram, std::uint32_t actor,
                     actor,action,controls::local_actor(ram,actor)?1:0,shot_quaternion?1:0);
         }
     }
-    if (!enabled || !shot_quaternion || !recomp::xr_base_gameplay(ram) ||
-        !controls::local_actor(ram,actor)) return 0;
+    if (!enabled) return xr_shot_reject(1);
+    if (!shot_quaternion || !recomp::xr_base_gameplay(ram) ||
+        !controls::local_actor(ram,actor)) return xr_shot_reject(2);
     const auto a=actor-0x80000000U;
-    if (controls::guest_word(ram,a+0x698)!=0x80109328U ||
+    if (controls::guest_word(ram,a+0x698)!=controls::xr_input_block() ||
             static_cast<std::int32_t>(controls::guest_word(ram,a+0x5E4))<=0 ||
-            controls::guest_word(ram,0x1407D4)!=0) return 0;
+            controls::guest_word(ram,0x1407D4)!=0) return xr_shot_reject(3);
     // Captured standard weapons share this actor-owned target/muzzle call.
     // Special/transformation IDs remain native until their paths are established.
     std::uint16_t weapon=0;
     std::memcpy(&weapon,ram+((a+0x62E)^2U),sizeof(weapon));
-    if (weapon<1 || weapon>14) return 0;
-    const auto motion=recomp::gate5_xr_shot_snapshot();
-    if (!motion.available || !motion.focused || !motion.head_pose_valid ||
-            !motion.right.aim_pose_valid) return 0;
+    if (weapon<1 || weapon>14) return xr_shot_reject(4);
     const auto now=std::chrono::duration_cast<std::chrono::nanoseconds>(
             std::chrono::steady_clock::now().time_since_epoch()).count();
+    // Prefer the pose sampled at the current time. It needs the optional
+    // XR_KHR_win32_convert_performance_counter_time extension; without it the
+    // shot packet never carries poses, so fall back to the latest frame's
+    // display-predicted poses (the ones the gun is drawn with).
+    auto motion=recomp::gate5_xr_shot_snapshot();
+    if (!recomp::xr_shot_pose_usable(motion,now)) {
+        motion=recomp::gate5_xr_motion_snapshot();
+        const auto predicted_age=now-motion.host_monotonic_ns;
+        if (!motion.available || !motion.focused || !motion.head_pose_valid ||
+                !motion.right.pose_valid || !motion.right.aim_pose_valid)
+            return xr_shot_reject(5);
+        if (motion.host_monotonic_ns<=0 || predicted_age<0 || predicted_age>100'000'000LL)
+            return xr_shot_reject(6);
+    }
     const auto age=now-motion.host_monotonic_ns;
-    if (!recomp::xr_shot_pose_usable(motion,now)) return 0;
     const auto view=controls::guest_word(ram,a+0x5DC);
-    if (!weapon_position || !target_position || !recomp::xr_guest_pointer(view,0x220)) return 0;
+    if (!weapon_position || !target_position || !recomp::xr_guest_pointer(view,0x220)) return xr_shot_reject(7);
     std::array<float,16> projection{},camera{};
     std::memcpy(projection.data(),ram+(view-0x80000000U)+0x1E0,sizeof(projection));
-    if (!recomp::xr_tracking_to_world(projection,camera)) return 0;
+    if (!recomp::xr_tracking_to_world(projection,camera)) return xr_shot_reject(8);
+    xr_shot_camera_from_display(ram,a,camera);
     float units=100.0F;
     if(const char* value=std::getenv("XR64_XR_UNITS_PER_METRE")) {
         const float parsed=std::strtof(value,nullptr);
         if(std::isfinite(parsed)&&parsed>0) units=parsed;
     }
     std::array<float,3> origin{},target{};
-    if (!recomp::xr_world_shot_ray(camera,motion,origin,target,units)) return 0;
+    if (!recomp::xr_world_shot_ray(camera,motion,origin,target,units)) return xr_shot_reject(9);
+    // Start at the visible barrel tip of the calibrated model, still aimed at
+    // the far point of the controller ray, so shots leave the gun the player
+    // sees. Without a tip record the controller aim pose remains the origin.
+    std::array<float,3> tip{};
+    const bool from_barrel=motion.right.pose_valid &&
+        xr_barrel_tip_world(weapon,camera,motion,units,tip);
+    if (from_barrel) origin=tip;
+    xr64_xr_note_shot(from_barrel?1:0, xr_shot_lead_units);
     recomp::XrShotQuat original{},aimed{};
     std::memcpy(original.data(),shot_quaternion,sizeof(original));
     // The native target-to-muzzle path rebuilds direction at 0x00281088.
@@ -245,8 +366,8 @@ extern "C" int xr64_xr_shot_override(std::uint8_t* ram, std::uint32_t actor,
         std::array<float,3> actor_xyz{}, weapon_xyz{};
         if (actor_position) std::memcpy(actor_xyz.data(),actor_position,sizeof(actor_xyz));
         if (weapon_position) std::memcpy(weapon_xyz.data(),weapon_position,sizeof(weapon_xyz));
-        std::fprintf(stderr,"RW109_XR_SHOT candidate=4 target=rendered_world_ray shot=%llu actor=%08X weapon=%u action=%u age_ms=%.1f base=(%.4f,%.4f,%.4f,%.4f) hand=(%.4f,%.4f,%.4f,%.4f) output=(%.4f,%.4f,%.4f,%.4f) actor_pos=(%.4f,%.4f,%.4f) weapon_pos=(%.4f,%.4f,%.4f) hand_pos=(%.4f,%.4f,%.4f) target_pos=(%.3f,%.3f,%.3f)\n",
-                static_cast<unsigned long long>(xr_shot_sequence),actor,weapon,action,double(age)/1'000'000.0,
+        std::fprintf(stderr,"RW109_XR_SHOT candidate=4 target=rendered_world_ray barrel=%d shot=%llu actor=%08X weapon=%u action=%u age_ms=%.1f base=(%.4f,%.4f,%.4f,%.4f) hand=(%.4f,%.4f,%.4f,%.4f) output=(%.4f,%.4f,%.4f,%.4f) actor_pos=(%.4f,%.4f,%.4f) weapon_pos=(%.4f,%.4f,%.4f) hand_pos=(%.4f,%.4f,%.4f) target_pos=(%.3f,%.3f,%.3f)\n",
+                from_barrel?1:0,static_cast<unsigned long long>(xr_shot_sequence),actor,weapon,action,double(age)/1'000'000.0,
                 original[0],original[1],original[2],original[3],
                 motion.right.aim_orientation[0],motion.right.aim_orientation[1],
                 motion.right.aim_orientation[2],motion.right.aim_orientation[3],
@@ -284,7 +405,7 @@ extern "C" int xr64_xr_muzzle_attachment(std::uint8_t* ram,
        (owner!=actor && owner!=parent) || !controls::local_actor(ram,actor) ||
        recomp::xr_guest_context(ram,actor,recomp::xr_base_gameplay(ram))!=recomp::XrGuestContext::Playing)return 0;
     const auto a=actor-0x80000000U;
-    if(controls::guest_word(ram,a+0x698)!=0x80109328U ||
+    if(controls::guest_word(ram,a+0x698)!=controls::xr_input_block() ||
        static_cast<std::int32_t>(controls::guest_word(ram,a+0x5E4))<=0)return 0;
     std::uint16_t weapon=0,action=0;
     std::memcpy(&weapon,ram+((a+0x62E)^2U),2);
@@ -300,6 +421,7 @@ extern "C" int xr64_xr_muzzle_attachment(std::uint8_t* ram,
     std::array<float,16> projection{},camera{};
     std::memcpy(projection.data(),ram+(view-0x80000000U)+0x1E0,64);
     if(!recomp::xr_tracking_to_world(projection,camera))return 0;
+    xr_shot_camera_from_display(ram,a,camera);
     float units=100.0F;
     if(const char* value=std::getenv("XR64_XR_UNITS_PER_METRE")) {
         const float parsed=std::strtof(value,nullptr);
@@ -340,7 +462,7 @@ extern "C" void xr64_xr_weapon_matrix(std::uint8_t* ram,std::uint32_t model) {
     if(!controls::local_actor(ram,actor) ||
        recomp::xr_guest_context(ram,actor,recomp::xr_base_gameplay(ram))!=recomp::XrGuestContext::Playing) return;
     const auto a=actor-0x80000000U;
-    if(controls::guest_word(ram,a+0x698)!=0x80109328U ||
+    if(controls::guest_word(ram,a+0x698)!=controls::xr_input_block() ||
        static_cast<std::int32_t>(controls::guest_word(ram,a+0x5E4))<=0 ||
        controls::guest_word(ram,0x1407D4)!=0) return;
     std::uint16_t weapon=0;
@@ -373,7 +495,7 @@ extern "C" void xr64_xr_weapon_matrix(std::uint8_t* ram,std::uint32_t model) {
 extern "C" void xr64_preview_weapon_draw_complete(std::uint8_t* ram,std::uint32_t actor) {
  using namespace xr64::rage_wars;
  if(!controls::local_actor(ram,actor) ||
-    controls::guest_word(ram,actor-0x80000000U+0x698)!=0x80109328U)return;
+    controls::guest_word(ram,actor-0x80000000U+0x698)!=controls::xr_input_block())return;
  recomp::PreviewWeaponFrame captured;
  if(recomp::xr_guest_context(ram,actor,recomp::xr_base_gameplay(ram))==recomp::XrGuestContext::Playing) {
   const auto a=actor-0x80000000U;
@@ -393,3 +515,5 @@ extern "C" void xr64_preview_weapon_draw_complete(std::uint8_t* ram,std::uint32_
  if(buffer<preview_frames.size())preview_frames[buffer]=captured;
  else preview_frames={};
 }
+
+extern "C" std::uint32_t xr64_local_look_block(void) { return xr64::rage_wars::controls::look_input_block(); }

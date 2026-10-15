@@ -7624,7 +7624,7 @@ functions = [
 
 [[section]]
 name = "gate14_state_dispatch_table"
-rom = 0x000DC010
+rom = 0x000DD010
 vram = 0x800DC410
 size = 0xe8
 functions = [
@@ -24026,12 +24026,12 @@ size=228
 functions=[{name="trace_func_00426270_r00226E70",vram=4350576,size=228}]
 
 [[section]]
-name = "trace_func_004263BC_r00226FBC"
-rom = 0x00226FBC
+name = "trace_func_004263BC_r0018A3BC"
+rom = 0x0018A3BC
 vram = 0x004263BC
-size = 0x2c
+size = 0x98
 functions = [
-    { name = "trace_func_004263BC_r00226FBC", vram = 0x004263BC, size = 0x2c },
+    { name = "trace_func_004263BC_r0018A3BC", vram = 0x004263BC, size = 0x98 },
 ]
 
 [[section]]
@@ -33507,3 +33507,5908 @@ vram=0x2B9660
 size=0x140
 functions=[{name="rom_worker_002B9660_r000BA260",vram=0x2B9660,size=0x140}]
 # END CLOSED NONRETURN ROM WORKER 20261003
+
+# BEGIN BOUNDED ROM RECOVERY 20261006
+[[section]]
+name="recovery_20261006_00264B1C_r0006571C"
+rom=0x6571C
+vram=0x264B1C
+size=0x10
+functions=[{name="recovery_20261006_00264B1C_r0006571C",vram=0x264B1C,size=0x10}]
+[[section]]
+name="recovery_20261006_00264B2C_r0006572C"
+rom=0x6572C
+vram=0x264B2C
+size=0x12C
+functions=[{name="recovery_20261006_00264B2C_r0006572C",vram=0x264B2C,size=0x12C}]
+[[section]]
+name="recovery_20261006_002AD870_r000AE470"
+rom=0xAE470
+vram=0x2AD870
+size=0xAC
+functions=[{name="recovery_20261006_002AD870_r000AE470",vram=0x2AD870,size=0xAC}]
+[[section]]
+name="recovery_20261006_002AD918_r000AE518"
+rom=0xAE518
+vram=0x2AD918
+size=0x640
+functions=[{name="recovery_20261006_002AD918_r000AE518",vram=0x2AD918,size=0x640}]
+[[section]]
+name="recovery_20261006_002B2400_r000B3000"
+rom=0xB3000
+vram=0x2B2400
+size=0x3C
+functions=[{name="recovery_20261006_002B2400_r000B3000",vram=0x2B2400,size=0x3C}]
+[[section]]
+name="recovery_20261006_002B3120_r000B3D20"
+rom=0xB3D20
+vram=0x2B3120
+size=0x8
+functions=[{name="recovery_20261006_002B3120_r000B3D20",vram=0x2B3120,size=0x8}]
+[[section]]
+name="recovery_20261006_0040184C_r0016584C"
+rom=0x16584C
+vram=0x40184C
+size=0x134
+functions=[{name="recovery_20261006_0040184C_r0016584C",vram=0x40184C,size=0x134}]
+[[section]]
+name="recovery_20261006_004037D4_r001677D4"
+rom=0x1677D4
+vram=0x4037D4
+size=0x14
+functions=[{name="recovery_20261006_004037D4_r001677D4",vram=0x4037D4,size=0x14}]
+# END BOUNDED ROM RECOVERY 20261006
+
+# BEGIN FULL ROM RECOVERY 20261013
+[[section]]
+name="full_rom_func_00200500"
+rom=0x1100
+vram=0x200500
+size=0x38
+functions=[{name="full_rom_func_00200500",vram=0x200500,size=0x38}]
+
+[[section]]
+name="full_rom_func_00200538"
+rom=0x1138
+vram=0x200538
+size=0x30
+functions=[{name="full_rom_func_00200538",vram=0x200538,size=0x30}]
+
+[[section]]
+name="full_rom_func_00200568"
+rom=0x1168
+vram=0x200568
+size=0x38
+functions=[{name="full_rom_func_00200568",vram=0x200568,size=0x38}]
+
+[[section]]
+name="full_rom_func_002005A0"
+rom=0x11A0
+vram=0x2005A0
+size=0x3C
+functions=[{name="full_rom_func_002005A0",vram=0x2005A0,size=0x3C}]
+
+[[section]]
+name="full_rom_func_002005DC"
+rom=0x11DC
+vram=0x2005DC
+size=0x34
+functions=[{name="full_rom_func_002005DC",vram=0x2005DC,size=0x34}]
+
+[[section]]
+name="full_rom_func_00200610"
+rom=0x1210
+vram=0x200610
+size=0x1F0
+functions=[{name="full_rom_func_00200610",vram=0x200610,size=0x1F0}]
+
+[[section]]
+name="full_rom_func_00200800"
+rom=0x1400
+vram=0x200800
+size=0x40
+functions=[{name="full_rom_func_00200800",vram=0x200800,size=0x40}]
+
+[[section]]
+name="full_rom_func_00200840"
+rom=0x1440
+vram=0x200840
+size=0x40
+functions=[{name="full_rom_func_00200840",vram=0x200840,size=0x40}]
+
+[[section]]
+name="full_rom_func_00200880"
+rom=0x1480
+vram=0x200880
+size=0xDC
+functions=[{name="full_rom_func_00200880",vram=0x200880,size=0xDC}]
+
+[[section]]
+name="full_rom_func_0020095C"
+rom=0x155C
+vram=0x20095C
+size=0x17C
+functions=[{name="full_rom_func_0020095C",vram=0x20095C,size=0x17C}]
+
+[[section]]
+name="full_rom_func_00200AD8"
+rom=0x16D8
+vram=0x200AD8
+size=0x3C
+functions=[{name="full_rom_func_00200AD8",vram=0x200AD8,size=0x3C}]
+
+[[section]]
+name="full_rom_func_00200B14"
+rom=0x1714
+vram=0x200B14
+size=0x114
+functions=[{name="full_rom_func_00200B14",vram=0x200B14,size=0x114}]
+
+[[section]]
+name="full_rom_func_00200C28"
+rom=0x1828
+vram=0x200C28
+size=0x78
+functions=[{name="full_rom_func_00200C28",vram=0x200C28,size=0x78}]
+
+[[section]]
+name="full_rom_func_00200CA0"
+rom=0x18A0
+vram=0x200CA0
+size=0x78
+functions=[{name="full_rom_func_00200CA0",vram=0x200CA0,size=0x78}]
+
+[[section]]
+name="full_rom_func_00200D18"
+rom=0x1918
+vram=0x200D18
+size=0xEC
+functions=[{name="full_rom_func_00200D18",vram=0x200D18,size=0xEC}]
+
+[[section]]
+name="full_rom_func_00200E04"
+rom=0x1A04
+vram=0x200E04
+size=0x194
+functions=[{name="full_rom_func_00200E04",vram=0x200E04,size=0x194}]
+
+[[section]]
+name="full_rom_func_00200F98"
+rom=0x1B98
+vram=0x200F98
+size=0xCC
+functions=[{name="full_rom_func_00200F98",vram=0x200F98,size=0xCC}]
+
+[[section]]
+name="full_rom_func_00201064"
+rom=0x1C64
+vram=0x201064
+size=0x74
+functions=[{name="full_rom_func_00201064",vram=0x201064,size=0x74}]
+
+[[section]]
+name="full_rom_func_002010D8"
+rom=0x1CD8
+vram=0x2010D8
+size=0x200
+functions=[{name="full_rom_func_002010D8",vram=0x2010D8,size=0x200}]
+
+[[section]]
+name="full_rom_func_002012D8"
+rom=0x1ED8
+vram=0x2012D8
+size=0x100
+functions=[{name="full_rom_func_002012D8",vram=0x2012D8,size=0x100}]
+
+[[section]]
+name="full_rom_func_002013D8"
+rom=0x1FD8
+vram=0x2013D8
+size=0xCC
+functions=[{name="full_rom_func_002013D8",vram=0x2013D8,size=0xCC}]
+
+[[section]]
+name="full_rom_func_002014A4"
+rom=0x20A4
+vram=0x2014A4
+size=0x238
+functions=[{name="full_rom_func_002014A4",vram=0x2014A4,size=0x238}]
+
+[[section]]
+name="full_rom_func_002016DC"
+rom=0x22DC
+vram=0x2016DC
+size=0x20
+functions=[{name="full_rom_func_002016DC",vram=0x2016DC,size=0x20}]
+
+[[section]]
+name="full_rom_func_002016FC"
+rom=0x22FC
+vram=0x2016FC
+size=0xEC
+functions=[{name="full_rom_func_002016FC",vram=0x2016FC,size=0xEC}]
+
+[[section]]
+name="full_rom_func_002017E8"
+rom=0x23E8
+vram=0x2017E8
+size=0xB8
+functions=[{name="full_rom_func_002017E8",vram=0x2017E8,size=0xB8}]
+
+[[section]]
+name="full_rom_func_002018A0"
+rom=0x24A0
+vram=0x2018A0
+size=0x1D4
+functions=[{name="full_rom_func_002018A0",vram=0x2018A0,size=0x1D4}]
+
+[[section]]
+name="full_rom_func_00201A74"
+rom=0x2674
+vram=0x201A74
+size=0x58
+functions=[{name="full_rom_func_00201A74",vram=0x201A74,size=0x58}]
+
+[[section]]
+name="full_rom_func_00201ACC"
+rom=0x26CC
+vram=0x201ACC
+size=0x84
+functions=[{name="full_rom_func_00201ACC",vram=0x201ACC,size=0x84}]
+
+[[section]]
+name="full_rom_func_00201B50"
+rom=0x2750
+vram=0x201B50
+size=0x130
+functions=[{name="full_rom_func_00201B50",vram=0x201B50,size=0x130}]
+
+[[section]]
+name="full_rom_func_00201C80"
+rom=0x2880
+vram=0x201C80
+size=0x130
+functions=[{name="full_rom_func_00201C80",vram=0x201C80,size=0x130}]
+
+[[section]]
+name="full_rom_func_00201DB0"
+rom=0x29B0
+vram=0x201DB0
+size=0xE4
+functions=[{name="full_rom_func_00201DB0",vram=0x201DB0,size=0xE4}]
+
+[[section]]
+name="full_rom_func_00201E94"
+rom=0x2A94
+vram=0x201E94
+size=0x184
+functions=[{name="full_rom_func_00201E94",vram=0x201E94,size=0x184}]
+
+[[section]]
+name="full_rom_func_00202018"
+rom=0x2C18
+vram=0x202018
+size=0x180
+functions=[{name="full_rom_func_00202018",vram=0x202018,size=0x180}]
+
+[[section]]
+name="full_rom_func_00202198"
+rom=0x2D98
+vram=0x202198
+size=0xD0
+functions=[{name="full_rom_func_00202198",vram=0x202198,size=0xD0}]
+
+[[section]]
+name="full_rom_func_002022E0"
+rom=0x2EE0
+vram=0x2022E0
+size=0xAC
+functions=[{name="full_rom_func_002022E0",vram=0x2022E0,size=0xAC}]
+
+[[section]]
+name="full_rom_func_002023C4"
+rom=0x2FC4
+vram=0x2023C4
+size=0xC
+functions=[{name="full_rom_func_002023C4",vram=0x2023C4,size=0xC}]
+
+[[section]]
+name="full_rom_func_002023D0"
+rom=0x2FD0
+vram=0x2023D0
+size=0xC
+functions=[{name="full_rom_func_002023D0",vram=0x2023D0,size=0xC}]
+
+[[section]]
+name="full_rom_func_00203CFC"
+rom=0x48FC
+vram=0x203CFC
+size=0x50
+functions=[{name="full_rom_func_00203CFC",vram=0x203CFC,size=0x50}]
+
+[[section]]
+name="full_rom_func_00203D4C"
+rom=0x494C
+vram=0x203D4C
+size=0xA4
+functions=[{name="full_rom_func_00203D4C",vram=0x203D4C,size=0xA4}]
+
+[[section]]
+name="full_rom_func_00203EB0"
+rom=0x4AB0
+vram=0x203EB0
+size=0x54
+functions=[{name="full_rom_func_00203EB0",vram=0x203EB0,size=0x54}]
+
+[[section]]
+name="full_rom_func_00203F04"
+rom=0x4B04
+vram=0x203F04
+size=0x128
+functions=[{name="full_rom_func_00203F04",vram=0x203F04,size=0x128}]
+
+[[section]]
+name="full_rom_func_00204E78"
+rom=0x5A78
+vram=0x204E78
+size=0x30
+functions=[{name="full_rom_func_00204E78",vram=0x204E78,size=0x30}]
+
+[[section]]
+name="full_rom_func_00204EA8"
+rom=0x5AA8
+vram=0x204EA8
+size=0x68
+functions=[{name="full_rom_func_00204EA8",vram=0x204EA8,size=0x68}]
+
+[[section]]
+name="full_rom_func_00204F10"
+rom=0x5B10
+vram=0x204F10
+size=0x68
+functions=[{name="full_rom_func_00204F10",vram=0x204F10,size=0x68}]
+
+[[section]]
+name="full_rom_func_00205700"
+rom=0x6300
+vram=0x205700
+size=0xC
+functions=[{name="full_rom_func_00205700",vram=0x205700,size=0xC}]
+
+[[section]]
+name="full_rom_func_0020570C"
+rom=0x630C
+vram=0x20570C
+size=0x14
+functions=[{name="full_rom_func_0020570C",vram=0x20570C,size=0x14}]
+
+[[section]]
+name="full_rom_func_00206200"
+rom=0x6E00
+vram=0x206200
+size=0x30
+functions=[{name="full_rom_func_00206200",vram=0x206200,size=0x30}]
+
+[[section]]
+name="full_rom_func_002062E0"
+rom=0x6EE0
+vram=0x2062E0
+size=0x10C
+functions=[{name="full_rom_func_002062E0",vram=0x2062E0,size=0x10C}]
+
+[[section]]
+name="full_rom_func_002063EC"
+rom=0x6FEC
+vram=0x2063EC
+size=0xB4
+functions=[{name="full_rom_func_002063EC",vram=0x2063EC,size=0xB4}]
+
+[[section]]
+name="full_rom_func_002064A0"
+rom=0x70A0
+vram=0x2064A0
+size=0xBC
+functions=[{name="full_rom_func_002064A0",vram=0x2064A0,size=0xBC}]
+
+[[section]]
+name="full_rom_func_0020655C"
+rom=0x715C
+vram=0x20655C
+size=0x64
+functions=[{name="full_rom_func_0020655C",vram=0x20655C,size=0x64}]
+
+[[section]]
+name="full_rom_func_002068C8"
+rom=0x74C8
+vram=0x2068C8
+size=0x48
+functions=[{name="full_rom_func_002068C8",vram=0x2068C8,size=0x48}]
+
+[[section]]
+name="full_rom_func_00206910"
+rom=0x7510
+vram=0x206910
+size=0x20
+functions=[{name="full_rom_func_00206910",vram=0x206910,size=0x20}]
+
+[[section]]
+name="full_rom_func_002077CC"
+rom=0x83CC
+vram=0x2077CC
+size=0x28
+functions=[{name="full_rom_func_002077CC",vram=0x2077CC,size=0x28}]
+
+[[section]]
+name="full_rom_func_0020BE7C"
+rom=0xCA7C
+vram=0x20BE7C
+size=0x1FC
+functions=[{name="full_rom_func_0020BE7C",vram=0x20BE7C,size=0x1FC}]
+
+[[section]]
+name="full_rom_func_0020C078"
+rom=0xCC78
+vram=0x20C078
+size=0x270
+functions=[{name="full_rom_func_0020C078",vram=0x20C078,size=0x270}]
+
+[[section]]
+name="full_rom_func_0020C9CC"
+rom=0xD5CC
+vram=0x20C9CC
+size=0x44
+functions=[{name="full_rom_func_0020C9CC",vram=0x20C9CC,size=0x44}]
+
+[[section]]
+name="full_rom_func_0020CD74"
+rom=0xD974
+vram=0x20CD74
+size=0x26C
+functions=[{name="full_rom_func_0020CD74",vram=0x20CD74,size=0x26C}]
+
+[[section]]
+name="full_rom_func_0020D070"
+rom=0xDC70
+vram=0x20D070
+size=0x5C
+functions=[{name="full_rom_func_0020D070",vram=0x20D070,size=0x5C}]
+
+[[section]]
+name="full_rom_func_0020EAB4"
+rom=0xF6B4
+vram=0x20EAB4
+size=0x2C
+functions=[{name="full_rom_func_0020EAB4",vram=0x20EAB4,size=0x2C}]
+
+[[section]]
+name="full_rom_func_0020F59C"
+rom=0x1019C
+vram=0x20F59C
+size=0x8
+functions=[{name="full_rom_func_0020F59C",vram=0x20F59C,size=0x8}]
+
+[[section]]
+name="full_rom_func_0020F614"
+rom=0x10214
+vram=0x20F614
+size=0xA4
+functions=[{name="full_rom_func_0020F614",vram=0x20F614,size=0xA4}]
+
+[[section]]
+name="full_rom_func_00210C14"
+rom=0x11814
+vram=0x210C14
+size=0x274
+functions=[{name="full_rom_func_00210C14",vram=0x210C14,size=0x274}]
+
+[[section]]
+name="full_rom_func_00213810"
+rom=0x14410
+vram=0x213810
+size=0xD8
+functions=[{name="full_rom_func_00213810",vram=0x213810,size=0xD8}]
+
+[[section]]
+name="full_rom_func_00214310"
+rom=0x14F10
+vram=0x214310
+size=0x314
+functions=[{name="full_rom_func_00214310",vram=0x214310,size=0x314}]
+
+[[section]]
+name="full_rom_func_00215B90"
+rom=0x16790
+vram=0x215B90
+size=0x578
+functions=[{name="full_rom_func_00215B90",vram=0x215B90,size=0x578}]
+
+[[section]]
+name="full_rom_func_002166F4"
+rom=0x172F4
+vram=0x2166F4
+size=0x114
+functions=[{name="full_rom_func_002166F4",vram=0x2166F4,size=0x114}]
+
+[[section]]
+name="full_rom_func_002168B8"
+rom=0x174B8
+vram=0x2168B8
+size=0xF4
+functions=[{name="full_rom_func_002168B8",vram=0x2168B8,size=0xF4}]
+
+[[section]]
+name="full_rom_func_002169AC"
+rom=0x175AC
+vram=0x2169AC
+size=0xC0
+functions=[{name="full_rom_func_002169AC",vram=0x2169AC,size=0xC0}]
+
+[[section]]
+name="full_rom_func_00216A6C"
+rom=0x1766C
+vram=0x216A6C
+size=0x188
+functions=[{name="full_rom_func_00216A6C",vram=0x216A6C,size=0x188}]
+
+[[section]]
+name="full_rom_func_00216D30"
+rom=0x17930
+vram=0x216D30
+size=0xC
+functions=[{name="full_rom_func_00216D30",vram=0x216D30,size=0xC}]
+
+[[section]]
+name="full_rom_func_002171BC"
+rom=0x17DBC
+vram=0x2171BC
+size=0xC
+functions=[{name="full_rom_func_002171BC",vram=0x2171BC,size=0xC}]
+
+[[section]]
+name="full_rom_func_002171C8"
+rom=0x17DC8
+vram=0x2171C8
+size=0x34
+functions=[{name="full_rom_func_002171C8",vram=0x2171C8,size=0x34}]
+
+[[section]]
+name="full_rom_func_002172C4"
+rom=0x17EC4
+vram=0x2172C4
+size=0xC
+functions=[{name="full_rom_func_002172C4",vram=0x2172C4,size=0xC}]
+
+[[section]]
+name="full_rom_func_0021740C"
+rom=0x1800C
+vram=0x21740C
+size=0xD8
+functions=[{name="full_rom_func_0021740C",vram=0x21740C,size=0xD8}]
+
+[[section]]
+name="full_rom_func_002174E4"
+rom=0x180E4
+vram=0x2174E4
+size=0xB0
+functions=[{name="full_rom_func_002174E4",vram=0x2174E4,size=0xB0}]
+
+[[section]]
+name="full_rom_func_00217594"
+rom=0x18194
+vram=0x217594
+size=0x98
+functions=[{name="full_rom_func_00217594",vram=0x217594,size=0x98}]
+
+[[section]]
+name="full_rom_func_002184C0"
+rom=0x190C0
+vram=0x2184C0
+size=0x110
+functions=[{name="full_rom_func_002184C0",vram=0x2184C0,size=0x110}]
+
+[[section]]
+name="full_rom_func_002191B8"
+rom=0x19DB8
+vram=0x2191B8
+size=0xFC
+functions=[{name="full_rom_func_002191B8",vram=0x2191B8,size=0xFC}]
+
+[[section]]
+name="full_rom_func_00229A54"
+rom=0x2A654
+vram=0x229A54
+size=0x18C
+functions=[{name="full_rom_func_00229A54",vram=0x229A54,size=0x18C}]
+
+[[section]]
+name="full_rom_func_0022A608"
+rom=0x2B208
+vram=0x22A608
+size=0x58
+functions=[{name="full_rom_func_0022A608",vram=0x22A608,size=0x58}]
+
+[[section]]
+name="full_rom_func_0022A89C"
+rom=0x2B49C
+vram=0x22A89C
+size=0x28
+functions=[{name="full_rom_func_0022A89C",vram=0x22A89C,size=0x28}]
+
+[[section]]
+name="full_rom_func_0022A8FC"
+rom=0x2B4FC
+vram=0x22A8FC
+size=0x18
+functions=[{name="full_rom_func_0022A8FC",vram=0x22A8FC,size=0x18}]
+
+[[section]]
+name="full_rom_func_0022A914"
+rom=0x2B514
+vram=0x22A914
+size=0x1C
+functions=[{name="full_rom_func_0022A914",vram=0x22A914,size=0x1C}]
+
+[[section]]
+name="full_rom_func_0022A930"
+rom=0x2B530
+vram=0x22A930
+size=0xE8
+functions=[{name="full_rom_func_0022A930",vram=0x22A930,size=0xE8}]
+
+[[section]]
+name="full_rom_func_0022AA18"
+rom=0x2B618
+vram=0x22AA18
+size=0x58
+functions=[{name="full_rom_func_0022AA18",vram=0x22AA18,size=0x58}]
+
+[[section]]
+name="full_rom_func_0022ADC4"
+rom=0x2B9C4
+vram=0x22ADC4
+size=0x38
+functions=[{name="full_rom_func_0022ADC4",vram=0x22ADC4,size=0x38}]
+
+[[section]]
+name="full_rom_func_0022ADFC"
+rom=0x2B9FC
+vram=0x22ADFC
+size=0x78
+functions=[{name="full_rom_func_0022ADFC",vram=0x22ADFC,size=0x78}]
+
+[[section]]
+name="full_rom_func_0022B2D8"
+rom=0x2BED8
+vram=0x22B2D8
+size=0xCC
+functions=[{name="full_rom_func_0022B2D8",vram=0x22B2D8,size=0xCC}]
+
+[[section]]
+name="full_rom_func_0022B3A4"
+rom=0x2BFA4
+vram=0x22B3A4
+size=0x90
+functions=[{name="full_rom_func_0022B3A4",vram=0x22B3A4,size=0x90}]
+
+[[section]]
+name="full_rom_func_0022B434"
+rom=0x2C034
+vram=0x22B434
+size=0x24
+functions=[{name="full_rom_func_0022B434",vram=0x22B434,size=0x24}]
+
+[[section]]
+name="full_rom_func_0022B458"
+rom=0x2C058
+vram=0x22B458
+size=0x8C
+functions=[{name="full_rom_func_0022B458",vram=0x22B458,size=0x8C}]
+
+[[section]]
+name="full_rom_func_002325C0"
+rom=0x331C0
+vram=0x2325C0
+size=0x1C
+functions=[{name="full_rom_func_002325C0",vram=0x2325C0,size=0x1C}]
+
+[[section]]
+name="full_rom_func_00232BB0"
+rom=0x337B0
+vram=0x232BB0
+size=0x98
+functions=[{name="full_rom_func_00232BB0",vram=0x232BB0,size=0x98}]
+
+[[section]]
+name="full_rom_func_00233AF4"
+rom=0x346F4
+vram=0x233AF4
+size=0x174
+functions=[{name="full_rom_func_00233AF4",vram=0x233AF4,size=0x174}]
+
+[[section]]
+name="full_rom_func_00233DDC"
+rom=0x349DC
+vram=0x233DDC
+size=0x5CC
+functions=[{name="full_rom_func_00233DDC",vram=0x233DDC,size=0x5CC}]
+
+[[section]]
+name="full_rom_func_002365EC"
+rom=0x371EC
+vram=0x2365EC
+size=0x268
+functions=[{name="full_rom_func_002365EC",vram=0x2365EC,size=0x268}]
+
+[[section]]
+name="full_rom_func_00239164"
+rom=0x39D64
+vram=0x239164
+size=0x8
+functions=[{name="full_rom_func_00239164",vram=0x239164,size=0x8}]
+
+[[section]]
+name="full_rom_func_0023916C"
+rom=0x39D6C
+vram=0x23916C
+size=0x8
+functions=[{name="full_rom_func_0023916C",vram=0x23916C,size=0x8}]
+
+[[section]]
+name="full_rom_func_002391D8"
+rom=0x39DD8
+vram=0x2391D8
+size=0x4C
+functions=[{name="full_rom_func_002391D8",vram=0x2391D8,size=0x4C}]
+
+[[section]]
+name="full_rom_func_002393E4"
+rom=0x39FE4
+vram=0x2393E4
+size=0x8
+functions=[{name="full_rom_func_002393E4",vram=0x2393E4,size=0x8}]
+
+[[section]]
+name="full_rom_func_002393EC"
+rom=0x39FEC
+vram=0x2393EC
+size=0x10
+functions=[{name="full_rom_func_002393EC",vram=0x2393EC,size=0x10}]
+
+[[section]]
+name="full_rom_func_002393FC"
+rom=0x39FFC
+vram=0x2393FC
+size=0x10
+functions=[{name="full_rom_func_002393FC",vram=0x2393FC,size=0x10}]
+
+[[section]]
+name="full_rom_func_00239658"
+rom=0x3A258
+vram=0x239658
+size=0xC8
+functions=[{name="full_rom_func_00239658",vram=0x239658,size=0xC8}]
+
+[[section]]
+name="full_rom_func_00239720"
+rom=0x3A320
+vram=0x239720
+size=0x30
+functions=[{name="full_rom_func_00239720",vram=0x239720,size=0x30}]
+
+[[section]]
+name="full_rom_func_00239AD4"
+rom=0x3A6D4
+vram=0x239AD4
+size=0x70
+functions=[{name="full_rom_func_00239AD4",vram=0x239AD4,size=0x70}]
+
+[[section]]
+name="full_rom_func_00239C1C"
+rom=0x3A81C
+vram=0x239C1C
+size=0x60
+functions=[{name="full_rom_func_00239C1C",vram=0x239C1C,size=0x60}]
+
+[[section]]
+name="full_rom_func_00239C7C"
+rom=0x3A87C
+vram=0x239C7C
+size=0x44
+functions=[{name="full_rom_func_00239C7C",vram=0x239C7C,size=0x44}]
+
+[[section]]
+name="full_rom_func_00239CCC"
+rom=0x3A8CC
+vram=0x239CCC
+size=0x14
+functions=[{name="full_rom_func_00239CCC",vram=0x239CCC,size=0x14}]
+
+[[section]]
+name="full_rom_func_00239CE0"
+rom=0x3A8E0
+vram=0x239CE0
+size=0x1C
+functions=[{name="full_rom_func_00239CE0",vram=0x239CE0,size=0x1C}]
+
+[[section]]
+name="full_rom_func_00239CFC"
+rom=0x3A8FC
+vram=0x239CFC
+size=0x74
+functions=[{name="full_rom_func_00239CFC",vram=0x239CFC,size=0x74}]
+
+[[section]]
+name="full_rom_func_00239D70"
+rom=0x3A970
+vram=0x239D70
+size=0x58
+functions=[{name="full_rom_func_00239D70",vram=0x239D70,size=0x58}]
+
+[[section]]
+name="full_rom_func_00239DC8"
+rom=0x3A9C8
+vram=0x239DC8
+size=0x60
+functions=[{name="full_rom_func_00239DC8",vram=0x239DC8,size=0x60}]
+
+[[section]]
+name="full_rom_func_00239E28"
+rom=0x3AA28
+vram=0x239E28
+size=0x5C
+functions=[{name="full_rom_func_00239E28",vram=0x239E28,size=0x5C}]
+
+[[section]]
+name="full_rom_func_00239FBC"
+rom=0x3ABBC
+vram=0x239FBC
+size=0x138
+functions=[{name="full_rom_func_00239FBC",vram=0x239FBC,size=0x138}]
+
+[[section]]
+name="full_rom_func_0023A0F4"
+rom=0x3ACF4
+vram=0x23A0F4
+size=0x7C
+functions=[{name="full_rom_func_0023A0F4",vram=0x23A0F4,size=0x7C}]
+
+[[section]]
+name="full_rom_func_0023A170"
+rom=0x3AD70
+vram=0x23A170
+size=0x64
+functions=[{name="full_rom_func_0023A170",vram=0x23A170,size=0x64}]
+
+[[section]]
+name="full_rom_func_0023A1D4"
+rom=0x3ADD4
+vram=0x23A1D4
+size=0x58
+functions=[{name="full_rom_func_0023A1D4",vram=0x23A1D4,size=0x58}]
+
+[[section]]
+name="full_rom_func_0023A22C"
+rom=0x3AE2C
+vram=0x23A22C
+size=0x48
+functions=[{name="full_rom_func_0023A22C",vram=0x23A22C,size=0x48}]
+
+[[section]]
+name="full_rom_func_0023A274"
+rom=0x3AE74
+vram=0x23A274
+size=0xB0
+functions=[{name="full_rom_func_0023A274",vram=0x23A274,size=0xB0}]
+
+[[section]]
+name="full_rom_func_0023A324"
+rom=0x3AF24
+vram=0x23A324
+size=0x198
+functions=[{name="full_rom_func_0023A324",vram=0x23A324,size=0x198}]
+
+[[section]]
+name="full_rom_func_0023B674"
+rom=0x3C274
+vram=0x23B674
+size=0x84
+functions=[{name="full_rom_func_0023B674",vram=0x23B674,size=0x84}]
+
+[[section]]
+name="full_rom_func_0023B6F8"
+rom=0x3C2F8
+vram=0x23B6F8
+size=0x194
+functions=[{name="full_rom_func_0023B6F8",vram=0x23B6F8,size=0x194}]
+
+[[section]]
+name="full_rom_func_0023B88C"
+rom=0x3C48C
+vram=0x23B88C
+size=0x4C
+functions=[{name="full_rom_func_0023B88C",vram=0x23B88C,size=0x4C}]
+
+[[section]]
+name="full_rom_func_0023B8D8"
+rom=0x3C4D8
+vram=0x23B8D8
+size=0x40
+functions=[{name="full_rom_func_0023B8D8",vram=0x23B8D8,size=0x40}]
+
+[[section]]
+name="full_rom_func_0023C69C"
+rom=0x3D29C
+vram=0x23C69C
+size=0x94
+functions=[{name="full_rom_func_0023C69C",vram=0x23C69C,size=0x94}]
+
+[[section]]
+name="full_rom_func_0023C83C"
+rom=0x3D43C
+vram=0x23C83C
+size=0x78
+functions=[{name="full_rom_func_0023C83C",vram=0x23C83C,size=0x78}]
+
+[[section]]
+name="full_rom_func_0023C8B4"
+rom=0x3D4B4
+vram=0x23C8B4
+size=0x50
+functions=[{name="full_rom_func_0023C8B4",vram=0x23C8B4,size=0x50}]
+
+[[section]]
+name="full_rom_func_0023CAEC"
+rom=0x3D6EC
+vram=0x23CAEC
+size=0x54
+functions=[{name="full_rom_func_0023CAEC",vram=0x23CAEC,size=0x54}]
+
+[[section]]
+name="full_rom_func_0023CB70"
+rom=0x3D770
+vram=0x23CB70
+size=0x30
+functions=[{name="full_rom_func_0023CB70",vram=0x23CB70,size=0x30}]
+
+[[section]]
+name="full_rom_func_0023CBE8"
+rom=0x3D7E8
+vram=0x23CBE8
+size=0xCC
+functions=[{name="full_rom_func_0023CBE8",vram=0x23CBE8,size=0xCC}]
+
+[[section]]
+name="full_rom_func_0023E844"
+rom=0x3F444
+vram=0x23E844
+size=0x50
+functions=[{name="full_rom_func_0023E844",vram=0x23E844,size=0x50}]
+
+[[section]]
+name="full_rom_func_0023E894"
+rom=0x3F494
+vram=0x23E894
+size=0x20
+functions=[{name="full_rom_func_0023E894",vram=0x23E894,size=0x20}]
+
+[[section]]
+name="full_rom_func_0023EE14"
+rom=0x3FA14
+vram=0x23EE14
+size=0x2C
+functions=[{name="full_rom_func_0023EE14",vram=0x23EE14,size=0x2C}]
+
+[[section]]
+name="full_rom_func_00240518"
+rom=0x41118
+vram=0x240518
+size=0xC4
+functions=[{name="full_rom_func_00240518",vram=0x240518,size=0xC4}]
+
+[[section]]
+name="full_rom_func_00241240"
+rom=0x41E40
+vram=0x241240
+size=0x70
+functions=[{name="full_rom_func_00241240",vram=0x241240,size=0x70}]
+
+[[section]]
+name="full_rom_func_002413A8"
+rom=0x41FA8
+vram=0x2413A8
+size=0x12C
+functions=[{name="full_rom_func_002413A8",vram=0x2413A8,size=0x12C}]
+
+[[section]]
+name="full_rom_func_00241648"
+rom=0x42248
+vram=0x241648
+size=0xC0
+functions=[{name="full_rom_func_00241648",vram=0x241648,size=0xC0}]
+
+[[section]]
+name="full_rom_func_00241820"
+rom=0x42420
+vram=0x241820
+size=0x10C
+functions=[{name="full_rom_func_00241820",vram=0x241820,size=0x10C}]
+
+[[section]]
+name="full_rom_func_002426AC"
+rom=0x432AC
+vram=0x2426AC
+size=0x204
+functions=[{name="full_rom_func_002426AC",vram=0x2426AC,size=0x204}]
+
+[[section]]
+name="full_rom_func_002428B0"
+rom=0x434B0
+vram=0x2428B0
+size=0x1C
+functions=[{name="full_rom_func_002428B0",vram=0x2428B0,size=0x1C}]
+
+[[section]]
+name="full_rom_func_002428CC"
+rom=0x434CC
+vram=0x2428CC
+size=0x34
+functions=[{name="full_rom_func_002428CC",vram=0x2428CC,size=0x34}]
+
+[[section]]
+name="full_rom_func_00242900"
+rom=0x43500
+vram=0x242900
+size=0x174
+functions=[{name="full_rom_func_00242900",vram=0x242900,size=0x174}]
+
+[[section]]
+name="full_rom_func_00242A74"
+rom=0x43674
+vram=0x242A74
+size=0x15C
+functions=[{name="full_rom_func_00242A74",vram=0x242A74,size=0x15C}]
+
+[[section]]
+name="full_rom_func_002457C0"
+rom=0x463C0
+vram=0x2457C0
+size=0x34
+functions=[{name="full_rom_func_002457C0",vram=0x2457C0,size=0x34}]
+
+[[section]]
+name="full_rom_func_002458C8"
+rom=0x464C8
+vram=0x2458C8
+size=0x10
+functions=[{name="full_rom_func_002458C8",vram=0x2458C8,size=0x10}]
+
+[[section]]
+name="full_rom_func_002458D8"
+rom=0x464D8
+vram=0x2458D8
+size=0x10
+functions=[{name="full_rom_func_002458D8",vram=0x2458D8,size=0x10}]
+
+[[section]]
+name="full_rom_func_00245920"
+rom=0x46520
+vram=0x245920
+size=0x28
+functions=[{name="full_rom_func_00245920",vram=0x245920,size=0x28}]
+
+[[section]]
+name="full_rom_func_00245948"
+rom=0x46548
+vram=0x245948
+size=0x28
+functions=[{name="full_rom_func_00245948",vram=0x245948,size=0x28}]
+
+[[section]]
+name="full_rom_func_00245970"
+rom=0x46570
+vram=0x245970
+size=0x10
+functions=[{name="full_rom_func_00245970",vram=0x245970,size=0x10}]
+
+[[section]]
+name="full_rom_func_00245B00"
+rom=0x46700
+vram=0x245B00
+size=0x8
+functions=[{name="full_rom_func_00245B00",vram=0x245B00,size=0x8}]
+
+[[section]]
+name="full_rom_func_00245C18"
+rom=0x46818
+vram=0x245C18
+size=0xDC
+functions=[{name="full_rom_func_00245C18",vram=0x245C18,size=0xDC}]
+
+[[section]]
+name="full_rom_func_002461C8"
+rom=0x46DC8
+vram=0x2461C8
+size=0x100
+functions=[{name="full_rom_func_002461C8",vram=0x2461C8,size=0x100}]
+
+[[section]]
+name="full_rom_func_0024641C"
+rom=0x4701C
+vram=0x24641C
+size=0x11C
+functions=[{name="full_rom_func_0024641C",vram=0x24641C,size=0x11C}]
+
+[[section]]
+name="full_rom_func_00246538"
+rom=0x47138
+vram=0x246538
+size=0x12C
+functions=[{name="full_rom_func_00246538",vram=0x246538,size=0x12C}]
+
+[[section]]
+name="full_rom_func_00247B94"
+rom=0x48794
+vram=0x247B94
+size=0x364
+functions=[{name="full_rom_func_00247B94",vram=0x247B94,size=0x364}]
+
+[[section]]
+name="full_rom_func_0024A588"
+rom=0x4B188
+vram=0x24A588
+size=0x1F8
+functions=[{name="full_rom_func_0024A588",vram=0x24A588,size=0x1F8}]
+
+[[section]]
+name="full_rom_func_0024B634"
+rom=0x4C234
+vram=0x24B634
+size=0x8
+functions=[{name="full_rom_func_0024B634",vram=0x24B634,size=0x8}]
+
+[[section]]
+name="full_rom_func_0024B65C"
+rom=0x4C25C
+vram=0x24B65C
+size=0x24
+functions=[{name="full_rom_func_0024B65C",vram=0x24B65C,size=0x24}]
+
+[[section]]
+name="full_rom_func_0024BB94"
+rom=0x4C794
+vram=0x24BB94
+size=0xE0
+functions=[{name="full_rom_func_0024BB94",vram=0x24BB94,size=0xE0}]
+
+[[section]]
+name="full_rom_func_0024BE0C"
+rom=0x4CA0C
+vram=0x24BE0C
+size=0x10
+functions=[{name="full_rom_func_0024BE0C",vram=0x24BE0C,size=0x10}]
+
+[[section]]
+name="full_rom_func_0024BE38"
+rom=0x4CA38
+vram=0x24BE38
+size=0x28
+functions=[{name="full_rom_func_0024BE38",vram=0x24BE38,size=0x28}]
+
+[[section]]
+name="full_rom_func_0024C0D4"
+rom=0x4CCD4
+vram=0x24C0D4
+size=0x8
+functions=[{name="full_rom_func_0024C0D4",vram=0x24C0D4,size=0x8}]
+
+[[section]]
+name="full_rom_func_0024C0DC"
+rom=0x4CCDC
+vram=0x24C0DC
+size=0x8
+functions=[{name="full_rom_func_0024C0DC",vram=0x24C0DC,size=0x8}]
+
+[[section]]
+name="full_rom_func_0024C0E4"
+rom=0x4CCE4
+vram=0x24C0E4
+size=0xC0
+functions=[{name="full_rom_func_0024C0E4",vram=0x24C0E4,size=0xC0}]
+
+[[section]]
+name="full_rom_func_0024C1A4"
+rom=0x4CDA4
+vram=0x24C1A4
+size=0xD0
+functions=[{name="full_rom_func_0024C1A4",vram=0x24C1A4,size=0xD0}]
+
+[[section]]
+name="full_rom_func_0024C274"
+rom=0x4CE74
+vram=0x24C274
+size=0xB0
+functions=[{name="full_rom_func_0024C274",vram=0x24C274,size=0xB0}]
+
+[[section]]
+name="full_rom_func_0024C324"
+rom=0x4CF24
+vram=0x24C324
+size=0x8
+functions=[{name="full_rom_func_0024C324",vram=0x24C324,size=0x8}]
+
+[[section]]
+name="full_rom_func_0024C32C"
+rom=0x4CF2C
+vram=0x24C32C
+size=0x108
+functions=[{name="full_rom_func_0024C32C",vram=0x24C32C,size=0x108}]
+
+[[section]]
+name="full_rom_func_0024C5B4"
+rom=0x4D1B4
+vram=0x24C5B4
+size=0x90
+functions=[{name="full_rom_func_0024C5B4",vram=0x24C5B4,size=0x90}]
+
+[[section]]
+name="full_rom_func_0024C644"
+rom=0x4D244
+vram=0x24C644
+size=0x84
+functions=[{name="full_rom_func_0024C644",vram=0x24C644,size=0x84}]
+
+[[section]]
+name="full_rom_func_0024C6C8"
+rom=0x4D2C8
+vram=0x24C6C8
+size=0x18C
+functions=[{name="full_rom_func_0024C6C8",vram=0x24C6C8,size=0x18C}]
+
+[[section]]
+name="full_rom_func_0024C854"
+rom=0x4D454
+vram=0x24C854
+size=0x50
+functions=[{name="full_rom_func_0024C854",vram=0x24C854,size=0x50}]
+
+[[section]]
+name="full_rom_func_0024C8A4"
+rom=0x4D4A4
+vram=0x24C8A4
+size=0x68
+functions=[{name="full_rom_func_0024C8A4",vram=0x24C8A4,size=0x68}]
+
+[[section]]
+name="full_rom_func_0024C90C"
+rom=0x4D50C
+vram=0x24C90C
+size=0xE4
+functions=[{name="full_rom_func_0024C90C",vram=0x24C90C,size=0xE4}]
+
+[[section]]
+name="full_rom_func_0024C9F0"
+rom=0x4D5F0
+vram=0x24C9F0
+size=0x13C
+functions=[{name="full_rom_func_0024C9F0",vram=0x24C9F0,size=0x13C}]
+
+[[section]]
+name="full_rom_func_0024CB2C"
+rom=0x4D72C
+vram=0x24CB2C
+size=0xE4
+functions=[{name="full_rom_func_0024CB2C",vram=0x24CB2C,size=0xE4}]
+
+[[section]]
+name="full_rom_func_0024CC10"
+rom=0x4D810
+vram=0x24CC10
+size=0x3F8
+functions=[{name="full_rom_func_0024CC10",vram=0x24CC10,size=0x3F8}]
+
+[[section]]
+name="full_rom_func_0024D008"
+rom=0x4DC08
+vram=0x24D008
+size=0xE0
+functions=[{name="full_rom_func_0024D008",vram=0x24D008,size=0xE0}]
+
+[[section]]
+name="full_rom_func_0024DD04"
+rom=0x4E904
+vram=0x24DD04
+size=0x34
+functions=[{name="full_rom_func_0024DD04",vram=0x24DD04,size=0x34}]
+
+[[section]]
+name="full_rom_func_0024DD38"
+rom=0x4E938
+vram=0x24DD38
+size=0x34
+functions=[{name="full_rom_func_0024DD38",vram=0x24DD38,size=0x34}]
+
+[[section]]
+name="full_rom_func_0024DDBC"
+rom=0x4E9BC
+vram=0x24DDBC
+size=0x34
+functions=[{name="full_rom_func_0024DDBC",vram=0x24DDBC,size=0x34}]
+
+[[section]]
+name="full_rom_func_0024DDF0"
+rom=0x4E9F0
+vram=0x24DDF0
+size=0x34
+functions=[{name="full_rom_func_0024DDF0",vram=0x24DDF0,size=0x34}]
+
+[[section]]
+name="full_rom_func_0024DE24"
+rom=0x4EA24
+vram=0x24DE24
+size=0x28
+functions=[{name="full_rom_func_0024DE24",vram=0x24DE24,size=0x28}]
+
+[[section]]
+name="full_rom_func_0024DE80"
+rom=0x4EA80
+vram=0x24DE80
+size=0x40
+functions=[{name="full_rom_func_0024DE80",vram=0x24DE80,size=0x40}]
+
+[[section]]
+name="full_rom_func_0024DEE8"
+rom=0x4EAE8
+vram=0x24DEE8
+size=0x54
+functions=[{name="full_rom_func_0024DEE8",vram=0x24DEE8,size=0x54}]
+
+[[section]]
+name="full_rom_func_0024E5EC"
+rom=0x4F1EC
+vram=0x24E5EC
+size=0x44
+functions=[{name="full_rom_func_0024E5EC",vram=0x24E5EC,size=0x44}]
+
+[[section]]
+name="full_rom_func_0024E758"
+rom=0x4F358
+vram=0x24E758
+size=0x24
+functions=[{name="full_rom_func_0024E758",vram=0x24E758,size=0x24}]
+
+[[section]]
+name="full_rom_func_0024E844"
+rom=0x4F444
+vram=0x24E844
+size=0xC
+functions=[{name="full_rom_func_0024E844",vram=0x24E844,size=0xC}]
+
+[[section]]
+name="full_rom_func_0024E850"
+rom=0x4F450
+vram=0x24E850
+size=0x48
+functions=[{name="full_rom_func_0024E850",vram=0x24E850,size=0x48}]
+
+[[section]]
+name="full_rom_func_0024E898"
+rom=0x4F498
+vram=0x24E898
+size=0x48
+functions=[{name="full_rom_func_0024E898",vram=0x24E898,size=0x48}]
+
+[[section]]
+name="full_rom_func_0024E8E0"
+rom=0x4F4E0
+vram=0x24E8E0
+size=0x24
+functions=[{name="full_rom_func_0024E8E0",vram=0x24E8E0,size=0x24}]
+
+[[section]]
+name="full_rom_func_0024EF08"
+rom=0x4FB08
+vram=0x24EF08
+size=0x1E0
+functions=[{name="full_rom_func_0024EF08",vram=0x24EF08,size=0x1E0}]
+
+[[section]]
+name="full_rom_func_0024F580"
+rom=0x50180
+vram=0x24F580
+size=0x78
+functions=[{name="full_rom_func_0024F580",vram=0x24F580,size=0x78}]
+
+[[section]]
+name="full_rom_func_0024F5F8"
+rom=0x501F8
+vram=0x24F5F8
+size=0x1C
+functions=[{name="full_rom_func_0024F5F8",vram=0x24F5F8,size=0x1C}]
+
+[[section]]
+name="full_rom_func_0024F614"
+rom=0x50214
+vram=0x24F614
+size=0xB8
+functions=[{name="full_rom_func_0024F614",vram=0x24F614,size=0xB8}]
+
+[[section]]
+name="full_rom_func_00250C1C"
+rom=0x5181C
+vram=0x250C1C
+size=0x15C
+functions=[{name="full_rom_func_00250C1C",vram=0x250C1C,size=0x15C}]
+
+[[section]]
+name="full_rom_func_00250D78"
+rom=0x51978
+vram=0x250D78
+size=0x34
+functions=[{name="full_rom_func_00250D78",vram=0x250D78,size=0x34}]
+
+[[section]]
+name="full_rom_func_00250DAC"
+rom=0x519AC
+vram=0x250DAC
+size=0x54
+functions=[{name="full_rom_func_00250DAC",vram=0x250DAC,size=0x54}]
+
+[[section]]
+name="full_rom_func_00251744"
+rom=0x52344
+vram=0x251744
+size=0x188
+functions=[{name="full_rom_func_00251744",vram=0x251744,size=0x188}]
+
+[[section]]
+name="full_rom_func_002529D4"
+rom=0x535D4
+vram=0x2529D4
+size=0x618
+functions=[{name="full_rom_func_002529D4",vram=0x2529D4,size=0x618}]
+
+[[section]]
+name="full_rom_func_00254720"
+rom=0x55320
+vram=0x254720
+size=0x10
+functions=[{name="full_rom_func_00254720",vram=0x254720,size=0x10}]
+
+[[section]]
+name="full_rom_func_00254730"
+rom=0x55330
+vram=0x254730
+size=0x10
+functions=[{name="full_rom_func_00254730",vram=0x254730,size=0x10}]
+
+[[section]]
+name="full_rom_func_00254740"
+rom=0x55340
+vram=0x254740
+size=0x10
+functions=[{name="full_rom_func_00254740",vram=0x254740,size=0x10}]
+
+[[section]]
+name="full_rom_func_00254750"
+rom=0x55350
+vram=0x254750
+size=0x10
+functions=[{name="full_rom_func_00254750",vram=0x254750,size=0x10}]
+
+[[section]]
+name="full_rom_func_00254760"
+rom=0x55360
+vram=0x254760
+size=0x10
+functions=[{name="full_rom_func_00254760",vram=0x254760,size=0x10}]
+
+[[section]]
+name="full_rom_func_00254770"
+rom=0x55370
+vram=0x254770
+size=0x8
+functions=[{name="full_rom_func_00254770",vram=0x254770,size=0x8}]
+
+[[section]]
+name="full_rom_func_002549BC"
+rom=0x555BC
+vram=0x2549BC
+size=0xA8
+functions=[{name="full_rom_func_002549BC",vram=0x2549BC,size=0xA8}]
+
+[[section]]
+name="full_rom_func_00254C94"
+rom=0x55894
+vram=0x254C94
+size=0x44
+functions=[{name="full_rom_func_00254C94",vram=0x254C94,size=0x44}]
+
+[[section]]
+name="full_rom_func_00254DC4"
+rom=0x559C4
+vram=0x254DC4
+size=0x58
+functions=[{name="full_rom_func_00254DC4",vram=0x254DC4,size=0x58}]
+
+[[section]]
+name="full_rom_func_00256690"
+rom=0x57290
+vram=0x256690
+size=0xB4
+functions=[{name="full_rom_func_00256690",vram=0x256690,size=0xB4}]
+
+[[section]]
+name="full_rom_func_00258A80"
+rom=0x59680
+vram=0x258A80
+size=0xAC
+functions=[{name="full_rom_func_00258A80",vram=0x258A80,size=0xAC}]
+
+[[section]]
+name="full_rom_func_00258B2C"
+rom=0x5972C
+vram=0x258B2C
+size=0x8
+functions=[{name="full_rom_func_00258B2C",vram=0x258B2C,size=0x8}]
+
+[[section]]
+name="full_rom_func_00258B34"
+rom=0x59734
+vram=0x258B34
+size=0x28
+functions=[{name="full_rom_func_00258B34",vram=0x258B34,size=0x28}]
+
+[[section]]
+name="full_rom_func_00258B5C"
+rom=0x5975C
+vram=0x258B5C
+size=0x8
+functions=[{name="full_rom_func_00258B5C",vram=0x258B5C,size=0x8}]
+
+[[section]]
+name="full_rom_func_00258CD8"
+rom=0x598D8
+vram=0x258CD8
+size=0x8
+functions=[{name="full_rom_func_00258CD8",vram=0x258CD8,size=0x8}]
+
+[[section]]
+name="full_rom_func_00258F0C"
+rom=0x59B0C
+vram=0x258F0C
+size=0x88
+functions=[{name="full_rom_func_00258F0C",vram=0x258F0C,size=0x88}]
+
+[[section]]
+name="full_rom_func_00258F94"
+rom=0x59B94
+vram=0x258F94
+size=0x44
+functions=[{name="full_rom_func_00258F94",vram=0x258F94,size=0x44}]
+
+[[section]]
+name="full_rom_func_00258FD8"
+rom=0x59BD8
+vram=0x258FD8
+size=0x168
+functions=[{name="full_rom_func_00258FD8",vram=0x258FD8,size=0x168}]
+
+[[section]]
+name="full_rom_func_00259140"
+rom=0x59D40
+vram=0x259140
+size=0x30
+functions=[{name="full_rom_func_00259140",vram=0x259140,size=0x30}]
+
+[[section]]
+name="full_rom_func_00259170"
+rom=0x59D70
+vram=0x259170
+size=0x30
+functions=[{name="full_rom_func_00259170",vram=0x259170,size=0x30}]
+
+[[section]]
+name="full_rom_func_0025960C"
+rom=0x5A20C
+vram=0x25960C
+size=0x28
+functions=[{name="full_rom_func_0025960C",vram=0x25960C,size=0x28}]
+
+[[section]]
+name="full_rom_func_00259634"
+rom=0x5A234
+vram=0x259634
+size=0x20
+functions=[{name="full_rom_func_00259634",vram=0x259634,size=0x20}]
+
+[[section]]
+name="full_rom_func_0025C16C"
+rom=0x5CD6C
+vram=0x25C16C
+size=0x90
+functions=[{name="full_rom_func_0025C16C",vram=0x25C16C,size=0x90}]
+
+[[section]]
+name="full_rom_func_0025C1FC"
+rom=0x5CDFC
+vram=0x25C1FC
+size=0x90
+functions=[{name="full_rom_func_0025C1FC",vram=0x25C1FC,size=0x90}]
+
+[[section]]
+name="full_rom_func_0025C28C"
+rom=0x5CE8C
+vram=0x25C28C
+size=0x7C
+functions=[{name="full_rom_func_0025C28C",vram=0x25C28C,size=0x7C}]
+
+[[section]]
+name="full_rom_func_0025C308"
+rom=0x5CF08
+vram=0x25C308
+size=0xD0
+functions=[{name="full_rom_func_0025C308",vram=0x25C308,size=0xD0}]
+
+[[section]]
+name="full_rom_func_0025C3D8"
+rom=0x5CFD8
+vram=0x25C3D8
+size=0x7C
+functions=[{name="full_rom_func_0025C3D8",vram=0x25C3D8,size=0x7C}]
+
+[[section]]
+name="full_rom_func_0025C454"
+rom=0x5D054
+vram=0x25C454
+size=0x70
+functions=[{name="full_rom_func_0025C454",vram=0x25C454,size=0x70}]
+
+[[section]]
+name="full_rom_func_0025C4C4"
+rom=0x5D0C4
+vram=0x25C4C4
+size=0x54
+functions=[{name="full_rom_func_0025C4C4",vram=0x25C4C4,size=0x54}]
+
+[[section]]
+name="full_rom_func_0025C518"
+rom=0x5D118
+vram=0x25C518
+size=0x44
+functions=[{name="full_rom_func_0025C518",vram=0x25C518,size=0x44}]
+
+[[section]]
+name="full_rom_func_0025C55C"
+rom=0x5D15C
+vram=0x25C55C
+size=0x20
+functions=[{name="full_rom_func_0025C55C",vram=0x25C55C,size=0x20}]
+
+[[section]]
+name="full_rom_func_0025C57C"
+rom=0x5D17C
+vram=0x25C57C
+size=0x80
+functions=[{name="full_rom_func_0025C57C",vram=0x25C57C,size=0x80}]
+
+[[section]]
+name="full_rom_func_0025C5FC"
+rom=0x5D1FC
+vram=0x25C5FC
+size=0x78
+functions=[{name="full_rom_func_0025C5FC",vram=0x25C5FC,size=0x78}]
+
+[[section]]
+name="full_rom_func_0025C674"
+rom=0x5D274
+vram=0x25C674
+size=0x150
+functions=[{name="full_rom_func_0025C674",vram=0x25C674,size=0x150}]
+
+[[section]]
+name="full_rom_func_0025C7C4"
+rom=0x5D3C4
+vram=0x25C7C4
+size=0x9C
+functions=[{name="full_rom_func_0025C7C4",vram=0x25C7C4,size=0x9C}]
+
+[[section]]
+name="full_rom_func_0025C860"
+rom=0x5D460
+vram=0x25C860
+size=0x10
+functions=[{name="full_rom_func_0025C860",vram=0x25C860,size=0x10}]
+
+[[section]]
+name="full_rom_func_0025C870"
+rom=0x5D470
+vram=0x25C870
+size=0x8
+functions=[{name="full_rom_func_0025C870",vram=0x25C870,size=0x8}]
+
+[[section]]
+name="full_rom_func_0025D1D8"
+rom=0x5DDD8
+vram=0x25D1D8
+size=0x118
+functions=[{name="full_rom_func_0025D1D8",vram=0x25D1D8,size=0x118}]
+
+[[section]]
+name="full_rom_func_0025D2F0"
+rom=0x5DEF0
+vram=0x25D2F0
+size=0x94
+functions=[{name="full_rom_func_0025D2F0",vram=0x25D2F0,size=0x94}]
+
+[[section]]
+name="full_rom_func_0025D384"
+rom=0x5DF84
+vram=0x25D384
+size=0x64
+functions=[{name="full_rom_func_0025D384",vram=0x25D384,size=0x64}]
+
+[[section]]
+name="full_rom_func_0025D9B0"
+rom=0x5E5B0
+vram=0x25D9B0
+size=0xBC
+functions=[{name="full_rom_func_0025D9B0",vram=0x25D9B0,size=0xBC}]
+
+[[section]]
+name="full_rom_func_0025DB20"
+rom=0x5E720
+vram=0x25DB20
+size=0xB4
+functions=[{name="full_rom_func_0025DB20",vram=0x25DB20,size=0xB4}]
+
+[[section]]
+name="full_rom_func_0025DBD4"
+rom=0x5E7D4
+vram=0x25DBD4
+size=0x54
+functions=[{name="full_rom_func_0025DBD4",vram=0x25DBD4,size=0x54}]
+
+[[section]]
+name="full_rom_func_0025DC28"
+rom=0x5E828
+vram=0x25DC28
+size=0xD8
+functions=[{name="full_rom_func_0025DC28",vram=0x25DC28,size=0xD8}]
+
+[[section]]
+name="full_rom_func_0025DD00"
+rom=0x5E900
+vram=0x25DD00
+size=0xCC
+functions=[{name="full_rom_func_0025DD00",vram=0x25DD00,size=0xCC}]
+
+[[section]]
+name="full_rom_func_0025DFEC"
+rom=0x5EBEC
+vram=0x25DFEC
+size=0xA8
+functions=[{name="full_rom_func_0025DFEC",vram=0x25DFEC,size=0xA8}]
+
+[[section]]
+name="full_rom_func_0025E9BC"
+rom=0x5F5BC
+vram=0x25E9BC
+size=0x518
+functions=[{name="full_rom_func_0025E9BC",vram=0x25E9BC,size=0x518}]
+
+[[section]]
+name="full_rom_func_0025F3D4"
+rom=0x5FFD4
+vram=0x25F3D4
+size=0x138
+functions=[{name="full_rom_func_0025F3D4",vram=0x25F3D4,size=0x138}]
+
+[[section]]
+name="full_rom_func_002602DC"
+rom=0x60EDC
+vram=0x2602DC
+size=0x160
+functions=[{name="full_rom_func_002602DC",vram=0x2602DC,size=0x160}]
+
+[[section]]
+name="full_rom_func_0026044C"
+rom=0x6104C
+vram=0x26044C
+size=0xA4
+functions=[{name="full_rom_func_0026044C",vram=0x26044C,size=0xA4}]
+
+[[section]]
+name="full_rom_func_002604F0"
+rom=0x610F0
+vram=0x2604F0
+size=0xE4
+functions=[{name="full_rom_func_002604F0",vram=0x2604F0,size=0xE4}]
+
+[[section]]
+name="full_rom_func_00260624"
+rom=0x61224
+vram=0x260624
+size=0x20
+functions=[{name="full_rom_func_00260624",vram=0x260624,size=0x20}]
+
+[[section]]
+name="full_rom_func_00260644"
+rom=0x61244
+vram=0x260644
+size=0x20
+functions=[{name="full_rom_func_00260644",vram=0x260644,size=0x20}]
+
+[[section]]
+name="full_rom_func_002606C4"
+rom=0x612C4
+vram=0x2606C4
+size=0x94
+functions=[{name="full_rom_func_002606C4",vram=0x2606C4,size=0x94}]
+
+[[section]]
+name="full_rom_func_002607C8"
+rom=0x613C8
+vram=0x2607C8
+size=0xA4
+functions=[{name="full_rom_func_002607C8",vram=0x2607C8,size=0xA4}]
+
+[[section]]
+name="full_rom_func_0026086C"
+rom=0x6146C
+vram=0x26086C
+size=0xE0
+functions=[{name="full_rom_func_0026086C",vram=0x26086C,size=0xE0}]
+
+[[section]]
+name="full_rom_func_0026094C"
+rom=0x6154C
+vram=0x26094C
+size=0xB0
+functions=[{name="full_rom_func_0026094C",vram=0x26094C,size=0xB0}]
+
+[[section]]
+name="full_rom_func_002609FC"
+rom=0x615FC
+vram=0x2609FC
+size=0x124
+functions=[{name="full_rom_func_002609FC",vram=0x2609FC,size=0x124}]
+
+[[section]]
+name="full_rom_func_00260C0C"
+rom=0x6180C
+vram=0x260C0C
+size=0x30
+functions=[{name="full_rom_func_00260C0C",vram=0x260C0C,size=0x30}]
+
+[[section]]
+name="full_rom_func_00260C3C"
+rom=0x6183C
+vram=0x260C3C
+size=0xDC
+functions=[{name="full_rom_func_00260C3C",vram=0x260C3C,size=0xDC}]
+
+[[section]]
+name="full_rom_func_00260D18"
+rom=0x61918
+vram=0x260D18
+size=0x30
+functions=[{name="full_rom_func_00260D18",vram=0x260D18,size=0x30}]
+
+[[section]]
+name="full_rom_func_00260D48"
+rom=0x61948
+vram=0x260D48
+size=0x74
+functions=[{name="full_rom_func_00260D48",vram=0x260D48,size=0x74}]
+
+[[section]]
+name="full_rom_func_00260DBC"
+rom=0x619BC
+vram=0x260DBC
+size=0x30
+functions=[{name="full_rom_func_00260DBC",vram=0x260DBC,size=0x30}]
+
+[[section]]
+name="full_rom_func_00260DEC"
+rom=0x619EC
+vram=0x260DEC
+size=0x80
+functions=[{name="full_rom_func_00260DEC",vram=0x260DEC,size=0x80}]
+
+[[section]]
+name="full_rom_func_00260E6C"
+rom=0x61A6C
+vram=0x260E6C
+size=0x2C
+functions=[{name="full_rom_func_00260E6C",vram=0x260E6C,size=0x2C}]
+
+[[section]]
+name="full_rom_func_00260E98"
+rom=0x61A98
+vram=0x260E98
+size=0xF8
+functions=[{name="full_rom_func_00260E98",vram=0x260E98,size=0xF8}]
+
+[[section]]
+name="full_rom_func_00260F90"
+rom=0x61B90
+vram=0x260F90
+size=0x1C
+functions=[{name="full_rom_func_00260F90",vram=0x260F90,size=0x1C}]
+
+[[section]]
+name="full_rom_func_00260FAC"
+rom=0x61BAC
+vram=0x260FAC
+size=0x70
+functions=[{name="full_rom_func_00260FAC",vram=0x260FAC,size=0x70}]
+
+[[section]]
+name="full_rom_func_0026101C"
+rom=0x61C1C
+vram=0x26101C
+size=0x10
+functions=[{name="full_rom_func_0026101C",vram=0x26101C,size=0x10}]
+
+[[section]]
+name="full_rom_func_00261248"
+rom=0x61E48
+vram=0x261248
+size=0x164
+functions=[{name="full_rom_func_00261248",vram=0x261248,size=0x164}]
+
+[[section]]
+name="full_rom_func_002613AC"
+rom=0x61FAC
+vram=0x2613AC
+size=0xC
+functions=[{name="full_rom_func_002613AC",vram=0x2613AC,size=0xC}]
+
+[[section]]
+name="full_rom_func_002613B8"
+rom=0x61FB8
+vram=0x2613B8
+size=0x134
+functions=[{name="full_rom_func_002613B8",vram=0x2613B8,size=0x134}]
+
+[[section]]
+name="full_rom_func_002624A4"
+rom=0x630A4
+vram=0x2624A4
+size=0x60
+functions=[{name="full_rom_func_002624A4",vram=0x2624A4,size=0x60}]
+
+[[section]]
+name="full_rom_func_00262590"
+rom=0x63190
+vram=0x262590
+size=0xAC
+functions=[{name="full_rom_func_00262590",vram=0x262590,size=0xAC}]
+
+[[section]]
+name="full_rom_func_0026263C"
+rom=0x6323C
+vram=0x26263C
+size=0xF8
+functions=[{name="full_rom_func_0026263C",vram=0x26263C,size=0xF8}]
+
+[[section]]
+name="full_rom_func_00262A3C"
+rom=0x6363C
+vram=0x262A3C
+size=0x1EC
+functions=[{name="full_rom_func_00262A3C",vram=0x262A3C,size=0x1EC}]
+
+[[section]]
+name="full_rom_func_00262F98"
+rom=0x63B98
+vram=0x262F98
+size=0x88
+functions=[{name="full_rom_func_00262F98",vram=0x262F98,size=0x88}]
+
+[[section]]
+name="full_rom_func_00263020"
+rom=0x63C20
+vram=0x263020
+size=0x5C
+functions=[{name="full_rom_func_00263020",vram=0x263020,size=0x5C}]
+
+[[section]]
+name="full_rom_func_0026308C"
+rom=0x63C8C
+vram=0x26308C
+size=0x68
+functions=[{name="full_rom_func_0026308C",vram=0x26308C,size=0x68}]
+
+[[section]]
+name="full_rom_func_0026430C"
+rom=0x64F0C
+vram=0x26430C
+size=0x10
+functions=[{name="full_rom_func_0026430C",vram=0x26430C,size=0x10}]
+
+[[section]]
+name="full_rom_func_00264388"
+rom=0x64F88
+vram=0x264388
+size=0x10
+functions=[{name="full_rom_func_00264388",vram=0x264388,size=0x10}]
+
+[[section]]
+name="full_rom_func_00264398"
+rom=0x64F98
+vram=0x264398
+size=0xC
+functions=[{name="full_rom_func_00264398",vram=0x264398,size=0xC}]
+
+[[section]]
+name="full_rom_func_00264674"
+rom=0x65274
+vram=0x264674
+size=0x54
+functions=[{name="full_rom_func_00264674",vram=0x264674,size=0x54}]
+
+[[section]]
+name="full_rom_func_00264F00"
+rom=0x65B00
+vram=0x264F00
+size=0x250
+functions=[{name="full_rom_func_00264F00",vram=0x264F00,size=0x250}]
+
+[[section]]
+name="full_rom_func_00265150"
+rom=0x65D50
+vram=0x265150
+size=0x194
+functions=[{name="full_rom_func_00265150",vram=0x265150,size=0x194}]
+
+[[section]]
+name="full_rom_func_002655DC"
+rom=0x661DC
+vram=0x2655DC
+size=0x14
+functions=[{name="full_rom_func_002655DC",vram=0x2655DC,size=0x14}]
+
+[[section]]
+name="full_rom_func_0026567C"
+rom=0x6627C
+vram=0x26567C
+size=0x38
+functions=[{name="full_rom_func_0026567C",vram=0x26567C,size=0x38}]
+
+[[section]]
+name="full_rom_func_002657BC"
+rom=0x663BC
+vram=0x2657BC
+size=0x5C
+functions=[{name="full_rom_func_002657BC",vram=0x2657BC,size=0x5C}]
+
+[[section]]
+name="full_rom_func_0026587C"
+rom=0x6647C
+vram=0x26587C
+size=0x8
+functions=[{name="full_rom_func_0026587C",vram=0x26587C,size=0x8}]
+
+[[section]]
+name="full_rom_func_002658A0"
+rom=0x664A0
+vram=0x2658A0
+size=0x1C
+functions=[{name="full_rom_func_002658A0",vram=0x2658A0,size=0x1C}]
+
+[[section]]
+name="full_rom_func_002658DC"
+rom=0x664DC
+vram=0x2658DC
+size=0x28
+functions=[{name="full_rom_func_002658DC",vram=0x2658DC,size=0x28}]
+
+[[section]]
+name="full_rom_func_00267194"
+rom=0x67D94
+vram=0x267194
+size=0x64
+functions=[{name="full_rom_func_00267194",vram=0x267194,size=0x64}]
+
+[[section]]
+name="full_rom_func_002673DC"
+rom=0x67FDC
+vram=0x2673DC
+size=0xE4
+functions=[{name="full_rom_func_002673DC",vram=0x2673DC,size=0xE4}]
+
+[[section]]
+name="full_rom_func_002674C0"
+rom=0x680C0
+vram=0x2674C0
+size=0xA0
+functions=[{name="full_rom_func_002674C0",vram=0x2674C0,size=0xA0}]
+
+[[section]]
+name="full_rom_func_00267560"
+rom=0x68160
+vram=0x267560
+size=0x11C
+functions=[{name="full_rom_func_00267560",vram=0x267560,size=0x11C}]
+
+[[section]]
+name="full_rom_func_0026767C"
+rom=0x6827C
+vram=0x26767C
+size=0x26C
+functions=[{name="full_rom_func_0026767C",vram=0x26767C,size=0x26C}]
+
+[[section]]
+name="full_rom_func_002678E8"
+rom=0x684E8
+vram=0x2678E8
+size=0x210
+functions=[{name="full_rom_func_002678E8",vram=0x2678E8,size=0x210}]
+
+[[section]]
+name="full_rom_func_0026B96C"
+rom=0x6C56C
+vram=0x26B96C
+size=0x274
+functions=[{name="full_rom_func_0026B96C",vram=0x26B96C,size=0x274}]
+
+[[section]]
+name="full_rom_func_0026C8F8"
+rom=0x6D4F8
+vram=0x26C8F8
+size=0x22C
+functions=[{name="full_rom_func_0026C8F8",vram=0x26C8F8,size=0x22C}]
+
+[[section]]
+name="full_rom_func_0026CD98"
+rom=0x6D998
+vram=0x26CD98
+size=0x464
+functions=[{name="full_rom_func_0026CD98",vram=0x26CD98,size=0x464}]
+
+[[section]]
+name="full_rom_func_0026D1FC"
+rom=0x6DDFC
+vram=0x26D1FC
+size=0x274
+functions=[{name="full_rom_func_0026D1FC",vram=0x26D1FC,size=0x274}]
+
+[[section]]
+name="full_rom_func_0026D7B4"
+rom=0x6E3B4
+vram=0x26D7B4
+size=0x8
+functions=[{name="full_rom_func_0026D7B4",vram=0x26D7B4,size=0x8}]
+
+[[section]]
+name="full_rom_func_0026D7BC"
+rom=0x6E3BC
+vram=0x26D7BC
+size=0x8
+functions=[{name="full_rom_func_0026D7BC",vram=0x26D7BC,size=0x8}]
+
+[[section]]
+name="full_rom_func_0026DCD0"
+rom=0x6E8D0
+vram=0x26DCD0
+size=0x1E0
+functions=[{name="full_rom_func_0026DCD0",vram=0x26DCD0,size=0x1E0}]
+
+[[section]]
+name="full_rom_func_0026DED8"
+rom=0x6EAD8
+vram=0x26DED8
+size=0x24
+functions=[{name="full_rom_func_0026DED8",vram=0x26DED8,size=0x24}]
+
+[[section]]
+name="full_rom_func_0026DEFC"
+rom=0x6EAFC
+vram=0x26DEFC
+size=0x1DC
+functions=[{name="full_rom_func_0026DEFC",vram=0x26DEFC,size=0x1DC}]
+
+[[section]]
+name="full_rom_func_0026E2D0"
+rom=0x6EED0
+vram=0x26E2D0
+size=0x28
+functions=[{name="full_rom_func_0026E2D0",vram=0x26E2D0,size=0x28}]
+
+[[section]]
+name="full_rom_func_00270FD8"
+rom=0x71BD8
+vram=0x270FD8
+size=0x260
+functions=[{name="full_rom_func_00270FD8",vram=0x270FD8,size=0x260}]
+
+[[section]]
+name="full_rom_func_00271238"
+rom=0x71E38
+vram=0x271238
+size=0x1E8
+functions=[{name="full_rom_func_00271238",vram=0x271238,size=0x1E8}]
+
+[[section]]
+name="full_rom_func_00271420"
+rom=0x72020
+vram=0x271420
+size=0x1F4
+functions=[{name="full_rom_func_00271420",vram=0x271420,size=0x1F4}]
+
+[[section]]
+name="full_rom_func_00271614"
+rom=0x72214
+vram=0x271614
+size=0x1F4
+functions=[{name="full_rom_func_00271614",vram=0x271614,size=0x1F4}]
+
+[[section]]
+name="full_rom_func_00271C44"
+rom=0x72844
+vram=0x271C44
+size=0x2AC
+functions=[{name="full_rom_func_00271C44",vram=0x271C44,size=0x2AC}]
+
+[[section]]
+name="full_rom_func_00271EF0"
+rom=0x72AF0
+vram=0x271EF0
+size=0x34
+functions=[{name="full_rom_func_00271EF0",vram=0x271EF0,size=0x34}]
+
+[[section]]
+name="full_rom_func_002720F4"
+rom=0x72CF4
+vram=0x2720F4
+size=0x7C
+functions=[{name="full_rom_func_002720F4",vram=0x2720F4,size=0x7C}]
+
+[[section]]
+name="full_rom_func_0027228C"
+rom=0x72E8C
+vram=0x27228C
+size=0x160
+functions=[{name="full_rom_func_0027228C",vram=0x27228C,size=0x160}]
+
+[[section]]
+name="full_rom_func_002725E4"
+rom=0x731E4
+vram=0x2725E4
+size=0x8
+functions=[{name="full_rom_func_002725E4",vram=0x2725E4,size=0x8}]
+
+[[section]]
+name="full_rom_func_00272F94"
+rom=0x73B94
+vram=0x272F94
+size=0x18
+functions=[{name="full_rom_func_00272F94",vram=0x272F94,size=0x18}]
+
+[[section]]
+name="full_rom_func_00273030"
+rom=0x73C30
+vram=0x273030
+size=0xCC
+functions=[{name="full_rom_func_00273030",vram=0x273030,size=0xCC}]
+
+[[section]]
+name="full_rom_func_002734E8"
+rom=0x740E8
+vram=0x2734E8
+size=0xB0
+functions=[{name="full_rom_func_002734E8",vram=0x2734E8,size=0xB0}]
+
+[[section]]
+name="full_rom_func_00273D90"
+rom=0x74990
+vram=0x273D90
+size=0x80
+functions=[{name="full_rom_func_00273D90",vram=0x273D90,size=0x80}]
+
+[[section]]
+name="full_rom_func_00273E10"
+rom=0x74A10
+vram=0x273E10
+size=0x44
+functions=[{name="full_rom_func_00273E10",vram=0x273E10,size=0x44}]
+
+[[section]]
+name="full_rom_func_00273E54"
+rom=0x74A54
+vram=0x273E54
+size=0x80
+functions=[{name="full_rom_func_00273E54",vram=0x273E54,size=0x80}]
+
+[[section]]
+name="full_rom_func_00274308"
+rom=0x74F08
+vram=0x274308
+size=0x68
+functions=[{name="full_rom_func_00274308",vram=0x274308,size=0x68}]
+
+[[section]]
+name="full_rom_func_0027449C"
+rom=0x7509C
+vram=0x27449C
+size=0x8
+functions=[{name="full_rom_func_0027449C",vram=0x27449C,size=0x8}]
+
+[[section]]
+name="full_rom_func_002744A4"
+rom=0x750A4
+vram=0x2744A4
+size=0x20
+functions=[{name="full_rom_func_002744A4",vram=0x2744A4,size=0x20}]
+
+[[section]]
+name="full_rom_func_002748E4"
+rom=0x754E4
+vram=0x2748E4
+size=0x50
+functions=[{name="full_rom_func_002748E4",vram=0x2748E4,size=0x50}]
+
+[[section]]
+name="full_rom_func_00274934"
+rom=0x75534
+vram=0x274934
+size=0x70
+functions=[{name="full_rom_func_00274934",vram=0x274934,size=0x70}]
+
+[[section]]
+name="full_rom_func_002749A4"
+rom=0x755A4
+vram=0x2749A4
+size=0xDC
+functions=[{name="full_rom_func_002749A4",vram=0x2749A4,size=0xDC}]
+
+[[section]]
+name="full_rom_func_00274B34"
+rom=0x75734
+vram=0x274B34
+size=0x38
+functions=[{name="full_rom_func_00274B34",vram=0x274B34,size=0x38}]
+
+[[section]]
+name="full_rom_func_00274B6C"
+rom=0x7576C
+vram=0x274B6C
+size=0x78
+functions=[{name="full_rom_func_00274B6C",vram=0x274B6C,size=0x78}]
+
+[[section]]
+name="full_rom_func_00274BE4"
+rom=0x757E4
+vram=0x274BE4
+size=0x88
+functions=[{name="full_rom_func_00274BE4",vram=0x274BE4,size=0x88}]
+
+[[section]]
+name="full_rom_func_00274C6C"
+rom=0x7586C
+vram=0x274C6C
+size=0x94
+functions=[{name="full_rom_func_00274C6C",vram=0x274C6C,size=0x94}]
+
+[[section]]
+name="full_rom_func_00274D00"
+rom=0x75900
+vram=0x274D00
+size=0x7C
+functions=[{name="full_rom_func_00274D00",vram=0x274D00,size=0x7C}]
+
+[[section]]
+name="full_rom_func_00274D7C"
+rom=0x7597C
+vram=0x274D7C
+size=0x70
+functions=[{name="full_rom_func_00274D7C",vram=0x274D7C,size=0x70}]
+
+[[section]]
+name="full_rom_func_00274DEC"
+rom=0x759EC
+vram=0x274DEC
+size=0x2B4
+functions=[{name="full_rom_func_00274DEC",vram=0x274DEC,size=0x2B4}]
+
+[[section]]
+name="full_rom_func_00275F18"
+rom=0x76B18
+vram=0x275F18
+size=0x12C
+functions=[{name="full_rom_func_00275F18",vram=0x275F18,size=0x12C}]
+
+[[section]]
+name="full_rom_func_002763FC"
+rom=0x76FFC
+vram=0x2763FC
+size=0xC8
+functions=[{name="full_rom_func_002763FC",vram=0x2763FC,size=0xC8}]
+
+[[section]]
+name="full_rom_func_002764C4"
+rom=0x770C4
+vram=0x2764C4
+size=0x3C
+functions=[{name="full_rom_func_002764C4",vram=0x2764C4,size=0x3C}]
+
+[[section]]
+name="full_rom_func_00276500"
+rom=0x77100
+vram=0x276500
+size=0x98
+functions=[{name="full_rom_func_00276500",vram=0x276500,size=0x98}]
+
+[[section]]
+name="full_rom_func_002789F8"
+rom=0x795F8
+vram=0x2789F8
+size=0xB4
+functions=[{name="full_rom_func_002789F8",vram=0x2789F8,size=0xB4}]
+
+[[section]]
+name="full_rom_func_00278AAC"
+rom=0x796AC
+vram=0x278AAC
+size=0x80
+functions=[{name="full_rom_func_00278AAC",vram=0x278AAC,size=0x80}]
+
+[[section]]
+name="full_rom_func_00278B2C"
+rom=0x7972C
+vram=0x278B2C
+size=0xD0
+functions=[{name="full_rom_func_00278B2C",vram=0x278B2C,size=0xD0}]
+
+[[section]]
+name="full_rom_func_002794B0"
+rom=0x7A0B0
+vram=0x2794B0
+size=0x48
+functions=[{name="full_rom_func_002794B0",vram=0x2794B0,size=0x48}]
+
+[[section]]
+name="full_rom_func_0027FEAC"
+rom=0x80AAC
+vram=0x27FEAC
+size=0x168
+functions=[{name="full_rom_func_0027FEAC",vram=0x27FEAC,size=0x168}]
+
+[[section]]
+name="full_rom_func_00283330"
+rom=0x83F30
+vram=0x283330
+size=0x48
+functions=[{name="full_rom_func_00283330",vram=0x283330,size=0x48}]
+
+[[section]]
+name="full_rom_func_00283378"
+rom=0x83F78
+vram=0x283378
+size=0x24
+functions=[{name="full_rom_func_00283378",vram=0x283378,size=0x24}]
+
+[[section]]
+name="full_rom_func_0028339C"
+rom=0x83F9C
+vram=0x28339C
+size=0x38
+functions=[{name="full_rom_func_0028339C",vram=0x28339C,size=0x38}]
+
+[[section]]
+name="full_rom_func_002833D4"
+rom=0x83FD4
+vram=0x2833D4
+size=0x128
+functions=[{name="full_rom_func_002833D4",vram=0x2833D4,size=0x128}]
+
+[[section]]
+name="full_rom_func_002834FC"
+rom=0x840FC
+vram=0x2834FC
+size=0x128
+functions=[{name="full_rom_func_002834FC",vram=0x2834FC,size=0x128}]
+
+[[section]]
+name="full_rom_func_00283624"
+rom=0x84224
+vram=0x283624
+size=0x128
+functions=[{name="full_rom_func_00283624",vram=0x283624,size=0x128}]
+
+[[section]]
+name="full_rom_func_0028374C"
+rom=0x8434C
+vram=0x28374C
+size=0x128
+functions=[{name="full_rom_func_0028374C",vram=0x28374C,size=0x128}]
+
+[[section]]
+name="full_rom_func_00283874"
+rom=0x84474
+vram=0x283874
+size=0xFC
+functions=[{name="full_rom_func_00283874",vram=0x283874,size=0xFC}]
+
+[[section]]
+name="full_rom_func_00283970"
+rom=0x84570
+vram=0x283970
+size=0x200
+functions=[{name="full_rom_func_00283970",vram=0x283970,size=0x200}]
+
+[[section]]
+name="full_rom_func_00283B70"
+rom=0x84770
+vram=0x283B70
+size=0x11C
+functions=[{name="full_rom_func_00283B70",vram=0x283B70,size=0x11C}]
+
+[[section]]
+name="full_rom_func_00283C8C"
+rom=0x8488C
+vram=0x283C8C
+size=0x18
+functions=[{name="full_rom_func_00283C8C",vram=0x283C8C,size=0x18}]
+
+[[section]]
+name="full_rom_func_00283FD4"
+rom=0x84BD4
+vram=0x283FD4
+size=0x10
+functions=[{name="full_rom_func_00283FD4",vram=0x283FD4,size=0x10}]
+
+[[section]]
+name="full_rom_func_00283FE4"
+rom=0x84BE4
+vram=0x283FE4
+size=0xE8
+functions=[{name="full_rom_func_00283FE4",vram=0x283FE4,size=0xE8}]
+
+[[section]]
+name="full_rom_func_002843CC"
+rom=0x84FCC
+vram=0x2843CC
+size=0xF8
+functions=[{name="full_rom_func_002843CC",vram=0x2843CC,size=0xF8}]
+
+[[section]]
+name="full_rom_func_002845C0"
+rom=0x851C0
+vram=0x2845C0
+size=0x5C
+functions=[{name="full_rom_func_002845C0",vram=0x2845C0,size=0x5C}]
+
+[[section]]
+name="full_rom_func_0028461C"
+rom=0x8521C
+vram=0x28461C
+size=0x90
+functions=[{name="full_rom_func_0028461C",vram=0x28461C,size=0x90}]
+
+[[section]]
+name="full_rom_func_002846AC"
+rom=0x852AC
+vram=0x2846AC
+size=0xB4
+functions=[{name="full_rom_func_002846AC",vram=0x2846AC,size=0xB4}]
+
+[[section]]
+name="full_rom_func_00284760"
+rom=0x85360
+vram=0x284760
+size=0x64
+functions=[{name="full_rom_func_00284760",vram=0x284760,size=0x64}]
+
+[[section]]
+name="full_rom_func_002847C4"
+rom=0x853C4
+vram=0x2847C4
+size=0x2C
+functions=[{name="full_rom_func_002847C4",vram=0x2847C4,size=0x2C}]
+
+[[section]]
+name="full_rom_func_002847F0"
+rom=0x853F0
+vram=0x2847F0
+size=0x20
+functions=[{name="full_rom_func_002847F0",vram=0x2847F0,size=0x20}]
+
+[[section]]
+name="full_rom_func_00284810"
+rom=0x85410
+vram=0x284810
+size=0x20
+functions=[{name="full_rom_func_00284810",vram=0x284810,size=0x20}]
+
+[[section]]
+name="full_rom_func_00284830"
+rom=0x85430
+vram=0x284830
+size=0x4C
+functions=[{name="full_rom_func_00284830",vram=0x284830,size=0x4C}]
+
+[[section]]
+name="full_rom_func_0028487C"
+rom=0x8547C
+vram=0x28487C
+size=0x84
+functions=[{name="full_rom_func_0028487C",vram=0x28487C,size=0x84}]
+
+[[section]]
+name="full_rom_func_00284900"
+rom=0x85500
+vram=0x284900
+size=0x44
+functions=[{name="full_rom_func_00284900",vram=0x284900,size=0x44}]
+
+[[section]]
+name="full_rom_func_00284944"
+rom=0x85544
+vram=0x284944
+size=0x130
+functions=[{name="full_rom_func_00284944",vram=0x284944,size=0x130}]
+
+[[section]]
+name="full_rom_func_00284A74"
+rom=0x85674
+vram=0x284A74
+size=0x128
+functions=[{name="full_rom_func_00284A74",vram=0x284A74,size=0x128}]
+
+[[section]]
+name="full_rom_func_00284B9C"
+rom=0x8579C
+vram=0x284B9C
+size=0x17C
+functions=[{name="full_rom_func_00284B9C",vram=0x284B9C,size=0x17C}]
+
+[[section]]
+name="full_rom_func_00284D18"
+rom=0x85918
+vram=0x284D18
+size=0xD8
+functions=[{name="full_rom_func_00284D18",vram=0x284D18,size=0xD8}]
+
+[[section]]
+name="full_rom_func_00284DF0"
+rom=0x859F0
+vram=0x284DF0
+size=0x158
+functions=[{name="full_rom_func_00284DF0",vram=0x284DF0,size=0x158}]
+
+[[section]]
+name="full_rom_func_00285800"
+rom=0x86400
+vram=0x285800
+size=0xB0
+functions=[{name="full_rom_func_00285800",vram=0x285800,size=0xB0}]
+
+[[section]]
+name="full_rom_func_002858B0"
+rom=0x864B0
+vram=0x2858B0
+size=0x14
+functions=[{name="full_rom_func_002858B0",vram=0x2858B0,size=0x14}]
+
+[[section]]
+name="full_rom_func_002858CC"
+rom=0x864CC
+vram=0x2858CC
+size=0x54
+functions=[{name="full_rom_func_002858CC",vram=0x2858CC,size=0x54}]
+
+[[section]]
+name="full_rom_func_00285920"
+rom=0x86520
+vram=0x285920
+size=0xF4
+functions=[{name="full_rom_func_00285920",vram=0x285920,size=0xF4}]
+
+[[section]]
+name="full_rom_func_0028B334"
+rom=0x8BF34
+vram=0x28B334
+size=0xE4
+functions=[{name="full_rom_func_0028B334",vram=0x28B334,size=0xE4}]
+
+[[section]]
+name="full_rom_func_0028B418"
+rom=0x8C018
+vram=0x28B418
+size=0x8
+functions=[{name="full_rom_func_0028B418",vram=0x28B418,size=0x8}]
+
+[[section]]
+name="full_rom_func_0028B420"
+rom=0x8C020
+vram=0x28B420
+size=0xF0
+functions=[{name="full_rom_func_0028B420",vram=0x28B420,size=0xF0}]
+
+[[section]]
+name="full_rom_func_0028B510"
+rom=0x8C110
+vram=0x28B510
+size=0xB0
+functions=[{name="full_rom_func_0028B510",vram=0x28B510,size=0xB0}]
+
+[[section]]
+name="full_rom_func_0028B704"
+rom=0x8C304
+vram=0x28B704
+size=0xE4
+functions=[{name="full_rom_func_0028B704",vram=0x28B704,size=0xE4}]
+
+[[section]]
+name="full_rom_func_0028B8D8"
+rom=0x8C4D8
+vram=0x28B8D8
+size=0xB0
+functions=[{name="full_rom_func_0028B8D8",vram=0x28B8D8,size=0xB0}]
+
+[[section]]
+name="full_rom_func_0028B988"
+rom=0x8C588
+vram=0x28B988
+size=0xE4
+functions=[{name="full_rom_func_0028B988",vram=0x28B988,size=0xE4}]
+
+[[section]]
+name="full_rom_func_0028BC0C"
+rom=0x8C80C
+vram=0x28BC0C
+size=0x90
+functions=[{name="full_rom_func_0028BC0C",vram=0x28BC0C,size=0x90}]
+
+[[section]]
+name="full_rom_func_0028BD58"
+rom=0x8C958
+vram=0x28BD58
+size=0xA4
+functions=[{name="full_rom_func_0028BD58",vram=0x28BD58,size=0xA4}]
+
+[[section]]
+name="full_rom_func_0028BF28"
+rom=0x8CB28
+vram=0x28BF28
+size=0x78
+functions=[{name="full_rom_func_0028BF28",vram=0x28BF28,size=0x78}]
+
+[[section]]
+name="full_rom_func_0028C058"
+rom=0x8CC58
+vram=0x28C058
+size=0x54
+functions=[{name="full_rom_func_0028C058",vram=0x28C058,size=0x54}]
+
+[[section]]
+name="full_rom_func_0028C730"
+rom=0x8D330
+vram=0x28C730
+size=0x54
+functions=[{name="full_rom_func_0028C730",vram=0x28C730,size=0x54}]
+
+[[section]]
+name="full_rom_func_0028C784"
+rom=0x8D384
+vram=0x28C784
+size=0x100
+functions=[{name="full_rom_func_0028C784",vram=0x28C784,size=0x100}]
+
+[[section]]
+name="full_rom_func_0028CA30"
+rom=0x8D630
+vram=0x28CA30
+size=0xD0
+functions=[{name="full_rom_func_0028CA30",vram=0x28CA30,size=0xD0}]
+
+[[section]]
+name="full_rom_func_0028CB00"
+rom=0x8D700
+vram=0x28CB00
+size=0x84
+functions=[{name="full_rom_func_0028CB00",vram=0x28CB00,size=0x84}]
+
+[[section]]
+name="full_rom_func_0028CB84"
+rom=0x8D784
+vram=0x28CB84
+size=0x70
+functions=[{name="full_rom_func_0028CB84",vram=0x28CB84,size=0x70}]
+
+[[section]]
+name="full_rom_func_0028CBF4"
+rom=0x8D7F4
+vram=0x28CBF4
+size=0x38
+functions=[{name="full_rom_func_0028CBF4",vram=0x28CBF4,size=0x38}]
+
+[[section]]
+name="full_rom_func_0028CC2C"
+rom=0x8D82C
+vram=0x28CC2C
+size=0x8C
+functions=[{name="full_rom_func_0028CC2C",vram=0x28CC2C,size=0x8C}]
+
+[[section]]
+name="full_rom_func_0028CCB8"
+rom=0x8D8B8
+vram=0x28CCB8
+size=0x88
+functions=[{name="full_rom_func_0028CCB8",vram=0x28CCB8,size=0x88}]
+
+[[section]]
+name="full_rom_func_0028CD40"
+rom=0x8D940
+vram=0x28CD40
+size=0x88
+functions=[{name="full_rom_func_0028CD40",vram=0x28CD40,size=0x88}]
+
+[[section]]
+name="full_rom_func_0028CFA0"
+rom=0x8DBA0
+vram=0x28CFA0
+size=0xB8
+functions=[{name="full_rom_func_0028CFA0",vram=0x28CFA0,size=0xB8}]
+
+[[section]]
+name="full_rom_func_0028D594"
+rom=0x8E194
+vram=0x28D594
+size=0x8
+functions=[{name="full_rom_func_0028D594",vram=0x28D594,size=0x8}]
+
+[[section]]
+name="full_rom_func_0028D69C"
+rom=0x8E29C
+vram=0x28D69C
+size=0x78
+functions=[{name="full_rom_func_0028D69C",vram=0x28D69C,size=0x78}]
+
+[[section]]
+name="full_rom_func_0028D714"
+rom=0x8E314
+vram=0x28D714
+size=0xC4
+functions=[{name="full_rom_func_0028D714",vram=0x28D714,size=0xC4}]
+
+[[section]]
+name="full_rom_func_0028D8B4"
+rom=0x8E4B4
+vram=0x28D8B4
+size=0x110
+functions=[{name="full_rom_func_0028D8B4",vram=0x28D8B4,size=0x110}]
+
+[[section]]
+name="full_rom_func_0028DA04"
+rom=0x8E604
+vram=0x28DA04
+size=0x88
+functions=[{name="full_rom_func_0028DA04",vram=0x28DA04,size=0x88}]
+
+[[section]]
+name="full_rom_func_0028DA8C"
+rom=0x8E68C
+vram=0x28DA8C
+size=0x100
+functions=[{name="full_rom_func_0028DA8C",vram=0x28DA8C,size=0x100}]
+
+[[section]]
+name="full_rom_func_0028DB8C"
+rom=0x8E78C
+vram=0x28DB8C
+size=0xC4
+functions=[{name="full_rom_func_0028DB8C",vram=0x28DB8C,size=0xC4}]
+
+[[section]]
+name="full_rom_func_0028DC50"
+rom=0x8E850
+vram=0x28DC50
+size=0xA4
+functions=[{name="full_rom_func_0028DC50",vram=0x28DC50,size=0xA4}]
+
+[[section]]
+name="full_rom_func_0028DCF4"
+rom=0x8E8F4
+vram=0x28DCF4
+size=0xA4
+functions=[{name="full_rom_func_0028DCF4",vram=0x28DCF4,size=0xA4}]
+
+[[section]]
+name="full_rom_func_0028DD98"
+rom=0x8E998
+vram=0x28DD98
+size=0xA4
+functions=[{name="full_rom_func_0028DD98",vram=0x28DD98,size=0xA4}]
+
+[[section]]
+name="full_rom_func_0028DE3C"
+rom=0x8EA3C
+vram=0x28DE3C
+size=0xA4
+functions=[{name="full_rom_func_0028DE3C",vram=0x28DE3C,size=0xA4}]
+
+[[section]]
+name="full_rom_func_0028DEE0"
+rom=0x8EAE0
+vram=0x28DEE0
+size=0x54
+functions=[{name="full_rom_func_0028DEE0",vram=0x28DEE0,size=0x54}]
+
+[[section]]
+name="full_rom_func_0028DF70"
+rom=0x8EB70
+vram=0x28DF70
+size=0x24
+functions=[{name="full_rom_func_0028DF70",vram=0x28DF70,size=0x24}]
+
+[[section]]
+name="full_rom_func_0028DFB8"
+rom=0x8EBB8
+vram=0x28DFB8
+size=0xA0
+functions=[{name="full_rom_func_0028DFB8",vram=0x28DFB8,size=0xA0}]
+
+[[section]]
+name="full_rom_func_0028E058"
+rom=0x8EC58
+vram=0x28E058
+size=0x17C
+functions=[{name="full_rom_func_0028E058",vram=0x28E058,size=0x17C}]
+
+[[section]]
+name="full_rom_func_0028E1D4"
+rom=0x8EDD4
+vram=0x28E1D4
+size=0x10C
+functions=[{name="full_rom_func_0028E1D4",vram=0x28E1D4,size=0x10C}]
+
+[[section]]
+name="full_rom_func_0028E2E0"
+rom=0x8EEE0
+vram=0x28E2E0
+size=0x114
+functions=[{name="full_rom_func_0028E2E0",vram=0x28E2E0,size=0x114}]
+
+[[section]]
+name="full_rom_func_0028E64C"
+rom=0x8F24C
+vram=0x28E64C
+size=0x74
+functions=[{name="full_rom_func_0028E64C",vram=0x28E64C,size=0x74}]
+
+[[section]]
+name="full_rom_func_0028E6C0"
+rom=0x8F2C0
+vram=0x28E6C0
+size=0x1C
+functions=[{name="full_rom_func_0028E6C0",vram=0x28E6C0,size=0x1C}]
+
+[[section]]
+name="full_rom_func_0028E6DC"
+rom=0x8F2DC
+vram=0x28E6DC
+size=0xD4
+functions=[{name="full_rom_func_0028E6DC",vram=0x28E6DC,size=0xD4}]
+
+[[section]]
+name="full_rom_func_0028E7B0"
+rom=0x8F3B0
+vram=0x28E7B0
+size=0xD0
+functions=[{name="full_rom_func_0028E7B0",vram=0x28E7B0,size=0xD0}]
+
+[[section]]
+name="full_rom_func_0028F7CC"
+rom=0x903CC
+vram=0x28F7CC
+size=0x90
+functions=[{name="full_rom_func_0028F7CC",vram=0x28F7CC,size=0x90}]
+
+[[section]]
+name="full_rom_func_0028F85C"
+rom=0x9045C
+vram=0x28F85C
+size=0x8
+functions=[{name="full_rom_func_0028F85C",vram=0x28F85C,size=0x8}]
+
+[[section]]
+name="full_rom_func_0028F8BC"
+rom=0x904BC
+vram=0x28F8BC
+size=0x60
+functions=[{name="full_rom_func_0028F8BC",vram=0x28F8BC,size=0x60}]
+
+[[section]]
+name="full_rom_func_0028FC54"
+rom=0x90854
+vram=0x28FC54
+size=0x8
+functions=[{name="full_rom_func_0028FC54",vram=0x28FC54,size=0x8}]
+
+[[section]]
+name="full_rom_func_0028FD7C"
+rom=0x9097C
+vram=0x28FD7C
+size=0x30
+functions=[{name="full_rom_func_0028FD7C",vram=0x28FD7C,size=0x30}]
+
+[[section]]
+name="full_rom_func_0028FDE0"
+rom=0x909E0
+vram=0x28FDE0
+size=0x20
+functions=[{name="full_rom_func_0028FDE0",vram=0x28FDE0,size=0x20}]
+
+[[section]]
+name="full_rom_func_0028FE00"
+rom=0x90A00
+vram=0x28FE00
+size=0x1C
+functions=[{name="full_rom_func_0028FE00",vram=0x28FE00,size=0x1C}]
+
+[[section]]
+name="full_rom_func_002907D0"
+rom=0x913D0
+vram=0x2907D0
+size=0x90
+functions=[{name="full_rom_func_002907D0",vram=0x2907D0,size=0x90}]
+
+[[section]]
+name="full_rom_func_00290924"
+rom=0x91524
+vram=0x290924
+size=0x34
+functions=[{name="full_rom_func_00290924",vram=0x290924,size=0x34}]
+
+[[section]]
+name="full_rom_func_00295EB4"
+rom=0x96AB4
+vram=0x295EB4
+size=0x80
+functions=[{name="full_rom_func_00295EB4",vram=0x295EB4,size=0x80}]
+
+[[section]]
+name="full_rom_func_002961E8"
+rom=0x96DE8
+vram=0x2961E8
+size=0xE8
+functions=[{name="full_rom_func_002961E8",vram=0x2961E8,size=0xE8}]
+
+[[section]]
+name="full_rom_func_002963B4"
+rom=0x96FB4
+vram=0x2963B4
+size=0x104
+functions=[{name="full_rom_func_002963B4",vram=0x2963B4,size=0x104}]
+
+[[section]]
+name="full_rom_func_002964B8"
+rom=0x970B8
+vram=0x2964B8
+size=0x38
+functions=[{name="full_rom_func_002964B8",vram=0x2964B8,size=0x38}]
+
+[[section]]
+name="full_rom_func_002967B8"
+rom=0x973B8
+vram=0x2967B8
+size=0xB8
+functions=[{name="full_rom_func_002967B8",vram=0x2967B8,size=0xB8}]
+
+[[section]]
+name="full_rom_func_002968F0"
+rom=0x974F0
+vram=0x2968F0
+size=0x38
+functions=[{name="full_rom_func_002968F0",vram=0x2968F0,size=0x38}]
+
+[[section]]
+name="full_rom_func_00296988"
+rom=0x97588
+vram=0x296988
+size=0x8C
+functions=[{name="full_rom_func_00296988",vram=0x296988,size=0x8C}]
+
+[[section]]
+name="full_rom_func_00296A14"
+rom=0x97614
+vram=0x296A14
+size=0xA0
+functions=[{name="full_rom_func_00296A14",vram=0x296A14,size=0xA0}]
+
+[[section]]
+name="full_rom_func_00299490"
+rom=0x9A090
+vram=0x299490
+size=0x3C
+functions=[{name="full_rom_func_00299490",vram=0x299490,size=0x3C}]
+
+[[section]]
+name="full_rom_func_002994CC"
+rom=0x9A0CC
+vram=0x2994CC
+size=0x38
+functions=[{name="full_rom_func_002994CC",vram=0x2994CC,size=0x38}]
+
+[[section]]
+name="full_rom_func_00299504"
+rom=0x9A104
+vram=0x299504
+size=0x10
+functions=[{name="full_rom_func_00299504",vram=0x299504,size=0x10}]
+
+[[section]]
+name="full_rom_func_00299690"
+rom=0x9A290
+vram=0x299690
+size=0x28
+functions=[{name="full_rom_func_00299690",vram=0x299690,size=0x28}]
+
+[[section]]
+name="full_rom_func_002996B8"
+rom=0x9A2B8
+vram=0x2996B8
+size=0x6C
+functions=[{name="full_rom_func_002996B8",vram=0x2996B8,size=0x6C}]
+
+[[section]]
+name="full_rom_func_002997B4"
+rom=0x9A3B4
+vram=0x2997B4
+size=0x34
+functions=[{name="full_rom_func_002997B4",vram=0x2997B4,size=0x34}]
+
+[[section]]
+name="full_rom_func_00299820"
+rom=0x9A420
+vram=0x299820
+size=0x78
+functions=[{name="full_rom_func_00299820",vram=0x299820,size=0x78}]
+
+[[section]]
+name="full_rom_func_00299920"
+rom=0x9A520
+vram=0x299920
+size=0x14
+functions=[{name="full_rom_func_00299920",vram=0x299920,size=0x14}]
+
+[[section]]
+name="full_rom_func_00299988"
+rom=0x9A588
+vram=0x299988
+size=0x14
+functions=[{name="full_rom_func_00299988",vram=0x299988,size=0x14}]
+
+[[section]]
+name="full_rom_func_0029999C"
+rom=0x9A59C
+vram=0x29999C
+size=0x24
+functions=[{name="full_rom_func_0029999C",vram=0x29999C,size=0x24}]
+
+[[section]]
+name="full_rom_func_00299A7C"
+rom=0x9A67C
+vram=0x299A7C
+size=0x10
+functions=[{name="full_rom_func_00299A7C",vram=0x299A7C,size=0x10}]
+
+[[section]]
+name="full_rom_func_00299AA0"
+rom=0x9A6A0
+vram=0x299AA0
+size=0x14
+functions=[{name="full_rom_func_00299AA0",vram=0x299AA0,size=0x14}]
+
+[[section]]
+name="full_rom_func_00299AB4"
+rom=0x9A6B4
+vram=0x299AB4
+size=0x78
+functions=[{name="full_rom_func_00299AB4",vram=0x299AB4,size=0x78}]
+
+[[section]]
+name="full_rom_func_00299B2C"
+rom=0x9A72C
+vram=0x299B2C
+size=0x4C
+functions=[{name="full_rom_func_00299B2C",vram=0x299B2C,size=0x4C}]
+
+[[section]]
+name="full_rom_func_00299B78"
+rom=0x9A778
+vram=0x299B78
+size=0x48
+functions=[{name="full_rom_func_00299B78",vram=0x299B78,size=0x48}]
+
+[[section]]
+name="full_rom_func_0029A964"
+rom=0x9B564
+vram=0x29A964
+size=0x10
+functions=[{name="full_rom_func_0029A964",vram=0x29A964,size=0x10}]
+
+[[section]]
+name="full_rom_func_0029AAE0"
+rom=0x9B6E0
+vram=0x29AAE0
+size=0x198
+functions=[{name="full_rom_func_0029AAE0",vram=0x29AAE0,size=0x198}]
+
+[[section]]
+name="full_rom_func_0029AC78"
+rom=0x9B878
+vram=0x29AC78
+size=0x16C
+functions=[{name="full_rom_func_0029AC78",vram=0x29AC78,size=0x16C}]
+
+[[section]]
+name="full_rom_func_0029ADE4"
+rom=0x9B9E4
+vram=0x29ADE4
+size=0x3D4
+functions=[{name="full_rom_func_0029ADE4",vram=0x29ADE4,size=0x3D4}]
+
+[[section]]
+name="full_rom_func_0029B300"
+rom=0x9BF00
+vram=0x29B300
+size=0x18C
+functions=[{name="full_rom_func_0029B300",vram=0x29B300,size=0x18C}]
+
+[[section]]
+name="full_rom_func_0029B48C"
+rom=0x9C08C
+vram=0x29B48C
+size=0x194
+functions=[{name="full_rom_func_0029B48C",vram=0x29B48C,size=0x194}]
+
+[[section]]
+name="full_rom_func_0029B620"
+rom=0x9C220
+vram=0x29B620
+size=0x188
+functions=[{name="full_rom_func_0029B620",vram=0x29B620,size=0x188}]
+
+[[section]]
+name="full_rom_func_0029B7A8"
+rom=0x9C3A8
+vram=0x29B7A8
+size=0x194
+functions=[{name="full_rom_func_0029B7A8",vram=0x29B7A8,size=0x194}]
+
+[[section]]
+name="full_rom_func_0029BD2C"
+rom=0x9C92C
+vram=0x29BD2C
+size=0x258
+functions=[{name="full_rom_func_0029BD2C",vram=0x29BD2C,size=0x258}]
+
+[[section]]
+name="full_rom_func_0029C1C8"
+rom=0x9CDC8
+vram=0x29C1C8
+size=0x218
+functions=[{name="full_rom_func_0029C1C8",vram=0x29C1C8,size=0x218}]
+
+[[section]]
+name="full_rom_func_0029C3E0"
+rom=0x9CFE0
+vram=0x29C3E0
+size=0x208
+functions=[{name="full_rom_func_0029C3E0",vram=0x29C3E0,size=0x208}]
+
+[[section]]
+name="full_rom_func_0029C8C4"
+rom=0x9D4C4
+vram=0x29C8C4
+size=0x130
+functions=[{name="full_rom_func_0029C8C4",vram=0x29C8C4,size=0x130}]
+
+[[section]]
+name="full_rom_func_0029C9F4"
+rom=0x9D5F4
+vram=0x29C9F4
+size=0x1BC
+functions=[{name="full_rom_func_0029C9F4",vram=0x29C9F4,size=0x1BC}]
+
+[[section]]
+name="full_rom_func_0029CBB0"
+rom=0x9D7B0
+vram=0x29CBB0
+size=0x1CC
+functions=[{name="full_rom_func_0029CBB0",vram=0x29CBB0,size=0x1CC}]
+
+[[section]]
+name="full_rom_func_0029CF40"
+rom=0x9DB40
+vram=0x29CF40
+size=0x248
+functions=[{name="full_rom_func_0029CF40",vram=0x29CF40,size=0x248}]
+
+[[section]]
+name="full_rom_func_0029D188"
+rom=0x9DD88
+vram=0x29D188
+size=0x2C8
+functions=[{name="full_rom_func_0029D188",vram=0x29D188,size=0x2C8}]
+
+[[section]]
+name="full_rom_func_0029D450"
+rom=0x9E050
+vram=0x29D450
+size=0x390
+functions=[{name="full_rom_func_0029D450",vram=0x29D450,size=0x390}]
+
+[[section]]
+name="full_rom_func_0029D7F0"
+rom=0x9E3F0
+vram=0x29D7F0
+size=0xC
+functions=[{name="full_rom_func_0029D7F0",vram=0x29D7F0,size=0xC}]
+
+[[section]]
+name="full_rom_func_0029D7FC"
+rom=0x9E3FC
+vram=0x29D7FC
+size=0x2C
+functions=[{name="full_rom_func_0029D7FC",vram=0x29D7FC,size=0x2C}]
+
+[[section]]
+name="full_rom_func_0029D828"
+rom=0x9E428
+vram=0x29D828
+size=0x3C
+functions=[{name="full_rom_func_0029D828",vram=0x29D828,size=0x3C}]
+
+[[section]]
+name="full_rom_func_0029D864"
+rom=0x9E464
+vram=0x29D864
+size=0x40
+functions=[{name="full_rom_func_0029D864",vram=0x29D864,size=0x40}]
+
+[[section]]
+name="full_rom_func_0029D8A4"
+rom=0x9E4A4
+vram=0x29D8A4
+size=0x78
+functions=[{name="full_rom_func_0029D8A4",vram=0x29D8A4,size=0x78}]
+
+[[section]]
+name="full_rom_func_0029DA74"
+rom=0x9E674
+vram=0x29DA74
+size=0x24
+functions=[{name="full_rom_func_0029DA74",vram=0x29DA74,size=0x24}]
+
+[[section]]
+name="full_rom_func_0029DAB4"
+rom=0x9E6B4
+vram=0x29DAB4
+size=0x28
+functions=[{name="full_rom_func_0029DAB4",vram=0x29DAB4,size=0x28}]
+
+[[section]]
+name="full_rom_func_0029DADC"
+rom=0x9E6DC
+vram=0x29DADC
+size=0x114
+functions=[{name="full_rom_func_0029DADC",vram=0x29DADC,size=0x114}]
+
+[[section]]
+name="full_rom_func_0029DBF0"
+rom=0x9E7F0
+vram=0x29DBF0
+size=0x68
+functions=[{name="full_rom_func_0029DBF0",vram=0x29DBF0,size=0x68}]
+
+[[section]]
+name="full_rom_func_0029DC58"
+rom=0x9E858
+vram=0x29DC58
+size=0x24
+functions=[{name="full_rom_func_0029DC58",vram=0x29DC58,size=0x24}]
+
+[[section]]
+name="full_rom_func_0029DCB8"
+rom=0x9E8B8
+vram=0x29DCB8
+size=0xD0
+functions=[{name="full_rom_func_0029DCB8",vram=0x29DCB8,size=0xD0}]
+
+[[section]]
+name="full_rom_func_0029DD88"
+rom=0x9E988
+vram=0x29DD88
+size=0x100
+functions=[{name="full_rom_func_0029DD88",vram=0x29DD88,size=0x100}]
+
+[[section]]
+name="full_rom_func_002A22C8"
+rom=0xA2EC8
+vram=0x2A22C8
+size=0x34
+functions=[{name="full_rom_func_002A22C8",vram=0x2A22C8,size=0x34}]
+
+[[section]]
+name="full_rom_func_002A4990"
+rom=0xA5590
+vram=0x2A4990
+size=0x388
+functions=[{name="full_rom_func_002A4990",vram=0x2A4990,size=0x388}]
+
+[[section]]
+name="full_rom_func_002A4D18"
+rom=0xA5918
+vram=0x2A4D18
+size=0x238
+functions=[{name="full_rom_func_002A4D18",vram=0x2A4D18,size=0x238}]
+
+[[section]]
+name="full_rom_func_002A4F50"
+rom=0xA5B50
+vram=0x2A4F50
+size=0x160
+functions=[{name="full_rom_func_002A4F50",vram=0x2A4F50,size=0x160}]
+
+[[section]]
+name="full_rom_func_002A5708"
+rom=0xA6308
+vram=0x2A5708
+size=0x8
+functions=[{name="full_rom_func_002A5708",vram=0x2A5708,size=0x8}]
+
+[[section]]
+name="full_rom_func_002A58BC"
+rom=0xA64BC
+vram=0x2A58BC
+size=0x98
+functions=[{name="full_rom_func_002A58BC",vram=0x2A58BC,size=0x98}]
+
+[[section]]
+name="full_rom_func_002A5954"
+rom=0xA6554
+vram=0x2A5954
+size=0x30
+functions=[{name="full_rom_func_002A5954",vram=0x2A5954,size=0x30}]
+
+[[section]]
+name="full_rom_func_002A5984"
+rom=0xA6584
+vram=0x2A5984
+size=0x10
+functions=[{name="full_rom_func_002A5984",vram=0x2A5984,size=0x10}]
+
+[[section]]
+name="full_rom_func_002A5994"
+rom=0xA6594
+vram=0x2A5994
+size=0x6C
+functions=[{name="full_rom_func_002A5994",vram=0x2A5994,size=0x6C}]
+
+[[section]]
+name="full_rom_func_002A5A00"
+rom=0xA6600
+vram=0x2A5A00
+size=0x7C
+functions=[{name="full_rom_func_002A5A00",vram=0x2A5A00,size=0x7C}]
+
+[[section]]
+name="full_rom_func_002A5A7C"
+rom=0xA667C
+vram=0x2A5A7C
+size=0x38
+functions=[{name="full_rom_func_002A5A7C",vram=0x2A5A7C,size=0x38}]
+
+[[section]]
+name="full_rom_func_002A5AB4"
+rom=0xA66B4
+vram=0x2A5AB4
+size=0x60
+functions=[{name="full_rom_func_002A5AB4",vram=0x2A5AB4,size=0x60}]
+
+[[section]]
+name="full_rom_func_002A5ECC"
+rom=0xA6ACC
+vram=0x2A5ECC
+size=0x54
+functions=[{name="full_rom_func_002A5ECC",vram=0x2A5ECC,size=0x54}]
+
+[[section]]
+name="full_rom_func_002A5F98"
+rom=0xA6B98
+vram=0x2A5F98
+size=0x10C
+functions=[{name="full_rom_func_002A5F98",vram=0x2A5F98,size=0x10C}]
+
+[[section]]
+name="full_rom_func_002A60A4"
+rom=0xA6CA4
+vram=0x2A60A4
+size=0x148
+functions=[{name="full_rom_func_002A60A4",vram=0x2A60A4,size=0x148}]
+
+[[section]]
+name="full_rom_func_002A61EC"
+rom=0xA6DEC
+vram=0x2A61EC
+size=0x48
+functions=[{name="full_rom_func_002A61EC",vram=0x2A61EC,size=0x48}]
+
+[[section]]
+name="full_rom_func_002A6234"
+rom=0xA6E34
+vram=0x2A6234
+size=0xA0
+functions=[{name="full_rom_func_002A6234",vram=0x2A6234,size=0xA0}]
+
+[[section]]
+name="full_rom_func_002A62D4"
+rom=0xA6ED4
+vram=0x2A62D4
+size=0xAC
+functions=[{name="full_rom_func_002A62D4",vram=0x2A62D4,size=0xAC}]
+
+[[section]]
+name="full_rom_func_002A6380"
+rom=0xA6F80
+vram=0x2A6380
+size=0x40
+functions=[{name="full_rom_func_002A6380",vram=0x2A6380,size=0x40}]
+
+[[section]]
+name="full_rom_func_002A63C0"
+rom=0xA6FC0
+vram=0x2A63C0
+size=0x150
+functions=[{name="full_rom_func_002A63C0",vram=0x2A63C0,size=0x150}]
+
+[[section]]
+name="full_rom_func_002AACFC"
+rom=0xAB8FC
+vram=0x2AACFC
+size=0x118
+functions=[{name="full_rom_func_002AACFC",vram=0x2AACFC,size=0x118}]
+
+[[section]]
+name="full_rom_func_002AAE14"
+rom=0xABA14
+vram=0x2AAE14
+size=0x1CC
+functions=[{name="full_rom_func_002AAE14",vram=0x2AAE14,size=0x1CC}]
+
+[[section]]
+name="full_rom_func_002AAFE0"
+rom=0xABBE0
+vram=0x2AAFE0
+size=0x100
+functions=[{name="full_rom_func_002AAFE0",vram=0x2AAFE0,size=0x100}]
+
+[[section]]
+name="full_rom_func_002AB0E0"
+rom=0xABCE0
+vram=0x2AB0E0
+size=0x1AC
+functions=[{name="full_rom_func_002AB0E0",vram=0x2AB0E0,size=0x1AC}]
+
+[[section]]
+name="full_rom_func_002AB2D8"
+rom=0xABED8
+vram=0x2AB2D8
+size=0x54
+functions=[{name="full_rom_func_002AB2D8",vram=0x2AB2D8,size=0x54}]
+
+[[section]]
+name="full_rom_func_002AB8AC"
+rom=0xAC4AC
+vram=0x2AB8AC
+size=0x260
+functions=[{name="full_rom_func_002AB8AC",vram=0x2AB8AC,size=0x260}]
+
+[[section]]
+name="full_rom_func_002ACFE0"
+rom=0xADBE0
+vram=0x2ACFE0
+size=0x34
+functions=[{name="full_rom_func_002ACFE0",vram=0x2ACFE0,size=0x34}]
+
+[[section]]
+name="full_rom_func_002AD014"
+rom=0xADC14
+vram=0x2AD014
+size=0xD0
+functions=[{name="full_rom_func_002AD014",vram=0x2AD014,size=0xD0}]
+
+[[section]]
+name="full_rom_func_002AD1C8"
+rom=0xADDC8
+vram=0x2AD1C8
+size=0x10
+functions=[{name="full_rom_func_002AD1C8",vram=0x2AD1C8,size=0x10}]
+
+[[section]]
+name="full_rom_func_002B0110"
+rom=0xB0D10
+vram=0x2B0110
+size=0x78
+functions=[{name="full_rom_func_002B0110",vram=0x2B0110,size=0x78}]
+
+[[section]]
+name="full_rom_func_002B0300"
+rom=0xB0F00
+vram=0x2B0300
+size=0x1AB0
+functions=[{name="full_rom_func_002B0300",vram=0x2B0300,size=0x1AB0}]
+
+[[section]]
+name="full_rom_func_002B65A0"
+rom=0xB71A0
+vram=0x2B65A0
+size=0x508
+functions=[{name="full_rom_func_002B65A0",vram=0x2B65A0,size=0x508}]
+
+[[section]]
+name="full_rom_func_002B6D20"
+rom=0xB7920
+vram=0x2B6D20
+size=0x338
+functions=[{name="full_rom_func_002B6D20",vram=0x2B6D20,size=0x338}]
+
+[[section]]
+name="full_rom_func_002B8C20"
+rom=0xB9820
+vram=0x2B8C20
+size=0xAC
+functions=[{name="full_rom_func_002B8C20",vram=0x2B8C20,size=0xAC}]
+
+[[section]]
+name="full_rom_func_002B8CD0"
+rom=0xB98D0
+vram=0x2B8CD0
+size=0x28
+functions=[{name="full_rom_func_002B8CD0",vram=0x2B8CD0,size=0x28}]
+
+[[section]]
+name="full_rom_func_002B8D00"
+rom=0xB9900
+vram=0x2B8D00
+size=0x178
+functions=[{name="full_rom_func_002B8D00",vram=0x2B8D00,size=0x178}]
+
+[[section]]
+name="full_rom_func_002B8E80"
+rom=0xB9A80
+vram=0x2B8E80
+size=0xC0
+functions=[{name="full_rom_func_002B8E80",vram=0x2B8E80,size=0xC0}]
+
+[[section]]
+name="full_rom_func_002B97A0"
+rom=0xBA3A0
+vram=0x2B97A0
+size=0xD4
+functions=[{name="full_rom_func_002B97A0",vram=0x2B97A0,size=0xD4}]
+
+[[section]]
+name="full_rom_func_002B9880"
+rom=0xBA480
+vram=0x2B9880
+size=0xE8
+functions=[{name="full_rom_func_002B9880",vram=0x2B9880,size=0xE8}]
+
+[[section]]
+name="full_rom_func_00403200"
+rom=0x167200
+vram=0x403200
+size=0x12C
+functions=[{name="full_rom_func_00403200",vram=0x403200,size=0x12C}]
+
+[[section]]
+name="full_rom_func_00403658"
+rom=0x167658
+vram=0x403658
+size=0x17C
+functions=[{name="full_rom_func_00403658",vram=0x403658,size=0x17C}]
+
+[[section]]
+name="full_rom_func_0040385C"
+rom=0x16785C
+vram=0x40385C
+size=0xB0
+functions=[{name="full_rom_func_0040385C",vram=0x40385C,size=0xB0}]
+
+[[section]]
+name="full_rom_func_0040390C"
+rom=0x16790C
+vram=0x40390C
+size=0xB8
+functions=[{name="full_rom_func_0040390C",vram=0x40390C,size=0xB8}]
+
+[[section]]
+name="full_rom_func_004039C4"
+rom=0x1679C4
+vram=0x4039C4
+size=0xA0
+functions=[{name="full_rom_func_004039C4",vram=0x4039C4,size=0xA0}]
+
+[[section]]
+name="full_rom_func_00403B04"
+rom=0x167B04
+vram=0x403B04
+size=0x8
+functions=[{name="full_rom_func_00403B04",vram=0x403B04,size=0x8}]
+
+[[section]]
+name="full_rom_func_00403B0C"
+rom=0x167B0C
+vram=0x403B0C
+size=0x20
+functions=[{name="full_rom_func_00403B0C",vram=0x403B0C,size=0x20}]
+
+[[section]]
+name="full_rom_func_00403B2C"
+rom=0x167B2C
+vram=0x403B2C
+size=0x44
+functions=[{name="full_rom_func_00403B2C",vram=0x403B2C,size=0x44}]
+
+[[section]]
+name="full_rom_func_00403B70"
+rom=0x167B70
+vram=0x403B70
+size=0x5C
+functions=[{name="full_rom_func_00403B70",vram=0x403B70,size=0x5C}]
+
+[[section]]
+name="full_rom_func_00403BCC"
+rom=0x167BCC
+vram=0x403BCC
+size=0x14
+functions=[{name="full_rom_func_00403BCC",vram=0x403BCC,size=0x14}]
+
+[[section]]
+name="full_rom_func_0040538C"
+rom=0x16938C
+vram=0x40538C
+size=0x54
+functions=[{name="full_rom_func_0040538C",vram=0x40538C,size=0x54}]
+
+[[section]]
+name="full_rom_func_004053E0"
+rom=0x1693E0
+vram=0x4053E0
+size=0x74
+functions=[{name="full_rom_func_004053E0",vram=0x4053E0,size=0x74}]
+
+[[section]]
+name="full_rom_func_004055D4"
+rom=0x1695D4
+vram=0x4055D4
+size=0x74
+functions=[{name="full_rom_func_004055D4",vram=0x4055D4,size=0x74}]
+
+[[section]]
+name="full_rom_func_0040570C"
+rom=0x16970C
+vram=0x40570C
+size=0xB0
+functions=[{name="full_rom_func_0040570C",vram=0x40570C,size=0xB0}]
+
+[[section]]
+name="full_rom_func_004058A0"
+rom=0x1698A0
+vram=0x4058A0
+size=0x10
+functions=[{name="full_rom_func_004058A0",vram=0x4058A0,size=0x10}]
+
+[[section]]
+name="full_rom_func_00405CDC"
+rom=0x169CDC
+vram=0x405CDC
+size=0xD8
+functions=[{name="full_rom_func_00405CDC",vram=0x405CDC,size=0xD8}]
+
+[[section]]
+name="full_rom_func_00409770"
+rom=0x16D770
+vram=0x409770
+size=0x90
+functions=[{name="full_rom_func_00409770",vram=0x409770,size=0x90}]
+
+[[section]]
+name="full_rom_func_00409800"
+rom=0x16D800
+vram=0x409800
+size=0x14
+functions=[{name="full_rom_func_00409800",vram=0x409800,size=0x14}]
+
+[[section]]
+name="full_rom_func_00409824"
+rom=0x16D824
+vram=0x409824
+size=0x8C
+functions=[{name="full_rom_func_00409824",vram=0x409824,size=0x8C}]
+
+[[section]]
+name="full_rom_func_0040C354"
+rom=0x170354
+vram=0x40C354
+size=0x24
+functions=[{name="full_rom_func_0040C354",vram=0x40C354,size=0x24}]
+
+[[section]]
+name="full_rom_func_0040C780"
+rom=0x170780
+vram=0x40C780
+size=0x248
+functions=[{name="full_rom_func_0040C780",vram=0x40C780,size=0x248}]
+
+[[section]]
+name="full_rom_func_0040C9C8"
+rom=0x1709C8
+vram=0x40C9C8
+size=0x8
+functions=[{name="full_rom_func_0040C9C8",vram=0x40C9C8,size=0x8}]
+
+[[section]]
+name="full_rom_func_0040C9D0"
+rom=0x1709D0
+vram=0x40C9D0
+size=0x154
+functions=[{name="full_rom_func_0040C9D0",vram=0x40C9D0,size=0x154}]
+
+[[section]]
+name="full_rom_func_0040E980"
+rom=0x172980
+vram=0x40E980
+size=0x28
+functions=[{name="full_rom_func_0040E980",vram=0x40E980,size=0x28}]
+
+[[section]]
+name="full_rom_func_0040E9F8"
+rom=0x1729F8
+vram=0x40E9F8
+size=0xC
+functions=[{name="full_rom_func_0040E9F8",vram=0x40E9F8,size=0xC}]
+
+[[section]]
+name="full_rom_func_0040EBC8"
+rom=0x172BC8
+vram=0x40EBC8
+size=0x20
+functions=[{name="full_rom_func_0040EBC8",vram=0x40EBC8,size=0x20}]
+
+[[section]]
+name="full_rom_func_0040EBE8"
+rom=0x172BE8
+vram=0x40EBE8
+size=0x24
+functions=[{name="full_rom_func_0040EBE8",vram=0x40EBE8,size=0x24}]
+
+[[section]]
+name="full_rom_func_0040EC0C"
+rom=0x172C0C
+vram=0x40EC0C
+size=0x20
+functions=[{name="full_rom_func_0040EC0C",vram=0x40EC0C,size=0x20}]
+
+[[section]]
+name="full_rom_func_0040EC2C"
+rom=0x172C2C
+vram=0x40EC2C
+size=0x24
+functions=[{name="full_rom_func_0040EC2C",vram=0x40EC2C,size=0x24}]
+
+[[section]]
+name="full_rom_func_0040EC74"
+rom=0x172C74
+vram=0x40EC74
+size=0x3C
+functions=[{name="full_rom_func_0040EC74",vram=0x40EC74,size=0x3C}]
+
+[[section]]
+name="full_rom_func_0040EDB8"
+rom=0x172DB8
+vram=0x40EDB8
+size=0xAC
+functions=[{name="full_rom_func_0040EDB8",vram=0x40EDB8,size=0xAC}]
+
+[[section]]
+name="full_rom_func_0040F0C4"
+rom=0x1730C4
+vram=0x40F0C4
+size=0x11C
+functions=[{name="full_rom_func_0040F0C4",vram=0x40F0C4,size=0x11C}]
+
+[[section]]
+name="full_rom_func_0040F27C"
+rom=0x17327C
+vram=0x40F27C
+size=0xC
+functions=[{name="full_rom_func_0040F27C",vram=0x40F27C,size=0xC}]
+
+[[section]]
+name="full_rom_func_0040F288"
+rom=0x173288
+vram=0x40F288
+size=0x8
+functions=[{name="full_rom_func_0040F288",vram=0x40F288,size=0x8}]
+
+[[section]]
+name="full_rom_func_0040F290"
+rom=0x173290
+vram=0x40F290
+size=0x8
+functions=[{name="full_rom_func_0040F290",vram=0x40F290,size=0x8}]
+
+[[section]]
+name="full_rom_func_0040F298"
+rom=0x173298
+vram=0x40F298
+size=0x18
+functions=[{name="full_rom_func_0040F298",vram=0x40F298,size=0x18}]
+
+[[section]]
+name="full_rom_func_0040F2B0"
+rom=0x1732B0
+vram=0x40F2B0
+size=0x120
+functions=[{name="full_rom_func_0040F2B0",vram=0x40F2B0,size=0x120}]
+
+[[section]]
+name="full_rom_func_0040F3D0"
+rom=0x1733D0
+vram=0x40F3D0
+size=0x138
+functions=[{name="full_rom_func_0040F3D0",vram=0x40F3D0,size=0x138}]
+
+[[section]]
+name="full_rom_func_00410B94"
+rom=0x174B94
+vram=0x410B94
+size=0x308
+functions=[{name="full_rom_func_00410B94",vram=0x410B94,size=0x308}]
+
+[[section]]
+name="full_rom_func_00411ABC"
+rom=0x175ABC
+vram=0x411ABC
+size=0x8
+functions=[{name="full_rom_func_00411ABC",vram=0x411ABC,size=0x8}]
+
+[[section]]
+name="full_rom_func_00411AC4"
+rom=0x175AC4
+vram=0x411AC4
+size=0x10
+functions=[{name="full_rom_func_00411AC4",vram=0x411AC4,size=0x10}]
+
+[[section]]
+name="full_rom_func_00411AD4"
+rom=0x175AD4
+vram=0x411AD4
+size=0x10
+functions=[{name="full_rom_func_00411AD4",vram=0x411AD4,size=0x10}]
+
+[[section]]
+name="full_rom_func_00411AE4"
+rom=0x175AE4
+vram=0x411AE4
+size=0x10
+functions=[{name="full_rom_func_00411AE4",vram=0x411AE4,size=0x10}]
+
+[[section]]
+name="full_rom_func_00411AF4"
+rom=0x175AF4
+vram=0x411AF4
+size=0x10
+functions=[{name="full_rom_func_00411AF4",vram=0x411AF4,size=0x10}]
+
+[[section]]
+name="full_rom_func_00411B04"
+rom=0x175B04
+vram=0x411B04
+size=0x24
+functions=[{name="full_rom_func_00411B04",vram=0x411B04,size=0x24}]
+
+[[section]]
+name="full_rom_func_00411B28"
+rom=0x175B28
+vram=0x411B28
+size=0x24
+functions=[{name="full_rom_func_00411B28",vram=0x411B28,size=0x24}]
+
+[[section]]
+name="full_rom_func_00411B4C"
+rom=0x175B4C
+vram=0x411B4C
+size=0x1C
+functions=[{name="full_rom_func_00411B4C",vram=0x411B4C,size=0x1C}]
+
+[[section]]
+name="full_rom_func_00411B68"
+rom=0x175B68
+vram=0x411B68
+size=0x8
+functions=[{name="full_rom_func_00411B68",vram=0x411B68,size=0x8}]
+
+[[section]]
+name="full_rom_func_00411FB8"
+rom=0x175FB8
+vram=0x411FB8
+size=0x10
+functions=[{name="full_rom_func_00411FB8",vram=0x411FB8,size=0x10}]
+
+[[section]]
+name="full_rom_func_00411FC8"
+rom=0x175FC8
+vram=0x411FC8
+size=0xC4
+functions=[{name="full_rom_func_00411FC8",vram=0x411FC8,size=0xC4}]
+
+[[section]]
+name="full_rom_func_004120B8"
+rom=0x1760B8
+vram=0x4120B8
+size=0xA4
+functions=[{name="full_rom_func_004120B8",vram=0x4120B8,size=0xA4}]
+
+[[section]]
+name="full_rom_func_0041215C"
+rom=0x17615C
+vram=0x41215C
+size=0x114
+functions=[{name="full_rom_func_0041215C",vram=0x41215C,size=0x114}]
+
+[[section]]
+name="full_rom_func_00412790"
+rom=0x176790
+vram=0x412790
+size=0x188
+functions=[{name="full_rom_func_00412790",vram=0x412790,size=0x188}]
+
+[[section]]
+name="full_rom_func_00412918"
+rom=0x176918
+vram=0x412918
+size=0xA8
+functions=[{name="full_rom_func_00412918",vram=0x412918,size=0xA8}]
+
+[[section]]
+name="full_rom_func_004129C0"
+rom=0x1769C0
+vram=0x4129C0
+size=0xB0
+functions=[{name="full_rom_func_004129C0",vram=0x4129C0,size=0xB0}]
+
+[[section]]
+name="full_rom_func_00412A70"
+rom=0x176A70
+vram=0x412A70
+size=0x68
+functions=[{name="full_rom_func_00412A70",vram=0x412A70,size=0x68}]
+
+[[section]]
+name="full_rom_func_00412AD8"
+rom=0x176AD8
+vram=0x412AD8
+size=0x68
+functions=[{name="full_rom_func_00412AD8",vram=0x412AD8,size=0x68}]
+
+[[section]]
+name="full_rom_func_00412B40"
+rom=0x176B40
+vram=0x412B40
+size=0x58
+functions=[{name="full_rom_func_00412B40",vram=0x412B40,size=0x58}]
+
+[[section]]
+name="full_rom_func_00412B98"
+rom=0x176B98
+vram=0x412B98
+size=0x60
+functions=[{name="full_rom_func_00412B98",vram=0x412B98,size=0x60}]
+
+[[section]]
+name="full_rom_func_00412FD4"
+rom=0x176FD4
+vram=0x412FD4
+size=0x490
+functions=[{name="full_rom_func_00412FD4",vram=0x412FD4,size=0x490}]
+
+[[section]]
+name="full_rom_func_004134F8"
+rom=0x1774F8
+vram=0x4134F8
+size=0x8
+functions=[{name="full_rom_func_004134F8",vram=0x4134F8,size=0x8}]
+
+[[section]]
+name="full_rom_func_0041367C"
+rom=0x17767C
+vram=0x41367C
+size=0xC
+functions=[{name="full_rom_func_0041367C",vram=0x41367C,size=0xC}]
+
+[[section]]
+name="full_rom_func_004136B4"
+rom=0x1776B4
+vram=0x4136B4
+size=0x2C
+functions=[{name="full_rom_func_004136B4",vram=0x4136B4,size=0x2C}]
+
+[[section]]
+name="full_rom_func_004136E0"
+rom=0x1776E0
+vram=0x4136E0
+size=0xC
+functions=[{name="full_rom_func_004136E0",vram=0x4136E0,size=0xC}]
+
+[[section]]
+name="full_rom_func_004136EC"
+rom=0x1776EC
+vram=0x4136EC
+size=0xC
+functions=[{name="full_rom_func_004136EC",vram=0x4136EC,size=0xC}]
+
+[[section]]
+name="full_rom_func_004136F8"
+rom=0x1776F8
+vram=0x4136F8
+size=0xC
+functions=[{name="full_rom_func_004136F8",vram=0x4136F8,size=0xC}]
+
+[[section]]
+name="full_rom_func_00413704"
+rom=0x177704
+vram=0x413704
+size=0xC
+functions=[{name="full_rom_func_00413704",vram=0x413704,size=0xC}]
+
+[[section]]
+name="full_rom_func_00413710"
+rom=0x177710
+vram=0x413710
+size=0xC
+functions=[{name="full_rom_func_00413710",vram=0x413710,size=0xC}]
+
+[[section]]
+name="full_rom_func_00413734"
+rom=0x177734
+vram=0x413734
+size=0xC
+functions=[{name="full_rom_func_00413734",vram=0x413734,size=0xC}]
+
+[[section]]
+name="full_rom_func_00413740"
+rom=0x177740
+vram=0x413740
+size=0xC
+functions=[{name="full_rom_func_00413740",vram=0x413740,size=0xC}]
+
+[[section]]
+name="full_rom_func_0041374C"
+rom=0x17774C
+vram=0x41374C
+size=0xC
+functions=[{name="full_rom_func_0041374C",vram=0x41374C,size=0xC}]
+
+[[section]]
+name="full_rom_func_00413784"
+rom=0x177784
+vram=0x413784
+size=0x10
+functions=[{name="full_rom_func_00413784",vram=0x413784,size=0x10}]
+
+[[section]]
+name="full_rom_func_00413794"
+rom=0x177794
+vram=0x413794
+size=0xC
+functions=[{name="full_rom_func_00413794",vram=0x413794,size=0xC}]
+
+[[section]]
+name="full_rom_func_0041381C"
+rom=0x17781C
+vram=0x41381C
+size=0x5C
+functions=[{name="full_rom_func_0041381C",vram=0x41381C,size=0x5C}]
+
+[[section]]
+name="full_rom_func_00413878"
+rom=0x177878
+vram=0x413878
+size=0x19C
+functions=[{name="full_rom_func_00413878",vram=0x413878,size=0x19C}]
+
+[[section]]
+name="full_rom_func_00413A14"
+rom=0x177A14
+vram=0x413A14
+size=0x4C
+functions=[{name="full_rom_func_00413A14",vram=0x413A14,size=0x4C}]
+
+[[section]]
+name="full_rom_func_00413A60"
+rom=0x177A60
+vram=0x413A60
+size=0x174
+functions=[{name="full_rom_func_00413A60",vram=0x413A60,size=0x174}]
+
+[[section]]
+name="full_rom_func_00413BD4"
+rom=0x177BD4
+vram=0x413BD4
+size=0x140
+functions=[{name="full_rom_func_00413BD4",vram=0x413BD4,size=0x140}]
+
+[[section]]
+name="full_rom_func_00413D14"
+rom=0x177D14
+vram=0x413D14
+size=0x4C
+functions=[{name="full_rom_func_00413D14",vram=0x413D14,size=0x4C}]
+
+[[section]]
+name="full_rom_func_00413D60"
+rom=0x177D60
+vram=0x413D60
+size=0x128
+functions=[{name="full_rom_func_00413D60",vram=0x413D60,size=0x128}]
+
+[[section]]
+name="full_rom_func_00419074"
+rom=0x17D074
+vram=0x419074
+size=0xD0
+functions=[{name="full_rom_func_00419074",vram=0x419074,size=0xD0}]
+
+[[section]]
+name="full_rom_func_00419144"
+rom=0x17D144
+vram=0x419144
+size=0xE0
+functions=[{name="full_rom_func_00419144",vram=0x419144,size=0xE0}]
+
+[[section]]
+name="full_rom_func_00419224"
+rom=0x17D224
+vram=0x419224
+size=0x44
+functions=[{name="full_rom_func_00419224",vram=0x419224,size=0x44}]
+
+[[section]]
+name="full_rom_func_00419268"
+rom=0x17D268
+vram=0x419268
+size=0x10
+functions=[{name="full_rom_func_00419268",vram=0x419268,size=0x10}]
+
+[[section]]
+name="full_rom_func_00419278"
+rom=0x17D278
+vram=0x419278
+size=0x80
+functions=[{name="full_rom_func_00419278",vram=0x419278,size=0x80}]
+
+[[section]]
+name="full_rom_func_00419A64"
+rom=0x17DA64
+vram=0x419A64
+size=0x8
+functions=[{name="full_rom_func_00419A64",vram=0x419A64,size=0x8}]
+
+[[section]]
+name="full_rom_func_0041B2AC"
+rom=0x17F2AC
+vram=0x41B2AC
+size=0x114
+functions=[{name="full_rom_func_0041B2AC",vram=0x41B2AC,size=0x114}]
+
+[[section]]
+name="full_rom_func_0041B844"
+rom=0x17F844
+vram=0x41B844
+size=0x38
+functions=[{name="full_rom_func_0041B844",vram=0x41B844,size=0x38}]
+
+[[section]]
+name="full_rom_func_0041B8A8"
+rom=0x17F8A8
+vram=0x41B8A8
+size=0xB4
+functions=[{name="full_rom_func_0041B8A8",vram=0x41B8A8,size=0xB4}]
+
+[[section]]
+name="full_rom_func_0041EBF8"
+rom=0x182BF8
+vram=0x41EBF8
+size=0x34
+functions=[{name="full_rom_func_0041EBF8",vram=0x41EBF8,size=0x34}]
+
+[[section]]
+name="full_rom_func_0041EC2C"
+rom=0x182C2C
+vram=0x41EC2C
+size=0x88
+functions=[{name="full_rom_func_0041EC2C",vram=0x41EC2C,size=0x88}]
+
+[[section]]
+name="full_rom_func_00420B44"
+rom=0x184B44
+vram=0x420B44
+size=0x3C
+functions=[{name="full_rom_func_00420B44",vram=0x420B44,size=0x3C}]
+
+[[section]]
+name="full_rom_func_00421E90"
+rom=0x185E90
+vram=0x421E90
+size=0xC
+functions=[{name="full_rom_func_00421E90",vram=0x421E90,size=0xC}]
+
+[[section]]
+name="full_rom_func_00421E9C"
+rom=0x185E9C
+vram=0x421E9C
+size=0x30
+functions=[{name="full_rom_func_00421E9C",vram=0x421E9C,size=0x30}]
+
+[[section]]
+name="full_rom_func_00421ECC"
+rom=0x185ECC
+vram=0x421ECC
+size=0x150
+functions=[{name="full_rom_func_00421ECC",vram=0x421ECC,size=0x150}]
+
+[[section]]
+name="full_rom_func_0042201C"
+rom=0x18601C
+vram=0x42201C
+size=0x30
+functions=[{name="full_rom_func_0042201C",vram=0x42201C,size=0x30}]
+
+[[section]]
+name="full_rom_func_0042358C"
+rom=0x18758C
+vram=0x42358C
+size=0x8
+functions=[{name="full_rom_func_0042358C",vram=0x42358C,size=0x8}]
+
+[[section]]
+name="full_rom_func_00423594"
+rom=0x187594
+vram=0x423594
+size=0x8
+functions=[{name="full_rom_func_00423594",vram=0x423594,size=0x8}]
+
+[[section]]
+name="full_rom_func_00427430"
+rom=0x18B430
+vram=0x427430
+size=0x184
+functions=[{name="full_rom_func_00427430",vram=0x427430,size=0x184}]
+
+[[section]]
+name="full_rom_func_00428300"
+rom=0x18C300
+vram=0x428300
+size=0x38
+functions=[{name="full_rom_func_00428300",vram=0x428300,size=0x38}]
+
+[[section]]
+name="full_rom_func_00428338"
+rom=0x18C338
+vram=0x428338
+size=0x50
+functions=[{name="full_rom_func_00428338",vram=0x428338,size=0x50}]
+
+[[section]]
+name="full_rom_func_0042B4BC"
+rom=0x18F4BC
+vram=0x42B4BC
+size=0x8
+functions=[{name="full_rom_func_0042B4BC",vram=0x42B4BC,size=0x8}]
+
+[[section]]
+name="full_rom_func_004349A8"
+rom=0x1989A8
+vram=0x4349A8
+size=0x1B0
+functions=[{name="full_rom_func_004349A8",vram=0x4349A8,size=0x1B0}]
+
+[[section]]
+name="full_rom_func_00434B58"
+rom=0x198B58
+vram=0x434B58
+size=0x18C
+functions=[{name="full_rom_func_00434B58",vram=0x434B58,size=0x18C}]
+
+[[section]]
+name="full_rom_func_004352A8"
+rom=0x1992A8
+vram=0x4352A8
+size=0x5C
+functions=[{name="full_rom_func_004352A8",vram=0x4352A8,size=0x5C}]
+
+[[section]]
+name="full_rom_func_004353C0"
+rom=0x1993C0
+vram=0x4353C0
+size=0x40
+functions=[{name="full_rom_func_004353C0",vram=0x4353C0,size=0x40}]
+
+[[section]]
+name="full_rom_func_00435400"
+rom=0x199400
+vram=0x435400
+size=0x4C
+functions=[{name="full_rom_func_00435400",vram=0x435400,size=0x4C}]
+
+[[section]]
+name="full_rom_func_0043544C"
+rom=0x19944C
+vram=0x43544C
+size=0x58
+functions=[{name="full_rom_func_0043544C",vram=0x43544C,size=0x58}]
+
+[[section]]
+name="full_rom_func_004354A4"
+rom=0x1994A4
+vram=0x4354A4
+size=0x78
+functions=[{name="full_rom_func_004354A4",vram=0x4354A4,size=0x78}]
+
+[[section]]
+name="full_rom_func_0043551C"
+rom=0x19951C
+vram=0x43551C
+size=0x44
+functions=[{name="full_rom_func_0043551C",vram=0x43551C,size=0x44}]
+
+[[section]]
+name="full_rom_func_00439DEC"
+rom=0x19DDEC
+vram=0x439DEC
+size=0x24
+functions=[{name="full_rom_func_00439DEC",vram=0x439DEC,size=0x24}]
+
+[[section]]
+name="full_rom_func_00439E3C"
+rom=0x19DE3C
+vram=0x439E3C
+size=0x24
+functions=[{name="full_rom_func_00439E3C",vram=0x439E3C,size=0x24}]
+
+[[section]]
+name="full_rom_func_0043DF84"
+rom=0x1A1F84
+vram=0x43DF84
+size=0x3C
+functions=[{name="full_rom_func_0043DF84",vram=0x43DF84,size=0x3C}]
+
+[[section]]
+name="full_rom_func_0043DFC0"
+rom=0x1A1FC0
+vram=0x43DFC0
+size=0x94
+functions=[{name="full_rom_func_0043DFC0",vram=0x43DFC0,size=0x94}]
+
+[[section]]
+name="full_rom_func_0043E054"
+rom=0x1A2054
+vram=0x43E054
+size=0x94
+functions=[{name="full_rom_func_0043E054",vram=0x43E054,size=0x94}]
+
+[[section]]
+name="full_rom_func_0043E0E8"
+rom=0x1A20E8
+vram=0x43E0E8
+size=0x70
+functions=[{name="full_rom_func_0043E0E8",vram=0x43E0E8,size=0x70}]
+
+[[section]]
+name="full_rom_func_0043E158"
+rom=0x1A2158
+vram=0x43E158
+size=0x58
+functions=[{name="full_rom_func_0043E158",vram=0x43E158,size=0x58}]
+
+[[section]]
+name="full_rom_func_0043E81C"
+rom=0x1A281C
+vram=0x43E81C
+size=0x108
+functions=[{name="full_rom_func_0043E81C",vram=0x43E81C,size=0x108}]
+
+[[section]]
+name="full_rom_func_0043E924"
+rom=0x1A2924
+vram=0x43E924
+size=0x84
+functions=[{name="full_rom_func_0043E924",vram=0x43E924,size=0x84}]
+
+[[section]]
+name="full_rom_func_0043EEC0"
+rom=0x1A2EC0
+vram=0x43EEC0
+size=0x8
+functions=[{name="full_rom_func_0043EEC0",vram=0x43EEC0,size=0x8}]
+
+[[section]]
+name="full_rom_func_0043EEC8"
+rom=0x1A2EC8
+vram=0x43EEC8
+size=0x28
+functions=[{name="full_rom_func_0043EEC8",vram=0x43EEC8,size=0x28}]
+
+[[section]]
+name="full_rom_func_0043EEF0"
+rom=0x1A2EF0
+vram=0x43EEF0
+size=0x2C
+functions=[{name="full_rom_func_0043EEF0",vram=0x43EEF0,size=0x2C}]
+
+[[section]]
+name="full_rom_func_0043F1B8"
+rom=0x1A31B8
+vram=0x43F1B8
+size=0x80
+functions=[{name="full_rom_func_0043F1B8",vram=0x43F1B8,size=0x80}]
+
+[[section]]
+name="full_rom_func_0043F404"
+rom=0x1A3404
+vram=0x43F404
+size=0x298
+functions=[{name="full_rom_func_0043F404",vram=0x43F404,size=0x298}]
+
+[[section]]
+name="full_rom_func_00440618"
+rom=0x1A4618
+vram=0x440618
+size=0x390
+functions=[{name="full_rom_func_00440618",vram=0x440618,size=0x390}]
+
+[[section]]
+name="full_rom_func_00442224"
+rom=0x1A6224
+vram=0x442224
+size=0x30
+functions=[{name="full_rom_func_00442224",vram=0x442224,size=0x30}]
+
+[[section]]
+name="full_rom_func_00442254"
+rom=0x1A6254
+vram=0x442254
+size=0x68
+functions=[{name="full_rom_func_00442254",vram=0x442254,size=0x68}]
+
+[[section]]
+name="full_rom_func_00442384"
+rom=0x1A6384
+vram=0x442384
+size=0x18
+functions=[{name="full_rom_func_00442384",vram=0x442384,size=0x18}]
+
+[[section]]
+name="full_rom_func_00442514"
+rom=0x1A6514
+vram=0x442514
+size=0x8
+functions=[{name="full_rom_func_00442514",vram=0x442514,size=0x8}]
+
+[[section]]
+name="full_rom_func_0044251C"
+rom=0x1A651C
+vram=0x44251C
+size=0x10
+functions=[{name="full_rom_func_0044251C",vram=0x44251C,size=0x10}]
+
+[[section]]
+name="full_rom_func_00442800"
+rom=0x1A6800
+vram=0x442800
+size=0x134
+functions=[{name="full_rom_func_00442800",vram=0x442800,size=0x134}]
+
+[[section]]
+name="full_rom_func_00442BD0"
+rom=0x1A6BD0
+vram=0x442BD0
+size=0x7C
+functions=[{name="full_rom_func_00442BD0",vram=0x442BD0,size=0x7C}]
+
+[[section]]
+name="full_rom_func_00442C4C"
+rom=0x1A6C4C
+vram=0x442C4C
+size=0x58
+functions=[{name="full_rom_func_00442C4C",vram=0x442C4C,size=0x58}]
+
+[[section]]
+name="full_rom_func_00442CF8"
+rom=0x1A6CF8
+vram=0x442CF8
+size=0x20
+functions=[{name="full_rom_func_00442CF8",vram=0x442CF8,size=0x20}]
+
+[[section]]
+name="full_rom_func_00442D18"
+rom=0x1A6D18
+vram=0x442D18
+size=0x130
+functions=[{name="full_rom_func_00442D18",vram=0x442D18,size=0x130}]
+
+[[section]]
+name="full_rom_func_00442E48"
+rom=0x1A6E48
+vram=0x442E48
+size=0x1C
+functions=[{name="full_rom_func_00442E48",vram=0x442E48,size=0x1C}]
+
+[[section]]
+name="full_rom_func_00442E64"
+rom=0x1A6E64
+vram=0x442E64
+size=0x1C
+functions=[{name="full_rom_func_00442E64",vram=0x442E64,size=0x1C}]
+
+[[section]]
+name="full_rom_func_00442E80"
+rom=0x1A6E80
+vram=0x442E80
+size=0xCC
+functions=[{name="full_rom_func_00442E80",vram=0x442E80,size=0xCC}]
+
+[[section]]
+name="full_rom_func_00443030"
+rom=0x1A7030
+vram=0x443030
+size=0xF0
+functions=[{name="full_rom_func_00443030",vram=0x443030,size=0xF0}]
+
+[[section]]
+name="full_rom_func_00443120"
+rom=0x1A7120
+vram=0x443120
+size=0x154
+functions=[{name="full_rom_func_00443120",vram=0x443120,size=0x154}]
+
+[[section]]
+name="full_rom_func_00443354"
+rom=0x1A7354
+vram=0x443354
+size=0x48
+functions=[{name="full_rom_func_00443354",vram=0x443354,size=0x48}]
+
+[[section]]
+name="full_rom_func_0044339C"
+rom=0x1A739C
+vram=0x44339C
+size=0x120
+functions=[{name="full_rom_func_0044339C",vram=0x44339C,size=0x120}]
+
+[[section]]
+name="full_rom_func_004434BC"
+rom=0x1A74BC
+vram=0x4434BC
+size=0x6C
+functions=[{name="full_rom_func_004434BC",vram=0x4434BC,size=0x6C}]
+
+[[section]]
+name="full_rom_func_0044359C"
+rom=0x1A759C
+vram=0x44359C
+size=0x8
+functions=[{name="full_rom_func_0044359C",vram=0x44359C,size=0x8}]
+
+[[section]]
+name="full_rom_func_004435A4"
+rom=0x1A75A4
+vram=0x4435A4
+size=0x8
+functions=[{name="full_rom_func_004435A4",vram=0x4435A4,size=0x8}]
+
+[[section]]
+name="full_rom_func_004435AC"
+rom=0x1A75AC
+vram=0x4435AC
+size=0x8
+functions=[{name="full_rom_func_004435AC",vram=0x4435AC,size=0x8}]
+
+[[section]]
+name="full_rom_func_004435B4"
+rom=0x1A75B4
+vram=0x4435B4
+size=0x8
+functions=[{name="full_rom_func_004435B4",vram=0x4435B4,size=0x8}]
+
+[[section]]
+name="full_rom_func_004435BC"
+rom=0x1A75BC
+vram=0x4435BC
+size=0x8
+functions=[{name="full_rom_func_004435BC",vram=0x4435BC,size=0x8}]
+
+[[section]]
+name="full_rom_func_004435C4"
+rom=0x1A75C4
+vram=0x4435C4
+size=0x8
+functions=[{name="full_rom_func_004435C4",vram=0x4435C4,size=0x8}]
+
+[[section]]
+name="full_rom_func_004435CC"
+rom=0x1A75CC
+vram=0x4435CC
+size=0x8
+functions=[{name="full_rom_func_004435CC",vram=0x4435CC,size=0x8}]
+
+[[section]]
+name="full_rom_func_004435D4"
+rom=0x1A75D4
+vram=0x4435D4
+size=0x7C
+functions=[{name="full_rom_func_004435D4",vram=0x4435D4,size=0x7C}]
+
+[[section]]
+name="full_rom_func_00443804"
+rom=0x1A7804
+vram=0x443804
+size=0x64
+functions=[{name="full_rom_func_00443804",vram=0x443804,size=0x64}]
+
+[[section]]
+name="full_rom_func_00443868"
+rom=0x1A7868
+vram=0x443868
+size=0x18
+functions=[{name="full_rom_func_00443868",vram=0x443868,size=0x18}]
+
+[[section]]
+name="full_rom_func_004439B4"
+rom=0x1A79B4
+vram=0x4439B4
+size=0x78
+functions=[{name="full_rom_func_004439B4",vram=0x4439B4,size=0x78}]
+
+[[section]]
+name="full_rom_func_00443AD4"
+rom=0x1A7AD4
+vram=0x443AD4
+size=0x34
+functions=[{name="full_rom_func_00443AD4",vram=0x443AD4,size=0x34}]
+
+[[section]]
+name="full_rom_func_00443B08"
+rom=0x1A7B08
+vram=0x443B08
+size=0x8C
+functions=[{name="full_rom_func_00443B08",vram=0x443B08,size=0x8C}]
+
+[[section]]
+name="full_rom_func_00443B94"
+rom=0x1A7B94
+vram=0x443B94
+size=0x8C
+functions=[{name="full_rom_func_00443B94",vram=0x443B94,size=0x8C}]
+
+[[section]]
+name="full_rom_func_00443C20"
+rom=0x1A7C20
+vram=0x443C20
+size=0x8C
+functions=[{name="full_rom_func_00443C20",vram=0x443C20,size=0x8C}]
+
+[[section]]
+name="full_rom_func_00443CAC"
+rom=0x1A7CAC
+vram=0x443CAC
+size=0x90
+functions=[{name="full_rom_func_00443CAC",vram=0x443CAC,size=0x90}]
+
+[[section]]
+name="full_rom_func_00443D3C"
+rom=0x1A7D3C
+vram=0x443D3C
+size=0x8
+functions=[{name="full_rom_func_00443D3C",vram=0x443D3C,size=0x8}]
+
+[[section]]
+name="full_rom_func_00443D44"
+rom=0x1A7D44
+vram=0x443D44
+size=0x40
+functions=[{name="full_rom_func_00443D44",vram=0x443D44,size=0x40}]
+
+[[section]]
+name="full_rom_func_00444204"
+rom=0x1A8204
+vram=0x444204
+size=0x5C
+functions=[{name="full_rom_func_00444204",vram=0x444204,size=0x5C}]
+
+[[section]]
+name="full_rom_func_00444364"
+rom=0x1A8364
+vram=0x444364
+size=0x28
+functions=[{name="full_rom_func_00444364",vram=0x444364,size=0x28}]
+
+[[section]]
+name="full_rom_func_00445CF8"
+rom=0x1A9CF8
+vram=0x445CF8
+size=0x38
+functions=[{name="full_rom_func_00445CF8",vram=0x445CF8,size=0x38}]
+
+[[section]]
+name="full_rom_func_00447990"
+rom=0x1AB990
+vram=0x447990
+size=0x17C
+functions=[{name="full_rom_func_00447990",vram=0x447990,size=0x17C}]
+
+[[section]]
+name="full_rom_func_00447B0C"
+rom=0x1ABB0C
+vram=0x447B0C
+size=0x9C
+functions=[{name="full_rom_func_00447B0C",vram=0x447B0C,size=0x9C}]
+
+[[section]]
+name="full_rom_func_00447BA8"
+rom=0x1ABBA8
+vram=0x447BA8
+size=0xB4
+functions=[{name="full_rom_func_00447BA8",vram=0x447BA8,size=0xB4}]
+
+[[section]]
+name="full_rom_func_0044A054"
+rom=0x1AE054
+vram=0x44A054
+size=0x13C
+functions=[{name="full_rom_func_0044A054",vram=0x44A054,size=0x13C}]
+
+[[section]]
+name="full_rom_func_0044A190"
+rom=0x1AE190
+vram=0x44A190
+size=0x5C
+functions=[{name="full_rom_func_0044A190",vram=0x44A190,size=0x5C}]
+
+[[section]]
+name="full_rom_func_0044A900"
+rom=0x1AE900
+vram=0x44A900
+size=0x40
+functions=[{name="full_rom_func_0044A900",vram=0x44A900,size=0x40}]
+
+[[section]]
+name="full_rom_func_0044CEFC"
+rom=0x1B0EFC
+vram=0x44CEFC
+size=0x2C8
+functions=[{name="full_rom_func_0044CEFC",vram=0x44CEFC,size=0x2C8}]
+
+# FULL ROM JUMP TABLES 20261013
+[[section]]
+name = "fullrom_jtbl_800C18F0"
+rom = 0xC24F0
+vram = 0x800C18F0
+size = 0x28
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C1988"
+rom = 0xC2588
+vram = 0x800C1988
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C1A20"
+rom = 0xC2620
+vram = 0x800C1A20
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C1AB8"
+rom = 0xC26B8
+vram = 0x800C1AB8
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C2070"
+rom = 0xC2C70
+vram = 0x800C2070
+size = 0x1C
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C5D70"
+rom = 0xC6970
+vram = 0x800C5D70
+size = 0x24
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C61E8"
+rom = 0xC6DE8
+vram = 0x800C61E8
+size = 0x20
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C7380"
+rom = 0xC7F80
+vram = 0x800C7380
+size = 0x60
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C76B8"
+rom = 0xC82B8
+vram = 0x800C76B8
+size = 0x20
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C7850"
+rom = 0xC8450
+vram = 0x800C7850
+size = 0x1C
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800C7A34"
+rom = 0xC8634
+vram = 0x800C7A34
+size = 0x154
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBA58"
+rom = 0xDC658
+vram = 0x800DBA58
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBA70"
+rom = 0xDC670
+vram = 0x800DBA70
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBA88"
+rom = 0xDC688
+vram = 0x800DBA88
+size = 0x3C
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBAC8"
+rom = 0xDC6C8
+vram = 0x800DBAC8
+size = 0x40
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBB08"
+rom = 0xDC708
+vram = 0x800DBB08
+size = 0x40
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBB48"
+rom = 0xDC748
+vram = 0x800DBB48
+size = 0x40
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBB88"
+rom = 0xDC788
+vram = 0x800DBB88
+size = 0x40
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBBC8"
+rom = 0xDC7C8
+vram = 0x800DBBC8
+size = 0x40
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBC08"
+rom = 0xDC808
+vram = 0x800DBC08
+size = 0x40
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBC48"
+rom = 0xDC848
+vram = 0x800DBC48
+size = 0x40
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBC88"
+rom = 0xDC888
+vram = 0x800DBC88
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBCA0"
+rom = 0xDC8A0
+vram = 0x800DBCA0
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBCB8"
+rom = 0xDC8B8
+vram = 0x800DBCB8
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBCD0"
+rom = 0xDC8D0
+vram = 0x800DBCD0
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBCE8"
+rom = 0xDC8E8
+vram = 0x800DBCE8
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBD00"
+rom = 0xDC900
+vram = 0x800DBD00
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBD18"
+rom = 0xDC918
+vram = 0x800DBD18
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DBEA0"
+rom = 0xDCAA0
+vram = 0x800DBEA0
+size = 0x16C
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC150"
+rom = 0xDCD50
+vram = 0x800DC150
+size = 0x1C
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC180"
+rom = 0xDCD80
+vram = 0x800DC180
+size = 0x38
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC240"
+rom = 0xDCE40
+vram = 0x800DC240
+size = 0x28
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC290"
+rom = 0xDCE90
+vram = 0x800DC290
+size = 0x18
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC348"
+rom = 0xDCF48
+vram = 0x800DC348
+size = 0xC8
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC4F8"
+rom = 0xDD0F8
+vram = 0x800DC4F8
+size = 0xE4
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC5E0"
+rom = 0xDD1E0
+vram = 0x800DC5E0
+size = 0x4C
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC630"
+rom = 0xDD230
+vram = 0x800DC630
+size = 0x24
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC688"
+rom = 0xDD288
+vram = 0x800DC688
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC6A0"
+rom = 0xDD2A0
+vram = 0x800DC6A0
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC6C0"
+rom = 0xDD2C0
+vram = 0x800DC6C0
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC6E0"
+rom = 0xDD2E0
+vram = 0x800DC6E0
+size = 0x38
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DC7C8"
+rom = 0xDD3C8
+vram = 0x800DC7C8
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DCBA0"
+rom = 0xDD7A0
+vram = 0x800DCBA0
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DCC20"
+rom = 0xDD820
+vram = 0x800DCC20
+size = 0x14
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DCE38"
+rom = 0xDDA38
+vram = 0x800DCE38
+size = 0x2C
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DCE68"
+rom = 0xDDA68
+vram = 0x800DCE68
+size = 0x8C
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DCF38"
+rom = 0xDDB38
+vram = 0x800DCF38
+size = 0x2C
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DCFB0"
+rom = 0xDDBB0
+vram = 0x800DCFB0
+size = 0x20
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DCFF0"
+rom = 0xDDBF0
+vram = 0x800DCFF0
+size = 0x20
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DD078"
+rom = 0xDDC78
+vram = 0x800DD078
+size = 0x24
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DD0A8"
+rom = 0xDDCA8
+vram = 0x800DD0A8
+size = 0x24
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DD348"
+rom = 0xDDF48
+vram = 0x800DD348
+size = 0x24
+functions = [
+]
+
+[[section]]
+name = "fullrom_jtbl_800DD378"
+rom = 0xDDF78
+vram = 0x800DD378
+size = 0x24
+functions = [
+]
+# END FULL ROM RECOVERY 20261013
+
+# BEGIN GAP ROM RECOVERY 20261013
+[[section]]
+name = "gap_rom_func_0022C0E4"
+rom = 0x2CCE4
+vram = 0x22C0E4
+size = 0xD8
+functions = [
+    { name = "gap_rom_func_0022C0E4", vram = 0x22C0E4, size = 0xD8 },
+]
+
+[[section]]
+name = "gap_rom_func_0022C7CC"
+rom = 0x2D3CC
+vram = 0x22C7CC
+size = 0x94
+functions = [
+    { name = "gap_rom_func_0022C7CC", vram = 0x22C7CC, size = 0x94 },
+]
+
+[[section]]
+name = "gap_rom_func_0022DC18"
+rom = 0x2E818
+vram = 0x22DC18
+size = 0x150
+functions = [
+    { name = "gap_rom_func_0022DC18", vram = 0x22DC18, size = 0x150 },
+]
+
+[[section]]
+name = "gap_rom_func_0022DD68"
+rom = 0x2E968
+vram = 0x22DD68
+size = 0xC4
+functions = [
+    { name = "gap_rom_func_0022DD68", vram = 0x22DD68, size = 0xC4 },
+]
+
+[[section]]
+name = "gap_rom_func_0022DE2C"
+rom = 0x2EA2C
+vram = 0x22DE2C
+size = 0x150
+functions = [
+    { name = "gap_rom_func_0022DE2C", vram = 0x22DE2C, size = 0x150 },
+]
+
+[[section]]
+name = "gap_rom_func_0022DF7C"
+rom = 0x2EB7C
+vram = 0x22DF7C
+size = 0x108
+functions = [
+    { name = "gap_rom_func_0022DF7C", vram = 0x22DF7C, size = 0x108 },
+]
+
+[[section]]
+name = "gap_rom_func_0022E104"
+rom = 0x2ED04
+vram = 0x22E104
+size = 0x4C
+functions = [
+    { name = "gap_rom_func_0022E104", vram = 0x22E104, size = 0x4C },
+]
+
+[[section]]
+name = "gap_rom_func_0022E410"
+rom = 0x2F010
+vram = 0x22E410
+size = 0x14C
+functions = [
+    { name = "gap_rom_func_0022E410", vram = 0x22E410, size = 0x14C },
+]
+
+[[section]]
+name = "gap_rom_func_0022E55C"
+rom = 0x2F15C
+vram = 0x22E55C
+size = 0x64
+functions = [
+    { name = "gap_rom_func_0022E55C", vram = 0x22E55C, size = 0x64 },
+]
+
+[[section]]
+name = "gap_rom_func_0022E678"
+rom = 0x2F278
+vram = 0x22E678
+size = 0xB4
+functions = [
+    { name = "gap_rom_func_0022E678", vram = 0x22E678, size = 0xB4 },
+]
+
+[[section]]
+name = "gap_rom_func_0022E760"
+rom = 0x2F360
+vram = 0x22E760
+size = 0x104
+functions = [
+    { name = "gap_rom_func_0022E760", vram = 0x22E760, size = 0x104 },
+]
+
+[[section]]
+name = "gap_rom_func_0022E864"
+rom = 0x2F464
+vram = 0x22E864
+size = 0x40
+functions = [
+    { name = "gap_rom_func_0022E864", vram = 0x22E864, size = 0x40 },
+]
+
+[[section]]
+name = "gap_rom_func_0022EA10"
+rom = 0x2F610
+vram = 0x22EA10
+size = 0xC8
+functions = [
+    { name = "gap_rom_func_0022EA10", vram = 0x22EA10, size = 0xC8 },
+]
+
+[[section]]
+name = "gap_rom_func_0022EB98"
+rom = 0x2F798
+vram = 0x22EB98
+size = 0x10
+functions = [
+    { name = "gap_rom_func_0022EB98", vram = 0x22EB98, size = 0x10 },
+]
+
+[[section]]
+name = "gap_rom_func_0022EBA8"
+rom = 0x2F7A8
+vram = 0x22EBA8
+size = 0x68
+functions = [
+    { name = "gap_rom_func_0022EBA8", vram = 0x22EBA8, size = 0x68 },
+]
+
+[[section]]
+name = "gap_rom_func_0022ED78"
+rom = 0x2F978
+vram = 0x22ED78
+size = 0x50
+functions = [
+    { name = "gap_rom_func_0022ED78", vram = 0x22ED78, size = 0x50 },
+]
+
+[[section]]
+name = "gap_rom_func_0022EDD0"
+rom = 0x2F9D0
+vram = 0x22EDD0
+size = 0x108
+functions = [
+    { name = "gap_rom_func_0022EDD0", vram = 0x22EDD0, size = 0x108 },
+]
+
+[[section]]
+name = "gap_rom_func_002446C0"
+rom = 0x452C0
+vram = 0x2446C0
+size = 0x23C
+functions = [
+    { name = "gap_rom_func_002446C0", vram = 0x2446C0, size = 0x23C },
+]
+
+[[section]]
+name = "gap_rom_func_00244B48"
+rom = 0x45748
+vram = 0x244B48
+size = 0x1FC
+functions = [
+    { name = "gap_rom_func_00244B48", vram = 0x244B48, size = 0x1FC },
+]
+
+[[section]]
+name = "gap_rom_func_0024E1E8"
+rom = 0x4EDE8
+vram = 0x24E1E8
+size = 0x94
+functions = [
+    { name = "gap_rom_func_0024E1E8", vram = 0x24E1E8, size = 0x94 },
+]
+
+[[section]]
+name = "gap_rom_func_00294AE0"
+rom = 0x956E0
+vram = 0x294AE0
+size = 0xB4
+functions = [
+    { name = "gap_rom_func_00294AE0", vram = 0x294AE0, size = 0xB4 },
+]
+
+[[section]]
+name = "gap_rom_func_00294B94"
+rom = 0x95794
+vram = 0x294B94
+size = 0x34
+functions = [
+    { name = "gap_rom_func_00294B94", vram = 0x294B94, size = 0x34 },
+]
+
+[[section]]
+name = "gap_rom_func_0029E300"
+rom = 0x9EF00
+vram = 0x29E300
+size = 0x68
+functions = [
+    { name = "gap_rom_func_0029E300", vram = 0x29E300, size = 0x68 },
+]
+
+[[section]]
+name = "gap_rom_func_0029E41C"
+rom = 0x9F01C
+vram = 0x29E41C
+size = 0x50
+functions = [
+    { name = "gap_rom_func_0029E41C", vram = 0x29E41C, size = 0x50 },
+]
+
+[[section]]
+name = "gap_rom_func_0029E46C"
+rom = 0x9F06C
+vram = 0x29E46C
+size = 0x94
+functions = [
+    { name = "gap_rom_func_0029E46C", vram = 0x29E46C, size = 0x94 },
+]
+
+[[section]]
+name = "gap_rom_func_0029E500"
+rom = 0x9F100
+vram = 0x29E500
+size = 0x94
+functions = [
+    { name = "gap_rom_func_0029E500", vram = 0x29E500, size = 0x94 },
+]
+
+[[section]]
+name = "gap_rom_func_0029E594"
+rom = 0x9F194
+vram = 0x29E594
+size = 0x94
+functions = [
+    { name = "gap_rom_func_0029E594", vram = 0x29E594, size = 0x94 },
+]
+
+[[section]]
+name = "gap_rom_func_0029E628"
+rom = 0x9F228
+vram = 0x29E628
+size = 0x94
+functions = [
+    { name = "gap_rom_func_0029E628", vram = 0x29E628, size = 0x94 },
+]
+
+[[section]]
+name = "gap_rom_func_0029E6BC"
+rom = 0x9F2BC
+vram = 0x29E6BC
+size = 0x94
+functions = [
+    { name = "gap_rom_func_0029E6BC", vram = 0x29E6BC, size = 0x94 },
+]
+
+[[section]]
+name = "gap_rom_func_0029E750"
+rom = 0x9F350
+vram = 0x29E750
+size = 0x9C
+functions = [
+    { name = "gap_rom_func_0029E750", vram = 0x29E750, size = 0x9C },
+]
+
+[[section]]
+name = "gap_rom_func_0029E87C"
+rom = 0x9F47C
+vram = 0x29E87C
+size = 0x108
+functions = [
+    { name = "gap_rom_func_0029E87C", vram = 0x29E87C, size = 0x108 },
+]
+
+[[section]]
+name = "gap_rom_func_0029EA34"
+rom = 0x9F634
+vram = 0x29EA34
+size = 0x20
+functions = [
+    { name = "gap_rom_func_0029EA34", vram = 0x29EA34, size = 0x20 },
+]
+
+[[section]]
+name = "gap_rom_func_0029F0A4"
+rom = 0x9FCA4
+vram = 0x29F0A4
+size = 0x1C
+functions = [
+    { name = "gap_rom_func_0029F0A4", vram = 0x29F0A4, size = 0x1C },
+]
+
+[[section]]
+name = "gap_rom_func_0029F0C0"
+rom = 0x9FCC0
+vram = 0x29F0C0
+size = 0x20
+functions = [
+    { name = "gap_rom_func_0029F0C0", vram = 0x29F0C0, size = 0x20 },
+]
+
+[[section]]
+name = "gap_rom_func_0029F194"
+rom = 0x9FD94
+vram = 0x29F194
+size = 0x114
+functions = [
+    { name = "gap_rom_func_0029F194", vram = 0x29F194, size = 0x114 },
+]
+
+[[section]]
+name = "gap_rom_func_0029FFF0"
+rom = 0xA0BF0
+vram = 0x29FFF0
+size = 0x128
+functions = [
+    { name = "gap_rom_func_0029FFF0", vram = 0x29FFF0, size = 0x128 },
+]
+
+[[section]]
+name = "gap_rom_func_002A07F8"
+rom = 0xA13F8
+vram = 0x2A07F8
+size = 0xA8
+functions = [
+    { name = "gap_rom_func_002A07F8", vram = 0x2A07F8, size = 0xA8 },
+]
+
+[[section]]
+name = "gap_rom_func_002A0988"
+rom = 0xA1588
+vram = 0x2A0988
+size = 0x3C
+functions = [
+    { name = "gap_rom_func_002A0988", vram = 0x2A0988, size = 0x3C },
+]
+
+[[section]]
+name = "gap_rom_func_002A09C4"
+rom = 0xA15C4
+vram = 0x2A09C4
+size = 0x20
+functions = [
+    { name = "gap_rom_func_002A09C4", vram = 0x2A09C4, size = 0x20 },
+]
+
+[[section]]
+name = "gap_rom_func_002A09E4"
+rom = 0xA15E4
+vram = 0x2A09E4
+size = 0x20
+functions = [
+    { name = "gap_rom_func_002A09E4", vram = 0x2A09E4, size = 0x20 },
+]
+
+[[section]]
+name = "gap_rom_func_002A0E90"
+rom = 0xA1A90
+vram = 0x2A0E90
+size = 0x8
+functions = [
+    { name = "gap_rom_func_002A0E90", vram = 0x2A0E90, size = 0x8 },
+]
+
+[[section]]
+name = "gap_rom_func_002A0F0C"
+rom = 0xA1B0C
+vram = 0x2A0F0C
+size = 0x38
+functions = [
+    { name = "gap_rom_func_002A0F0C", vram = 0x2A0F0C, size = 0x38 },
+]
+
+[[section]]
+name = "gap_rom_func_002A0F4C"
+rom = 0xA1B4C
+vram = 0x2A0F4C
+size = 0x44
+functions = [
+    { name = "gap_rom_func_002A0F4C", vram = 0x2A0F4C, size = 0x44 },
+]
+
+[[section]]
+name = "gap_rom_func_002A0FDC"
+rom = 0xA1BDC
+vram = 0x2A0FDC
+size = 0x78
+functions = [
+    { name = "gap_rom_func_002A0FDC", vram = 0x2A0FDC, size = 0x78 },
+]
+
+[[section]]
+name = "gap_rom_func_002A1054"
+rom = 0xA1C54
+vram = 0x2A1054
+size = 0x44
+functions = [
+    { name = "gap_rom_func_002A1054", vram = 0x2A1054, size = 0x44 },
+]
+
+[[section]]
+name = "gap_rom_func_002AE1C0"
+rom = 0xAEDC0
+vram = 0x2AE1C0
+size = 0x270
+functions = [
+    { name = "gap_rom_func_002AE1C0", vram = 0x2AE1C0, size = 0x270 },
+]
+
+[[section]]
+name = "gap_rom_func_002B22F4"
+rom = 0xB2EF4
+vram = 0x2B22F4
+size = 0x30
+functions = [
+    { name = "gap_rom_func_002B22F4", vram = 0x2B22F4, size = 0x30 },
+]
+
+[[section]]
+name = "gap_rom_func_002B2324"
+rom = 0xB2F24
+vram = 0x2B2324
+size = 0x50
+functions = [
+    { name = "gap_rom_func_002B2324", vram = 0x2B2324, size = 0x50 },
+]
+
+[[section]]
+name = "gap_rom_func_002BDF60"
+rom = 0xBEB60
+vram = 0x2BDF60
+size = 0x88
+functions = [
+    { name = "gap_rom_func_002BDF60", vram = 0x2BDF60, size = 0x88 },
+]
+
+[[section]]
+name = "gap_rom_func_002BFD6C"
+rom = 0xC096C
+vram = 0x2BFD6C
+size = 0x2C
+functions = [
+    { name = "gap_rom_func_002BFD6C", vram = 0x2BFD6C, size = 0x2C },
+]
+
+[[section]]
+name = "gap_rom_func_002BFF3C"
+rom = 0xC0B3C
+vram = 0x2BFF3C
+size = 0x38
+functions = [
+    { name = "gap_rom_func_002BFF3C", vram = 0x2BFF3C, size = 0x38 },
+]
+
+[[section]]
+name = "gap_rom_func_004041E8"
+rom = 0x1681E8
+vram = 0x4041E8
+size = 0x108
+functions = [
+    { name = "gap_rom_func_004041E8", vram = 0x4041E8, size = 0x108 },
+]
+
+[[section]]
+name = "gap_rom_func_00404DDC"
+rom = 0x168DDC
+vram = 0x404DDC
+size = 0x4C
+functions = [
+    { name = "gap_rom_func_00404DDC", vram = 0x404DDC, size = 0x4C },
+]
+
+[[section]]
+name = "gap_rom_func_004098F8"
+rom = 0x16D8F8
+vram = 0x4098F8
+size = 0x98
+functions = [
+    { name = "gap_rom_func_004098F8", vram = 0x4098F8, size = 0x98 },
+]
+
+[[section]]
+name = "gap_rom_func_00409F98"
+rom = 0x16DF98
+vram = 0x409F98
+size = 0x34
+functions = [
+    { name = "gap_rom_func_00409F98", vram = 0x409F98, size = 0x34 },
+]
+
+[[section]]
+name = "gap_rom_func_00409FCC"
+rom = 0x16DFCC
+vram = 0x409FCC
+size = 0x98
+functions = [
+    { name = "gap_rom_func_00409FCC", vram = 0x409FCC, size = 0x98 },
+]
+
+[[section]]
+name = "gap_rom_func_0040A0C8"
+rom = 0x16E0C8
+vram = 0x40A0C8
+size = 0x114
+functions = [
+    { name = "gap_rom_func_0040A0C8", vram = 0x40A0C8, size = 0x114 },
+]
+
+[[section]]
+name = "gap_rom_func_0040A1DC"
+rom = 0x16E1DC
+vram = 0x40A1DC
+size = 0x94
+functions = [
+    { name = "gap_rom_func_0040A1DC", vram = 0x40A1DC, size = 0x94 },
+]
+
+[[section]]
+name = "gap_rom_func_0041994C"
+rom = 0x17D94C
+vram = 0x41994C
+size = 0x110
+functions = [
+    { name = "gap_rom_func_0041994C", vram = 0x41994C, size = 0x110 },
+]
+
+[[section]]
+name = "gap_rom_func_00419A84"
+rom = 0x17DA84
+vram = 0x419A84
+size = 0x8
+functions = [
+    { name = "gap_rom_func_00419A84", vram = 0x419A84, size = 0x8 },
+]
+
+[[section]]
+name = "gap_rom_func_0043CF44"
+rom = 0x1A0F44
+vram = 0x43CF44
+size = 0x94
+functions = [
+    { name = "gap_rom_func_0043CF44", vram = 0x43CF44, size = 0x94 },
+]
+
+[[section]]
+name = "gap_rom_func_00445700"
+rom = 0x1A9700
+vram = 0x445700
+size = 0x5C
+functions = [
+    { name = "gap_rom_func_00445700", vram = 0x445700, size = 0x5C },
+]
+
+[[section]]
+name = "gap_rom_func_0044575C"
+rom = 0x1A975C
+vram = 0x44575C
+size = 0x20
+functions = [
+    { name = "gap_rom_func_0044575C", vram = 0x44575C, size = 0x20 },
+]
+
+[[section]]
+name = "gap_rom_func_0044D2E8"
+rom = 0x1B12E8
+vram = 0x44D2E8
+size = 0x3C
+functions = [
+    { name = "gap_rom_func_0044D2E8", vram = 0x44D2E8, size = 0x3C },
+]
+
+[[section]]
+name = "gap_rom_func_0044D6F0"
+rom = 0x1B16F0
+vram = 0x44D6F0
+size = 0x44
+functions = [
+    { name = "gap_rom_func_0044D6F0", vram = 0x44D6F0, size = 0x44 },
+]
+
+# END GAP ROM RECOVERY 20261013
+
+# FULL ROM JUMP TABLES 20261013

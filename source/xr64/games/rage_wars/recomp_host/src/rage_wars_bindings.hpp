@@ -31,7 +31,7 @@ inline Set controller_defaults() {
     s[14]={kPadBase+11,0};s[15]={kPadBase+12,0};s[16]={kPadBase+13,0};s[17]={kPadBase+14,0};s[18]={kPadBase+2,0};
     return s;
 }
-constexpr Code kXrBase=1024, kXrMenu=kXrBase+8, kXrLast=kXrBase+16;
+constexpr Code kXrBase=1024, kXrMenu=kXrBase+8, kXrStickEnd=kXrBase+16, kXrLast=kXrBase+18;
 inline Set xr_defaults() {
  Set s{};s[0]={kXrBase+9,0};s[1]={kXrBase+10,0};s[2]={kXrBase+11,0};s[3]={kXrBase+12,0};
  s[6]={kXrBase+15,0};s[7]={kXrBase+16,0};
@@ -100,7 +100,7 @@ template<class Down> inline recomp::N64ControllerInput map(const Set& bindings, 
 inline std::string name(Device device,Code code) {
     if(code==0)return "UNBOUND";
     if(device==Device::XR) {
-        constexpr const char* labels[]={"L TRIGGER","R TRIGGER","L GRIP","R GRIP","A","B","X","Y","MENU","L STICK UP","L STICK DOWN","L STICK LEFT","L STICK RIGHT","R STICK UP","R STICK DOWN","R STICK LEFT","R STICK RIGHT"};
+        constexpr const char* labels[]={"L TRIGGER","R TRIGGER","L GRIP","R GRIP","A","B","X","Y","MENU","L STICK UP","L STICK DOWN","L STICK LEFT","L STICK RIGHT","R STICK UP","R STICK DOWN","R STICK LEFT","R STICK RIGHT","L STICK PRESS","R STICK PRESS"};
         return code>=kXrBase && code<=kXrLast ? labels[code-kXrBase] : "INVALID";
     }
     if(device==Device::Controller) {

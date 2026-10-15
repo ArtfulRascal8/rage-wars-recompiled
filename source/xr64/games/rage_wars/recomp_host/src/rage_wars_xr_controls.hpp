@@ -12,6 +12,7 @@ inline float xr_binding_value(const XrMotionInput& input,bindings::Code code) {
     case 2:return input.left.grip;case 3:return input.right.grip;
     case 4:return input.right.primary;case 5:return input.right.secondary;
     case 6:return input.left.primary;case 7:return input.left.secondary;case 8:return input.menu_button;
+    case 17:return input.left.stick_click;case 18:return input.right.stick_click;
     default:break;
     }
     if(i>=9 && i<=16) {
@@ -25,7 +26,7 @@ inline float xr_binding_value(const XrMotionInput& input,bindings::Code code) {
 inline controls::DeviceActivity xr_device_activity(const XrMotionInput& input) {
     controls::DeviceActivity out;
     out.available=input.available; out.focused=input.focused;
-    for(unsigned i=0;i<9;++i)
+    for(unsigned i=0;i<=18;++i) if(i<9||i>16)
         if(xr_binding_value(input,bindings::kXrBase+i)>=0.55F)out.buttons|=1U<<i;
     out.axes[0]=input.left.stick[0];out.axes[1]=input.left.stick[1];
     out.axes[2]=input.right.stick[0];out.axes[3]=input.right.stick[1];
@@ -35,8 +36,11 @@ inline controls::DeviceActivity xr_device_activity(const XrMotionInput& input) {
 // isolated so continuous locomotion can replace it after the movement hook is known.
 class XrMotionMapper {
 public:
+    // True after a gameplay map() in which the weapon wheel binding was held.
+    bool wheel_held() const { return wheel_held_; }
     N64ControllerInput map(const XrMotionInput& input, bool gameplay, bool /*legacy_probe_ignored*/=false, const controls::Settings& settings=controls::Settings{}) {
         N64ControllerInput out;
+        wheel_held_=false;
         if (!input.available || !input.focused) { movement_=0; return out; }
         if (gameplay) {
             const float threshold=settings.xr_move_threshold;
@@ -45,7 +49,7 @@ public:
             update(input.right.stick[1],16,32,threshold,threshold*0.72F,movement_);
             update(input.right.stick[0],128,64,threshold,threshold*0.72F,movement_);
             auto down=[&](bindings::Code code) {
-                if(code>=bindings::kXrBase+9 && code<=bindings::kXrLast)return bool(movement_&(1U<<(code-bindings::kXrBase-9)));
+                if(code>=bindings::kXrBase+9 && code<=bindings::kXrStickEnd)return bool(movement_&(1U<<(code-bindings::kXrBase-9)));
                 return xr_binding_value(input,code)>=settings.xr_trigger_threshold;
             };
             // Preserve the established Touch guest-button contract. Desktop Modern
@@ -62,13 +66,21 @@ public:
                 const auto binding=settings.xr_bindings[action];
                 auto value=[&](bindings::Code code) {
                     float v=xr_binding_value(input,code);
-                    if(code>=bindings::kXrBase+9)return turn_axis(v)*2.0F;
+                    if(code>=bindings::kXrBase+9 && code<=bindings::kXrStickEnd)return turn_axis(v)*2.0F;
                     return down(code)?1.0F:0.0F;
                 };
                 return std::max(value(binding.primary),value(binding.alternate));
             };
             out.stick_x=(strength(7)-strength(6))*settings.xr_turn_speed;
             out.stick_y=(strength(4)-strength(5))*settings.xr_turn_speed;
+            // While the weapon wheel is held the guest reads the N64 stick as a
+            // selector: give it the full right-stick deflection, not turn speed.
+            const auto wheel=settings.xr_bindings[bindings::kActionCount-1];
+            wheel_held_=down(wheel.primary)||down(wheel.alternate);
+            if(wheel_held_) {
+                out.stick_x=std::clamp(input.right.stick[0],-1.0F,1.0F);
+                out.stick_y=std::clamp(input.right.stick[1],-1.0F,1.0F);
+            }
             if(!input.right.pose_valid)out.buttons&=~kN64ButtonZ;
             // Always retain a physical pause escape, regardless of gameplay remaps.
             if(input.menu_button)out.buttons|=kN64ButtonStart;
@@ -103,5 +115,6 @@ private:
         else held&=~negative;
     }
     std::uint16_t movement_=0;
+    bool wheel_held_=false;
 };
 }

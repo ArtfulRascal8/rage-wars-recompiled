@@ -12,13 +12,14 @@
 - Rabbitizer, fmt, xxHash and other vendored generator/runtime components — upstream license texts included and indexed in THIRD-PARTY-NOTICES.txt.
 - Microsoft Visual C++ runtime — unmodified app-local x64 redistributable DLLs; redistribution notice included.
 - [LibUltraShip Fast3D](https://github.com/Kenix3/libultraship/tree/main/src/fast) — field-extraction reference identified in the renderer alongside libultra GBI protocol macros. Fast3D MIT reference notice (2020 Emill, MaikelChan) is preserved. The historical reference revision was not recorded; the current reference notice does not establish that revision.
+- [thejunkman9000/Turok-Rage-Wars-Decomp](https://github.com/thejunkman9000/Turok-Rage-Wars-Decomp) - a matching decompilation of the US v1.1 release. Used only as a reference for function sizes and ordering to locate original-ROM functions that earlier builds had not reached, and checked against the US v1.0 ROM. No code from it is included in this release.
 - [Alex LeTux's Perfect Dark VR](https://github.com/Alex-LeTux/perfect_dark_VR) — reference for OpenXR lifecycle/tracking-space separation and project-page presentation. Recorded code reference: 67ea20c86986c6bc85687f26a27418b266af309c; MIT reference notice, copyright 2022 Ryan Dwyer. The port's OpenXR source documents consultation without importing game-specific camera/input code.
 
 The port/runtime integration, modifications and combined distribution use GNU
 GPLv3; see [COPYING.txt](COPYING.txt) and dated [MODIFICATIONS.txt](MODIFICATIONS.txt).
 Upstream permissive copyrights and licenses remain applicable and are preserved
 in both downloads. Complete matching source and rebuild instructions accompany
-the binary on the [release page](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.1.0-beta.1).
+the binary on the [release page](https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.5.0-beta.1).
 
 XR64 Studios records its decision to distribute a non-commercial fan
 recompilation. No rights-holder permission or legal finding is claimed.

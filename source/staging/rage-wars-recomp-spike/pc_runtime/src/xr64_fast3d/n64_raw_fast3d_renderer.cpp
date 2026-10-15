@@ -117,6 +117,19 @@ struct Tile {
     std::uint32_t lrt = 0;
 };
 
+// RDP tile shifts are right shifts for 0..10 and left shifts by 16-n for
+// 11..15. Translate the shifted texel coordinate by the 10.2 tile origin
+// before normalizing to the uploaded texture. Keep the coordinate continuous;
+// masking/wrapping is sampled per fragment, not applied at triangle vertices.
+float tile_texture_coordinate(float coordinate, unsigned shift,
+        unsigned origin, unsigned extent) {
+    const float multiplier = shift <= 10U ?
+            1.0F / static_cast<float>(1U << shift) :
+            static_cast<float>(1U << (16U - shift));
+    return (coordinate * multiplier - static_cast<float>(origin) / 4.0F) /
+            static_cast<float>(std::max(1U, extent));
+}
+
 struct ImageState {
     std::uint32_t address = 0;
     std::uint32_t format = 0;
@@ -404,8 +417,12 @@ private:
         vertex.y = px * mp_[1] + py * mp_[5] + pz * mp_[9] + mp_[13];
         vertex.z = px * mp_[2] + py * mp_[6] + pz * mp_[10] + mp_[14];
         vertex.w = px * mp_[3] + py * mp_[7] + pz * mp_[11] + mp_[15];
-        vertex.s = static_cast<float>(s) / 32.0F;
-        vertex.t = static_cast<float>(t) / 32.0F;
+        // G_VTX performs the RSP texture transform before caching the vertex.
+        // G_MODIFYVTX ST writes that cache directly with pre-scaled s10.5 data.
+        vertex.s = static_cast<float>(s) / 32.0F *
+                (static_cast<float>(texture_scale_s_) / 65536.0F);
+        vertex.t = static_cast<float>(t) / 32.0F *
+                (static_cast<float>(texture_scale_t_) / 65536.0F);
         vertex.attributes = {
                 byte_at(color_physical),
                 byte_at(color_physical + 1),
@@ -1140,10 +1157,12 @@ private:
                     "RW081_UV_INPUT draw=%u tile=%u dimensions=%ux%u shift=%u,%u mask=%u,%u scale=%u,%u st=%.6f,%.6f\n",
                     stats_ ? stats_->triangle_count + 1 : 0, active_tile_, tile.width, tile.height,
                     tile.descriptor_word1 & 15U, (tile.descriptor_word1 >> 10U) & 15U, (tile.descriptor_word1 >> 4U) & 15U, (tile.descriptor_word1 >> 14U) & 15U, texture_scale_s_, texture_scale_t_, vertex.s, vertex.t);
-            vertex.s *= static_cast<float>(texture_scale_s_) / 65536.0F;
-            vertex.t *= static_cast<float>(texture_scale_t_) / 65536.0F;
-            if (tile.width != 0) vertex.s /= static_cast<float>(tile.width);
-            if (tile.height != 0) vertex.t /= static_cast<float>(tile.height);
+            if (texture_enabled_) {
+                vertex.s = tile_texture_coordinate(vertex.s,
+                        tile.descriptor_word1 & 15U, tile.uls, tile.width);
+                vertex.t = tile_texture_coordinate(vertex.t,
+                        (tile.descriptor_word1 >> 10U) & 15U, tile.ult, tile.height);
+            }
         }
         const bool submitted = suppress_replaced_ || backend_.draw_triangles(triangle, draw_state(), error_);
         #if XR64_RENDER_DIAGNOSTICS
@@ -1367,7 +1386,16 @@ private:
                     if ((w0 & 0xFFU) == 8U) { std::int16_t sx=0,sy=0,sz=0,tx=0,ty=0,tz=0; if (!read_i16(w1, sx) || !read_i16(w1+2, sy) || !read_i16(w1+4, sz) || !read_i16(w1+8, tx) || !read_i16(w1+10, ty) || !read_i16(w1+12, tz)) { error_ = "raw_fast3d_viewport_load_failed"; return false; } viewport_scale_x_=sx; viewport_scale_y_=sy; viewport_scale_z_=sz; viewport_translate_x_=tx; viewport_translate_y_=ty; viewport_translate_z_=tz; viewport_width_ = std::max(1, static_cast<int>(std::abs(sx) / 2)); viewport_height_ = std::max(1, static_cast<int>(std::abs(sy) / 2)); if (!backend_.set_viewport((static_cast<int>(tx) - std::abs(sx)) / 4, (static_cast<int>(ty) - std::abs(sy)) / 4, viewport_width_, viewport_height_, error_)) return false; }
                     continue;
                 }
-                if (opcode == kF3dex2Texture) { texture_enabled_ = ((w0 >> 1U) & 0x7FU) != 0; active_tile_ = static_cast<std::uint8_t>((w0 >> 8U) & 7U); texture_scale_s_ = static_cast<std::uint16_t>(w1 >> 16U); texture_scale_t_ = static_cast<std::uint16_t>(w1); continue; }
+                if (opcode == kF3dex2Texture) {
+                    texture_enabled_ = ((w0 >> 1U) & 0x7FU) != 0;
+                    // G_OFF changes only enablement; tile/scale state is retained.
+                    if (texture_enabled_) {
+                        active_tile_ = static_cast<std::uint8_t>((w0 >> 8U) & 7U);
+                        texture_scale_s_ = static_cast<std::uint16_t>(w1 >> 16U);
+                        texture_scale_t_ = static_cast<std::uint16_t>(w1);
+                    }
+                    continue;
+                }
                 if (opcode == kF3dex2ModeL || opcode == kF3dex2ModeH) { apply_mode(w0, w1, opcode == kF3dex2ModeH); continue; }
                 if (opcode == kF3dex2Dl) { if (!execute_list(w1, depth + 1)) return false; if (((w0 >> 16U) & 1U) != 0) return true; continue; }
                 if (opcode == kF3dex2End) return true;
@@ -1494,16 +1522,23 @@ private:
                 const std::uint8_t tile = static_cast<std::uint8_t>((w1 >> 24U) & 7U);
                 if (texture_enabled_ && !prepare_texture(tile, true)) return false;
                 const Tile &state = tiles_[tile];
-                const float texture_width = static_cast<float>(std::max(1U, state.width));
-                const float texture_height = static_cast<float>(std::max(1U, state.height));
+
                 const float start_s = static_cast<float>(static_cast<std::int16_t>(w3 >> 16U)) / 32.0F;
                 const float start_t = static_cast<float>(static_cast<std::int16_t>(w3)) / 32.0F;
                 const float dsdx = static_cast<float>(static_cast<std::int16_t>(w5 >> 16U)) / 1024.0F;
                 const float dtdy = static_cast<float>(static_cast<std::int16_t>(w5)) / 1024.0F;
-                const float s0 = start_s / texture_width;
-                const float t0 = start_t / texture_height;
-                const float s1 = (start_s + dsdx * static_cast<float>(right - left)) / texture_width;
-                const float t1 = (start_t + dtdy * static_cast<float>(bottom - top)) / texture_height;
+                const unsigned shift_s = state.descriptor_word1 & 15U;
+                const unsigned shift_t = (state.descriptor_word1 >> 10U) & 15U;
+                const float s0 = tile_texture_coordinate(start_s,
+                        shift_s, state.uls, state.width);
+                const float t0 = tile_texture_coordinate(start_t,
+                        shift_t, state.ult, state.height);
+                const float s1 = tile_texture_coordinate(
+                        start_s + dsdx * static_cast<float>(right - left),
+                        shift_s, state.uls, state.width);
+                const float t1 = tile_texture_coordinate(
+                        start_t + dtdy * static_cast<float>(bottom - top),
+                        shift_t, state.ult, state.height);
                 (void)w2;
                 (void)w4;
                 const bool submitted = backend_.draw_rectangle(static_cast<float>(left),

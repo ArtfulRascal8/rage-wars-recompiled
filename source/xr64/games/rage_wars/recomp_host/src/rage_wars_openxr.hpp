@@ -29,6 +29,9 @@ struct XrEyeFrame {
     float orientation[4]={0,0,0,1};
     float position[3]={0,0,0};
     float fov[4]={}; // left, right, up, down radians
+    // Shared head pose (midpoint of both eyes) for head-locked panels.
+    float head_orientation[4]={0,0,0,1};
+    float head_position[3]={0,0,0};
 };
 struct XrMotionHand {
     bool pose_valid=false;
@@ -40,6 +43,7 @@ struct XrMotionHand {
     float stick[2]={};
     float trigger=0, grip=0;
     bool primary=false, secondary=false;
+    bool stick_click=false;
 };
 enum class XrPoseTimePolicy { Unavailable, DisplayPrediction, CurrentSample };
 struct XrMotionInput {
@@ -73,6 +77,8 @@ public:
     bool render(const std::function<bool(const XrEyeFrame&)>& draw, const std::function<bool()>& present_mirror, std::string& error, bool have_frame=true, XrFrameTiming* timing=nullptr);
     void shutdown();
     void request_recenter();
+    // Right stick press recentres only while it is not bound to a game action.
+    void set_right_stick_recenter(bool enabled);
     bool touch_actions_ready() const;
     bool session_running() const;
     bool session_focused() const;

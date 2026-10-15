@@ -154,6 +154,22 @@ inline LocalCameraCorrection local_camera_correction(const LocalPlayerPresentati
     result.input_sequence=current.mouse.sequence;result.player_update=current.player.update;
     result.valid=true;return result;
 }
+// VR play space: the body frame keeps the camera's position and yaw but is
+// levelled to world Y, so game pitch/roll never tilts the world around the
+// head. Eyes, laser, shots and the weapon all derive from this one frame.
+// Handedness is preserved (the guest display mirrors X).
+inline bool level_play_space(std::array<float,16>& m) {
+    std::array<float,3> right{m[0],0,m[2]};
+    const float rl=std::sqrt(right[0]*right[0]+right[2]*right[2]);
+    if(!(rl>0.05F))return false;
+    for(float& v:right)v/=rl;
+    const std::array<float,3> up{0,m[5]<0?-1.0F:1.0F,0};
+    // Back is horizontal and orthogonal to right; its sign follows the original.
+    std::array<float,3> back{-right[2],0,right[0]};
+    if(back[0]*m[8]+back[2]*m[10]<0)for(float& v:back)v=-v;
+    for(int i=0;i<3;++i){m[i]=right[i];m[4+i]=up[i];m[8+i]=back[i];}
+    return true;
+}
 // Express the current eye in the retained scene's camera coordinates. This
 // gives CPU and retained-VBO draws the same fresh body origin and orientation.
 inline XrEyeFrame local_xr_eye(const XrEyeFrame& eye,const LocalCameraCorrection& c,float units) {

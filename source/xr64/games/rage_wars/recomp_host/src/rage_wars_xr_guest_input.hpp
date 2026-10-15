@@ -19,7 +19,7 @@ inline XrGuestContext xr_guest_context(const std::uint8_t* ram,std::uint32_t act
     using controls::guest_word;
     if(!base_gameplay) return XrGuestContext::Menu;
     if(!ram || !controls::local_actor(ram,actor) ||
-       guest_word(ram,actor-0x80000000U+0x698)!=0x80109328U)
+       guest_word(ram,actor-0x80000000U+0x698)!=controls::xr_input_block())
         return XrGuestContext::Unknown;
     const auto a=actor-0x80000000U;
     const auto profile=guest_word(ram,a+0x5D8),view=guest_word(ram,a+0x5DC);
@@ -33,4 +33,5 @@ inline XrGuestContext xr_guest_context(const std::uint8_t* ram,std::uint32_t act
     return XrGuestContext::Playing;
 }
 bool gate5_xr_guest_gameplay(const std::uint8_t* ram,bool base_gameplay);
+bool gate5_guest_team_select(const std::uint8_t* ram,bool base_gameplay);
 }

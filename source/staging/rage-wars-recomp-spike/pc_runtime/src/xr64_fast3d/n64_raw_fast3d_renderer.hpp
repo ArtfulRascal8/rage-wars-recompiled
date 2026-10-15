@@ -5,6 +5,7 @@
 #include <array>
 #include <cstddef>
 #include <cstdint>
+#include <cstring>
 #include <cstdlib>
 #include <string>
 #include <vector>
@@ -146,7 +147,17 @@ inline std::uint64_t n64_raw_fast3d_texture_hash(const N64RawFast3DTexture& t) {
     word(static_cast<std::uint32_t>(t.wrap_t));
     byte(t.alpha_precombined ? 1U : 0U);
     word(t.rgba.size());
-    for (std::uint8_t value : t.rgba) byte(value);
+    // Texels are hashed eight bytes per step; a byte-serial loop dominated
+    // decode time when the game reloads textures for every draw.
+    const std::uint8_t* data = t.rgba.data();
+    std::size_t remaining = t.rgba.size();
+    for (; remaining >= 8; data += 8, remaining -= 8) {
+        std::uint64_t value;
+        std::memcpy(&value, data, sizeof(value));
+        hash = (hash ^ value) * 0x9E3779B97F4A7C15ULL;
+        hash ^= hash >> 29;
+    }
+    for (; remaining; ++data, --remaining) byte(*data);
     return hash;
 }
 

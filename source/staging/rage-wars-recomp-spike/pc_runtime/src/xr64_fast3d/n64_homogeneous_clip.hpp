@@ -2,6 +2,7 @@
 #include "n64_raw_fast3d_renderer.hpp"
 #include <algorithm>
 #include <cmath>
+#include <utility>
 namespace xr64 {
 // Clip geometry before the existing divide. Texture state and the backend's
 // interpolation mode remain unchanged; surviving original vertices are exact.
@@ -24,28 +25,38 @@ inline std::vector<N64RawFast3DVertex> n64_clip_triangles(
         auto v=a;v.x=lerp(a.x,b.x);v.y=lerp(a.y,b.y);v.z=lerp(a.z,b.z);v.w=lerp(a.w,b.w);
         v.s=lerp(a.s,b.s);v.t=lerp(a.t,b.t);v.color=color(a.color,b.color);v.attributes=color(a.attributes,b.attributes);return v;
     };
+    // Fixed-capacity polygons: a triangle gains at most one vertex per plane.
+    // Same distances, interpolation and emission order as the allocating form;
+    // a triangle wholly outside one plane is rejected without clipping.
     std::vector<N64RawFast3DVertex> result;
     result.reserve(input.size());
+    N64RawFast3DVertex buffers[2][9];
     for(std::size_t i=0;i+2<input.size();i+=3) {
-        std::vector<N64RawFast3DVertex> polygon{input[i],input[i+1],input[i+2]};
+        N64RawFast3DVertex* polygon=buffers[0];
+        N64RawFast3DVertex* scratch=buffers[1];
+        polygon[0]=input[i];polygon[1]=input[i+1];polygon[2]=input[i+2];
+        std::size_t count=3;
         bool finite=true;
-        for(const auto& v:polygon) finite &= std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z)&&std::isfinite(v.w);
+        for(std::size_t k=0;k<3;++k){const auto& v=polygon[k];finite &= std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z)&&std::isfinite(v.w);}
         if(!finite)continue;
-        for(int plane=0;plane<6 && !polygon.empty();++plane) {
-            bool all_inside=true;for(const auto& v:polygon)all_inside &= distance(v,plane)>=0;
+        for(int plane=0;plane<6 && count;++plane) {
+            double dist[9];
+            bool all_inside=true,all_outside=true;
+            for(std::size_t k=0;k<count;++k){dist[k]=distance(polygon[k],plane);all_inside&=dist[k]>=0;all_outside&=dist[k]<0;}
             if(all_inside)continue;
-            std::vector<N64RawFast3DVertex> clipped;
-            for(std::size_t j=0;j<polygon.size();++j) {
-                const auto& a=polygon[j];const auto& b=polygon[(j+1)%polygon.size()];
-                const double da=distance(a,plane),db=distance(b,plane);
-                if(da>=0)clipped.push_back(a);
-                if((da>=0)!=(db>=0))clipped.push_back(interpolate(a,b,da/(da-db)));
+            if(all_outside){count=0;break;}
+            std::size_t out=0;
+            for(std::size_t j=0;j<count;++j) {
+                const auto& a=polygon[j];const auto& b=polygon[(j+1)%count];
+                const double da=dist[j],db=dist[(j+1)%count];
+                if(da>=0)scratch[out++]=a;
+                if((da>=0)!=(db>=0))scratch[out++]=interpolate(a,b,da/(da-db));
             }
-            polygon=std::move(clipped);
+            std::swap(polygon,scratch);count=out;
         }
-        for(std::size_t j=1;j+1<polygon.size();++j) {
+        for(std::size_t j=1;j+1<count;++j) {
             if(polygon[0].w<=0 || polygon[j].w<=0 || polygon[j+1].w<=0)continue;
-            result.insert(result.end(),{polygon[0],polygon[j],polygon[j+1]});
+            result.push_back(polygon[0]);result.push_back(polygon[j]);result.push_back(polygon[j+1]);
         }
     }
     return result;

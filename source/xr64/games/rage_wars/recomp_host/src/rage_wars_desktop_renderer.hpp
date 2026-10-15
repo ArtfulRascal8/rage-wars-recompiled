@@ -6,8 +6,11 @@
 #include <mutex>
 #include <string>
 
+#include <array>
+
 #include "rage_wars_controller_mapping.hpp"
 #include "rage_wars_controls.hpp"
+#include "rage_wars_input_assignment.hpp"
 
 namespace xr64::rage_wars::recomp {
 
@@ -40,6 +43,13 @@ public:
     bool pump_events();
     DesktopControllerSnapshot controller_snapshot() const;
     DesktopControllerSnapshot consume_controller_snapshot(bool gameplay, bool xr_gameplay);
+    // Per-player input: what controller port `port` (0-3) reads, following the input assignment.
+    DesktopControllerSnapshot consume_port_snapshot(unsigned port, bool gameplay, bool xr_gameplay);
+    bool port_connected(unsigned port) const;
+    input_assignment::Assignment input_assignment() const;
+    void set_input_assignment(const input_assignment::Assignment& assignment);
+    std::array<input_assignment::Effective, input_assignment::kPorts> effective_assignment() const;
+    unsigned gamepads_connected() const;
     controls::LookSample consume_look_sample();
     std::uint8_t consume_weapon_cycle();
     bool submit_task(std::uint8_t *rdram, std::size_t rdram_size,
@@ -58,6 +68,25 @@ private:
     void publish_input_snapshot();
     void set_mouse_capture(bool captured);
     void set_input_focus(bool focused);
+    // Gamepads 2-4 (gamepad 1 is controller_ / gamepad_input_).
+    struct ExtraPad {
+        void *handle = nullptr;
+        std::int32_t instance = -1;
+        StandardGamepadState state{};
+        N64ControllerInput gameplay{};
+        N64ControllerInput menu{};
+        controls::GamepadMapper mapper;
+        std::string name;
+    };
+    bool open_extra_pad(int device_index);
+    void close_extra_pad(std::int32_t instance);
+    void refresh_extra_pads();
+    void publish_local_blocks();
+    bool xr_input_available() const;
+    bool gather_xr_input(bool& gameplay, bool xr_gameplay, N64ControllerInput& touch_input, bool& touch_ready);
+    DesktopControllerSnapshot port_gamepad_snapshot(unsigned pad, bool gameplay);
+    DesktopControllerSnapshot port_keyboard_snapshot(bool gameplay);
+    DesktopControllerSnapshot port_xr_snapshot(bool gameplay, bool xr_gameplay);
 
     void *window_ = nullptr;
     void *context_ = nullptr;
@@ -96,6 +125,10 @@ private:
     bool mouse_captured_ = false;
     std::uint16_t latched_buttons_ = 0;
     std::uint8_t pending_weapon_cycle_=0,last_weapon_cycle_=0,last_keyboard_cycle_=0;
+    std::array<ExtraPad, 3> extra_pads_{};
+    mutable std::mutex assignment_mutex_;
+    input_assignment::Assignment assignment_{};
+    bool assignment_loaded_ = false;
     std::mutex lifecycle_mutex_;
     bool shutting_down_ = false;
     mutable std::mutex stats_mutex_;
@@ -116,6 +149,12 @@ DesktopControllerSnapshot gate5_desktop_controller_snapshot();
 DesktopControllerSnapshot consume_gate5_desktop_controller_snapshot(bool gameplay = false, bool xr_gameplay = false);
 XrMotionInput gate5_xr_motion_snapshot();
 XrMotionInput gate5_xr_shot_snapshot();
+DesktopControllerSnapshot consume_gate5_desktop_port_snapshot(unsigned port, bool gameplay, bool xr_gameplay);
+bool gate5_port_connected(unsigned port);
+std::array<input_assignment::Effective, input_assignment::kPorts> gate5_effective_assignment();
+std::uint64_t gate5_input_ui_revision();
+input_assignment::Assignment gate5_input_assignment();
+void set_gate5_input_assignment(const input_assignment::Assignment& assignment);
 controls::LookSample consume_gate5_desktop_look();
 std::uint8_t consume_gate5_desktop_weapon_cycle();
 void shutdown_gate5_desktop();

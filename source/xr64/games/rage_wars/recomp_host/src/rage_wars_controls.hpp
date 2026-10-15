@@ -23,6 +23,11 @@ struct Settings {
     bindings::Set controller_bindings = bindings::controller_defaults();
     bindings::Set xr_bindings = bindings::xr_defaults();
     float xr_turn_speed=0.5F, xr_move_threshold=0.25F, xr_trigger_threshold=0.55F;
+    // VR view placement (metres): head-locked gameplay HUD and the menu panel.
+    float xr_hud_distance=2.5F, xr_hud_width=2.2F, xr_menu_distance=2.0F, xr_menu_width=2.0F;
+    std::uint8_t xr_reticle_mode=0; // 0 laser, 1 ring, 2 off (motion controls)
+    std::uint8_t xr_move_direction=0; // 0 body, 1 head, 2 left hand
+    bool xr_analog_move=true;
     bool xr_motion_controls = true;
     bool controller_invert_x = false;
     bool controller_invert_y = false;
@@ -57,6 +62,12 @@ inline Settings validate(Settings settings) {
     settings.xr_turn_speed=finite_clamp(settings.xr_turn_speed,0.1F,1.0F,0.5F);
     settings.xr_move_threshold=finite_clamp(settings.xr_move_threshold,0.15F,0.6F,0.25F);
     settings.xr_trigger_threshold=finite_clamp(settings.xr_trigger_threshold,0.2F,0.9F,0.55F);
+    settings.xr_hud_distance=finite_clamp(settings.xr_hud_distance,1.0F,6.0F,2.5F);
+    settings.xr_hud_width=finite_clamp(settings.xr_hud_width,1.0F,4.0F,2.2F);
+    settings.xr_menu_distance=finite_clamp(settings.xr_menu_distance,1.0F,6.0F,2.0F);
+    settings.xr_menu_width=finite_clamp(settings.xr_menu_width,1.0F,4.0F,2.0F);
+    if(settings.xr_reticle_mode>2)settings.xr_reticle_mode=0;
+    if(settings.xr_move_direction>2)settings.xr_move_direction=0;
     return settings;
 }
 

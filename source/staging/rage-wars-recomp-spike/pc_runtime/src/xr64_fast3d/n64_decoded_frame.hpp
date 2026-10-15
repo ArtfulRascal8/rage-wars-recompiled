@@ -4,7 +4,9 @@
 
 #include <cstdint>
 #include <limits>
+#include <cstring>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -77,6 +79,9 @@ class N64DecodedFrame final : public N64RawFast3DBackend {
     std::vector<N64RawFast3DVertex> triangle_vertices_;
     std::vector<TriangleBatch> triangle_batches_;
     std::vector<RectangleDraw> rectangle_draws_;
+    // The game reloads the same texture for many draws in a frame. Identical
+    // loads share one owned payload instead of each copying its texels.
+    std::unordered_map<std::uint64_t, std::uint32_t> texture_by_hash_;
 
     template <typename Payload>
     bool append_payload(Op op, std::vector<Payload>& payloads,
@@ -96,6 +101,17 @@ class N64DecodedFrame final : public N64RawFast3DBackend {
             throw;
         }
         return true;
+    }
+
+    static bool same_texture(const N64RawFast3DTexture& a,
+            const N64RawFast3DTexture& b) {
+        return a.alpha_precombined == b.alpha_precombined &&
+                a.wrap_s == b.wrap_s && a.wrap_t == b.wrap_t &&
+                a.width == b.width && a.height == b.height &&
+                a.format == b.format && a.size == b.size &&
+                a.rgba.size() == b.rgba.size() &&
+                (a.rgba.empty() ||
+                    std::memcmp(a.rgba.data(), b.rgba.data(), a.rgba.size()) == 0);
     }
 
     bool append_marker(Op op) {
@@ -207,6 +223,30 @@ public:
 
     std::size_t size() const { return commands_.size(); }
 
+    // Read-only batch listing in replay order, with the content hash of the
+    // texture most recently uploaded before each batch (0 when none).
+    struct TriangleBatchView {
+        const N64RawFast3DVertex* vertices;
+        std::size_t vertex_count;
+        const N64RawFast3DDrawState* state;
+        std::uint64_t texture_hash;
+    };
+    std::vector<TriangleBatchView> triangle_batch_views() const {
+        std::vector<TriangleBatchView> views;
+        views.reserve(triangle_batches_.size());
+        std::uint64_t texture = 0;
+        for (const auto& command : commands_) {
+            if (command.op == Op::UploadTexture) {
+                texture = textures_[command.payload_index].content_hash;
+            } else if (command.op == Op::DrawTriangles) {
+                const auto& batch = triangle_batches_[command.payload_index];
+                views.push_back({batch.vertex_count ? triangle_vertices_.data() + batch.vertex_offset : nullptr,
+                        batch.vertex_count, &batch.state, texture});
+            }
+        }
+        return views;
+    }
+
     // The graphics owner may retain this immutable arena for one generation.
     // Accept a draw pointer only when it names a complete span in the arena.
     const N64RawFast3DVertex* triangle_vertex_data() const noexcept {
@@ -260,11 +300,21 @@ public:
 
     bool upload_texture(const N64RawFast3DTexture& texture,
             std::string& error) override {
+        const std::uint64_t hash = n64_raw_fast3d_texture_hash(texture);
+        const auto found = texture_by_hash_.find(hash);
+        if (found != texture_by_hash_.end() &&
+                same_texture(textures_[found->second], texture)) {
+            commands_.push_back({Op::UploadTexture, found->second});
+            return true;
+        }
         N64RawFast3DTexture owned_texture = texture;
-        owned_texture.content_hash = n64_raw_fast3d_texture_hash(owned_texture);
+        owned_texture.content_hash = hash;
         owned_texture.content_hash_valid = true;
-        return append_payload(Op::UploadTexture, textures_,
-                std::move(owned_texture), error);
+        const auto index = static_cast<std::uint32_t>(textures_.size());
+        if (!append_payload(Op::UploadTexture, textures_,
+                std::move(owned_texture), error)) return false;
+        texture_by_hash_[hash] = index;
+        return true;
     }
 
     bool draw_triangles(const std::vector<N64RawFast3DVertex>& vertices,

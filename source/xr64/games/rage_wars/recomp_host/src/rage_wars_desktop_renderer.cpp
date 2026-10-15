@@ -4,6 +4,8 @@
 #include "rage_wars_presentation_clock.hpp"
 #include "rage_wars_presentation_policy.hpp"
 #include "rage_wars_local_presentation.hpp"
+#include "rage_wars_body_interpolation.hpp"
+#include "rage_wars_animation_blend.hpp"
 #include "rage_wars_audio.hpp"
 #include "rage_wars_audio_telemetry.hpp"
 #include "rage_wars_preview_weapon.hpp"
@@ -30,6 +32,11 @@
 #include <ultramodern/ultra64.h>
 #include <ultramodern/renderer_context.hpp>
 #include <Windows.h>
+#include "rage_wars_model_filter.hpp"
+#include "rage_wars_generic_combiner.hpp"
+#include "rage_wars_xr_frame_stats.hpp"
+#include "rage_wars_xr_hud.hpp"
+#include "rage_wars_xr_laser.hpp"
 #pragma comment(lib, "Advapi32.lib")
 #include <TlHelp32.h>
 #include <cwctype>
@@ -38,6 +45,7 @@
 
 #include <algorithm>
 #include <atomic>
+#include <mutex>
 #include <array>
 #include <cmath>
 #include <chrono>
@@ -67,6 +75,42 @@ extern "C" void xr64_damage_reversal_observe(int state) {
     if (old != state) std::fprintf(stderr, "RW095_DAMAGE_REVERSAL state=%d (0=off,1=on,2=refused)\n", state);
 }
 static std::atomic<bool> rw092_ai_freeze{false};
+// Opt-in owner diagnostic: F10 requests one RDRAM snapshot when
+// XR64_RDRAM_SNAPSHOT_DIR is set; the guest controller poll writes it.
+static std::atomic<bool> g_rdram_snapshot_request{false};
+// Camera actually displayed in the latest VR frame (presentation-corrected),
+// published for the guest-thread shot hooks so shots start from what you see.
+std::mutex g_xr_display_camera_mutex;
+std::array<float,16> g_xr_display_camera{};
+std::int64_t g_xr_display_camera_ns = 0;
+// Player origin (actor+0x08 space) that the displayed camera corresponds to.
+// Body smoothing shows an older origin than the simulation has reached.
+std::array<float,3> g_xr_display_origin{};
+bool g_xr_display_origin_valid=false;
+extern "C" int xr64_xr_display_camera(float* out, long long max_age_ns) {
+    const auto now=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    std::lock_guard lock(g_xr_display_camera_mutex);
+    if(!g_xr_display_camera_ns || now-g_xr_display_camera_ns>max_age_ns || now<g_xr_display_camera_ns)return 0;
+    std::memcpy(out,g_xr_display_camera.data(),sizeof(float)*16);
+    return 1;
+}
+extern "C" int xr64_xr_display_origin(float* out) {
+    std::lock_guard lock(g_xr_display_camera_mutex);
+    if(!g_xr_display_origin_valid)return 0;
+    std::memcpy(out,g_xr_display_origin.data(),sizeof(float)*3);
+    return 1;
+}
+// Shot-path evidence for VR_FRAME_STATS (the guest-thread RW109 lines are not
+// reaching the captured stderr).
+std::atomic<std::uint64_t> g_xr_shot_count{0},g_xr_shot_barrel{0};
+std::atomic<float> g_xr_shot_lead{0};
+extern "C" void xr64_xr_shot_outcomes(unsigned long long* out);
+extern "C" void xr64_xr_note_shot(int barrel,float lead_units) {
+    ++g_xr_shot_count;if(barrel)++g_xr_shot_barrel;g_xr_shot_lead.store(lead_units);
+}
+// VR analog locomotion: left stick when motion controls own input (else 0).
+extern "C" int xr64_xr_locomotion_stick(float* x, float* y, float* yaw);
+extern "C" int xr64_rdram_snapshot_take() { return g_rdram_snapshot_request.exchange(false) ? 1 : 0; }
 extern "C" int xr64_rw092_ai_freeze_enabled() {
     return rw092_ai_freeze.load(std::memory_order_relaxed) ? 1 : 0;
 }
@@ -74,6 +118,11 @@ extern "C" int xr64_rw092_ai_freeze_enabled() {
 namespace xr64::rage_wars::recomp {
 namespace {
 HostPresentationClock g_presentation_clock;
+LocalBodyInterpolation g_desktop_body;
+// VR keeps its own smoothing histories so desktop/VR switches never mix them.
+LocalBodyInterpolation g_xr_body;
+AnimationBlend g_xr_animation_blend;
+AnimationBlend g_animation_blend;
 #ifdef XR64_OPENXR
 RageWarsOpenXr g_xr;
 XrMotionMapper g_motion_mapper;
@@ -83,6 +132,24 @@ std::uint64_t g_last_presented_generation = 0;
 std::uint64_t g_xr_presentations = 0;
 double g_upload_cpu_ms = 0;
 std::uint64_t g_upload_calls = 0;
+std::uint64_t g_xr_eye_draws = 0, g_xr_eye_vertices = 0;
+XrFrameStats g_xr_frame_stats;
+SceneAgeStats g_scene_age;
+// Scene age against the displayed camera delay; see SceneAgeStats.
+void record_scene_age(const LocalPlayerPresentation& player,std::int64_t now_ns,std::int64_t delay_ns,
+        std::uint64_t generation) {
+    if(!xr_frame_stats_enabled() || !player.valid || player.sampled_ns<=0 || now_ns<player.sampled_ns)return;
+    g_scene_age.record(double(now_ns-player.sampled_ns)/1e6,double(delay_ns)/1e6,generation);
+}
+struct XrDrawBreakdown {
+    std::uint64_t clip_vertices = 0, alpha_draws = 0, immediate_draws = 0, rects = 0;
+    double opaque_mpx = 0, alpha_mpx = 0, prepare_ms = 0, submit_ms = 0;
+} g_xr_breakdown;
+struct XrSubmitTimer {
+    bool active;
+    std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+    ~XrSubmitTimer() { if (active) g_xr_breakdown.submit_ms += std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count(); }
+};
 const XrEyeFrame* g_xr_eye=nullptr;
 bool g_xr_menu_flat=false;
 GLuint g_xr_panel_texture=0;
@@ -100,6 +167,30 @@ bool xr_requested() { const char* v=std::getenv("XR64_OPENXR"); return v&&std::s
 bool independent_requested() { const char* v=std::getenv("XR64_XR_PRESENTATION"); return v&&std::string(v)=="independent"; }
 bool xr_enabled() { return g_xr_active; }
 bool xr_hand_motion_enabled() { return g_xr_hand_motion_active.load(std::memory_order_acquire); }
+}} // namespace xr64::rage_wars::recomp (temporarily closed for the C accessor)
+// Yaw (radians, counter-clockwise from above) of the chosen movement reference
+// relative to tracking forward, which the reference space keeps aligned with
+// the body after a recenter: 0 for BODY, head yaw for HEAD, left aim yaw for HAND.
+extern "C" int xr64_xr_locomotion_stick(float* x, float* y, float* yaw) {
+    using namespace xr64::rage_wars::recomp;
+    if(!x || !y || !yaw || !xr_enabled() || !g_xr_hand_motion_active.load(std::memory_order_acquire))return 0;
+    const auto controls=xr64::rage_wars::port_options::snapshot().controls;
+    if(!controls.xr_analog_move)return 0;
+    const auto input=g_xr.input_snapshot();
+    if(!input.available || !input.focused)return 0;
+    *x=input.left.stick[0];*y=input.left.stick[1];*yaw=0;
+    const float* q=nullptr;
+    if(controls.xr_move_direction==1 && input.head_pose_valid)q=input.head_orientation;
+    else if(controls.xr_move_direction==2 && input.left.pose_valid)
+        q=input.left.aim_pose_valid ? input.left.aim_orientation : input.left.orientation;
+    if(q) {
+        // Forward is -Z: f = q * (0,0,-1).
+        const float fx=-2.0F*(q[0]*q[2]+q[3]*q[1]), fz=-(1.0F-2.0F*(q[0]*q[0]+q[1]*q[1]));
+        if(fx*fx+fz*fz>1e-4F)*yaw=std::atan2(-fx,-fz);
+    }
+    return std::isfinite(*x) && std::isfinite(*y) && std::isfinite(*yaw) ? 1 : 0;
+}
+namespace xr64::rage_wars::recomp { namespace {
 std::wstring selected_runtime_manifest() {
     wchar_t override_path[32768]{};
     SetLastError(ERROR_SUCCESS);
@@ -221,6 +312,77 @@ bool start_xr_on_owner(std::string& error) {
 bool xr_hand_ray_requested() {
     static const bool enabled=[] { const char* value=std::getenv("XR64_XR_HAND_RAY"); return value&&std::string(value)=="1"; }();
     return enabled;
+}
+XrLaserWorld g_xr_laser_world;
+// Laser from the hand to the first world hit, projected exactly like world
+// geometry (same source projection and per-eye camera retarget).
+void draw_xr_laser(const XrEyeFrame& eye,const LocalCameraCorrection& local,
+        const ::xr64::N64RawFast3DDrawState& state,const std::array<float,3>& start,
+        const std::array<float,3>& end,bool hit) {
+    const float units=xr_laser_units();
+    const XrEyeFrame used=local_scene_projection(state,local) ? local_xr_eye(eye,local,units) : eye;
+    const auto ndc=[&](const std::array<float,3>& p,std::array<float,3>& out) {
+        const auto& m=state.source_projection;
+        ::xr64::N64RawFast3DVertex v;
+        v.x=m[0]*p[0]+m[4]*p[1]+m[8]*p[2]+m[12];
+        v.y=m[1]*p[0]+m[5]*p[1]+m[9]*p[2]+m[13];
+        v.z=m[2]*p[0]+m[6]*p[1]+m[10]*p[2]+m[14];
+        v.w=m[3]*p[0]+m[7]*p[1]+m[11]*p[2]+m[15];
+        v=xr_project_vertex(v,state,used,units);
+        if(!std::isfinite(v.w)||v.w<0.02F)return false;
+        out={v.x/v.w,v.y/v.w,v.z/v.w};return true;
+    };
+    std::array<float,3> a{},b{};
+    if(!ndc(start,a)||!ndc(end,b))return;
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+    glDisable(GL_TEXTURE_2D);glDisable(GL_DEPTH_TEST);glDisable(GL_CULL_FACE);
+    glDisable(GL_SCISSOR_TEST);glEnable(GL_BLEND);glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glMatrixMode(GL_PROJECTION);glPushMatrix();glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);glPushMatrix();glLoadIdentity();
+    glLineWidth(2.5F);
+    glBegin(GL_LINES);
+    glColor4f(1.0F,0.15F,0.1F,0.15F);glVertex3f(a[0],a[1],a[2]);
+    glColor4f(1.0F,0.15F,0.1F,0.75F);glVertex3f(b[0],b[1],b[2]);
+    glEnd();
+    if(hit) {
+        glPointSize(10.0F);glColor4f(1.0F,0.1F,0.05F,0.9F);
+        glBegin(GL_POINTS);glVertex3f(b[0],b[1],b[2]);glEnd();
+        glPointSize(4.0F);glColor4f(1.0F,0.9F,0.8F,1.0F);
+        glBegin(GL_POINTS);glVertex3f(b[0],b[1],b[2]);glEnd();
+    }
+    glPopMatrix();glMatrixMode(GL_PROJECTION);glPopMatrix();glPopAttrib();
+}
+// Controller reticle on the right-hand aim ray (the ray the shot hook uses),
+// at the HUD distance and facing the head, so both eyes see one reticle.
+void draw_xr_aim_reticle(const XrEyeFrame& eye,const XrMotionInput& motion) {
+    if(!motion.focused || !g_xr_hand_motion_active.load(std::memory_order_acquire))return;
+    XrTrackedRay ray;
+    if(!xr_tracked_aim_ray(motion.right,ray))return;
+    const float distance=xr_hud_settings().distance;
+    const std::array<float,3> centre{ray.origin[0]+ray.forward[0]*distance,
+        ray.origin[1]+ray.forward[1]*distance,ray.origin[2]+ray.forward[2]*distance};
+    const auto right=xr_hud_rotate(eye.head_orientation,{1,0,0});
+    const auto up=xr_hud_rotate(eye.head_orientation,{0,1,0});
+    const float radius=distance*0.012F;
+    const auto ndc=[&](float u,float v,std::array<float,3>& out) {
+        const std::array<float,3> p{centre[0]+(right[0]*u+up[0]*v)*radius,centre[1]+(right[1]*u+up[1]*v)*radius,
+            centre[2]+(right[2]*u+up[2]*v)*radius};
+        const auto c=xr_project_tracked_point(p,eye);
+        if(!std::isfinite(c.w)||c.w<0.02F)return false;
+        out={c.x/c.w,c.y/c.w,c.z/c.w};return true;
+    };
+    std::array<std::array<float,3>,25> pts{};
+    for(int i=0;i<24;++i){const float a=6.2831853F*float(i)/24.0F;if(!ndc(std::cos(a),std::sin(a),pts[i]))return;}
+    if(!ndc(0,0,pts[24]))return;
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+    glDisable(GL_TEXTURE_2D);glDisable(GL_DEPTH_TEST);glDisable(GL_CULL_FACE);
+    glDisable(GL_SCISSOR_TEST);glEnable(GL_BLEND);glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glMatrixMode(GL_PROJECTION);glPushMatrix();glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);glPushMatrix();glLoadIdentity();
+    glLineWidth(2.5F);glColor4f(0.15F,1.0F,0.25F,0.9F);
+    glBegin(GL_LINE_LOOP);for(int i=0;i<24;++i)glVertex3f(pts[i][0],pts[i][1],pts[i][2]);glEnd();
+    glPointSize(5.0F);glBegin(GL_POINTS);glVertex3f(pts[24][0],pts[24][1],pts[24][2]);glEnd();
+    glPopMatrix();glMatrixMode(GL_PROJECTION);glPopMatrix();glPopAttrib();
 }
 void draw_xr_hand_ray(const XrEyeFrame& eye,const XrMotionInput& motion) {
     if(!xr_hand_ray_requested()||!motion.focused)return;
@@ -384,7 +546,8 @@ void publish_local_control_state(std::uint64_t generation,const LocalCameraCorre
     if(!local_state_sample_enabled())return;
     static LocalControlTelemetry telemetry;static auto reported=std::chrono::steady_clock::now();
     static std::uint64_t presentations=0;++presentations;
-    const auto now=std::chrono::steady_clock::now();if(now-reported<std::chrono::seconds(1))return;
+    const auto now=std::chrono::steady_clock::now();
+    if(!local_frame_sample_enabled() && now-reported<std::chrono::seconds(1))return;
     reported=now;const auto state=local_presentation().acquire();const auto& p=state.player;
     char text[2048]{};
     const int bytes=std::snprintf(text,sizeof(text),
@@ -625,6 +788,15 @@ struct TriangleVboPath {
     }
 };
 TriangleVboPath g_triangle_vbo;
+CapturedModelFilter g_model_filter;
+GenericCombiner g_generic_combiner;
+bool model_filter_requested() {
+    static const bool enabled = [] {
+        // On by default; XR64_CAPTURED_MODEL_FILTER=0 switches it off.
+        return feature_default_on("XR64_CAPTURED_MODEL_FILTER");
+    }();
+    return enabled;
+}
 #ifdef XR64_OPENXR
 // A single raw vertex arena is uploaded once for a decoded generation. Replay
 // still visits every draw in its original order; each eye supplies its own pose
@@ -1025,6 +1197,22 @@ bool xr_triangle_vbo_enabled() {
     }();
     return enabled;
 }
+// Default on; XR64_XR_CALIBRATED_MODELS=0 lets VR follow the PC MODELS option.
+bool xr_force_calibrated_models() {
+    static const bool enabled = [] {
+        const char *value = std::getenv("XR64_XR_CALIBRATED_MODELS");
+        return !(value && value[0] == '0' && value[1] == 0);
+    }();
+    return enabled;
+}
+// Default on; XR64_XR_LEVEL_VIEW=0 restores the game-pitched VR camera.
+bool xr_level_play_space_enabled() {
+    static const bool enabled = [] {
+        const char *value = std::getenv("XR64_XR_LEVEL_VIEW");
+        return !(value && value[0] == '0' && value[1] == '\0');
+    }();
+    return enabled;
+}
 bool xr_retained_geometry_enabled() {
     static const bool enabled = [] {
         const char *value = std::getenv("XR64_XR_RETAINED_GEOMETRY");
@@ -1122,6 +1310,7 @@ public:
     bool startup() const { return startup_; }
     LocalPlayerPresentation scene_player() const { return scene_player_; }
     void local_camera(const LocalCameraCorrection& correction) { local_camera_=correction; }
+    void animation_blend(const AnimationBlend* blend) { animation_blend_=blend; }
     void presentation_motion(const XrMotionInput& motion) { presentation_motion_=motion; }
     bool present_mirror(const ::xr64::N64RawFast3DTaskStats& stats, bool repeated, std::string& error) {
         raw_stats_ = stats;
@@ -1185,7 +1374,9 @@ public:
         scene_player_=preview_frame.player;
         auto preview_replacement=prepare_preview_weapon(context.rdram,
                 preview_frame.actor,xr_enabled() && xr_hand_motion_enabled(),gate5_xr_motion_snapshot(),&preview_frame,
-                port_options::snapshot().calibrated_weapon_models);
+                // VR always uses the calibrated, controller-tracked models; the
+                // original arm model is screen-fixed and cannot follow a hand.
+                port_options::snapshot().calibrated_weapon_models || (xr_enabled() && xr_force_calibrated_models()));
         if(preview_frame.actor && preview_frame.list) {
             preview_replacement.physical_address=preview_frame.list&0x7FFFFFU;
             preview_replacement.camera_attachment=true;
@@ -1410,6 +1601,11 @@ public:
             std::size_t vertex_count,
             const ::xr64::N64RawFast3DDrawState &state,
             std::string &) override {
+        if(g_xr_eye){++g_xr_eye_draws;g_xr_eye_vertices+=vertex_count;}
+        const auto xr_draw_begin=std::chrono::steady_clock::now();
+        // Desktop presentation only: substitute the matched, blended batch.
+        if(animation_blend_)
+            if(const auto* blended=animation_blend_->find(input_vertices,vertex_count))input_vertices=blended;
 #ifdef XR64_OPENXR
         const bool retarget_xr=g_xr_eye && local_scene_projection(state,local_camera_);
         const XrEyeFrame* raw_eye=g_xr_eye;
@@ -1430,25 +1626,32 @@ public:
                 g_widescreen, drawable_w, drawable_h, g_diagnostic_fov,
                 state.perspective_y_scale);
         const bool wide = adjustment.wide;
-        std::vector<::xr64::N64RawFast3DVertex> adjusted_vertices;
-        if (vertex_count) adjusted_vertices.assign(input_vertices,
-                input_vertices + vertex_count);
-        const bool retarget=!menu_panel_ && local_scene_projection(state,local_camera_);
-        for (auto& v : adjusted_vertices) {
-            if(retarget)v=local_project_vertex(v,state,local_camera_);
-            v.x *= adjustment.x_scale;
-            v.y *= adjustment.y_scale;
+        // Reused per thread: each eye replays every draw, so a fresh heap
+        // vector per draw was paid twice per frame for every model.
+        static thread_local std::vector<::xr64::N64RawFast3DVertex> adjusted_vertices;
+        adjusted_vertices.assign(input_vertices, input_vertices + vertex_count);
+#ifdef XR64_OPENXR
+        const bool xr_perspective=g_xr_eye && !g_xr_menu_flat && state.perspective_projection && state.perspective_x_norm>0.00001F && state.perspective_y_norm>0.00001F && state.perspective_w_norm>0.00001F;
+#else
+        const bool xr_perspective=false;
+#endif
+        // The XR branch below replaces these vertices from the input; skip the
+        // desktop retarget/scale work it would discard.
+        if(!xr_perspective) {
+            const bool retarget=!menu_panel_ && local_scene_projection(state,local_camera_);
+            for (auto& v : adjusted_vertices) {
+                if(retarget)v=local_project_vertex(v,state,local_camera_);
+                v.x *= adjustment.x_scale;
+                v.y *= adjustment.y_scale;
+            }
         }
 #ifdef XR64_OPENXR
-        if(g_xr_eye && !g_xr_menu_flat && state.perspective_projection && state.perspective_x_norm>0.00001F && state.perspective_y_norm>0.00001F && state.perspective_w_norm>0.00001F) {
+        if(xr_perspective) {
             // Recover eye-space coordinates from the symmetric guest projection.
             // Norms remove camera rotation and N64 perspective normalization.
             // World scale is deliberately explicit pending headset calibration.
             const auto& eye=*g_xr_eye;
-            float units=100.0F;
-            if(const char* value=std::getenv("XR64_XR_UNITS_PER_METRE")) { const float parsed=std::strtof(value,nullptr);if(std::isfinite(parsed)&&parsed>0)units=parsed; }
-            if (vertex_count) adjusted_vertices.assign(input_vertices,
-                    input_vertices + vertex_count);
+            const float units=xr_world_units();
             if(state.tracked_attachment) {
                 const auto attachment=tracked_weapon_attachment(presentation_motion_);
                 if(!attachment.valid)return true;
@@ -1457,7 +1660,10 @@ public:
                     const auto clip=xr_project_tracked_point(p,eye);
                     v.x=clip.x;v.y=clip.y;v.z=clip.z;v.w=clip.w;
                 }
-            } else for(auto& v:adjusted_vertices)v=xr_project_vertex(v,state,retarget_xr?world_eye:eye,units);
+            } else {
+                const XrEyeProjector project(state,retarget_xr?world_eye:eye,units);
+                for(auto& v:adjusted_vertices)project(v);
+            }
         }
 #endif
         set_drawable_viewport(wide);
@@ -1467,12 +1673,71 @@ public:
         if (diagnostic_task_selected()) std::fprintf(stderr,
                 "RW087_CLIP task=%llu input=%zu output=%zu\n",
                 static_cast<unsigned long long>(task_sequence_),vertex_count,vertices.size());
+        // The coverage estimate re-maps every clipped vertex; only pay for it
+        // when VR frame stats are being recorded.
+        if(g_xr_eye && xr_frame_stats_enabled()) {
+            g_xr_breakdown.prepare_ms+=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-xr_draw_begin).count();
+            g_xr_breakdown.clip_vertices+=vertices.size();
+            double area=0;
+            for(std::size_t i=0;i+2<vertices.size();i+=3) {
+                float px[3],py[3];bool ok=true;
+                for(int k=0;k<3;++k) {
+                    const auto c=::xr64::n64_raw_fast3d_map_to_host_clip(vertices[i+k],state.viewport,
+                        static_cast<float>(logical_width_),static_cast<float>(logical_height_));
+                    if(!(c.w>1e-6F)){ok=false;break;}
+                    px[k]=c.x/c.w;py[k]=c.y/c.w;
+                }
+                if(ok)area+=std::abs((px[1]-px[0])*(py[2]-py[0])-(px[2]-px[0])*(py[1]-py[0]))*0.5;
+            }
+            // NDC spans 2x2; scale to eye pixels, in megapixels.
+            const double mpx=area*0.25*double(g_xr_eye->width)*double(g_xr_eye->height)/1e6;
+            if(state.alpha_blend){g_xr_breakdown.alpha_mpx+=mpx;++g_xr_breakdown.alpha_draws;}
+            else g_xr_breakdown.opaque_mpx+=mpx;
+        }
+        XrSubmitTimer xr_submit_timer{g_xr_eye!=nullptr};
         if (vertices.empty()) return true;
 
         if (::xr64::render_diagnostics::legacy() || diagnostic_task_selected()) std::fprintf(stderr, "RW020_RDP_TRIANGLE_SUBMIT vertices=%zu\n",
                 vertices.size());
         XR64_RENDER_DIAGNOSTIC_FLUSH();
+        HudDrawScope hud_scope{this};
+        hud_draw_ = g_xr_eye && !g_xr_menu_flat && !state.perspective_projection &&
+                !state.tracked_attachment && xr_hud_settings().enabled;
+        if (hud_draw_ && xr_hide_game_crosshair_enabled() && g_xr_hand_motion_active.load(std::memory_order_acquire)) {
+            float l=1e30F,t=1e30F,r=-1e30F,b=-1e30F;
+            for (const auto& v : vertices) {
+                ::xr64::N64RawFast3DGuestPosition p;
+                if (!::xr64::n64_raw_fast3d_map_to_guest_viewport(v, state.viewport, p)) continue;
+                l=std::min(l,p.x);r=std::max(r,p.x);t=std::min(t,p.y);b=std::max(b,p.y);
+            }
+            if (xr_hud_is_crosshair(l,t,r,b,logical_width_,logical_height_)) return true;
+        }
         set_triangle_draw_state(state);
+        if (hud_draw_) glDisable(GL_DEPTH_TEST); // The HUD is never hidden by nearer world geometry.
+        CapturedModelFilterScope filter_scope;
+        bool desktop_filter = model_filter_requested() && !xr_enabled() && texture_id_ &&
+                captured_model_filter_material(state, texture_format_, texture_size_);
+#ifdef XR64_OPENXR
+        desktop_filter = desktop_filter && !g_xr_eye;
+#endif
+        if (desktop_filter) {
+            if (g_model_filter.begin(texture_width_, texture_height_)) {
+                filter_scope.filter = &g_model_filter;
+            } else {
+                static bool reported = false;
+                if (!reported) {
+                    std::fprintf(stderr, "RW100_MODEL_FILTER unavailable=%s fallback=nearest\n",
+                            g_model_filter.reason().c_str());
+                    reported = true;
+                }
+            }
+        }
+        log_combiner_once(state, texture_format_, texture_size_);
+        GenericCombinerScope combiner_scope;
+        if (!filter_scope.filter && generic_combiner_enabled() && !g_xr_eye &&
+                !::xr64::n64_raw_fast3d_palette_lerp_material(state) &&
+                !::xr64::n64_raw_fast3d_texture_rgb_material(state) &&
+                g_generic_combiner.begin(state)) combiner_scope.combiner = &g_generic_combiner;
         if (diagnostic_task_selected()) {
             GLint min_filter=0, mag_filter=0;
             if (state.textured && texture_id_) {
@@ -1497,6 +1762,7 @@ public:
         else if (vertices.size() > kTriangleVboByteLimit / sizeof(TriangleArrayVertex))
             fallback_reason = "batch_exceeds_32_mib_limit";
         if (fallback_reason) {
+            if(g_xr_eye)++g_xr_breakdown.immediate_draws;
             note_triangle_submission(false, fallback_reason);
         } else {
             note_triangle_submission(true);
@@ -1553,6 +1819,14 @@ public:
             }
             glEnd();
         }
+        if (filter_scope.filter) {
+            static bool submitted = false;
+            if (!submitted) {
+                std::fprintf(stderr, "RW100_MODEL_FILTER draw_submitted=1 dimensions=%dx%d format=%u size=%u scope=desktop_captured_material\n",
+                        texture_width_, texture_height_, texture_format_, texture_size_);
+                submitted = true;
+            }
+        }
         observe_framebuffer_change("triangle");
         return true;
     }
@@ -1561,6 +1835,7 @@ public:
             float s0, float t0, float s1, float t1,
             const ::xr64::N64RawFast3DDrawState &state,
             std::string &) override {
+        if(g_xr_eye)++g_xr_breakdown.rects;
 #ifdef XR64_OPENXR
         g_xr_retained_geometry.restore_draw_scope();
 #endif
@@ -1597,6 +1872,12 @@ public:
         set_drawable_viewport();
         apply_guest_scissor();
         set_blend_depth(state);
+        HudDrawScope hud_scope{this};
+        hud_draw_ = g_xr_eye && !g_xr_menu_flat && xr_hud_settings().enabled &&
+                xr_hud_rectangle(left, top, right, bottom, logical_width_, logical_height_);
+        if (hud_draw_ && xr_hide_game_crosshair_enabled() && g_xr_hand_motion_active.load(std::memory_order_acquire) &&
+                xr_hud_is_crosshair(left, top, right, bottom, logical_width_, logical_height_)) return true;
+        if (hud_draw_) { glDisable(GL_DEPTH_TEST); glDisable(GL_SCISSOR_TEST); }
         set_pixel_projection();
         if (state.textured && texture_id_ != 0) {
             glEnable(GL_TEXTURE_2D);
@@ -1610,12 +1891,30 @@ public:
         }
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         glDisable(GL_CULL_FACE);
+        if (state.textured) log_combiner_once(state, texture_format_, texture_size_);
+        const bool known_env_hud = texture_alpha_precombined_ &&
+                ::xr64::n64_raw_fast3d_environment_hud_material(state);
+        // Opt-in: two-colour text is lerp(primitive, environment, glyph); see
+        // combiner_rect_lerp. The default draws it in the primitive colour only.
+        RectLerp rect_lerp;
+        if (state.textured && !known_env_hud && texture_id_ != 0 && rect_combiner_color_enabled())
+            rect_lerp = combiner_rect_lerp(decode_combiner(state.combine_word0, state.combine_word1),
+                    combiner_two_cycle(state));
         auto color = !state.textured ?
                 startup_rectangle_fill(menu_panel_, startup_, left, top, right, bottom,
                         logical_width_, logical_height_, state) :
-                texture_alpha_precombined_ &&
-                        ::xr64::n64_raw_fast3d_environment_hud_material(state) ?
-                state.environment_color : state.primitive_color;
+                known_env_hud ? state.environment_color : state.primitive_color;
+        if (rect_lerp.valid) {
+            // GL_BLEND: Cf * (1 - Ct) + Cc * Ct with Cf = colour at texel 0 and Cc = colour at texel 1.
+            const auto& low = rect_lerp.from_prim ? state.primitive_color : state.environment_color;
+            const auto& high = rect_lerp.from_prim ? state.environment_color : state.primitive_color;
+            const GLfloat high_color[4] = {high.r / 255.0F, high.g / 255.0F, high.b / 255.0F, 1.0F};
+            glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
+            glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, high_color);
+            color = low;
+            color.a = rect_lerp.alpha_source == 1 ? state.primitive_color.a :
+                    rect_lerp.alpha_source == 2 ? state.environment_color.a : 255;
+        }
         glColor4ub(color.r, color.g, color.b,
                 state.textured && texture_alpha_precombined_ ? 255 : color.a);
         // Captured health digits only; this probe does not alter draw state.
@@ -1675,6 +1974,7 @@ public:
         glTexCoord2f(s1, t1); glVertex3f(right, bottom, 0.0F);
         glTexCoord2f(s0, t1); glVertex3f(left, bottom, 0.0F);
         glEnd();
+        if (rect_lerp.valid) glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         observe_framebuffer_change("rectangle");
         if (state.textured) {
             ++textured_rectangle_count_;
@@ -1900,6 +2200,9 @@ private:
     const ::xr64::N64FrameSnapshotOf<LocalPlayerPresentation>* frame_snapshot_ = nullptr;
     LocalPlayerPresentation scene_player_{};
     LocalCameraCorrection local_camera_{};
+    mutable bool hud_draw_ = false; // XR gameplay HUD draw: pixel projection targets the head-locked panel
+    struct HudDrawScope { const OpenGlFast3DBackend* b; ~HudDrawScope() { b->hud_draw_ = false; } };
+    const AnimationBlend* animation_blend_ = nullptr;
     XrMotionInput presentation_motion_{};
     bool menu_panel_ = true;
     bool startup_ = false;
@@ -2360,10 +2663,14 @@ private:
     }
 #ifdef XR64_OPENXR
     static float xr_world_units() {
-        float units=100;
-        if(const char* value=std::getenv("XR64_XR_UNITS_PER_METRE")) {
-            const float parsed=std::strtof(value,nullptr);if(std::isfinite(parsed)&&parsed>0)units=parsed;
-        }
+        // Read once: this runs for every XR draw.
+        static const float units=[] {
+            float value_units=100;
+            if(const char* value=std::getenv("XR64_XR_UNITS_PER_METRE")) {
+                const float parsed=std::strtof(value,nullptr);if(std::isfinite(parsed)&&parsed>0)value_units=parsed;
+            }
+            return value_units;
+        }();
         return units;
     }
     bool draw_xr_retained_triangles(const ::xr64::N64RawFast3DVertex* vertices,
@@ -2638,6 +2945,13 @@ private:
     void set_pixel_projection() const {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
+        if (hud_draw_ && g_xr_eye) {
+            const auto m = xr_hud_matrix(*g_xr_eye, logical_width_, logical_height_);
+            glLoadMatrixf(m.data());
+            glMatrixMode(GL_MODELVIEW);
+            glLoadIdentity();
+            return;
+        }
         glOrtho(0.0, logical_width_, logical_height_, 0.0, -1.0, 1.0);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -2704,15 +3018,7 @@ void RageWarsDesktopRenderer::close_controller() {
     XR64_RENDER_DIAGNOSTIC_FLUSH();
 }
 
-void RageWarsDesktopRenderer::refresh_controller_snapshot() {
-    SDL_GameController *controller = static_cast<SDL_GameController *>(controller_);
-    if (controller == nullptr) return;
-    if (g_sdl.game_controller_get_attached(controller) != SDL_TRUE) {
-        close_controller();
-        return;
-    }
-
-    g_sdl.game_controller_update();
+static StandardGamepadState read_standard_gamepad_state(SDL_GameController *controller) {
     const auto pressed = [controller](SDL_GameControllerButton button) {
         return g_sdl.game_controller_get_button(controller, button) != 0;
     };
@@ -2735,12 +3041,349 @@ void RageWarsDesktopRenderer::refresh_controller_snapshot() {
     physical.right_y = g_sdl.game_controller_get_axis(controller, SDL_CONTROLLER_AXIS_RIGHTY);
     physical.right_trigger = g_sdl.game_controller_get_axis(
             controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+    return physical;
+}
+
+void RageWarsDesktopRenderer::refresh_controller_snapshot() {
+    SDL_GameController *controller = static_cast<SDL_GameController *>(controller_);
+    if (controller == nullptr) return;
+    if (g_sdl.game_controller_get_attached(controller) != SDL_TRUE) {
+        close_controller();
+        return;
+    }
+
+    g_sdl.game_controller_update();
+    const StandardGamepadState physical = read_standard_gamepad_state(controller);
     {
         std::lock_guard lock(controller_mutex_);
         gamepad_state_ = physical;
         menu_gamepad_input_ = map_gamepad_menu(physical);
         gamepad_input_ = gamepad_mapper_.map(physical, control_settings_, true);
     }
+}
+
+bool RageWarsDesktopRenderer::open_extra_pad(int device_index) {
+    if (g_sdl.is_game_controller(device_index) != SDL_TRUE) return false;
+    SDL_GameController *controller = g_sdl.game_controller_open(device_index);
+    if (controller == nullptr) return false;
+    SDL_Joystick *joystick = g_sdl.game_controller_get_joystick(controller);
+    const std::int32_t instance = joystick != nullptr ? g_sdl.joystick_instance_id(joystick) : -1;
+    bool duplicate = instance < 0 || instance == controller_instance_id_;
+    std::size_t free_slot = extra_pads_.size();
+    {
+        std::lock_guard lock(controller_mutex_);
+        for (std::size_t i = 0; i < extra_pads_.size(); ++i) {
+            if (extra_pads_[i].handle != nullptr && extra_pads_[i].instance == instance) duplicate = true;
+            if (extra_pads_[i].handle == nullptr && free_slot == extra_pads_.size()) free_slot = i;
+        }
+        if (!duplicate && free_slot < extra_pads_.size()) {
+            ExtraPad &pad = extra_pads_[free_slot];
+            pad = ExtraPad{};
+            pad.handle = controller;
+            pad.instance = instance;
+            const char *name = g_sdl.game_controller_name(controller);
+            pad.name = name != nullptr ? name : "unknown";
+        }
+    }
+    if (duplicate || free_slot >= extra_pads_.size()) {
+        g_sdl.game_controller_close(controller);  // SDL reference counted: the first handle stays open
+        return false;
+    }
+    std::fprintf(stderr, "RW120_EXTRA_PAD_OPEN slot=%zu gamepad=%zu instance=%d name=%s\n",
+            free_slot, free_slot + 2, instance, extra_pads_[free_slot].name.c_str());
+    XR64_RENDER_DIAGNOSTIC_FLUSH();
+    return true;
+}
+
+void RageWarsDesktopRenderer::close_extra_pad(std::int32_t instance) {
+    void *handle = nullptr;
+    std::string name;
+    {
+        std::lock_guard lock(controller_mutex_);
+        for (auto &pad : extra_pads_) {
+            if (pad.handle != nullptr && pad.instance == instance) {
+                handle = pad.handle;
+                name = pad.name;
+                pad = ExtraPad{};
+                break;
+            }
+        }
+    }
+    if (handle == nullptr) return;
+    g_sdl.game_controller_close(static_cast<SDL_GameController *>(handle));
+    std::fprintf(stderr, "RW120_EXTRA_PAD_REMOVED name=%s state=neutral\n", name.c_str());
+    XR64_RENDER_DIAGNOSTIC_FLUSH();
+}
+
+void RageWarsDesktopRenderer::refresh_extra_pads() {
+    for (std::size_t i = 0; i < extra_pads_.size(); ++i) {
+        void *handle;
+        {
+            std::lock_guard lock(controller_mutex_);
+            handle = extra_pads_[i].handle;
+        }
+        if (handle == nullptr) continue;
+        auto *controller = static_cast<SDL_GameController *>(handle);
+        if (g_sdl.game_controller_get_attached(controller) != SDL_TRUE) {
+            std::int32_t instance;
+            { std::lock_guard lock(controller_mutex_); instance = extra_pads_[i].instance; }
+            close_extra_pad(instance);
+            continue;
+        }
+        const StandardGamepadState physical = read_standard_gamepad_state(controller);
+        std::lock_guard lock(controller_mutex_);
+        ExtraPad &pad = extra_pads_[i];
+        if (pad.handle != handle) continue;
+        pad.state = physical;
+        pad.menu = map_gamepad_menu(physical);
+        pad.gameplay = pad.mapper.map(physical, control_settings_, true);
+    }
+}
+
+unsigned RageWarsDesktopRenderer::gamepads_connected() const {
+    std::lock_guard lock(controller_mutex_);
+    unsigned count = controller_ != nullptr ? 1U : 0U;
+    for (const auto &pad : extra_pads_) if (pad.handle != nullptr) ++count;
+    return count;
+}
+
+bool RageWarsDesktopRenderer::xr_input_available() const {
+#ifdef XR64_OPENXR
+    return xr_enabled();
+#else
+    return false;
+#endif
+}
+
+// ---- Per-player input assignment -------------------------------------------------------
+namespace {
+std::filesystem::path input_assignment_path() {
+    if (const char *explicit_path = std::getenv("XR64_INPUT_ASSIGNMENT_CONFIG");
+            explicit_path != nullptr && explicit_path[0] != '\0') {
+        return explicit_path;
+    }
+    const char *local = std::getenv("LOCALAPPDATA");
+    const std::filesystem::path root = local != nullptr && local[0] != '\0'
+            ? std::filesystem::path(local) : std::filesystem::temp_directory_path();
+    return root / "XR64" / "RageWars" / "input-assignment-v1.ini";
+}
+
+input_assignment::Assignment load_input_assignment() {
+    input_assignment::Assignment assignment;
+    const auto path = input_assignment_path();
+    std::error_code error;
+    if (std::filesystem::is_regular_file(path, error)) {
+        std::ifstream file(path, std::ios::binary);
+        const std::string text((std::istreambuf_iterator<char>(file)), {});
+        unsigned problems = 0;
+        input_assignment::parse_config(text, assignment, &problems);
+        std::fprintf(stderr, "RW120_INPUT_ASSIGNMENT file=%s problems=%u\n", path.string().c_str(), problems);
+    }
+    // Environment overrides (for launchers): XR64_PLAYER1_INPUT .. XR64_PLAYER4_INPUT.
+    for (unsigned port = 0; port < input_assignment::kPorts; ++port) {
+        const std::string name = "XR64_PLAYER" + std::to_string(port + 1) + "_INPUT";
+        const char *value = std::getenv(name.c_str());
+        input_assignment::Source parsed;
+        if (value != nullptr && input_assignment::parse_source(value, parsed)) assignment.port[port] = parsed;
+    }
+    return assignment;
+}
+
+bool save_input_assignment(const input_assignment::Assignment &assignment) {
+    const auto path = input_assignment_path();
+    std::error_code error;
+    std::filesystem::create_directories(path.parent_path(), error);
+    auto temporary = path;
+    temporary += ".tmp";
+    {
+        std::ofstream file(temporary, std::ios::binary | std::ios::trunc);
+        if (!file) return false;
+        file << input_assignment::serialize(assignment);
+        if (!file.good()) return false;
+    }
+    std::filesystem::rename(temporary, path, error);
+    if (error) {
+        std::filesystem::remove(path, error);
+        std::filesystem::rename(temporary, path, error);
+    }
+    return !error;
+}
+
+std::atomic<std::uint64_t> g_input_ui_revision{1};
+std::atomic<int> g_keyboard_mode{0};  // 0 legacy/auto, 1 keyboard+mouse owns a non-legacy port, 2 no keyboard assigned
+}  // namespace
+
+std::uint64_t gate5_input_ui_revision() { return g_input_ui_revision.load(std::memory_order_relaxed); }
+
+input_assignment::Assignment RageWarsDesktopRenderer::input_assignment() const {
+    std::lock_guard lock(assignment_mutex_);
+    auto *self = const_cast<RageWarsDesktopRenderer *>(this);
+    if (!self->assignment_loaded_) {
+        self->assignment_ = load_input_assignment();
+        self->assignment_loaded_ = true;
+    }
+    return assignment_;
+}
+
+void RageWarsDesktopRenderer::set_input_assignment(const input_assignment::Assignment &assignment) {
+    {
+        std::lock_guard lock(assignment_mutex_);
+        assignment_ = assignment;
+        assignment_loaded_ = true;
+    }
+    g_input_ui_revision.fetch_add(1, std::memory_order_relaxed);
+    const bool saved = save_input_assignment(assignment);
+    std::fprintf(stderr, "RW120_INPUT_ASSIGNMENT_SET p1=%s p2=%s p3=%s p4=%s saved=%u\n",
+            input_assignment::to_string(assignment.port[0]).c_str(), input_assignment::to_string(assignment.port[1]).c_str(),
+            input_assignment::to_string(assignment.port[2]).c_str(), input_assignment::to_string(assignment.port[3]).c_str(),
+            saved ? 1U : 0U);
+}
+
+std::array<input_assignment::Effective, input_assignment::kPorts> RageWarsDesktopRenderer::effective_assignment() const {
+    return input_assignment::resolve(input_assignment(), {gamepads_connected(), xr_input_available()});
+}
+
+bool RageWarsDesktopRenderer::port_connected(unsigned port) const {
+    if (port >= input_assignment::kPorts) return false;
+    return effective_assignment()[port].connected;
+}
+
+void RageWarsDesktopRenderer::publish_local_blocks() {
+    const auto effective = effective_assignment();
+    int look = input_assignment::keyboard_mouse_port(effective);
+    if (look < 0) {
+        for (unsigned port = 0; port < input_assignment::kPorts && look < 0; ++port)
+            if (effective[port].connected) look = static_cast<int>(port);
+    }
+    const int xr = input_assignment::xr_port(effective);
+    controls::set_local_input_ports(look, xr);
+    int mode = 0;
+    bool keyboard_somewhere = false, keyboard_dedicated = false;
+    for (const auto &port : effective) {
+        if (port.route == input_assignment::Route::KeyboardMouse) { keyboard_dedicated = true; keyboard_somewhere = true; }
+        if (port.route == input_assignment::Route::Legacy) keyboard_somewhere = true;
+    }
+    if (keyboard_dedicated) mode = 1;
+    else if (!keyboard_somewhere) mode = 2;
+    g_keyboard_mode.store(mode, std::memory_order_relaxed);
+    static int last_look = -2, last_xr = -2, last_mode = -2, last_state = -2;
+    int state = static_cast<int>(gamepads_connected());
+    for (const auto &port : effective) state = state * 8 + static_cast<int>(port.route) + (port.connected ? 4 : 0);
+    if (look != last_look || xr != last_xr || mode != last_mode || state != last_state) {
+        if (state != last_state) g_input_ui_revision.fetch_add(1, std::memory_order_relaxed);
+        last_look = look; last_xr = xr; last_mode = mode; last_state = state;
+        char line[256];
+        std::snprintf(line, sizeof(line), "RW120_LOCAL_PORTS look=%d xr=%d keyboard_mode=%d routes=%d,%d,%d,%d connected=%u%u%u%u gamepads=%u\n", look, xr, mode,
+                static_cast<int>(effective[0].route), static_cast<int>(effective[1].route),
+                static_cast<int>(effective[2].route), static_cast<int>(effective[3].route),
+                effective[0].connected ? 1U : 0U, effective[1].connected ? 1U : 0U,
+                effective[2].connected ? 1U : 0U, effective[3].connected ? 1U : 0U, gamepads_connected());
+        std::fputs(line, stderr);
+        // Release builds silence stderr; XR64_INPUT_ASSIGNMENT_TRACE=<file> keeps a plain-text record.
+        if (const char *trace = std::getenv("XR64_INPUT_ASSIGNMENT_TRACE"); trace != nullptr && trace[0] != '\0') {
+            if (std::FILE *file = std::fopen(trace, "ab")) { std::fputs(line, file); std::fclose(file); }
+        }
+        XR64_RENDER_DIAGNOSTIC_FLUSH();
+    }
+}
+
+DesktopControllerSnapshot RageWarsDesktopRenderer::port_gamepad_snapshot(unsigned pad, bool gameplay) {
+    const bool capture_blocked = port_options::binding_input_blocked();
+    std::lock_guard lock(controller_mutex_);
+    DesktopControllerSnapshot result;
+    N64ControllerInput input{};
+    unsigned seen = 0;
+    if (controller_ != nullptr && ++seen == pad) {
+        input = gameplay ? gamepad_input_ : menu_gamepad_input_;
+        result.connected = true;
+        result.device_name = controller_snapshot_.device_name;
+    }
+    for (const auto &extra : extra_pads_) {
+        if (extra.handle == nullptr || ++seen != pad) continue;
+        input = gameplay ? extra.gameplay : extra.menu;
+        result.connected = true;
+        result.device_name = extra.name;
+    }
+    if (!result.connected) return result;
+    if (!window_focused_ || capture_blocked || binding_pump_blocked_) return result;  // connected, neutral
+    if (gameplay) {
+        input.stick_x *= control_settings_.controller_sensitivity_x * (control_settings_.controller_invert_x ? -1.0F : 1.0F);
+        input.stick_y *= control_settings_.controller_sensitivity_y * (control_settings_.controller_invert_y ? -1.0F : 1.0F);
+    }
+    result.buttons = input.buttons;
+    result.stick_x = std::clamp(input.stick_x, -1.0F, 1.0F);
+    result.stick_y = std::clamp(input.stick_y, -1.0F, 1.0F);
+    return result;
+}
+
+DesktopControllerSnapshot RageWarsDesktopRenderer::port_keyboard_snapshot(bool gameplay) {
+    const bool capture_blocked = port_options::binding_input_blocked();
+    std::lock_guard lock(controller_mutex_);
+    const bool blocked = capture_blocked || binding_pump_blocked_;
+    const bool input_allowed = window_focused_ && !blocked;
+    if (!input_allowed) {
+        latched_buttons_ = menu_wheel_buttons_ = 0;
+        keyboard_wheel_input_ = {}; pending_weapon_cycle_ = last_weapon_cycle_ = 0;
+        mouse_motion_.clear(); mouse_aim_x_ = mouse_aim_y_ = 0;
+    }
+    if (gameplay_context_ != gameplay) {
+        gameplay_context_ = gameplay;
+        mouse_motion_.clear();
+        mouse_aim_x_ = mouse_aim_y_ = 0.0F;
+        latched_buttons_ = menu_wheel_buttons_ = 0;
+        keyboard_wheel_input_ = {};
+        pending_weapon_cycle_ = last_weapon_cycle_ = 0;
+    }
+    N64ControllerInput keyboard_mouse = gameplay
+            ? merge_controller_input(keyboard_input_, keyboard_wheel_input_) : menu_keyboard_input_;
+    if (!gameplay) keyboard_mouse.buttons |= menu_wheel_buttons_;
+    if (gameplay) {
+        const auto &settings = control_settings_;
+        if (settings.profile != controls::Profile::Modern) {
+            keyboard_mouse.stick_x = std::clamp(keyboard_mouse.stick_x + mouse_aim_x_, -1.0F, 1.0F);
+            keyboard_mouse.stick_y = std::clamp(keyboard_mouse.stick_y + mouse_aim_y_, -1.0F, 1.0F);
+        }
+        keyboard_mouse.stick_x *= settings.mouse_sensitivity_x * (settings.mouse_invert_x ? -1.0F : 1.0F);
+        keyboard_mouse.stick_y *= settings.mouse_sensitivity_y * (settings.mouse_invert_y ? -1.0F : 1.0F);
+    }
+    const auto mapped = input_allowed ? keyboard_mouse : N64ControllerInput{};
+    DesktopControllerSnapshot result;
+    result.connected = true;
+    result.device_name = "Keyboard + Mouse";
+    result.buttons = mapped.buttons | (input_allowed ? latched_buttons_ : 0);
+    result.stick_x = std::clamp(mapped.stick_x, -1.0F, 1.0F);
+    result.stick_y = std::clamp(mapped.stick_y, -1.0F, 1.0F);
+    latched_buttons_ = menu_wheel_buttons_ = 0;
+    keyboard_wheel_input_ = {};
+    mouse_aim_x_ = mouse_aim_y_ = 0.0F;
+    return result;
+}
+
+DesktopControllerSnapshot RageWarsDesktopRenderer::port_xr_snapshot(bool gameplay, bool xr_gameplay) {
+    N64ControllerInput touch_input;
+    bool touch_ready = false;
+    gather_xr_input(gameplay, xr_gameplay, touch_input, touch_ready);
+    DesktopControllerSnapshot result;
+    result.connected = xr_input_available();
+    result.device_name = "VR controllers";
+    if (!touch_ready || port_options::binding_input_blocked()) return result;
+    result.buttons = touch_input.buttons;
+    result.stick_x = std::clamp(touch_input.stick_x, -1.0F, 1.0F);
+    result.stick_y = std::clamp(touch_input.stick_y, -1.0F, 1.0F);
+    return result;
+}
+
+DesktopControllerSnapshot RageWarsDesktopRenderer::consume_port_snapshot(unsigned port, bool gameplay, bool xr_gameplay) {
+    if (port >= input_assignment::kPorts) return {};
+    const auto effective = effective_assignment()[port];
+    switch (effective.route) {
+    case input_assignment::Route::Legacy: return consume_controller_snapshot(gameplay, xr_gameplay);
+    case input_assignment::Route::Gamepad: return port_gamepad_snapshot(effective.pad, gameplay);
+    case input_assignment::Route::KeyboardMouse: return port_keyboard_snapshot(gameplay);
+    case input_assignment::Route::Xr: return port_xr_snapshot(gameplay, xr_gameplay);
+    case input_assignment::Route::Off: break;
+    }
+    return {};
 }
 
 void RageWarsDesktopRenderer::set_mouse_capture(bool captured) {
@@ -2895,8 +3538,19 @@ void RageWarsDesktopRenderer::publish_input_snapshot() {
             keyboard_mouse.stick_x = std::clamp(keyboard_mouse.stick_x + mouse_aim_x_, -1.0F, 1.0F);
             keyboard_mouse.stick_y = std::clamp(keyboard_mouse.stick_y + mouse_aim_y_, -1.0F, 1.0F);
         }
-        const auto selected = device_selector_.update(control_settings_.device_mode,
-                controller_ != nullptr, gamepad_state_, keyboard_activity_, window_focused_, touch_activity);
+        // With VR motion controls on and Touch tracked, the keyboard/mouse never
+        // takes gameplay ownership from the controllers (menus still merge input).
+        bool xr_motion_owned=false;
+#ifdef XR64_OPENXR
+        xr_motion_owned=xr_enabled() && control_settings_.xr_motion_controls &&
+            touch_activity.available && touch_activity.focused;
+#endif
+        auto selected = device_selector_.update(control_settings_.device_mode,
+                controller_ != nullptr, gamepad_state_, keyboard_activity_ && !xr_motion_owned, window_focused_, touch_activity);
+        if (xr_motion_owned) selected = controls::Device::Touch;
+        else if (const int keyboard_mode = g_keyboard_mode.load(std::memory_order_relaxed); keyboard_mode == 1)
+            selected = controls::Device::KeyboardMouse;  // keyboard+mouse is a dedicated player
+        else if (keyboard_mode == 2) selected = controls::Device::Controller;  // nobody uses the mouse
 #ifdef XR64_OPENXR
         g_xr_hand_motion_active.store(selected == controls::Device::Touch &&
             control_settings_.xr_motion_controls && touch_activity.available && touch_activity.focused,
@@ -3051,11 +3705,13 @@ bool RageWarsDesktopRenderer::pump_events() {
 #endif
         if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
             if (event.key.keysym.sym == SDLK_ESCAPE) set_mouse_capture(false);
+            if (event.key.keysym.sym == SDLK_F10 && std::getenv("XR64_RDRAM_SNAPSHOT_DIR"))
+                g_rdram_snapshot_request.store(true);
+#ifndef XR64_DEMO_BUILD
+            if (event.key.keysym.sym == SDLK_b && (event.key.keysym.mod & KMOD_CTRL)) xr64_body_request_toggle();
 #ifdef XR64_OPENXR
             if(event.key.keysym.sym==SDLK_F12&&!event.key.repeat)g_xr.request_recenter();
 #endif
-#ifndef XR64_DEMO_BUILD
-            if (event.key.keysym.sym == SDLK_b && (event.key.keysym.mod & KMOD_CTRL)) xr64_body_request_toggle();
             if (event.key.keysym.sym == SDLK_F5) {
                 port_options::set_vertical_fov(port_options::kFovGameOriginal);
             }
@@ -3116,8 +3772,11 @@ bool RageWarsDesktopRenderer::pump_events() {
             if(port_options::binding_editor_snapshot().device==bindings::Device::Controller)
                 port_options::cancel_binding_capture();
             close_controller();
-        } else if (event.type == SDL_CONTROLLERDEVICEADDED && controller_ == nullptr) {
-            open_controller(event.cdevice.which);
+        } else if (event.type == SDL_CONTROLLERDEVICEREMOVED) {
+            close_extra_pad(event.cdevice.which);
+        } else if (event.type == SDL_CONTROLLERDEVICEADDED) {
+            if (controller_ == nullptr) open_controller(event.cdevice.which);
+            else open_extra_pad(event.cdevice.which);
         }
     }
     if (controller_ == nullptr) {
@@ -3127,6 +3786,8 @@ bool RageWarsDesktopRenderer::pump_events() {
         }
     }
     refresh_controller_snapshot();
+    refresh_extra_pads();
+    publish_local_blocks();
     refresh_keyboard_mouse_snapshot();
     bool neutral,focused;
     {
@@ -3217,9 +3878,8 @@ DesktopControllerSnapshot RageWarsDesktopRenderer::controller_snapshot() const {
     return controller_snapshot_;
 }
 
-DesktopControllerSnapshot RageWarsDesktopRenderer::consume_controller_snapshot(bool gameplay, bool xr_gameplay) {
-    N64ControllerInput touch_input;
-    bool touch_ready=false;
+bool RageWarsDesktopRenderer::gather_xr_input(bool& gameplay, bool xr_gameplay, N64ControllerInput& touch_input, bool& touch_ready) {
+    touch_ready=false;
 #ifdef XR64_OPENXR
     if (xr_enabled()) {
         gameplay=xr_gameplay;
@@ -3244,6 +3904,13 @@ DesktopControllerSnapshot RageWarsDesktopRenderer::consume_controller_snapshot(b
         if(was_blocked)touch_input={};
     }
 #endif
+    return touch_ready;
+}
+
+DesktopControllerSnapshot RageWarsDesktopRenderer::consume_controller_snapshot(bool gameplay, bool xr_gameplay) {
+    N64ControllerInput touch_input;
+    bool touch_ready=false;
+    gather_xr_input(gameplay,xr_gameplay,touch_input,touch_ready);
     const bool capture_blocked=port_options::binding_input_blocked();
     std::lock_guard lock(controller_mutex_);
     const bool blocked=capture_blocked || binding_pump_blocked_;
@@ -3307,7 +3974,8 @@ controls::LookSample RageWarsDesktopRenderer::consume_look_sample() {
     if(active_device_==controls::Device::Touch) {
 #ifdef XR64_OPENXR
         const auto mapped=g_motion_mapper.map(touch,gameplay_context_,false,control_settings_);
-        sample.stick={mapped.stick_x,mapped.stick_y};
+        // The held weapon wheel owns the stick as a selector; do not also turn.
+        if(!g_motion_mapper.wheel_held())sample.stick={mapped.stick_x,mapped.stick_y};
 #endif
         sample.focused=touch.available && touch.focused;
     } else {
@@ -3451,6 +4119,7 @@ bool RageWarsDesktopRenderer::initialize(std::string &error,bool attempt_xr) {
         std::fprintf(stderr, "RW077_SDL_DEVICE index=%d name=%s mapped=%s\n",
                 index, name != nullptr ? name : "unknown", mapped ? "yes" : "no");
         if (mapped && controller_ == nullptr) open_controller(index);
+        else if (mapped) open_extra_pad(index);
     }
     XR64_RENDER_DIAGNOSTIC_FLUSH();
     return true;
@@ -3599,6 +4268,8 @@ bool RageWarsDesktopRenderer::present_latest(std::string& error) {
         }();
         ensure_present_swap_interval(g_desktop_pacing.software?0:1);
         if(!snapshot) {
+            g_desktop_body.reset();
+            g_animation_blend.reset();
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
             g_sdl.gl_swap_window(window);
             finish_desktop_cadence(presentation_begin);
@@ -3606,14 +4277,23 @@ bool RageWarsDesktopRenderer::present_latest(std::string& error) {
         }
         g_xr_eye=nullptr;
         OpenGlFast3DBackend backend(window,snapshot->generation,snapshot);
-        const auto local=local_camera_correction(snapshot->player,local_presentation().acquire(),
-            std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count());
+        const auto desktop_now_ns=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+        const auto desktop_delay_ns=snapshot->menu_panel?0:local_body_delay_ns();
+        const auto local=g_desktop_body.camera(snapshot->player,local_presentation().acquire(),
+            desktop_now_ns,desktop_delay_ns);
+        if(!snapshot->menu_panel && !snapshot->startup)record_scene_age(snapshot->player,desktop_now_ns,desktop_delay_ns,snapshot->generation);
         backend.local_camera(local);
         static std::uint64_t local_frames=0;
         if(++local_frames%120==0 && std::getenv("XR64_LOCAL_PRESENTATION_TRACE"))std::fprintf(stderr,
             "RW_LOCAL_PRESENT generation=%llu input=%llu player=%llu valid=%d yaw=%.7f pitch=%.7f origin=(%.3f,%.3f,%.3f)\n",
             snapshot->generation,local.input_sequence,local.player_update,int(local.valid),local.yaw,local.pitch,
             local.target[12],local.target[13],local.target[14]);
+        if(animation_blend_enabled()) {
+            g_animation_blend.observe(std::shared_ptr<const ::xr64::N64DecodedFrame>(snapshot,&snapshot->frame),
+                snapshot->generation,snapshot->decoded_at,!snapshot->menu_panel && !snapshot->startup);
+            g_animation_blend.prepare(std::chrono::steady_clock::now(),snapshot->menu_panel?0:local_body_delay_ns());
+            backend.animation_blend(&g_animation_blend);
+        }
         if(!snapshot->frame.replay(backend,error))return false;
         const bool repeated=snapshot->generation==g_last_presented_generation;
         if(!backend.present_mirror(snapshot->stats,repeated,error))return false;
@@ -3655,20 +4335,90 @@ bool RageWarsDesktopRenderer::present_latest(std::string& error) {
         error.clear();
         return present_desktop();
     }
+    g_desktop_body.reset(); // No desktop body history crosses an XR transition.
     ensure_present_swap_interval(0);
     bool first_eye = true;
     XrMotionInput frame_motion;
     LocalCameraCorrection frame_local;
-    g_upload_cpu_ms = 0; g_upload_calls = 0;
+    g_upload_cpu_ms = 0; g_upload_calls = 0; g_xr_eye_draws = 0; g_xr_eye_vertices = 0; g_xr_breakdown = {};
     XrFrameTiming timing;
+    unsigned reticle_mode = 0;
+    {
+        const auto controls = port_options::snapshot().controls;
+        xr_hud_configure(controls.xr_hud_distance, controls.xr_hud_width,
+                         controls.xr_menu_distance, controls.xr_menu_width);
+        reticle_mode = controls.xr_reticle_mode;
+        bool right_press_bound=false;
+        for(const auto& b:controls.xr_bindings)
+            right_press_bound|=b.primary==bindings::kXrLast || b.alternate==bindings::kXrLast;
+        g_xr.set_right_stick_recenter(!right_press_bound);
+        if(port_options::take_recenter_request())g_xr.request_recenter();
+    }
+    bool laser_valid = false, laser_hit = false;
+    std::array<float,3> laser_start{}, laser_end{};
+    ::xr64::N64RawFast3DDrawState laser_state{};
     const bool ok = g_xr.render([&](const XrEyeFrame& eye) {
         // Choose the latest completed decode after xrWaitFrame, then pin it for
         // both eyes. Producer publication continues while this frame is rendered.
         if (first_eye) {
             snapshot=g_xr_frames.acquire();first_eye=false;
             frame_motion=gate5_xr_motion_snapshot();
-            if(snapshot)frame_local=local_camera_correction(snapshot->player,local_presentation().acquire(),
-                std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count());
+            const auto now_ns=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+            if(snapshot) {
+                // Same accepted body smoothing as desktop (XR64_LOCAL_BODY_DELAY_MS).
+                g_xr_body.set_interpolate_yaw(true);
+                frame_local=g_xr_body.camera(snapshot->player,local_presentation().acquire(),now_ns,
+                    snapshot->menu_panel?0:local_body_delay_ns());
+                if(!snapshot->menu_panel && !snapshot->startup)record_scene_age(snapshot->player,now_ns,local_body_delay_ns(),snapshot->generation);
+                if(frame_local.valid && xr_level_play_space_enabled() &&
+                        !level_play_space(frame_local.target))frame_local.valid=false;
+                if(frame_local.valid) {
+                    std::lock_guard lock(g_xr_display_camera_mutex);
+                    g_xr_display_camera=frame_local.target;g_xr_display_camera_ns=now_ns;
+                    g_xr_display_origin_valid=snapshot->player.valid;
+                    for(int i=0;i<3;++i)g_xr_display_origin[i]=snapshot->player.origin[i]+
+                        frame_local.target[12+i]-frame_local.source[12+i];
+                }
+                if(animation_blend_enabled()) {
+                    g_xr_animation_blend.observe(std::shared_ptr<const ::xr64::N64DecodedFrame>(snapshot,&snapshot->frame),
+                        snapshot->generation,snapshot->decoded_at,!snapshot->menu_panel && !snapshot->startup);
+                    g_xr_animation_blend.prepare(std::chrono::steady_clock::now(),snapshot->menu_panel?0:local_body_delay_ns());
+                }
+            }
+            if(snapshot && reticle_mode==0 && !snapshot->menu_panel &&
+                    g_xr_hand_motion_active.load(std::memory_order_acquire)) {
+                // Camera: the local-player scene projection, else the first world draw.
+                const ::xr64::N64RawFast3DDrawState* world=nullptr;
+                for(const auto& view:snapshot->frame.triangle_batch_views()) {
+                    const auto& s=*view.state;
+                    if(!s.perspective_projection || s.camera_attachment || s.tracked_attachment)continue;
+                    if(local_scene_projection(s,frame_local)){world=&s;break;}
+                    if(!world)world=&s;
+                }
+                std::array<float,16> camera{};
+                std::array<float,3> origin{},target{};
+                const float units=xr_laser_units();
+                // Use the presentation-corrected (current) camera when available,
+                // so the laser starts at the displayed hand while strafing rather
+                // than where the player was when this scene was produced.
+                bool have_camera=false;
+                if(world && local_scene_projection(*world,frame_local)){camera=frame_local.target;have_camera=true;}
+                else if(world)have_camera=xr_tracking_to_world(world->source_projection,camera);
+                if(have_camera && xr_world_shot_ray(camera,frame_motion,origin,target,units)) {
+                    std::array<float,3> dir{target[0]-origin[0],target[1]-origin[1],target[2]-origin[2]};
+                    const float len=std::sqrt(dir[0]*dir[0]+dir[1]*dir[1]+dir[2]*dir[2]);
+                    if(len>0 && std::isfinite(len)) {
+                        for(float& c:dir)c/=len;
+                        g_xr_laser_world.build(snapshot->frame,snapshot->generation);
+                        float t=30.0F*units;
+                        laser_hit=g_xr_laser_world.raycast(origin,dir,0.3F*units,100.0F*units,t);
+                        if(!laser_hit)t=30.0F*units;
+                        laser_start=origin;
+                        laser_end={origin[0]+dir[0]*t,origin[1]+dir[1]*t,origin[2]+dir[2]*t};
+                        laser_state=*world;laser_valid=true;
+                    }
+                }
+            }
         }
         if(!snapshot)return true;
         // Composite a complete flat guest screen before giving it binocular depth.
@@ -3678,6 +4428,7 @@ bool RageWarsDesktopRenderer::present_latest(std::string& error) {
         g_xr_eye = g_xr_menu_flat ? &flat_eye : &eye;
         OpenGlFast3DBackend backend(window, snapshot->generation, snapshot);
         backend.local_camera(frame_local);backend.presentation_motion(frame_motion);
+        if(animation_blend_enabled())backend.animation_blend(&g_xr_animation_blend);
         const bool replayed = snapshot->frame.replay(backend, error);
         // The hand ray and flat panel are outside decoded replay ownership.
         g_xr_retained_geometry.restore_draw_scope();
@@ -3700,13 +4451,17 @@ bool RageWarsDesktopRenderer::present_latest(std::string& error) {
             glColor4ub(255,255,255,255);
             glBegin(GL_QUADS);
             for(const auto& c:std::array<std::array<float,2>,4>{{{-1,-1},{1,-1},{1,1},{-1,1}}}) {
-                const auto v=xr_menu_corner(c[0],c[1],eye);
+                const auto v=xr_menu_corner(c[0],c[1],eye,xr_hud_settings().menu_distance,xr_hud_settings().menu_width);
                 glTexCoord2f((c[0]+1)*0.5F,(c[1]+1)*0.5F);glVertex4f(v.x,v.y,v.z,v.w);
             }
             glEnd();
             static bool reported=false;
             if(!reported){reported=true;std::fprintf(stderr,"RW120_XR_MENU_PANEL distance_m=2 width_m=2 height_m=1.5 source=1024x768\n");}
-        } else if(replayed)draw_xr_hand_ray(eye,frame_motion);
+        } else if(replayed){
+            draw_xr_hand_ray(eye,frame_motion);
+            if(reticle_mode==0 && laser_valid)draw_xr_laser(eye,frame_local,laser_state,laser_start,laser_end,laser_hit);
+            else if(reticle_mode==1)draw_xr_aim_reticle(eye,frame_motion);
+        }
         g_xr_eye = nullptr;g_xr_menu_flat=false;
         return replayed;
     }, [&]() {
@@ -3753,15 +4508,25 @@ bool RageWarsDesktopRenderer::present_latest(std::string& error) {
         if(snapshot)publish_local_control_state(snapshot->generation,frame_local,frame_motion);
         { std::lock_guard<std::mutex> lock(stats_mutex_); ++stats_.presented_frames; }
         const bool repeated = snapshot->generation == g_last_presented_generation;
+        if(xr_frame_stats_enabled()) {
+            unsigned long long outcomes[10]{};xr64_xr_shot_outcomes(outcomes);
+            xr_report_shot_hook(outcomes,g_xr_shot_count.load(),g_xr_shot_barrel.load(),double(g_xr_shot_lead.load()));
+        }
+        g_xr_frame_stats.record({timing.period_ms, timing.wait_ms, timing.app_gap_ms, timing.eye_ms[0], timing.eye_ms[1],
+            g_upload_cpu_ms, timing.end_ms, timing.gpu_span_ms, snapshot->decode_cpu_ms,
+            static_cast<std::uint64_t>(timing.predicted_misses), g_xr_eye_draws, g_xr_eye_vertices, repeated,
+            g_xr_breakdown.clip_vertices, g_xr_breakdown.alpha_draws, g_xr_breakdown.immediate_draws, g_xr_breakdown.rects,
+            g_xr_breakdown.opaque_mpx, g_xr_breakdown.alpha_mpx, g_xr_breakdown.prepare_ms, g_xr_breakdown.submit_ms});
         ++g_xr_presentations;
         const char* detail = std::getenv("XR64_XR_TRACE_FRAMES");
         if ((detail && std::string(detail)=="1") || g_xr_presentations%120==0) {
-            std::fprintf(stderr, "RW_XR_PRESENT frame=%llu generation=%llu repeated=%d mode=%s commands=%zu decode_cpu_ms=%.3f period_ms=%.3f app_gap_ms=%.3f wait_ms=%.3f acquire_ms=%.3f image_wait_ms=%.3f left_cpu_ms=%.3f right_cpu_ms=%.3f upload_cpu_ms=%.3f uploads=%llu mirror_copy_ms=%.3f mirror_present_ms=%.3f end_ms=%.3f predicted_misses=%llu gpu_span_ms=%.3f gpu_sample_frame=%llu predicted_ns=%lld pose_y=%.6f pose_qy=%.6f pose_qw=%.6f\n",
+            std::fprintf(stderr, "RW_XR_PRESENT frame=%llu generation=%llu repeated=%d mode=%s commands=%zu decode_cpu_ms=%.3f period_ms=%.3f app_gap_ms=%.3f wait_ms=%.3f acquire_ms=%.3f image_wait_ms=%.3f left_cpu_ms=%.3f right_cpu_ms=%.3f upload_cpu_ms=%.3f uploads=%llu mirror_copy_ms=%.3f mirror_present_ms=%.3f end_ms=%.3f predicted_misses=%llu gpu_span_ms=%.3f gpu_sample_frame=%llu predicted_ns=%lld pose_y=%.6f pose_qy=%.6f pose_qw=%.6f eye_draws=%llu eye_vertices=%llu\n",
                     static_cast<unsigned long long>(g_xr_presentations), static_cast<unsigned long long>(snapshot->generation), repeated,
                     independent_presentation()?"independent":"task", snapshot->frame.size(), snapshot->decode_cpu_ms,
                     timing.period_ms, timing.app_gap_ms, timing.wait_ms, timing.acquire_ms, timing.image_wait_ms,
                     timing.eye_ms[0], timing.eye_ms[1], g_upload_cpu_ms, static_cast<unsigned long long>(g_upload_calls),
-                    timing.mirror_copy_ms, timing.mirror_present_ms, timing.end_ms, static_cast<unsigned long long>(timing.predicted_misses), timing.gpu_span_ms, timing.gpu_sample_frame, timing.predicted_ns, timing.pose_y, timing.pose_qy, timing.pose_qw);
+                    timing.mirror_copy_ms, timing.mirror_present_ms, timing.end_ms, static_cast<unsigned long long>(timing.predicted_misses), timing.gpu_span_ms, timing.gpu_sample_frame, timing.predicted_ns, timing.pose_y, timing.pose_qy, timing.pose_qw,
+                    static_cast<unsigned long long>(g_xr_eye_draws), static_cast<unsigned long long>(g_xr_eye_vertices));
         }
         g_last_presented_generation = snapshot->generation;
         const auto tick = g_presentation_clock.sample(HostPresentationMode::OpenXR,
@@ -3777,6 +4542,7 @@ void RageWarsDesktopRenderer::shutdown() {
     if (!stats_.initialized || shutting_down_) return;
     shutting_down_ = true;
     g_presentation_clock.reset();
+    g_desktop_body.reset();
     g_presentation_perf = {};
 #ifdef XR64_OPENXR
     g_xr_frames.reset(); g_last_presented_generation = 0; g_xr_presentations = 0;
@@ -3784,6 +4550,7 @@ void RageWarsDesktopRenderer::shutdown() {
     g_xr_queued_request.store(0,std::memory_order_release);
     set_xr_transition_status(XrPresentationMode::StoppingXR,"Stopping renderer");
 #endif
+    for (auto &extra_pad : extra_pads_) if (extra_pad.handle != nullptr) close_extra_pad(extra_pad.instance);
     close_controller();
     if (context_) {
         g_sdl.gl_make_current(static_cast<SDL_Window*>(window_),
@@ -3796,6 +4563,7 @@ void RageWarsDesktopRenderer::shutdown() {
 #ifdef XR64_OPENXR
         g_xr_retained_geometry.release_current_context();
 #endif
+        g_model_filter.release_current_context();
         g_triangle_vbo.release_current_context();
         g_texture_cache.clear();
     }

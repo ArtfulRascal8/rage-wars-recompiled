@@ -2417,6 +2417,28 @@ xr64::rage_wars::recomp::consume_gate5_desktop_controller_snapshot(bool gameplay
     return g_desktop_renderer.consume_controller_snapshot(gameplay, xr_gameplay);
 }
 
+xr64::rage_wars::recomp::DesktopControllerSnapshot
+xr64::rage_wars::recomp::consume_gate5_desktop_port_snapshot(unsigned port, bool gameplay, bool xr_gameplay) {
+    return g_desktop_renderer.consume_port_snapshot(port, gameplay, xr_gameplay);
+}
+
+bool xr64::rage_wars::recomp::gate5_port_connected(unsigned port) {
+    return g_desktop_renderer.port_connected(port);
+}
+
+xr64::rage_wars::input_assignment::Assignment xr64::rage_wars::recomp::gate5_input_assignment() {
+    return g_desktop_renderer.input_assignment();
+}
+
+std::array<xr64::rage_wars::input_assignment::Effective, xr64::rage_wars::input_assignment::kPorts>
+xr64::rage_wars::recomp::gate5_effective_assignment() {
+    return g_desktop_renderer.effective_assignment();
+}
+
+void xr64::rage_wars::recomp::set_gate5_input_assignment(const input_assignment::Assignment& assignment) {
+    g_desktop_renderer.set_input_assignment(assignment);
+}
+
 xr64::rage_wars::controls::LookSample
 xr64::rage_wars::recomp::consume_gate5_desktop_look() {
     return g_desktop_renderer.consume_look_sample();

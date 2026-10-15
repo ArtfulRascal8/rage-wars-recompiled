@@ -1,186 +1,182 @@
 {
   "schema": "xr64.private-reconstruction-source.v1",
   "private_review_only": false,
-  "allowlist_basis": "Reviewed compiler-input and reconstruction allowlist; private reports and testing-slot deployment excluded; public instructions and packaging updated.",
+  "baseline_fallback_executable": "A56AB4AF91A6CCECA5F9505DA474DD84E18A9A7A4ADD06F617F1EBAB0BA043DF",
+  "allowlist_basis": "Declared projects, tracked reads, original consumer-source receipts, configure inputs, named bootstrap/contracts/notices.",
   "files": {
     "COPYING.txt": {
       "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
       "bytes": 35823,
       "origin": "working-source"
     },
-    "MODIFICATIONS.txt": {
-      "sha256": "6f06a722b235aad5709e5fea7e27814d7b5cd60aa4c54a3ca80436c2c17f8813",
-      "bytes": 4866,
-      "origin": "working-source"
-    },
-    "README.md": {
-      "sha256": "5f9038690117f34ef34df27425391a0117cc1da80045e56a9cf71293676615bd",
-      "bytes": 828,
-      "origin": "working-source"
-    },
-    "THIRD-PARTY-NOTICES.txt": {
-      "sha256": "429df0e58681f5b3b5b156605dc4d386ef389759366f46aa794b8c61b95a74ae",
-      "bytes": 4282,
-      "origin": "working-source"
-    },
     "docs/PC_RECONSTRUCTION.md": {
-      "sha256": "579e241ae42598f3b668b8c44bfe9488411288cf0529e0fc453df8fe8f2f458a",
-      "bytes": 5320,
+      "sha256": "237dc090a1029a571d4f8d86754a0d7a721755f1bdaaf8dae14e767c5a4e2c90",
+      "bytes": 3078,
       "origin": "working-source"
     },
     "licenses/0530cbedd4-LICENSE": {
       "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
       "bytes": 18092,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/07b0517a30-LICENSE": {
       "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
       "bytes": 1094,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/0c34463d08-LICENSE": {
       "sha256": "5ce68de7ce0f15f934746a70ead3cf9999ed902443554648801e4230638c503a",
       "bytes": 1092,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/16b008239b-LICENSE-odashi-encoding.txt": {
       "sha256": "497dbe776317cf83af8f4b3d62ac09b4cdfd927475c02db8dac4fd4dacb8d03e",
       "bytes": 1144,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/1b790bec9b-LICENSE.txt": {
       "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
       "bytes": 1110,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/31de7f3e77-LICENSE": {
       "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
       "bytes": 18092,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/337f91b9d7-COPYING": {
       "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
       "bytes": 35823,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/4047e7c8a7-LICENSE.MIT": {
       "sha256": "46a65cffd1ea955132d95a8dd921640714a8d6b537d2e4e482d31145ae95b603",
       "bytes": 1076,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/46d9eea800-COPYING": {
       "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
       "bytes": 18092,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/4d4e6e1a83-LICENSE": {
       "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
       "bytes": 1094,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/51a6960a22-LICENSE-PerfectDarkVR-reference.txt": {
       "sha256": "33efa0ef96a7e69f0aeb755b01f6b846cdadd750f725a32a19f4612b2b86c03c",
       "bytes": 1067,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/530ca09e5c-LICENSE-Fast3D-reference.txt": {
       "sha256": "f26e9084000ec95baf5fbec41998b95c26a686c4f9179e95fa05fb550bc6a0d2",
       "bytes": 1074,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/5864596295-LICENSE": {
       "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
       "bytes": 1458,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/670b97c1ac-LICENSE.txt": {
       "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
       "bytes": 1110,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/6a413a28ea-LICENSE": {
       "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
       "bytes": 1094,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/717fad8efc-LICENSE": {
       "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
       "bytes": 1094,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/7886c05d73-LICENSE-Ares-RSP.txt": {
       "sha256": "7a84c51809a26a0f3a12a09b79f5157321211f758d340642ef120cff0018f973",
       "bytes": 1067,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/7b5c2d9da4-LICENSE": {
       "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
       "bytes": 1389,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/7d404da449-LICENSE": {
       "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
       "bytes": 1469,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/8130e3fbe7-LICENSE": {
       "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
       "bytes": 1095,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/a68c4e11a1-LICENSE": {
       "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
       "bytes": 1469,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/a7dc098df0-LICENSE": {
       "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
       "bytes": 1458,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/a85d3b168e-LICENSE": {
       "sha256": "0115478d567121238cf6cc1c0c361926cf07a49d9e4c9e66da97fac6a01646b3",
       "bytes": 1184,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/concurrentqueue.txt": {
       "sha256": "0aebadfb9129e91eced4f0c317f7b1aa80225484acc443062c91f1cd9ab2ba08",
       "bytes": 3723,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/e7a9216367-LICENSE": {
       "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
       "bytes": 1095,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/Microsoft-VCRedist.txt": {
       "sha256": "ce2a7b886aa53e438df0a80027bec346ffeb85988e9b01dc40212d3e27f8a1bc",
       "bytes": 580,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/OpenXR-Apache-2.0.txt": {
       "sha256": "d3910dee6fe9fe134856d76268fe82adb1ade1ecf51b3568b7da6b94894b88f3",
       "bytes": 10283,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/OpenXR-ATTRIBUTION.txt": {
       "sha256": "9175861a75b86b28ae6b0887f4f7ea471eee0c642e6206ce586d8f395e7e28d7",
       "bytes": 896,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/OpenXR-JsonCpp.txt": {
       "sha256": "cec0db5f6d7ed6b3a72647bd50aed02e13c3377fd44382b96dc2915534c042ad",
       "bytes": 2714,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/OpenXR-MIT.txt": {
       "sha256": "8f25018489d6fe0dec34a352314c38dc146247b7de65735790f4398a92afa84b",
       "bytes": 1108,
-      "origin": "working-source"
+      "origin": "release-notice"
     },
     "licenses/SDL2.txt": {
       "sha256": "97f35b302b361680ec1e891e95d2d52097bb95abff361434916d99dc1305f127",
       "bytes": 884,
+      "origin": "release-notice"
+    },
+    "MODIFICATIONS.txt": {
+      "sha256": "1451cbd388c06bb75fa04f42c7d66eae72ebc9dfe851d6144e7a8b39a3083aec",
+      "bytes": 9318,
+      "origin": "working-source"
+    },
+    "README.md": {
+      "sha256": "81bff073879c5254008808154e147c909103c413426553832a48d034c50b0df5",
+      "bytes": 1190,
       "origin": "working-source"
     },
     "reconstruction/canonical-functions.json": {
@@ -234,8 +230,8 @@
       "origin": "private-recipe"
     },
     "reconstruction/reconstruction.lock.json": {
-      "sha256": "d5ea160bd37c5f70e8a136bed0ab63efafe7963cf6406f5002103fd395cb9cc3",
-      "bytes": 3465,
+      "sha256": "44608cd400512517e79ecc84798a0e21c7d5b7441805bc323a365071b7c7e7c5",
+      "bytes": 3411,
       "origin": "private-recipe"
     },
     "reconstruction/recovery496-full-generator-differences.json": {
@@ -273,6 +269,16 @@
       "bytes": 3821,
       "origin": "private-recipe"
     },
+    "scripts/apply_bounded_recovery.py": {
+      "sha256": "07b7447c0015af8486151abd047955ce1f0cf2f46fb7351b2ba940e810f3ab30",
+      "bytes": 15450,
+      "origin": "working-source"
+    },
+    "scripts/apply_full_rom_recovery.py": {
+      "sha256": "053be4289f773589fe4bed52691cc6595e0a7fe2c8a082635e89deb1bf5fb2d0",
+      "bytes": 17103,
+      "origin": "working-source"
+    },
     "scripts/apply_modern_controls_hooks.py": {
       "sha256": "dc52900ac93d1942f977cb1bb0d38b0fa05ad70423fabc8528f261428c1c6b32",
       "bytes": 1500,
@@ -283,9 +289,14 @@
       "bytes": 1276,
       "origin": "working-source"
     },
+    "scripts/audit_current_character_callbacks.py": {
+      "sha256": "3736d6f8c107d20a6bdd06f7fbf565310a3b2b3d3a3c77a04cc9e0af9bcd07ac",
+      "bytes": 5273,
+      "origin": "working-source"
+    },
     "scripts/audit_demo_build.py": {
-      "sha256": "ece1371d7f9602b9bcf558ac54d966cdda0eca10da7fb9e0a552dfbc8ca238e7",
-      "bytes": 5398,
+      "sha256": "249698c3b9d7bd9ec3b8f74f2d14a4af8009a1ddecaed22a27fb44b3badfca3d",
+      "bytes": 5356,
       "origin": "working-source"
     },
     "scripts/audit_pc_dependency_inputs.py": {
@@ -298,14 +309,34 @@
       "bytes": 1516,
       "origin": "working-source"
     },
+    "scripts/bounded_recovery_20261006.json": {
+      "sha256": "a88e473259ad8eafd5dc1c604492dedd21a7549f4358b993fe4ee31bea6ca9da",
+      "bytes": 30675,
+      "origin": "working-source"
+    },
     "scripts/build_pc_candidate.ps1": {
-      "sha256": "cda77588e923ca64a90fe116a80214a6e16d0ef11b0f740112ce12bfa3fe3ea2",
-      "bytes": 3157,
+      "sha256": "85b776a0c88a00059287e7d16703d95d25a98fa2571ceb49f6ffb1add7340fbb",
+      "bytes": 5576,
       "origin": "working-source"
     },
     "scripts/export_pc_source_candidate.py": {
-      "sha256": "956f1ea07bd25206cd821e63f026fcb0d69aa79f999ea8e2a251501b44e3a714",
-      "bytes": 7332,
+      "sha256": "0370baea11ba733a11948666554fe772339d1ab70c03b85900c40492f40d27fe",
+      "bytes": 8724,
+      "origin": "working-source"
+    },
+    "scripts/full_rom_recovery_20261014.json": {
+      "sha256": "9833677d23a694687a5661726c7d8455cc30bb8501e9cc37c9a249c8be775d84",
+      "bytes": 289117,
+      "origin": "working-source"
+    },
+    "scripts/ground_movement_bridge_contract.cpp": {
+      "sha256": "16388a981202dade28ccc24b76db8bc44e399ca5245be2808c277ebe0448c64d",
+      "bytes": 8876,
+      "origin": "working-source"
+    },
+    "scripts/ground_movement_original_contract.cpp": {
+      "sha256": "d487c8697c8b8f797497bbeb8ac731ce556f28ce8d67a2e8c2bb8fc8b015bdde",
+      "bytes": 20123,
       "origin": "working-source"
     },
     "scripts/instrument_damage_reversal.py": {
@@ -319,8 +350,8 @@
       "origin": "working-source"
     },
     "scripts/package_rage_wars_release.py": {
-      "sha256": "5edaa9dbeb10141938fed7e41b1d50f1f16383da4ffe4e750999a01f4498b4a5",
-      "bytes": 21197,
+      "sha256": "e4208f5ade872474f6bcdaed13b3a557d6caece50878e5226f6bcb41ea0bbe97",
+      "bytes": 19785,
       "origin": "working-source"
     },
     "scripts/pc_dependencies.lock.json": {
@@ -328,9 +359,89 @@
       "bytes": 1400,
       "origin": "working-source"
     },
+    "scripts/player_damage_descriptor_bridge_contract.cpp": {
+      "sha256": "3e9b440a235f4ec9959445c3e9c332d1787a6e06dcae1775f1425d401e87261e",
+      "bytes": 3826,
+      "origin": "working-source"
+    },
+    "scripts/player_damage_descriptor_original_contract.cpp": {
+      "sha256": "427df4669ab74f5257a657d4eeae5ecca084cfce693ebd28dc7afc20c9a963b1",
+      "bytes": 4736,
+      "origin": "working-source"
+    },
+    "scripts/player_ease_bridge_contract.cpp": {
+      "sha256": "142798f1ce4f4ebf77e075bfd8c62b454e4e641af49db3621d7c761c8ae1d12b",
+      "bytes": 4306,
+      "origin": "working-source"
+    },
+    "scripts/player_ease_original_contract.cpp": {
+      "sha256": "9da891109e22cdfb8353d5f49e58bf1ff3d21ba92e30ced7791c98c9667a28f2",
+      "bytes": 5905,
+      "origin": "working-source"
+    },
+    "scripts/player_floor_height_bridge_contract.cpp": {
+      "sha256": "7d5b974fbb211b22015811e800caf889c2ea81f43bf118063e24af5f9495f9ae",
+      "bytes": 5104,
+      "origin": "working-source"
+    },
+    "scripts/player_floor_height_original_contract.cpp": {
+      "sha256": "49039d53e452d9ad9549e47a169e5c4fa0f66ae98d429f5b72848dabd8f1ebac",
+      "bytes": 6222,
+      "origin": "working-source"
+    },
+    "scripts/player_ground_contact_bridge_contract.cpp": {
+      "sha256": "be0da5d64c655140de01e711dfcfdd0039bceb71f3bfb1e14104a6f8a9bf8a6c",
+      "bytes": 3384,
+      "origin": "working-source"
+    },
+    "scripts/player_ground_contact_original_contract.cpp": {
+      "sha256": "123748f642e65f45499ad976b1c7ddfe67bc20fa4dd7ca86006a638f212da464",
+      "bytes": 4711,
+      "origin": "working-source"
+    },
+    "scripts/player_idle_entry_bridge_contract.cpp": {
+      "sha256": "6f70bfa41697594def80c48ffc44f3488b61f5e5bd740409bed6afa68dbd66d3",
+      "bytes": 4666,
+      "origin": "working-source"
+    },
+    "scripts/player_idle_entry_original_contract.cpp": {
+      "sha256": "d57b7b989f810229ac03770fb78e9eb1cd9f75634a5251e600d3c32318519ffc",
+      "bytes": 9019,
+      "origin": "working-source"
+    },
+    "scripts/player_movement_speed_bridge_contract.cpp": {
+      "sha256": "45b50a3fbabe94f581acd355018fe5b5b766964fd2612431010970b694b2f0b8",
+      "bytes": 5307,
+      "origin": "working-source"
+    },
+    "scripts/player_movement_speed_original_contract.cpp": {
+      "sha256": "11e4aa67e871174312f846188801d2e9ba324e5e400b4bce1d845124071f6d70",
+      "bytes": 12370,
+      "origin": "working-source"
+    },
+    "scripts/player_surface_lookup_bridge_contract.cpp": {
+      "sha256": "0f980be03f85e0a729867fd038e8884e65d7da3537641378cd2cfbb9bfa7a275",
+      "bytes": 4432,
+      "origin": "working-source"
+    },
+    "scripts/player_surface_lookup_original_contract.cpp": {
+      "sha256": "f05bd727d4c910b6b1c0f2682e2b67131d8f230f0bdfe92302e7575b52ee1e06",
+      "bytes": 6192,
+      "origin": "working-source"
+    },
+    "scripts/player_view_bridge_contract.cpp": {
+      "sha256": "375b987db2a9e1fc600b1dff69f995e0ea2bb52d7ffabf14a192715bab538a46",
+      "bytes": 5924,
+      "origin": "working-source"
+    },
+    "scripts/player_view_original_contract.cpp": {
+      "sha256": "ccaea57d67763c849121ffb0c7e1d6cdad8c19db4c3cede7b04602363fd7e7e3",
+      "bytes": 23446,
+      "origin": "working-source"
+    },
     "scripts/prepare_demo_source.py": {
-      "sha256": "e394c3c505276bc55652a31689293d7f83d891a71a562723060271d1a4b4e7e0",
-      "bytes": 10500,
+      "sha256": "cfbcd097fb36a6314f2145f39c6f6023238c435fadc0c064ee5d2982c2d6177c",
+      "bytes": 22300,
       "origin": "working-source"
     },
     "scripts/prepare_pc_dependencies.py": {
@@ -339,7 +450,7 @@
       "origin": "working-source"
     },
     "scripts/prepare_pc_reconstruction_recipe.py": {
-      "sha256": "07ed181531c283379973fe0aabcbdb14c45fc29dcd869a7a4449fcdebcae67f9",
+      "sha256": "988c36dc333f19cd5f012e18cdc5c518610869cff79f56a83240f19ae8b8d483",
       "bytes": 18225,
       "origin": "working-source"
     },
@@ -348,14 +459,14 @@
       "bytes": 1998,
       "origin": "working-source"
     },
+    "scripts/reconstruct_pc_candidate.py": {
+      "sha256": "91cd697939fdd43c0dabc7598cedf9c62e6712fc057e529bd1f0b7eaef9dc7cf",
+      "bytes": 26795,
+      "origin": "working-source"
+    },
     "scripts/reconstruction_common.py": {
       "sha256": "6eefbca62bb766989b8eddbe0edc31433d76567a71479deed196f86311a9b64b",
       "bytes": 3882,
-      "origin": "working-source"
-    },
-    "scripts/reconstruct_pc_candidate.py": {
-      "sha256": "a1e52279b05076516445e3a93232b2d3337040ef2ae297cda8e6f092272f19f6",
-      "bytes": 23506,
       "origin": "working-source"
     },
     "scripts/regenerate_audio_rsp.py": {
@@ -363,9 +474,19 @@
       "bytes": 5746,
       "origin": "working-source"
     },
+    "scripts/stage_pc_testing_candidate.py": {
+      "sha256": "aeaa715c38bd9eb24dee0b169790636631e1740c4f1321946c4a6d03517ef99e",
+      "bytes": 5018,
+      "origin": "working-source"
+    },
     "scripts/test_crash_reporting.py": {
-      "sha256": "39c84567e24fcbdaea03a0a304a52373f4944f14bb1b5969d1eba44686317614",
+      "sha256": "afd962fe7a2e2b962200b13703da5d93242cafe29863574fc4a34d32d673a9e6",
       "bytes": 11603,
+      "origin": "working-source"
+    },
+    "scripts/test_ground_movement_original.py": {
+      "sha256": "31876d27b50bac118c44690e2b2bce964e1212a7137507d9b14ccbc932d8ad1c",
+      "bytes": 7641,
       "origin": "working-source"
     },
     "scripts/test_package_rage_wars_release.py": {
@@ -376,6 +497,46 @@
     "scripts/test_pc_dependencies.py": {
       "sha256": "a2db0d7e43d687b79be39677c5f112b9a889894ccd3191d72d7e1d66d0e1f726",
       "bytes": 2100,
+      "origin": "working-source"
+    },
+    "scripts/test_player_damage_descriptor_original.py": {
+      "sha256": "27a156dcbc24a253e42b600ebd04b5befe7e90b89fadeb01c8f2b87c55e6c70e",
+      "bytes": 8271,
+      "origin": "working-source"
+    },
+    "scripts/test_player_ease_original.py": {
+      "sha256": "453c106001c51c0fcf52f31a2f26df6ee9e6d7a7d160b0a6099acf532aa155db",
+      "bytes": 10409,
+      "origin": "working-source"
+    },
+    "scripts/test_player_floor_height_original.py": {
+      "sha256": "6de5e3c6617e3fce0681ca5346f53df1f9cee7a21e9228ca60010bc543fd588c",
+      "bytes": 8287,
+      "origin": "working-source"
+    },
+    "scripts/test_player_ground_contact_original.py": {
+      "sha256": "1276ed42638cd7d7e6e389fca8571787be57e24d2574a8c23ab7826fe4b03de9",
+      "bytes": 8195,
+      "origin": "working-source"
+    },
+    "scripts/test_player_idle_entry_original.py": {
+      "sha256": "41c912a80f857dbc2ec73a7649b67cb4a77727a456f5edacc192aa7b521acb27",
+      "bytes": 9340,
+      "origin": "working-source"
+    },
+    "scripts/test_player_movement_speed_original.py": {
+      "sha256": "7dfd5cd59b5cf5712e37694aa2e41130f304657e6f2b3b6d8ad646ebaec29d91",
+      "bytes": 9677,
+      "origin": "working-source"
+    },
+    "scripts/test_player_surface_lookup_original.py": {
+      "sha256": "bda29dc0f260eca265df3131cdf1362d395f2c843518b113231e98e015081c6e",
+      "bytes": 8208,
+      "origin": "working-source"
+    },
+    "scripts/test_player_view_original.py": {
+      "sha256": "ed834dafabb7d4ce1d6860d1038a5bd2410fa6fb7cfd72e318db806534aa873d",
+      "bytes": 10497,
       "origin": "working-source"
     },
     "scripts/test_reconstruction.py": {
@@ -393,19 +554,9 @@
       "bytes": 5386,
       "origin": "working-source"
     },
-    "staging/rage-wars-recomp-spike/pc_runtime/CMakeLists.txt": {
-      "sha256": "6d3b26fe9e2c0bd3f448abaa56fdd1bf3588dd95c7a4888ec3dfd5b434aa901e",
-      "bytes": 1125,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/symbols/rage_wars.us.ares_boot_to_combat.toml": {
-      "sha256": "e84d360cbf2620a4a00a40e41fce264cf1ba4c62e48c58ac9a7ae24e3da3ad86",
-      "bytes": 774954,
-      "origin": "working-source"
-    },
     "staging/rage-wars-recomp-spike/pc_runtime/cmake/demo_release.cmake": {
-      "sha256": "614e869b48b7f91b2abd22adf02c1e0ef9d0e5459e6b7326c8b64cd07d14bebe",
-      "bytes": 3682,
+      "sha256": "917c7fd954f225882b71048392d54388297f3647864d3592342d0594ee4e02fb",
+      "bytes": 5246,
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/cmake/gate2_setup_once.cmake": {
@@ -429,8 +580,8 @@
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/cmake/gate5_setup_once.cmake": {
-      "sha256": "444aa90a135d20aa034ad4f155835fe00d9f7a5de62d4f67dd531fbf562396e6",
-      "bytes": 25770,
+      "sha256": "4dc694189e4457996246ac3396713cabd684187f16fe187b5c8cda2807e916d7",
+      "bytes": 51122,
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/cmake/pc_dependencies.cmake": {
@@ -448,9 +599,14 @@
       "bytes": 1156,
       "origin": "working-source"
     },
+    "staging/rage-wars-recomp-spike/pc_runtime/CMakeLists.txt": {
+      "sha256": "6d3b26fe9e2c0bd3f448abaa56fdd1bf3588dd95c7a4888ec3dfd5b434aa901e",
+      "bytes": 1125,
+      "origin": "working-source"
+    },
     "staging/rage-wars-recomp-spike/pc_runtime/src/gate5_main.cpp": {
-      "sha256": "9ad7c4d58379e6b39da24ccf1fb98837e4560bad9b0e5048458d0f40185ee9e6",
-      "bytes": 117897,
+      "sha256": "6f88a5185a1ebc0e570506dcf2522e419f0c70bb8ba15592d779aec9a1a33110",
+      "bytes": 117196,
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/src/gate5_overlay.cpp": {
@@ -558,106 +714,6 @@
       "bytes": 482,
       "origin": "working-source"
     },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/CMakeLists.txt": {
-      "sha256": "08c22ff47f6866ca842ae42022fb063a102fe7c4bc67e6f04777f00383e5f98a",
-      "bytes": 2088,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_asset_loader_test.cpp": {
-      "sha256": "d18c219ceafcdab2e9e0c8b7698837f1fbe7823daee40574fa578f0a12d540f8",
-      "bytes": 2862,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_audio_device_test.cpp": {
-      "sha256": "7bd7b7ec852eabbc70c551fc03c6341aca97896b0d4c1646ef5873727004699c",
-      "bytes": 2392,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_audio_output_test.cpp": {
-      "sha256": "86d32a78ee61c9201ed0adf034442431208b8739888178f567674602006e9304",
-      "bytes": 9953,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_code_residency_test.cpp": {
-      "sha256": "cc78e0699ad9455d2ab30e47b77c8ed4ba573384a230001074b04208cb6becae",
-      "bytes": 8194,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_controller_mapping_test.cpp": {
-      "sha256": "07295823caf097118968fedb7d5acdeb8ae468f19e71476854864967fd30fa0c",
-      "bytes": 3549,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_controller_service_test.cpp": {
-      "sha256": "e1deba1e7294b0e450bd0dd67fcd021d9823eb1a584837c4485012ccc3cb96fe",
-      "bytes": 6597,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_controls_persistence_test.cpp": {
-      "sha256": "7caa65f20a523d3a761cc11f270f3e22792b50000e8f6c6a83d01315b378e219",
-      "bytes": 6164,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_decoded_frame_test.cpp": {
-      "sha256": "65bb6eb8629bf0004eadbc4a0e2c0a44ee08a50d019150154c6e25217d73e310",
-      "bytes": 8734,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_guest_clock_test.cpp": {
-      "sha256": "e791e550b9527440a13de21a276c2b1233f52a9f5369bf5900076006f6d94a40",
-      "bytes": 1618,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_input_replay_test.cpp": {
-      "sha256": "ffb15d4a07c3f738a0013e792340edf9dbb39aba9afabdefe600712fe2df196b",
-      "bytes": 3467,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_modern_controls_test.cpp": {
-      "sha256": "e37d9fb41d64638eb5850528e46aa24a5535164381551e3aa7fff2da4a857a97",
-      "bytes": 11082,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_port_options_test.cpp": {
-      "sha256": "3f2d234fb754f08b40961d7089bceb98b7ccb6eb8bd514f5018e74cb2f52b477",
-      "bytes": 2700,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_presentation_clock_test.cpp": {
-      "sha256": "cd7516600e7461b65c49054d6888d467be96da7dc2723618b67ea7d33b9b6ac7",
-      "bytes": 1577,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_scheduler_test.cpp": {
-      "sha256": "28184413e7abbb77b62761d20cb1fa4355288a20a964dee46efd760a6cb514df",
-      "bytes": 2664,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_camera_test.cpp": {
-      "sha256": "9d943cd98beb5b4c7dc67a68fc510cd1a8d3b1b338a65dacb83c81b024b4632e",
-      "bytes": 23804,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_controls_test.cpp": {
-      "sha256": "4b6c3007f84614ffedabc511301a12e49177aeddb710c64bb3cbe4d6fe5faf80",
-      "bytes": 4710,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tests/recomp_output_audit.cpp": {
-      "sha256": "7d1412d790535021763bcf631013ad8d8e89f19b35564eccd5ecb2a2523f5ff4",
-      "bytes": 1953,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tools/build_generated_source_manifest.py": {
-      "sha256": "127e26bb38720810a189fb2c812b657d8dcfb2965b6f410cfc9ce1525d479145",
-      "bytes": 3712,
-      "origin": "working-source"
-    },
-    "staging/rage-wars-recomp-spike/pc_runtime/tools/rom_xxh3.cpp": {
-      "sha256": "ff1390b76c5f2a3efebac9dce0f578dcc9cc3b7fa67c749336c0d7a9541e5e47",
-      "bytes": 685,
-      "origin": "working-source"
-    },
     "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/fast3d_scene_decoder.cpp": {
       "sha256": "e6e4a269b39ec0672a612439b8fe061a228df46524670f47be73d86f3c72050d",
       "bytes": 85530,
@@ -669,8 +725,8 @@
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_decoded_frame.hpp": {
-      "sha256": "2ab9622f9211960b3fed6ffdf9de00c086d273f31ea0d652a924968a1d4cd861",
-      "bytes": 10580,
+      "sha256": "7dd3275c4925094d102edbfba45cabb7aaabba8927c0485ab4a3567881ccc128",
+      "bytes": 12618,
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_emulator_render_bridge.hpp": {
@@ -684,8 +740,8 @@
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_homogeneous_clip.hpp": {
-      "sha256": "c4dae6b73a87658fbdd5995c112bd62f65ebcd522b67cd99a3966f1b50615cd4",
-      "bytes": 2906,
+      "sha256": "8397eb0b3145ad2a3c3033d8b48cc42bb748e76991cc7e04eded33ede1b3eea1",
+      "bytes": 3399,
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_live_fast3d_task_adapter.cpp": {
@@ -709,13 +765,13 @@
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_raw_fast3d_renderer.cpp": {
-      "sha256": "3e9d639bda1d62a318b80b774a77f676cb5fee09ae6d634612d10bf31c59a808",
-      "bytes": 87938,
+      "sha256": "57d0738ec38e6d9922f022d25a19ede10c52602042d135d6de861fa3903b9caf",
+      "bytes": 89553,
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_raw_fast3d_renderer.hpp": {
-      "sha256": "1234fd6e10fdad2295872448a5d0cfe95e56c88fce12d5ba64f5e93fdb70e962",
-      "bytes": 12593,
+      "sha256": "14e23acac35a37486cfaebe65aed91549eeb1a160ab7e1baa9b718f5c4bb9709",
+      "bytes": 12772,
       "origin": "working-source"
     },
     "staging/rage-wars-recomp-spike/pc_runtime/src/xr64_fast3d/n64_segment_map.cpp": {
@@ -748,6 +804,161 @@
       "bytes": 7871,
       "origin": "working-source"
     },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/CMakeLists.txt": {
+      "sha256": "08c22ff47f6866ca842ae42022fb063a102fe7c4bc67e6f04777f00383e5f98a",
+      "bytes": 2088,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/n64_clip_equivalence_test.cpp": {
+      "sha256": "630964ad5b9a164f9e40e8de1e50d36a8412a4e01487bde0ec4e3e0aa297b43d",
+      "bytes": 4497,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_animation_blend_test.cpp": {
+      "sha256": "41c1b51557cd1734f28ab5002986dda4e3a94ecbc1cb55ab8bacb331a97aaf46",
+      "bytes": 10123,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_asset_loader_test.cpp": {
+      "sha256": "d18c219ceafcdab2e9e0c8b7698837f1fbe7823daee40574fa578f0a12d540f8",
+      "bytes": 2862,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_audio_device_test.cpp": {
+      "sha256": "7bd7b7ec852eabbc70c551fc03c6341aca97896b0d4c1646ef5873727004699c",
+      "bytes": 2392,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_audio_output_test.cpp": {
+      "sha256": "86d32a78ee61c9201ed0adf034442431208b8739888178f567674602006e9304",
+      "bytes": 9953,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_body_interpolation_test.cpp": {
+      "sha256": "9eae72e12c752144d9ec0dc2e677f1963d544f0b2fe29958d45055ff3758a49c",
+      "bytes": 9819,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_code_residency_test.cpp": {
+      "sha256": "cc78e0699ad9455d2ab30e47b77c8ed4ba573384a230001074b04208cb6becae",
+      "bytes": 8194,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_controller_mapping_test.cpp": {
+      "sha256": "07295823caf097118968fedb7d5acdeb8ae468f19e71476854864967fd30fa0c",
+      "bytes": 3549,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_controller_service_test.cpp": {
+      "sha256": "e1deba1e7294b0e450bd0dd67fcd021d9823eb1a584837c4485012ccc3cb96fe",
+      "bytes": 6597,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_controls_persistence_test.cpp": {
+      "sha256": "7caa65f20a523d3a761cc11f270f3e22792b50000e8f6c6a83d01315b378e219",
+      "bytes": 6164,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_decoded_frame_test.cpp": {
+      "sha256": "65bb6eb8629bf0004eadbc4a0e2c0a44ee08a50d019150154c6e25217d73e310",
+      "bytes": 8734,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_generic_combiner_test.cpp": {
+      "sha256": "eaf0708739e5b9add20e33f2566da189aed5da0ceedd5c1f6277ba382e025b37",
+      "bytes": 6004,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_guest_clock_test.cpp": {
+      "sha256": "e791e550b9527440a13de21a276c2b1233f52a9f5369bf5900076006f6d94a40",
+      "bytes": 1618,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_input_assignment_test.cpp": {
+      "sha256": "61addd6976384fb5f949cd183de33901bf6139bff931959f72db60dbb52e6ce1",
+      "bytes": 4948,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_input_replay_test.cpp": {
+      "sha256": "ffb15d4a07c3f738a0013e792340edf9dbb39aba9afabdefe600712fe2df196b",
+      "bytes": 3467,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_model_filter_test.cpp": {
+      "sha256": "9d478feae55d9764ce5b773ce6f8bb9e7fa7a7fa88d3f2307f0404508b4e3b6d",
+      "bytes": 8342,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_modern_controls_test.cpp": {
+      "sha256": "e37d9fb41d64638eb5850528e46aa24a5535164381551e3aa7fff2da4a857a97",
+      "bytes": 11082,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_native_focus_test.cpp": {
+      "sha256": "9de006cdb7981ce2ecb43b365a0ad722f4abe22617f3c9a6016f9981a0c36d16",
+      "bytes": 4922,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_port_options_test.cpp": {
+      "sha256": "3f2d234fb754f08b40961d7089bceb98b7ccb6eb8bd514f5018e74cb2f52b477",
+      "bytes": 2700,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_presentation_clock_test.cpp": {
+      "sha256": "cd7516600e7461b65c49054d6888d467be96da7dc2723618b67ea7d33b9b6ac7",
+      "bytes": 1577,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_scheduler_test.cpp": {
+      "sha256": "28184413e7abbb77b62761d20cb1fa4355288a20a964dee46efd760a6cb514df",
+      "bytes": 2664,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_camera_test.cpp": {
+      "sha256": "76a451d862446ceb5b3eb4e8fa01e65b725d2576aca7e6b64da3ba70d64f4bb0",
+      "bytes": 24562,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_controls_test.cpp": {
+      "sha256": "4b6c3007f84614ffedabc511301a12e49177aeddb710c64bb3cbe4d6fe5faf80",
+      "bytes": 4710,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_hud_test.cpp": {
+      "sha256": "32a6562dcf5308ca2db692818df7dfba2caaf516e7f8674370c0ccceaca63fe4",
+      "bytes": 3391,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_laser_test.cpp": {
+      "sha256": "19e728bf2aa8b36e2d4e0f11e12c486c2c3996d888c0ad4942584b540b5a6bbe",
+      "bytes": 1601,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tests/recomp_output_audit.cpp": {
+      "sha256": "52f946c298a3611cf9cffc850b66754519b19cb4809f8104b8c00be4a88d569d",
+      "bytes": 2004,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tools/build_generated_source_manifest.py": {
+      "sha256": "127e26bb38720810a189fb2c812b657d8dcfb2965b6f410cfc9ce1525d479145",
+      "bytes": 3712,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/pc_runtime/tools/rom_xxh3.cpp": {
+      "sha256": "ff1390b76c5f2a3efebac9dce0f578dcc9cc3b7fa67c749336c0d7a9541e5e47",
+      "bytes": 685,
+      "origin": "working-source"
+    },
+    "staging/rage-wars-recomp-spike/symbols/rage_wars.us.ares_boot_to_combat.toml": {
+      "sha256": "e4023b7caf7278e1a7b72fc93fffc06d591d1bbc9f1a945daf487fa193ab202e",
+      "bytes": 861722,
+      "origin": "working-source"
+    },
+    "THIRD-PARTY-NOTICES.txt": {
+      "sha256": "429df0e58681f5b3b5b156605dc4d386ef389759366f46aa794b8c61b95a74ae",
+      "bytes": 4282,
+      "origin": "release-notice"
+    },
     "toolchain/N64ModernRuntime/CMakeLists.txt": {
       "sha256": "9fb7732d7fea069db02ef264f1c1fad891db485f813083247bd6702cd21124e5",
       "bytes": 198,
@@ -758,189 +969,9 @@
       "bytes": 35823,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/LICENSE-Fast3D-reference.txt": {
-      "sha256": "f26e9084000ec95baf5fbec41998b95c26a686c4f9179e95fa05fb550bc6a0d2",
-      "bytes": 1074,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/LICENSE-PerfectDarkVR-reference.txt": {
-      "sha256": "33efa0ef96a7e69f0aeb755b01f6b846cdadd750f725a32a19f4612b2b86c03c",
-      "bytes": 1067,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/CMakeLists.txt": {
-      "sha256": "d292e792325e8695e1812d3ddfb84cb09f48487264a377e4ad67c4548338ced8",
-      "bytes": 8691,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/LICENSE": {
-      "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
-      "bytes": 1095,
-      "origin": "working-source"
-    },
     "toolchain/N64ModernRuntime/librecomp/CMakeLists.txt": {
       "sha256": "fa7c8f1efe79f358006037d05eb3b84f77395bf787e7b81436cc2a7fa2a5b8d9",
       "bytes": 2677,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/CMakeLists.txt": {
-      "sha256": "d292e792325e8695e1812d3ddfb84cb09f48487264a377e4ad67c4548338ced8",
-      "bytes": 8691,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/LICENSE": {
-      "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
-      "bytes": 1095,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/CMakeLists.txt": {
-      "sha256": "a51d8fe940e1abca05ba0d4e94a6e144e6fe37f70af25eab14d2179f08180866",
-      "bytes": 1909,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/ai.cpp": {
-      "sha256": "4c12d4ea818418834abebdab20c7c368725bce4ebbd0769bed83260980686b1e",
-      "bytes": 1014,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/config.cpp": {
-      "sha256": "ef6842d938b4264f50393c62b5c42ed1d457f5804ae5adfae9fafd75199b649c",
-      "bytes": 24678,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/config_option.cpp": {
-      "sha256": "645d962104516849d789c1a3d4015c0b32496c6b80c6fdf5a68fd777eb17f496",
-      "bytes": 3429,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/cont.cpp": {
-      "sha256": "2800ff4e5f2172cdc52e537ea7c67ac6d9f222c8a19a2f1e25cffa86182244bc",
-      "bytes": 7217,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/dp.cpp": {
-      "sha256": "ba3545c6cfce0441f765fe19d8e48266df733fc1d951b1f433f934f595feeb02",
-      "bytes": 1193,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/eep.cpp": {
-      "sha256": "d407c8ba21cb45bfc9d92085c4dd84d30c5c360c3b77dd5871ce6d5b959200e3",
-      "bytes": 2713,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/euc-jp.cpp": {
-      "sha256": "3864532fb37b0f8d40ffc0ca37f64faf1d8658059ff31cdff1e6142e0178dd67",
-      "bytes": 208738,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/extensions.cpp": {
-      "sha256": "8fbd47b37cd0c8925ebcf80d06c47376016f713c8b6f9a0d772d1e92e74c4ae9",
-      "bytes": 495,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/files.cpp": {
-      "sha256": "22e519981a9583e1d9455b62f5c2c686b69fb1813a9d5910b3bba467638b0085",
-      "bytes": 1779,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/flash.cpp": {
-      "sha256": "6dcde00d6545779e4769ea07f99c745c5924114a9e3ab342e02316c362520240",
-      "bytes": 7090,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/heap.cpp": {
-      "sha256": "4a85ab12aeaf6f50be5d5913b3e0ccb8c3bf512627c3880c0be0d212aa9dc2d6",
-      "bytes": 1677,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/LICENSE-odashi-encoding.txt": {
-      "sha256": "497dbe776317cf83af8f4b3d62ac09b4cdfd927475c02db8dac4fd4dacb8d03e",
-      "bytes": 1144,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/math_routines.cpp": {
-      "sha256": "c17568804733d5265dc3d06436763f0ea241c9907a2554ca08a76ff181ad761c",
-      "bytes": 3878,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/mods.cpp": {
-      "sha256": "526353dfae032db30c751ccce0d0585e7ca4ef03a24f75c34a8c4aa36169c345",
-      "bytes": 114136,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/mod_config_api.cpp": {
-      "sha256": "745f5744ac458dde580d48db5cae62fe5fa0c59ea166396a83f7d80e9d294680",
-      "bytes": 5611,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/mod_events.cpp": {
-      "sha256": "1701e1ce9c5b2b15ec124a1afc59e1d2b3b2beed2f0430a143931cedc87ee18d",
-      "bytes": 2560,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/mod_hooks.cpp": {
-      "sha256": "7984389f78bf5569e21f945cd1089a9fa48f352d208d36595325cac3905ce479",
-      "bytes": 5641,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/mod_manifest.cpp": {
-      "sha256": "56e816257822a7451862ef6119f98103b473fc44a7130d8cbe449c80f3820a9f",
-      "bytes": 45420,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/overlays.cpp": {
-      "sha256": "f321947423a8000980c0eda1646359befe7f17511a08eb875b22761287500c00",
-      "bytes": 42518,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/pak.cpp": {
-      "sha256": "313f2a3d5e6e6f9be8e8e2482080d667cff477533d82ef5056dc218021aef776",
-      "bytes": 23141,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/patcher.cpp": {
-      "sha256": "f29c66d3f1492e727c77260af98c764bf218ce16b2c40d9c68ee9daa22d5adda",
-      "bytes": 11854,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/pi.cpp": {
-      "sha256": "f37b8816ef7e7417830b8010886d8f07f4cb4895d64183a6200d0defc812b0c1",
-      "bytes": 17363,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/print.cpp": {
-      "sha256": "3258f626770caad429e7531299497fa0b5ccfb93075fd6dea9acbfe19fba19d7",
-      "bytes": 2078,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/recomp.cpp": {
-      "sha256": "bbf52b3f9b69dfcb69342aef1e7776e2372c618018d1e8b28804f54665a3d45b",
-      "bytes": 33931,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/rsp.cpp": {
-      "sha256": "5719fc22ec868b087e2f73b37e2f80acb640526deabc3e85b590ba082822a066",
-      "bytes": 1986,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/sp.cpp": {
-      "sha256": "436a254311d54b307236cb437ad0641dafdebfe1050e5708da77d42fba0972a3",
-      "bytes": 1808,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/ultra_stubs.cpp": {
-      "sha256": "ee45233ba54853e105cfbad7bf3151d19cf54aefa6afba491da97e822b873ce3",
-      "bytes": 1348,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/ultra_translation.cpp": {
-      "sha256": "4712c3ac66b0d7273bbfc9c955f72ba5609c3320efa525b00b4f4b78e0a9e1a9",
-      "bytes": 5964,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/librecomp/src/vi.cpp": {
-      "sha256": "b6bfedcb5c3e791bd72bc18ff916abf6d7d23ba16fb3671fabf944d0209980e5",
-      "bytes": 1588,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/librecomp/include/librecomp/addresses.hpp": {
@@ -1013,89 +1044,169 @@
       "bytes": 1203,
       "origin": "working-source"
     },
+    "toolchain/N64ModernRuntime/librecomp/src/ai.cpp": {
+      "sha256": "4c12d4ea818418834abebdab20c7c368725bce4ebbd0769bed83260980686b1e",
+      "bytes": 1014,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/config.cpp": {
+      "sha256": "ef6842d938b4264f50393c62b5c42ed1d457f5804ae5adfae9fafd75199b649c",
+      "bytes": 24678,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/config_option.cpp": {
+      "sha256": "645d962104516849d789c1a3d4015c0b32496c6b80c6fdf5a68fd777eb17f496",
+      "bytes": 3429,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/cont.cpp": {
+      "sha256": "2800ff4e5f2172cdc52e537ea7c67ac6d9f222c8a19a2f1e25cffa86182244bc",
+      "bytes": 7217,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/dp.cpp": {
+      "sha256": "ba3545c6cfce0441f765fe19d8e48266df733fc1d951b1f433f934f595feeb02",
+      "bytes": 1193,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/eep.cpp": {
+      "sha256": "d407c8ba21cb45bfc9d92085c4dd84d30c5c360c3b77dd5871ce6d5b959200e3",
+      "bytes": 2713,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/euc-jp.cpp": {
+      "sha256": "3864532fb37b0f8d40ffc0ca37f64faf1d8658059ff31cdff1e6142e0178dd67",
+      "bytes": 208738,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/extensions.cpp": {
+      "sha256": "8fbd47b37cd0c8925ebcf80d06c47376016f713c8b6f9a0d772d1e92e74c4ae9",
+      "bytes": 495,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/files.cpp": {
+      "sha256": "22e519981a9583e1d9455b62f5c2c686b69fb1813a9d5910b3bba467638b0085",
+      "bytes": 1779,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/flash.cpp": {
+      "sha256": "6dcde00d6545779e4769ea07f99c745c5924114a9e3ab342e02316c362520240",
+      "bytes": 7090,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/heap.cpp": {
+      "sha256": "4a85ab12aeaf6f50be5d5913b3e0ccb8c3bf512627c3880c0be0d212aa9dc2d6",
+      "bytes": 1677,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/LICENSE-odashi-encoding.txt": {
+      "sha256": "497dbe776317cf83af8f4b3d62ac09b4cdfd927475c02db8dac4fd4dacb8d03e",
+      "bytes": 1144,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/math_routines.cpp": {
+      "sha256": "c17568804733d5265dc3d06436763f0ea241c9907a2554ca08a76ff181ad761c",
+      "bytes": 3878,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mod_config_api.cpp": {
+      "sha256": "745f5744ac458dde580d48db5cae62fe5fa0c59ea166396a83f7d80e9d294680",
+      "bytes": 5611,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mod_events.cpp": {
+      "sha256": "1701e1ce9c5b2b15ec124a1afc59e1d2b3b2beed2f0430a143931cedc87ee18d",
+      "bytes": 2560,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mod_hooks.cpp": {
+      "sha256": "7984389f78bf5569e21f945cd1089a9fa48f352d208d36595325cac3905ce479",
+      "bytes": 5641,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mod_manifest.cpp": {
+      "sha256": "56e816257822a7451862ef6119f98103b473fc44a7130d8cbe449c80f3820a9f",
+      "bytes": 45420,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/mods.cpp": {
+      "sha256": "526353dfae032db30c751ccce0d0585e7ca4ef03a24f75c34a8c4aa36169c345",
+      "bytes": 114136,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/overlays.cpp": {
+      "sha256": "f321947423a8000980c0eda1646359befe7f17511a08eb875b22761287500c00",
+      "bytes": 42518,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/pak.cpp": {
+      "sha256": "313f2a3d5e6e6f9be8e8e2482080d667cff477533d82ef5056dc218021aef776",
+      "bytes": 23141,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/patcher.cpp": {
+      "sha256": "f29c66d3f1492e727c77260af98c764bf218ce16b2c40d9c68ee9daa22d5adda",
+      "bytes": 11854,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/pi.cpp": {
+      "sha256": "f37b8816ef7e7417830b8010886d8f07f4cb4895d64183a6200d0defc812b0c1",
+      "bytes": 17363,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/print.cpp": {
+      "sha256": "3258f626770caad429e7531299497fa0b5ccfb93075fd6dea9acbfe19fba19d7",
+      "bytes": 2078,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/recomp.cpp": {
+      "sha256": "bbf52b3f9b69dfcb69342aef1e7776e2372c618018d1e8b28804f54665a3d45b",
+      "bytes": 33931,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/rsp.cpp": {
+      "sha256": "5719fc22ec868b087e2f73b37e2f80acb640526deabc3e85b590ba082822a066",
+      "bytes": 1986,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/sp.cpp": {
+      "sha256": "436a254311d54b307236cb437ad0641dafdebfe1050e5708da77d42fba0972a3",
+      "bytes": 1808,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/ultra_stubs.cpp": {
+      "sha256": "ee45233ba54853e105cfbad7bf3151d19cf54aefa6afba491da97e822b873ce3",
+      "bytes": 1348,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/ultra_translation.cpp": {
+      "sha256": "4712c3ac66b0d7273bbfc9c955f72ba5609c3320efa525b00b4f4b78e0a9e1a9",
+      "bytes": 5964,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/librecomp/src/vi.cpp": {
+      "sha256": "b6bfedcb5c3e791bd72bc18ff916abf6d7d23ba16fb3671fabf944d0209980e5",
+      "bytes": 1588,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/LICENSE-Fast3D-reference.txt": {
+      "sha256": "f26e9084000ec95baf5fbec41998b95c26a686c4f9179e95fa05fb550bc6a0d2",
+      "bytes": 1074,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/LICENSE-PerfectDarkVR-reference.txt": {
+      "sha256": "33efa0ef96a7e69f0aeb755b01f6b846cdadd750f725a32a19f4612b2b86c03c",
+      "bytes": 1067,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/CMakeLists.txt": {
+      "sha256": "d292e792325e8695e1812d3ddfb84cb09f48487264a377e4ad67c4548338ced8",
+      "bytes": 8691,
+      "origin": "working-source"
+    },
     "toolchain/N64ModernRuntime/N64Recomp/include/recomp.h": {
       "sha256": "d42a572ec50e15f8196fdeb7a37ff62e62f30c80d80bf87c454298ece8fce9d6",
       "bytes": 15439,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/LiveRecomp/live_generator.cpp": {
-      "sha256": "e1e10a82b7a22b26fe199fb0e7eee592bfe8808cabb9fcbe2a2d5aad03a1b096",
-      "bytes": 85586,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/LiveRecomp/live_recompiler_test.cpp": {
-      "sha256": "7730934b063a775ca48a88dc8ed36e7156346ca13bf006c9f29d070868531d37",
-      "bytes": 13558,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/OfflineModRecomp/main.cpp": {
-      "sha256": "3c20fdd280c2534197b2de84b17fc6563911c6fb112ecc0be1438fa42de3a9e3",
-      "bytes": 11759,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/RecompModMerger/main.cpp": {
-      "sha256": "2d775cb1c552534465b95ee2c2a1fe367880ee0569ccb063ba83683574303abc",
-      "bytes": 12678,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/RecompModTool/main.cpp": {
-      "sha256": "08767d14b638356c76f0d5ca0b97914e36d91731c4f854efc1703c5563cd6398",
-      "bytes": 58871,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/analysis.cpp": {
-      "sha256": "c060bd09f73a82f703f6c25ed87c50cd66c6b7d0fcabeea3a2a09a5dd2c23a07",
-      "bytes": 15115,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/analysis.h": {
-      "sha256": "a9ba3a0454c9037c26c6281c6e7b4d5d1c660357c3c1a95fe61a0d56c73d4c1e",
-      "bytes": 661,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/cgenerator.cpp": {
-      "sha256": "edb178c83b5cedc1943082f8fc3f448b6dc883b546e23fd3530a140627b43afa",
-      "bytes": 28652,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/config.cpp": {
-      "sha256": "314292412e0e35e72e96a4420155fec5ef831262cb9208a8082840fa336720c2",
-      "bytes": 39456,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/elf.cpp": {
-      "sha256": "1575f99deb63a1691a9042b1ba4c60380318f8f4ea4ea6d67ba90173fd7e6713",
-      "bytes": 37009,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/main.cpp": {
-      "sha256": "27d8d2f65e6b6ff7d355fb97f706bedcee3050a14305c11b10f563c636162ab8",
-      "bytes": 50663,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/mdebug.cpp": {
-      "sha256": "80a83de9a5cf38c30947bd6c16a7994ac61e1c3b941d6a451bdadbf10aa14830",
-      "bytes": 32063,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/mod_symbols.cpp": {
-      "sha256": "29ad96e2431dc3ee6f0930b7f8281ba3b2d3d7a6e88a26b78b66631fe226b0a0",
-      "bytes": 35730,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/operations.cpp": {
-      "sha256": "8d5f2ef2ec1c3499af02ebc273416a0d83fb51b4eb7a2780f28df3a4518817d1",
-      "bytes": 23348,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/recompilation.cpp": {
-      "sha256": "302bf66addfa23fb7d81b25c5968f98fb8de01ee49f92454657a76c47a111afa",
-      "bytes": 37888,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/src/symbol_lists.cpp": {
-      "sha256": "25b1bb7d63cba3d22f5b2239ef14b9301126e70d84b57c706b9b79c718cf2fe1",
-      "bytes": 15147,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/N64Recomp/include/recompiler/context.h": {
@@ -1123,61 +1234,6 @@
       "bytes": 5165,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/LICENSE.txt": {
-      "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
-      "bytes": 1110,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/ChangeLog.md": {
-      "sha256": "c114c7ec4b4ea4f70e92138a9e494c2a47ad054210f405fa24fca70cac3bd15c",
-      "bytes": 123907,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/CMakeLists.txt": {
-      "sha256": "5b82067a0caea95a88274b7e04d60542198d3c3774a8d9f47bb82a551b753a26",
-      "bytes": 20214,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/LICENSE": {
-      "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
-      "bytes": 1458,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/README.md": {
-      "sha256": "0647c8654668b4961f88dfeadbadc6ae744105c947122e88e554a6c58c4d439e",
-      "bytes": 20167,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/LICENSE": {
-      "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
-      "bytes": 1094,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/CMakeLists.txt": {
-      "sha256": "0c165eb248e1018650867f3e96b1d369160d3caeb1f6a0e2d97db054f12d3f0e",
-      "bytes": 1560,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/LICENSE": {
-      "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
-      "bytes": 1469,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/CMakeLists.txt": {
-      "sha256": "3af7131a2038870dfe310f3577a54ad0930061a3e48b4cf8dbdc3c16eee225b2",
-      "bytes": 1187,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/LICENSE": {
-      "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
-      "bytes": 1094,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/CMakeLists.txt": {
-      "sha256": "a13faf9428188348975b0b00b200df304dcf5d56f457b7d818e7e677ff2a21a1",
-      "bytes": 227,
-      "origin": "working-source"
-    },
     "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/add_section/CMakeLists.txt": {
       "sha256": "7c303e440b7019a3e5ff0641eaccab2639f766853ab81c5fa3e344056559c210",
       "bytes": 104,
@@ -1191,6 +1247,11 @@
     "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/c_wrapper/CMakeLists.txt": {
       "sha256": "f83b42ac53015cbba3ae97f097b99bdec88bd7ce7fa0339597f75fb87d24e4fe",
       "bytes": 134,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/CMakeLists.txt": {
+      "sha256": "a13faf9428188348975b0b00b200df304dcf5d56f457b7d818e7e677ff2a21a1",
+      "bytes": 227,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/elfdump/CMakeLists.txt": {
@@ -1208,29 +1269,29 @@
       "bytes": 95,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/writer/CMakeLists.txt": {
-      "sha256": "f9861c440b206e305248e9c091a1fd0eabcdac94a8bf134b64bb68cbda3ab084",
-      "bytes": 89,
-      "origin": "working-source"
-    },
     "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/write_obj/CMakeLists.txt": {
       "sha256": "cd551b369ee90518a36edc28719ff26e10508eb4414cd638965f8d1699c13a80",
       "bytes": 98,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/src/format.cc": {
-      "sha256": "934931a6b753c038daf5c0965da6b68cb027b6ced7862af4d3299979d380f616",
-      "bytes": 1264,
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/examples/writer/CMakeLists.txt": {
+      "sha256": "f9861c440b206e305248e9c091a1fd0eabcdac94a8bf134b64bb68cbda3ab084",
+      "bytes": 89,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/src/os.cc": {
-      "sha256": "575ace8b746cbaabec3a8b007cc961213feaff9851e47cb9f7c9a6efbbb92c8b",
-      "bytes": 11786,
+    "toolchain/N64ModernRuntime/N64Recomp/lib/ELFIO/LICENSE.txt": {
+      "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
+      "bytes": 1110,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/CMakeLists.txt": {
-      "sha256": "2bfef2841af81ba93ae35672c8d091cf0226e791170cac9f4002d7002b7380ad",
-      "bytes": 9405,
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/ChangeLog.md": {
+      "sha256": "c114c7ec4b4ea4f70e92138a9e494c2a47ad054210f405fa24fca70cac3bd15c",
+      "bytes": 123907,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/CMakeLists.txt": {
+      "sha256": "5b82067a0caea95a88274b7e04d60542198d3c3774a8d9f47bb82a551b753a26",
+      "bytes": 20214,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/include/fmt/args.h": {
@@ -1303,6 +1364,26 @@
       "bytes": 13454,
       "origin": "working-source"
     },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/LICENSE": {
+      "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
+      "bytes": 1458,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/README.md": {
+      "sha256": "0647c8654668b4961f88dfeadbadc6ae744105c947122e88e554a6c58c4d439e",
+      "bytes": 20167,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/src/format.cc": {
+      "sha256": "934931a6b753c038daf5c0965da6b68cb027b6ced7862af4d3299979d380f616",
+      "bytes": 1264,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/src/os.cc": {
+      "sha256": "575ace8b746cbaabec3a8b007cc961213feaff9851e47cb9f7c9a6efbbb92c8b",
+      "bytes": 11786,
+      "origin": "working-source"
+    },
     "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/support/cmake/FindSetEnv.cmake": {
       "sha256": "eb73df3d87a30b64a2830433eeb24b1a827387405185239424c74acbbd8b9273",
       "bytes": 306,
@@ -1316,6 +1397,11 @@
     "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/add-subdirectory-test/CMakeLists.txt": {
       "sha256": "dae26d0c7208ce959195f9e2cb920cb116adc841c30ef1279bd2ff06d0e01d46",
       "bytes": 612,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/CMakeLists.txt": {
+      "sha256": "2bfef2841af81ba93ae35672c8d091cf0226e791170cac9f4002d7002b7380ad",
+      "bytes": 9405,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/compile-error-test/CMakeLists.txt": {
@@ -1346,11 +1432,6 @@
     "toolchain/N64ModernRuntime/N64Recomp/lib/fmt/test/static-export-test/CMakeLists.txt": {
       "sha256": "f4b5ca4bd427857f2ef3751069230cfb299fd3f5287ec7761fc563b2095b7fa5",
       "bytes": 843,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/rabbitizer.hpp": {
-      "sha256": "e202ecfdfaf9fa4d8b0a5dfffcecee28907b62bb3a45dfd43ac1f2b5d047f3ce",
-      "bytes": 774,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/analysis/LoPairingInfo.hpp": {
@@ -1436,6 +1517,11 @@
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/Registers.hpp": {
       "sha256": "0a56031c311e4e2867074574b5dee0ca212fcc4ec370948f78eb8e9d304085c3",
       "bytes": 307,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/include/rabbitizer.hpp": {
+      "sha256": "e202ecfdfaf9fa4d8b0a5dfffcecee28907b62bb3a45dfd43ac1f2b5d047f3ce",
+      "bytes": 774,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/cplusplus/src/analysis/LoPairingInfo.cpp": {
@@ -1538,16 +1624,6 @@
       "bytes": 114791,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_enum.h": {
-      "sha256": "98e5e30533c86b9763c2dc9b9a4a829885c80ea6f9171baecea6581982a3baaf",
-      "bytes": 2171,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_Names_array.h": {
-      "sha256": "7d16c87aae887cf02385c4ebb9f1c96110972af2a1666993316bfa00cde2ae41",
-      "bytes": 3453,
-      "origin": "working-source"
-    },
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrId_enum.h": {
       "sha256": "fa0b1ed2e21e735ce3828b6fa77ea7d3c1683e5a73100b797fdbafa6fcf3c483",
       "bytes": 27499,
@@ -1556,6 +1632,16 @@
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrId_Names_array.h": {
       "sha256": "8adfe9a8767444095f0ef1c929488a5c406abb6ae128006a919034b9954b154f",
       "bytes": 36402,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_enum.h": {
+      "sha256": "98e5e30533c86b9763c2dc9b9a4a829885c80ea6f9171baecea6581982a3baaf",
+      "bytes": 2171,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_Names_array.h": {
+      "sha256": "7d16c87aae887cf02385c4ebb9f1c96110972af2a1666993316bfa00cde2ae41",
+      "bytes": 3453,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/include/generated/instrOpercandCallbacks_array.h": {
@@ -1658,6 +1744,11 @@
       "bytes": 3782,
       "origin": "working-source"
     },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/LICENSE": {
+      "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/analysis/RabbitizerLoPairingInfo.c": {
       "sha256": "390b419e966b1e2678cbb2715e7232dd598d05d7ca01afe539728ab01b40d36e",
       "bytes": 402,
@@ -1711,16 +1802,6 @@
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrSuffix.c": {
       "sha256": "89373bd3227964289bac16eb7e174cd0f3994eb281b77cd726d21f7306b13a0c",
       "bytes": 2298,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegister.c": {
-      "sha256": "70f44608b3a4117f53377b7df19c7d324855c47b2ad889899d43f874555aada3",
-      "bytes": 8380,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegisterDescriptor.c": {
-      "sha256": "13aa76881dbbcde48c1c445d9cde688bcbbbb9f5c9968e48099b97caede8a55c",
-      "bytes": 1705,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction.c": {
@@ -1796,6 +1877,16 @@
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionRsp/RabbitizerInstructionRsp_ProcessUniqueId.c": {
       "sha256": "24e4d5ec5aec6adc05cd2e11bd6e2e51d60b6e6f8d455bb2c4ae7eab9bfbab82",
       "bytes": 8512,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegister.c": {
+      "sha256": "70f44608b3a4117f53377b7df19c7d324855c47b2ad889899d43f874555aada3",
+      "bytes": 8380,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegisterDescriptor.c": {
+      "sha256": "13aa76881dbbcde48c1c445d9cde688bcbbbb9f5c9968e48099b97caede8a55c",
+      "bytes": 1705,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop0.inc": {
@@ -1978,6 +2069,26 @@
       "bytes": 7021,
       "origin": "working-source"
     },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/CMakeLists.txt": {
+      "sha256": "0c165eb248e1018650867f3e96b1d369160d3caeb1f6a0e2d97db054f12d3f0e",
+      "bytes": 1560,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/LICENSE": {
+      "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
+      "bytes": 1469,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/allocator_src/sljitExecAllocatorCore.c": {
+      "sha256": "0a7603d61943218feadfe755f63445d43d07e8534622433ff67a65bcfe17303e",
+      "bytes": 11473,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/allocator_src/sljitExecAllocatorWindows.c": {
+      "sha256": "a45c6933e3d6524b21f790110a64bc674b22f033d73a519ef8e5f95e91a00e9f",
+      "bytes": 1848,
+      "origin": "working-source"
+    },
     "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/sljitConfig.h": {
       "sha256": "541808ae34fc0cea3cc3458276bf9f2056e139ffa5a23eb271128e9a94ca8ac2",
       "bytes": 5407,
@@ -2023,16 +2134,6 @@
       "bytes": 10774,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/allocator_src/sljitExecAllocatorCore.c": {
-      "sha256": "0a7603d61943218feadfe755f63445d43d07e8534622433ff67a65bcfe17303e",
-      "bytes": 11473,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/N64Recomp/lib/sljit/sljit_src/allocator_src/sljitExecAllocatorWindows.c": {
-      "sha256": "a45c6933e3d6524b21f790110a64bc674b22f033d73a519ef8e5f95e91a00e9f",
-      "bytes": 1848,
-      "origin": "working-source"
-    },
     "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/cmake/install-rules.cmake": {
       "sha256": "7ed72e74208296034948bbdfa6cff5d91f1a2d6195196e1d142eb1f8a8044c9a",
       "bytes": 1316,
@@ -2053,6 +2154,11 @@
       "bytes": 674,
       "origin": "working-source"
     },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/CMakeLists.txt": {
+      "sha256": "3af7131a2038870dfe310f3577a54ad0930061a3e48b4cf8dbdc3c16eee225b2",
+      "bytes": 1187,
+      "origin": "working-source"
+    },
     "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/examples/CMakeLists.txt": {
       "sha256": "8e82789b204106c401df132077768d86227221f7a38874d93593235d57353562",
       "bytes": 848,
@@ -2063,9 +2169,99 @@
       "bytes": 979,
       "origin": "working-source"
     },
+    "toolchain/N64ModernRuntime/N64Recomp/lib/tomlplusplus/LICENSE": {
+      "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/LICENSE": {
+      "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
+      "bytes": 1095,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/LiveRecomp/live_generator.cpp": {
+      "sha256": "e1e10a82b7a22b26fe199fb0e7eee592bfe8808cabb9fcbe2a2d5aad03a1b096",
+      "bytes": 85586,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/LiveRecomp/live_recompiler_test.cpp": {
+      "sha256": "7730934b063a775ca48a88dc8ed36e7156346ca13bf006c9f29d070868531d37",
+      "bytes": 13558,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/OfflineModRecomp/main.cpp": {
+      "sha256": "3c20fdd280c2534197b2de84b17fc6563911c6fb112ecc0be1438fa42de3a9e3",
+      "bytes": 11759,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/RecompModMerger/main.cpp": {
+      "sha256": "2d775cb1c552534465b95ee2c2a1fe367880ee0569ccb063ba83683574303abc",
+      "bytes": 12678,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/RecompModTool/main.cpp": {
+      "sha256": "08767d14b638356c76f0d5ca0b97914e36d91731c4f854efc1703c5563cd6398",
+      "bytes": 58871,
+      "origin": "working-source"
+    },
     "toolchain/N64ModernRuntime/N64Recomp/RSPRecomp/src/rsp_recomp.cpp": {
       "sha256": "eff0a52bc3be7e3fe3abbb9b7c1bf994e364e55ed2dce5c45bde0a1cf0240d8a",
       "bytes": 53230,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/analysis.cpp": {
+      "sha256": "c060bd09f73a82f703f6c25ed87c50cd66c6b7d0fcabeea3a2a09a5dd2c23a07",
+      "bytes": 15115,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/analysis.h": {
+      "sha256": "a9ba3a0454c9037c26c6281c6e7b4d5d1c660357c3c1a95fe61a0d56c73d4c1e",
+      "bytes": 661,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/cgenerator.cpp": {
+      "sha256": "edb178c83b5cedc1943082f8fc3f448b6dc883b546e23fd3530a140627b43afa",
+      "bytes": 28652,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/config.cpp": {
+      "sha256": "314292412e0e35e72e96a4420155fec5ef831262cb9208a8082840fa336720c2",
+      "bytes": 39456,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/elf.cpp": {
+      "sha256": "1575f99deb63a1691a9042b1ba4c60380318f8f4ea4ea6d67ba90173fd7e6713",
+      "bytes": 37009,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/main.cpp": {
+      "sha256": "27d8d2f65e6b6ff7d355fb97f706bedcee3050a14305c11b10f563c636162ab8",
+      "bytes": 50663,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/mdebug.cpp": {
+      "sha256": "80a83de9a5cf38c30947bd6c16a7994ac61e1c3b941d6a451bdadbf10aa14830",
+      "bytes": 32063,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/mod_symbols.cpp": {
+      "sha256": "29ad96e2431dc3ee6f0930b7f8281ba3b2d3d7a6e88a26b78b66631fe226b0a0",
+      "bytes": 35730,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/operations.cpp": {
+      "sha256": "8d5f2ef2ec1c3499af02ebc273416a0d83fb51b4eb7a2780f28df3a4518817d1",
+      "bytes": 23348,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/recompilation.cpp": {
+      "sha256": "302bf66addfa23fb7d81b25c5968f98fb8de01ee49f92454657a76c47a111afa",
+      "bytes": 37888,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/N64Recomp/src/symbol_lists.cpp": {
+      "sha256": "25b1bb7d63cba3d22f5b2239ef14b9301126e70d84b57c706b9b79c718cf2fe1",
+      "bytes": 15147,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/thirdparty/concurrentqueue/blockingconcurrentqueue.h": {
@@ -2158,21 +2354,6 @@
       "bytes": 1092,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/thirdparty/xxHash/LICENSE": {
-      "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
-      "bytes": 1389,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/thirdparty/xxHash/xxh3.h": {
-      "sha256": "a927ee0e6e0800835baed52b16bc981ec39f46287271a1a3f77c22cc48634430",
-      "bytes": 2394,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/thirdparty/xxHash/xxhash.h": {
-      "sha256": "ccc7934d982bfd4f51624e7fdd93a6c40bc3d5c33f66463b54e70c21932d9129",
-      "bytes": 264481,
-      "origin": "working-source"
-    },
     "toolchain/N64ModernRuntime/thirdparty/o1heap/o1heap/o1heap.c": {
       "sha256": "3d165d5a481aac22fbcfd825bc02312f96e136f58cfe086386f94909c938ed65",
       "bytes": 23366,
@@ -2198,6 +2379,11 @@
       "bytes": 817,
       "origin": "working-source"
     },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/LICENSE": {
+      "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+      "bytes": 1389,
+      "origin": "working-source"
+    },
     "toolchain/N64ModernRuntime/thirdparty/xxHash/tests/bench/LICENSE": {
       "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
       "bytes": 18092,
@@ -2206,6 +2392,71 @@
     "toolchain/N64ModernRuntime/thirdparty/xxHash/tests/collisions/LICENSE": {
       "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
       "bytes": 18092,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/xxh3.h": {
+      "sha256": "a927ee0e6e0800835baed52b16bc981ec39f46287271a1a3f77c22cc48634430",
+      "bytes": 2394,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/thirdparty/xxHash/xxhash.h": {
+      "sha256": "ccc7934d982bfd4f51624e7fdd93a6c40bc3d5c33f66463b54e70c21932d9129",
+      "bytes": 264481,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/CMakeLists.txt": {
+      "sha256": "a51d8fe940e1abca05ba0d4e94a6e144e6fe37f70af25eab14d2179f08180866",
+      "bytes": 1909,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/config.hpp": {
+      "sha256": "090f7b95c3f438e630482191f485a85bfb57c1fd6a870bc9cece049effd85da0",
+      "bytes": 4658,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/error_handling.hpp": {
+      "sha256": "80e5544bc89129e6c936e78b0e08fc8a5a4f3b58e683a33d9f681372a4311aba",
+      "bytes": 811,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/events.hpp": {
+      "sha256": "a0981686c89587651707a96435fe7840327e8b59eaebe0fda8ec4ee54391aca0",
+      "bytes": 573,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/extensions.h": {
+      "sha256": "4078e5397fadddf07bb316ea4ff577cd26bfc9e5150581a47384b458488565d6",
+      "bytes": 1615,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/input.hpp": {
+      "sha256": "f93f85d4cc788ab88e7ff862f08d8613f747bb561b0bbfa7d87d7c191b138046",
+      "bytes": 2797,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/renderer_context.hpp": {
+      "sha256": "5c24502412e02632d1a22770c3a0c81fb9d8286fb70c68a8d2a7a7c556c7919e",
+      "bytes": 4552,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/rsp.hpp": {
+      "sha256": "784b245e646f4a1958fa9bec5ecb0e939726fce7b082f1e1e699ecb8bb601f89",
+      "bytes": 702,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/threads.hpp": {
+      "sha256": "95f1f01245c0fa07561b2de4c4fc0f5fc03ae8016e8ca9718aa875d19f0fd9a8",
+      "bytes": 1038,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/ultra64.h": {
+      "sha256": "f8cd21c09e2fbc0cdd3ec67ce7c071f2d3bc089f89417be95dfbcb36117cf61b",
+      "bytes": 9631,
+      "origin": "working-source"
+    },
+    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/ultramodern.hpp": {
+      "sha256": "0bc26bd14cc662ee3fd497a59420cb66f9e2f7b1132e428c2738f0d72851dae6",
+      "bytes": 7632,
       "origin": "working-source"
     },
     "toolchain/N64ModernRuntime/ultramodern/src/audio.cpp": {
@@ -2283,149 +2534,14 @@
       "bytes": 1337,
       "origin": "working-source"
     },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/config.hpp": {
-      "sha256": "090f7b95c3f438e630482191f485a85bfb57c1fd6a870bc9cece049effd85da0",
-      "bytes": 4658,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/error_handling.hpp": {
-      "sha256": "80e5544bc89129e6c936e78b0e08fc8a5a4f3b58e683a33d9f681372a4311aba",
-      "bytes": 811,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/events.hpp": {
-      "sha256": "a0981686c89587651707a96435fe7840327e8b59eaebe0fda8ec4ee54391aca0",
-      "bytes": 573,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/extensions.h": {
-      "sha256": "4078e5397fadddf07bb316ea4ff577cd26bfc9e5150581a47384b458488565d6",
-      "bytes": 1615,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/input.hpp": {
-      "sha256": "f93f85d4cc788ab88e7ff862f08d8613f747bb561b0bbfa7d87d7c191b138046",
-      "bytes": 2797,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/renderer_context.hpp": {
-      "sha256": "5c24502412e02632d1a22770c3a0c81fb9d8286fb70c68a8d2a7a7c556c7919e",
-      "bytes": 4552,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/rsp.hpp": {
-      "sha256": "784b245e646f4a1958fa9bec5ecb0e939726fce7b082f1e1e699ecb8bb601f89",
-      "bytes": 702,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/threads.hpp": {
-      "sha256": "95f1f01245c0fa07561b2de4c4fc0f5fc03ae8016e8ca9718aa875d19f0fd9a8",
-      "bytes": 1038,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/ultra64.h": {
-      "sha256": "f8cd21c09e2fbc0cdd3ec67ce7c071f2d3bc089f89417be95dfbcb36117cf61b",
-      "bytes": 9631,
-      "origin": "working-source"
-    },
-    "toolchain/N64ModernRuntime/ultramodern/include/ultramodern/ultramodern.hpp": {
-      "sha256": "0bc26bd14cc662ee3fd497a59420cb66f9e2f7b1132e428c2738f0d72851dae6",
-      "bytes": 7632,
+    "toolchain/N64Recomp/CMakeLists.txt": {
+      "sha256": "d292e792325e8695e1812d3ddfb84cb09f48487264a377e4ad67c4548338ced8",
+      "bytes": 8691,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/include/recomp.h": {
       "sha256": "4efdb9d4dce905618cdd119fffd701fada0d302ad5a7ec1d55059b955be7cebd",
       "bytes": 16047,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/LiveRecomp/live_generator.cpp": {
-      "sha256": "e1e10a82b7a22b26fe199fb0e7eee592bfe8808cabb9fcbe2a2d5aad03a1b096",
-      "bytes": 85586,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/LiveRecomp/live_recompiler_test.cpp": {
-      "sha256": "7730934b063a775ca48a88dc8ed36e7156346ca13bf006c9f29d070868531d37",
-      "bytes": 13558,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/OfflineModRecomp/main.cpp": {
-      "sha256": "3c20fdd280c2534197b2de84b17fc6563911c6fb112ecc0be1438fa42de3a9e3",
-      "bytes": 11759,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/RecompModMerger/main.cpp": {
-      "sha256": "2d775cb1c552534465b95ee2c2a1fe367880ee0569ccb063ba83683574303abc",
-      "bytes": 12678,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/RecompModTool/main.cpp": {
-      "sha256": "08767d14b638356c76f0d5ca0b97914e36d91731c4f854efc1703c5563cd6398",
-      "bytes": 58871,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/analysis.cpp": {
-      "sha256": "869efd55a4e3dbdb909511327490b10311d9aa484f1c4f3afd60d05bcf39ab60",
-      "bytes": 16373,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/analysis.h": {
-      "sha256": "a9ba3a0454c9037c26c6281c6e7b4d5d1c660357c3c1a95fe61a0d56c73d4c1e",
-      "bytes": 661,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/cgenerator.cpp": {
-      "sha256": "b25a5985d41166b910db2ab54da195543f97befc3d224204f5a6e2ee632220cf",
-      "bytes": 29184,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/config.cpp": {
-      "sha256": "314292412e0e35e72e96a4420155fec5ef831262cb9208a8082840fa336720c2",
-      "bytes": 39456,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/config.h": {
-      "sha256": "fb75e2a321a06ce18da88f908daa54c8168d8e50f406daf1478ffb0edd497276",
-      "bytes": 2772,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/elf.cpp": {
-      "sha256": "1575f99deb63a1691a9042b1ba4c60380318f8f4ea4ea6d67ba90173fd7e6713",
-      "bytes": 37009,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/main.cpp": {
-      "sha256": "50e783992f9ac69eb17d921d5fafa7386f7937bac832c4ce21da353986c50312",
-      "bytes": 52317,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/mdebug.cpp": {
-      "sha256": "80a83de9a5cf38c30947bd6c16a7994ac61e1c3b941d6a451bdadbf10aa14830",
-      "bytes": 32063,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/mdebug.h": {
-      "sha256": "81dc4f35df95e5c19ea06f892519bbedc0eda77dd27426c9b4d17dcfcd76ce5d",
-      "bytes": 18778,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/mod_symbols.cpp": {
-      "sha256": "29ad96e2431dc3ee6f0930b7f8281ba3b2d3d7a6e88a26b78b66631fe226b0a0",
-      "bytes": 35730,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/operations.cpp": {
-      "sha256": "8d5f2ef2ec1c3499af02ebc273416a0d83fb51b4eb7a2780f28df3a4518817d1",
-      "bytes": 23348,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/recompilation.cpp": {
-      "sha256": "302bf66addfa23fb7d81b25c5968f98fb8de01ee49f92454657a76c47a111afa",
-      "bytes": 37888,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/src/symbol_lists.cpp": {
-      "sha256": "25b1bb7d63cba3d22f5b2239ef14b9301126e70d84b57c706b9b79c718cf2fe1",
-      "bytes": 15147,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/include/recompiler/context.h": {
@@ -2448,54 +2564,9 @@
       "bytes": 5165,
       "origin": "working-source"
     },
-    "toolchain/N64Recomp/lib/ELFIO/LICENSE.txt": {
-      "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
-      "bytes": 1110,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/fmt/ChangeLog.md": {
-      "sha256": "c114c7ec4b4ea4f70e92138a9e494c2a47ad054210f405fa24fca70cac3bd15c",
-      "bytes": 123907,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/fmt/CMakeLists.txt": {
-      "sha256": "5b82067a0caea95a88274b7e04d60542198d3c3774a8d9f47bb82a551b753a26",
-      "bytes": 20214,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/fmt/LICENSE": {
-      "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
-      "bytes": 1458,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/fmt/README.md": {
-      "sha256": "0647c8654668b4961f88dfeadbadc6ae744105c947122e88e554a6c58c4d439e",
-      "bytes": 20167,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/rabbitizer/LICENSE": {
-      "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
-      "bytes": 1094,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/sljit/CMakeLists.txt": {
-      "sha256": "0c165eb248e1018650867f3e96b1d369160d3caeb1f6a0e2d97db054f12d3f0e",
-      "bytes": 1560,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/sljit/LICENSE": {
-      "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
-      "bytes": 1469,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/tomlplusplus/CMakeLists.txt": {
-      "sha256": "3af7131a2038870dfe310f3577a54ad0930061a3e48b4cf8dbdc3c16eee225b2",
-      "bytes": 1187,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/tomlplusplus/LICENSE": {
-      "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
-      "bytes": 1094,
+    "toolchain/N64Recomp/lib/ELFIO/elfio/elf_types.hpp": {
+      "sha256": "a06a2dfdcd3bfcf3f547ef5761fc971a15d0e07a1426023761acfcefb16e5dd3",
+      "bytes": 69954,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/ELFIO/elfio/elfio.hpp": {
@@ -2568,16 +2639,6 @@
       "bytes": 6598,
       "origin": "working-source"
     },
-    "toolchain/N64Recomp/lib/ELFIO/elfio/elf_types.hpp": {
-      "sha256": "a06a2dfdcd3bfcf3f547ef5761fc971a15d0e07a1426023761acfcefb16e5dd3",
-      "bytes": 69954,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/ELFIO/examples/CMakeLists.txt": {
-      "sha256": "a13faf9428188348975b0b00b200df304dcf5d56f457b7d818e7e677ff2a21a1",
-      "bytes": 227,
-      "origin": "working-source"
-    },
     "toolchain/N64Recomp/lib/ELFIO/examples/add_section/CMakeLists.txt": {
       "sha256": "7c303e440b7019a3e5ff0641eaccab2639f766853ab81c5fa3e344056559c210",
       "bytes": 104,
@@ -2591,6 +2652,11 @@
     "toolchain/N64Recomp/lib/ELFIO/examples/c_wrapper/CMakeLists.txt": {
       "sha256": "f83b42ac53015cbba3ae97f097b99bdec88bd7ce7fa0339597f75fb87d24e4fe",
       "bytes": 134,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/ELFIO/examples/CMakeLists.txt": {
+      "sha256": "a13faf9428188348975b0b00b200df304dcf5d56f457b7d818e7e677ff2a21a1",
+      "bytes": 227,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/ELFIO/examples/elfdump/CMakeLists.txt": {
@@ -2608,29 +2674,29 @@
       "bytes": 95,
       "origin": "working-source"
     },
-    "toolchain/N64Recomp/lib/ELFIO/examples/writer/CMakeLists.txt": {
-      "sha256": "f9861c440b206e305248e9c091a1fd0eabcdac94a8bf134b64bb68cbda3ab084",
-      "bytes": 89,
-      "origin": "working-source"
-    },
     "toolchain/N64Recomp/lib/ELFIO/examples/write_obj/CMakeLists.txt": {
       "sha256": "cd551b369ee90518a36edc28719ff26e10508eb4414cd638965f8d1699c13a80",
       "bytes": 98,
       "origin": "working-source"
     },
-    "toolchain/N64Recomp/lib/fmt/src/format.cc": {
-      "sha256": "934931a6b753c038daf5c0965da6b68cb027b6ced7862af4d3299979d380f616",
-      "bytes": 1264,
+    "toolchain/N64Recomp/lib/ELFIO/examples/writer/CMakeLists.txt": {
+      "sha256": "f9861c440b206e305248e9c091a1fd0eabcdac94a8bf134b64bb68cbda3ab084",
+      "bytes": 89,
       "origin": "working-source"
     },
-    "toolchain/N64Recomp/lib/fmt/src/os.cc": {
-      "sha256": "575ace8b746cbaabec3a8b007cc961213feaff9851e47cb9f7c9a6efbbb92c8b",
-      "bytes": 11786,
+    "toolchain/N64Recomp/lib/ELFIO/LICENSE.txt": {
+      "sha256": "a15b5135eae48f2f6f6572ac4d7baf678761fdfde530344e9202fceb9e4e5014",
+      "bytes": 1110,
       "origin": "working-source"
     },
-    "toolchain/N64Recomp/lib/fmt/test/CMakeLists.txt": {
-      "sha256": "2bfef2841af81ba93ae35672c8d091cf0226e791170cac9f4002d7002b7380ad",
-      "bytes": 9405,
+    "toolchain/N64Recomp/lib/fmt/ChangeLog.md": {
+      "sha256": "c114c7ec4b4ea4f70e92138a9e494c2a47ad054210f405fa24fca70cac3bd15c",
+      "bytes": 123907,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/CMakeLists.txt": {
+      "sha256": "5b82067a0caea95a88274b7e04d60542198d3c3774a8d9f47bb82a551b753a26",
+      "bytes": 20214,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/fmt/include/fmt/args.h": {
@@ -2703,6 +2769,26 @@
       "bytes": 13454,
       "origin": "working-source"
     },
+    "toolchain/N64Recomp/lib/fmt/LICENSE": {
+      "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf",
+      "bytes": 1458,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/README.md": {
+      "sha256": "0647c8654668b4961f88dfeadbadc6ae744105c947122e88e554a6c58c4d439e",
+      "bytes": 20167,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/src/format.cc": {
+      "sha256": "934931a6b753c038daf5c0965da6b68cb027b6ced7862af4d3299979d380f616",
+      "bytes": 1264,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/src/os.cc": {
+      "sha256": "575ace8b746cbaabec3a8b007cc961213feaff9851e47cb9f7c9a6efbbb92c8b",
+      "bytes": 11786,
+      "origin": "working-source"
+    },
     "toolchain/N64Recomp/lib/fmt/support/cmake/FindSetEnv.cmake": {
       "sha256": "eb73df3d87a30b64a2830433eeb24b1a827387405185239424c74acbbd8b9273",
       "bytes": 306,
@@ -2716,6 +2802,11 @@
     "toolchain/N64Recomp/lib/fmt/test/add-subdirectory-test/CMakeLists.txt": {
       "sha256": "dae26d0c7208ce959195f9e2cb920cb116adc841c30ef1279bd2ff06d0e01d46",
       "bytes": 612,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/fmt/test/CMakeLists.txt": {
+      "sha256": "2bfef2841af81ba93ae35672c8d091cf0226e791170cac9f4002d7002b7380ad",
+      "bytes": 9405,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/fmt/test/compile-error-test/CMakeLists.txt": {
@@ -2746,11 +2837,6 @@
     "toolchain/N64Recomp/lib/fmt/test/static-export-test/CMakeLists.txt": {
       "sha256": "f4b5ca4bd427857f2ef3751069230cfb299fd3f5287ec7761fc563b2095b7fa5",
       "bytes": 843,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/rabbitizer.hpp": {
-      "sha256": "e202ecfdfaf9fa4d8b0a5dfffcecee28907b62bb3a45dfd43ac1f2b5d047f3ce",
-      "bytes": 774,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/analysis/LoPairingInfo.hpp": {
@@ -2836,6 +2922,11 @@
     "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/instructions/Registers.hpp": {
       "sha256": "0a56031c311e4e2867074574b5dee0ca212fcc4ec370948f78eb8e9d304085c3",
       "bytes": 307,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/cplusplus/include/rabbitizer.hpp": {
+      "sha256": "e202ecfdfaf9fa4d8b0a5dfffcecee28907b62bb3a45dfd43ac1f2b5d047f3ce",
+      "bytes": 774,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/rabbitizer/cplusplus/src/analysis/LoPairingInfo.cpp": {
@@ -2938,16 +3029,6 @@
       "bytes": 114791,
       "origin": "working-source"
     },
-    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_enum.h": {
-      "sha256": "98e5e30533c86b9763c2dc9b9a4a829885c80ea6f9171baecea6581982a3baaf",
-      "bytes": 2171,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_Names_array.h": {
-      "sha256": "7d16c87aae887cf02385c4ebb9f1c96110972af2a1666993316bfa00cde2ae41",
-      "bytes": 3453,
-      "origin": "working-source"
-    },
     "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrId_enum.h": {
       "sha256": "fa0b1ed2e21e735ce3828b6fa77ea7d3c1683e5a73100b797fdbafa6fcf3c483",
       "bytes": 27499,
@@ -2956,6 +3037,16 @@
     "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrId_Names_array.h": {
       "sha256": "8adfe9a8767444095f0ef1c929488a5c406abb6ae128006a919034b9954b154f",
       "bytes": 36402,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_enum.h": {
+      "sha256": "98e5e30533c86b9763c2dc9b9a4a829885c80ea6f9171baecea6581982a3baaf",
+      "bytes": 2171,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/include/generated/InstrIdType_Names_array.h": {
+      "sha256": "7d16c87aae887cf02385c4ebb9f1c96110972af2a1666993316bfa00cde2ae41",
+      "bytes": 3453,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/rabbitizer/include/generated/instrOpercandCallbacks_array.h": {
@@ -3058,6 +3149,11 @@
       "bytes": 3782,
       "origin": "working-source"
     },
+    "toolchain/N64Recomp/lib/rabbitizer/LICENSE": {
+      "sha256": "f0df1d4bd58eb60274ae4a8d34e71acd7295903dae9b3b0a4872346ddd87846d",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
     "toolchain/N64Recomp/lib/rabbitizer/src/analysis/RabbitizerLoPairingInfo.c": {
       "sha256": "390b419e966b1e2678cbb2715e7232dd598d05d7ca01afe539728ab01b40d36e",
       "bytes": 402,
@@ -3111,16 +3207,6 @@
     "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstrSuffix.c": {
       "sha256": "89373bd3227964289bac16eb7e174cd0f3994eb281b77cd726d21f7306b13a0c",
       "bytes": 2298,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegister.c": {
-      "sha256": "70f44608b3a4117f53377b7df19c7d324855c47b2ad889899d43f874555aada3",
-      "bytes": 8380,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegisterDescriptor.c": {
-      "sha256": "13aa76881dbbcde48c1c445d9cde688bcbbbb9f5c9968e48099b97caede8a55c",
-      "bytes": 1705,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstruction/RabbitizerInstruction.c": {
@@ -3196,6 +3282,16 @@
     "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerInstructionRsp/RabbitizerInstructionRsp_ProcessUniqueId.c": {
       "sha256": "24e4d5ec5aec6adc05cd2e11bd6e2e51d60b6e6f8d455bb2c4ae7eab9bfbab82",
       "bytes": 8512,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegister.c": {
+      "sha256": "70f44608b3a4117f53377b7df19c7d324855c47b2ad889899d43f874555aada3",
+      "bytes": 8380,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/rabbitizer/src/instructions/RabbitizerRegisterDescriptor.c": {
+      "sha256": "13aa76881dbbcde48c1c445d9cde688bcbbbb9f5c9968e48099b97caede8a55c",
+      "bytes": 1705,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/rabbitizer/tables/tables/instr_id/cpu/cpu_cop0.inc": {
@@ -3378,6 +3474,16 @@
       "bytes": 7021,
       "origin": "working-source"
     },
+    "toolchain/N64Recomp/lib/sljit/CMakeLists.txt": {
+      "sha256": "0c165eb248e1018650867f3e96b1d369160d3caeb1f6a0e2d97db054f12d3f0e",
+      "bytes": 1560,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/sljit/LICENSE": {
+      "sha256": "37c7a090fc61388430d63fc97bf8a22ffce92d3ca2249aac572cfaf411d3070f",
+      "bytes": 1469,
+      "origin": "working-source"
+    },
     "toolchain/N64Recomp/lib/sljit/sljit_src/sljitLir.c": {
       "sha256": "4c0942cc7b83be2c88d3c52cf782ae773e3762c3e1d737b801047e00f620d966",
       "bytes": 123336,
@@ -3403,6 +3509,11 @@
       "bytes": 674,
       "origin": "working-source"
     },
+    "toolchain/N64Recomp/lib/tomlplusplus/CMakeLists.txt": {
+      "sha256": "3af7131a2038870dfe310f3577a54ad0930061a3e48b4cf8dbdc3c16eee225b2",
+      "bytes": 1187,
+      "origin": "working-source"
+    },
     "toolchain/N64Recomp/lib/tomlplusplus/examples/CMakeLists.txt": {
       "sha256": "8e82789b204106c401df132077768d86227221f7a38874d93593235d57353562",
       "bytes": 848,
@@ -3411,11 +3522,6 @@
     "toolchain/N64Recomp/lib/tomlplusplus/fuzzing/CMakeLists.txt": {
       "sha256": "204aa43bb3c9fa8fb3629f90f7464bed1461dcbf0751d34a327e53f4a50b8729",
       "bytes": 979,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/toml.hpp": {
-      "sha256": "9fa7642b0f266c1cc6406dbfc0d4ea604e7e552264724c0607f7a76357fcf19a",
-      "bytes": 6355,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/array.hpp": {
@@ -3503,16 +3609,6 @@
       "bytes": 26422,
       "origin": "working-source"
     },
-    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parser.hpp": {
-      "sha256": "6c3a2adf728dc2f360bb97e265e21b331547f627588d9fa6a6b0c6554be1000e",
-      "bytes": 11725,
-      "origin": "working-source"
-    },
-    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parser.inl": {
-      "sha256": "147519f449768891a343309c1ab4c31b593e3c222d3fc3ec752b0ba8050b14ca",
-      "bytes": 115774,
-      "origin": "working-source"
-    },
     "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parse_error.hpp": {
       "sha256": "eda5953e165f3034e3229b4dd01fb03ca8490068b4fdd2b86fcce58f8b713693",
       "bytes": 3762,
@@ -3521,6 +3617,16 @@
     "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parse_result.hpp": {
       "sha256": "337f2459fc5cb3c652419749d5f69a25a589013a459defc6861034b30b509997",
       "bytes": 14559,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parser.hpp": {
+      "sha256": "6c3a2adf728dc2f360bb97e265e21b331547f627588d9fa6a6b0c6554be1000e",
+      "bytes": 11725,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/parser.inl": {
+      "sha256": "147519f449768891a343309c1ab4c31b593e3c222d3fc3ec752b0ba8050b14ca",
+      "bytes": 115774,
       "origin": "working-source"
     },
     "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/impl/path.hpp": {
@@ -3658,19 +3764,224 @@
       "bytes": 3867,
       "origin": "working-source"
     },
+    "toolchain/N64Recomp/lib/tomlplusplus/include/toml++/toml.hpp": {
+      "sha256": "9fa7642b0f266c1cc6406dbfc0d4ea604e7e552264724c0607f7a76357fcf19a",
+      "bytes": 6355,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/lib/tomlplusplus/LICENSE": {
+      "sha256": "529bc3900a9571e49db285b0df432397e70b881cc3bf48de6667ae74ff4b06d8",
+      "bytes": 1094,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/LICENSE": {
+      "sha256": "8f3594c18cd4f7e551795c2a11d17c460f7dd2c39ffde0db82f1de876aaac0c4",
+      "bytes": 1095,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/LiveRecomp/live_generator.cpp": {
+      "sha256": "e1e10a82b7a22b26fe199fb0e7eee592bfe8808cabb9fcbe2a2d5aad03a1b096",
+      "bytes": 85586,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/LiveRecomp/live_recompiler_test.cpp": {
+      "sha256": "7730934b063a775ca48a88dc8ed36e7156346ca13bf006c9f29d070868531d37",
+      "bytes": 13558,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/OfflineModRecomp/main.cpp": {
+      "sha256": "3c20fdd280c2534197b2de84b17fc6563911c6fb112ecc0be1438fa42de3a9e3",
+      "bytes": 11759,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/RecompModMerger/main.cpp": {
+      "sha256": "2d775cb1c552534465b95ee2c2a1fe367880ee0569ccb063ba83683574303abc",
+      "bytes": 12678,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/RecompModTool/main.cpp": {
+      "sha256": "08767d14b638356c76f0d5ca0b97914e36d91731c4f854efc1703c5563cd6398",
+      "bytes": 58871,
+      "origin": "working-source"
+    },
     "toolchain/N64Recomp/RSPRecomp/src/rsp_recomp.cpp": {
       "sha256": "eff0a52bc3be7e3fe3abbb9b7c1bf994e364e55ed2dce5c45bde0a1cf0240d8a",
       "bytes": 53230,
       "origin": "working-source"
     },
+    "toolchain/N64Recomp/src/analysis.cpp": {
+      "sha256": "869efd55a4e3dbdb909511327490b10311d9aa484f1c4f3afd60d05bcf39ab60",
+      "bytes": 16373,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/analysis.h": {
+      "sha256": "a9ba3a0454c9037c26c6281c6e7b4d5d1c660357c3c1a95fe61a0d56c73d4c1e",
+      "bytes": 661,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/cgenerator.cpp": {
+      "sha256": "b25a5985d41166b910db2ab54da195543f97befc3d224204f5a6e2ee632220cf",
+      "bytes": 29184,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/config.cpp": {
+      "sha256": "314292412e0e35e72e96a4420155fec5ef831262cb9208a8082840fa336720c2",
+      "bytes": 39456,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/config.h": {
+      "sha256": "fb75e2a321a06ce18da88f908daa54c8168d8e50f406daf1478ffb0edd497276",
+      "bytes": 2772,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/elf.cpp": {
+      "sha256": "1575f99deb63a1691a9042b1ba4c60380318f8f4ea4ea6d67ba90173fd7e6713",
+      "bytes": 37009,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/main.cpp": {
+      "sha256": "50e783992f9ac69eb17d921d5fafa7386f7937bac832c4ce21da353986c50312",
+      "bytes": 52317,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/mdebug.cpp": {
+      "sha256": "80a83de9a5cf38c30947bd6c16a7994ac61e1c3b941d6a451bdadbf10aa14830",
+      "bytes": 32063,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/mdebug.h": {
+      "sha256": "81dc4f35df95e5c19ea06f892519bbedc0eda77dd27426c9b4d17dcfcd76ce5d",
+      "bytes": 18778,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/mod_symbols.cpp": {
+      "sha256": "29ad96e2431dc3ee6f0930b7f8281ba3b2d3d7a6e88a26b78b66631fe226b0a0",
+      "bytes": 35730,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/operations.cpp": {
+      "sha256": "8d5f2ef2ec1c3499af02ebc273416a0d83fb51b4eb7a2780f28df3a4518817d1",
+      "bytes": 23348,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/recompilation.cpp": {
+      "sha256": "302bf66addfa23fb7d81b25c5968f98fb8de01ee49f92454657a76c47a111afa",
+      "bytes": 37888,
+      "origin": "working-source"
+    },
+    "toolchain/N64Recomp/src/symbol_lists.cpp": {
+      "sha256": "25b1bb7d63cba3d22f5b2239ef14b9301126e70d84b57c706b9b79c718cf2fe1",
+      "bytes": 15147,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/actor_storage.hpp": {
+      "sha256": "f94ed33124c23da5ea36e30c4b9a9234c1652b6db0fdecf34284398e5e442f05",
+      "bytes": 4399,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/damage_descriptor.cpp": {
+      "sha256": "4fe5f7cc9f8c52e0495bfddbf56ee043c599d6d4049d0a440672803806d8339c",
+      "bytes": 374,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/damage_descriptor.hpp": {
+      "sha256": "02e1975c6f97ed65b7bf073cf3d274df76a5af52208a05c0429f80064bf2eb80",
+      "bytes": 400,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/ease_toward.cpp": {
+      "sha256": "cd646cfbb46bc5394ec5d29dd6bd2bb3229ed8ccfcaec6967d82fc4a12762d8e",
+      "bytes": 1346,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/ease_toward.hpp": {
+      "sha256": "97237833ebec3b4cd41d0a10dffc3e10060e974796a9bc7b2caa07ab26312e25",
+      "bytes": 387,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/floor_height.cpp": {
+      "sha256": "b4b5b3dba82c85facabe054a122080c4bcc231b8ed57900fb5611dd345276363",
+      "bytes": 1138,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/floor_height.hpp": {
+      "sha256": "a7d91b56250510c7a0a0887105cc10b83d31d9ca1d1d5cb4ddc1a5603690dd9c",
+      "bytes": 590,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/ground_contact.cpp": {
+      "sha256": "32b003ec5850c20ba6712c431bb0e2c7f3829d1df0e471510d21cfab1f7acb22",
+      "bytes": 355,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/ground_contact.hpp": {
+      "sha256": "4a408584a2207d955a2c340f1826e168352c3a10342061b46982f43370bb3223",
+      "bytes": 429,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/ground_movement.cpp": {
+      "sha256": "ec3d6158f27d84430333388e358b2952430e160d9e25a032c4b2afed752578b7",
+      "bytes": 7694,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/ground_movement.hpp": {
+      "sha256": "c0f90d60bcef820e1b1a8b7c6a18c9b23b886f8f065eb5089330aa87468af2a7",
+      "bytes": 4079,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/idle_entry.cpp": {
+      "sha256": "b63f79ab857acd5703b43865a1e4dba1fa0c21312ee9650915b3735d3a8ec3bd",
+      "bytes": 699,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/idle_entry.hpp": {
+      "sha256": "3400f3dd0832b5fd7caa0c145a30742dd1f2bca346db40734c295823d2e3eb9d",
+      "bytes": 607,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/movement_speed.cpp": {
+      "sha256": "071fdbbcd5e0c2b65d5f2abb4a58b9a204b19846249b346f80f6c842c4edd35a",
+      "bytes": 3739,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/movement_speed.hpp": {
+      "sha256": "fec9f009c2fb5107ed666e2d05bd0d72b913df951b4d5e294563efff552ba270",
+      "bytes": 382,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/player_view.cpp": {
+      "sha256": "914e003fa7c3afac1204cc91a9a8ac3bf4faf9f87b8ef2508e34dcc53feb97ad",
+      "bytes": 6925,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/player_view.hpp": {
+      "sha256": "e80a3f45d44cf809b338ad14c1f86e7aa037b27a0b182f8e177f126243c28339",
+      "bytes": 2568,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/surface_lookup.cpp": {
+      "sha256": "8c65331b23431aa24c10d00165e435c701931db04a405f5b67ce5ae956eb46b8",
+      "bytes": 420,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/native_player/surface_lookup.hpp": {
+      "sha256": "b198e62c605bea8dc43b2761088c263d27c43e6c95be1bac8b869351b024c5e4",
+      "bytes": 758,
+      "origin": "working-source"
+    },
     "xr64/games/rage_wars/recomp_host/src/main.cpp": {
-      "sha256": "bb7260d35c55f40cae1b73dc27995abbb0588132f7288deae5615a9c43008d0d",
-      "bytes": 121289,
+      "sha256": "adb3cbafd7d2dc0244057e315e140b4d7d01709355fce4057e03e0cf5d0ce510",
+      "bytes": 122212,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/pcrage_recovery_asset.h": {
       "sha256": "d202948ba384a751391dcbd067ad662331ba43cd425e3bfc72660b18f5973309",
       "bytes": 713,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_animation_blend.hpp": {
+      "sha256": "50788ff36fc1866a46990d926b0500f6b905f10a6ea254958bdbb666a756242d",
+      "bytes": 14640,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_audio.cpp": {
@@ -3709,8 +4020,13 @@
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_bindings.hpp": {
-      "sha256": "4b0378618ee177d31c6906bf07be2851fa8a4ec641a8cbe08473bcaeee73e4ed",
-      "bytes": 8792,
+      "sha256": "6a68f701c6bfd5aa2ac8a99a672d98ff1621c112debe1a5a5966cf9997a526fc",
+      "bytes": 8848,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_body_interpolation.hpp": {
+      "sha256": "21ff715985b5a11d7333900e5b11eb7c6c6d5d5c16d9812ed6dcbee391095998",
+      "bytes": 7622,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_body_policy.h": {
@@ -3723,19 +4039,19 @@
       "bytes": 728,
       "origin": "working-source"
     },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_control_sample.hpp": {
+      "sha256": "ceba16b1f92bc15f65df786f91e628f97662b157e2c926643876bc2203937f8a",
+      "bytes": 1330,
+      "origin": "working-source"
+    },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_controller_mapping.hpp": {
       "sha256": "9bac15d575b3a029527dd3ed01a4e2767d5208b01b1cdde256d8d6f2aa0db455",
       "bytes": 8260,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_controls.hpp": {
-      "sha256": "dee1686348a90986846baadbc75a4e14c9e56e0ac4b785c0613f1dba8475bbf5",
-      "bytes": 10926,
-      "origin": "working-source"
-    },
-    "xr64/games/rage_wars/recomp_host/src/rage_wars_control_sample.hpp": {
-      "sha256": "ceba16b1f92bc15f65df786f91e628f97662b157e2c926643876bc2203937f8a",
-      "bytes": 1330,
+      "sha256": "8b534c81bb2b5b8e820b3665b7eb623b43155bfda4bf3dae923d7276757fe2f5",
+      "bytes": 11746,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_crash_report.cpp": {
@@ -3749,7 +4065,7 @@
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_demo_launcher.cpp": {
-      "sha256": "969c8120e97220499c1aa68a564d254c068038ab2c0185e57ed330725cf22a60",
+      "sha256": "ba979f2047498cacca5a912c8aab26226e1810a4986ebf8f2c514d5bdf8f426c",
       "bytes": 32437,
       "origin": "working-source"
     },
@@ -3769,13 +4085,33 @@
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_desktop_renderer.cpp": {
-      "sha256": "c7ecc4110bf499e00f766f30e4142911e1be728dc2b44b75a2f94858e685c033",
-      "bytes": 201276,
+      "sha256": "045490493c48961089fea502c01449617d9a86b6595cd6b77068f8aea1146db4",
+      "bytes": 242782,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_desktop_renderer.hpp": {
-      "sha256": "11f1fe6563c22008cad394bdc97de9f56bb875bd02855026a1ece7b311093dad",
-      "bytes": 4675,
+      "sha256": "579649c76efb37221e9f0db03ccd6f68a1f40628b7f1b59605bdd01db3b4ae7d",
+      "bytes": 6732,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_feature_defaults.hpp": {
+      "sha256": "642a27aa3bfec59d99ff01b8e8513df89e1737820f3e99c4992f3256c7f62f71",
+      "bytes": 1393,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_generic_combiner.hpp": {
+      "sha256": "aca90dc3ddef6442f58652d3c4daef0113e9aa0d572b7b948d3a63490406569f",
+      "bytes": 17457,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_ground_movement_bridge.cpp": {
+      "sha256": "256c97c1b2985dbe0c7c5a7bad8948446b3746200a8e1a4ffd3c1164877aa96c",
+      "bytes": 10409,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_ground_movement_bridge.h": {
+      "sha256": "c382725273052e666757a5fed4290bf0764b4ade28bdb853da930f52a79fe0e8",
+      "bytes": 671,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_guest_clock.hpp": {
@@ -3783,9 +4119,14 @@
       "bytes": 810,
       "origin": "working-source"
     },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_input_assignment.hpp": {
+      "sha256": "e1df71d661ed90bf73e3164e13b8bbe4e6f08773466d1350e4029453d7f8dcde",
+      "bytes": 9305,
+      "origin": "working-source"
+    },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_local_presentation.hpp": {
-      "sha256": "79497968ac057cf73c4698f756264d7a479f670385de72db6dd182982d659eb6",
-      "bytes": 10919,
+      "sha256": "908e5bdd53c936e69f51d5f0118e6ff4c5c3031df295ac7e903d70d64a25597b",
+      "bytes": 11558,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_local_telemetry.hpp": {
@@ -3794,23 +4135,38 @@
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_look_policy.hpp": {
-      "sha256": "cefd6e3e534113ae5025c18fee7f57509f2440553e847c396bec97755f664ec1",
-      "bytes": 6088,
+      "sha256": "e5e751bad75e8df1e1340f6e18323242ae39290835fc944826aa5a1906e377df",
+      "bytes": 7411,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_model_filter.hpp": {
+      "sha256": "07611efb9e47e8c233a371d6ee5ed6b26d78a5620657a1ca96f8a29bb94e62a9",
+      "bytes": 8425,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_modern_look.cpp": {
-      "sha256": "a20a5533c908de8d850c49b6af945bb22e983112819c9207004b1eddd9b7db13",
-      "bytes": 22633,
+      "sha256": "879442a5766dbaff0857ff0f02bb5d1cb80c6b350a24ea5003c943ea3bb1219f",
+      "bytes": 29049,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_native_actions.c": {
-      "sha256": "226e2e09445ecb18c54c23c6c6abe22ee3d329423a0931390530aebd30648964",
-      "bytes": 2222,
+      "sha256": "9807ad223aac549f092eba59b59dfed519a2b363d253ae14583ad6844f3b6299",
+      "bytes": 2292,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_native_focus.c": {
+      "sha256": "f91fee962f23d221bc8759a718460f46b58c3f02185ec48c6589d309bd8e60d8",
+      "bytes": 3971,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_native_pc_option_ids.h": {
+      "sha256": "e44e70bf667d5cc73fe9c55781bccaee12bf65ccedfaba08c1b4af62abb0778c",
+      "bytes": 1959,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_native_pc_options.c": {
-      "sha256": "b8c73451ba4d84a1c2dd4be8e7652aad70f395ab7d0ab477c81c7f3d0fea6d87",
-      "bytes": 25106,
+      "sha256": "25bf1fc39f17c84674925ac28dc91fe5ff1cff13496b00002c0d6fbeda739ed2",
+      "bytes": 29468,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_native_pc_options.h": {
@@ -3818,29 +4174,104 @@
       "bytes": 1573,
       "origin": "working-source"
     },
-    "xr64/games/rage_wars/recomp_host/src/rage_wars_native_pc_option_ids.h": {
-      "sha256": "ddc40a948e09e90519e3154ac157a171660a546948164200280e374db2ab4025",
-      "bytes": 1579,
-      "origin": "working-source"
-    },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_openxr.cpp": {
-      "sha256": "98b687c8a110d3a8ed3a503be30fcedd836f8b7fbc062fb49456d8556e0d7b9d",
-      "bytes": 40336,
+      "sha256": "aa1c0836c683afa655514bac1a585da011cff681722865c23387f10bcf27a46a",
+      "bytes": 42709,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_openxr.hpp": {
-      "sha256": "98e5f4f28f8535efe02483475755fc25ad320966e14fad0649489a4d1673ba1c",
-      "bytes": 3373,
+      "sha256": "fcfbea84c6d3468893df8868b7178f6a89ff9a55c3b8aebc02ec7977f15ac7e0",
+      "bytes": 3679,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_damage_descriptor_bridge.cpp": {
+      "sha256": "fa282277f32065dba86e71721ac2f04b49342d3875d6ee1c45d909968524604f",
+      "bytes": 2676,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_damage_descriptor_bridge.h": {
+      "sha256": "0a7b195475660c3d83d83ea7894178c7511263de9ddad8307292c362e38488f7",
+      "bytes": 322,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_ease_bridge.cpp": {
+      "sha256": "1e323f9b10e3e8724c4140fe8e1e9a8b762323f7be714354c368f326e73ee7c9",
+      "bytes": 2196,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_ease_bridge.h": {
+      "sha256": "9242f1a16aa3491f031532b720bd2210317c92df21b514f1991c039a9b2624c1",
+      "bytes": 309,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_floor_height_bridge.cpp": {
+      "sha256": "373d995d6c5c3febb3db9d6b6fb666ff8dbb20fcacdb49a3509a3818b9faf8f4",
+      "bytes": 3588,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_floor_height_bridge.h": {
+      "sha256": "9d676c41d517f3b4b3e327c3d307b0a554426f2b16da065ea86887b07156696c",
+      "bytes": 317,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_ground_contact_bridge.cpp": {
+      "sha256": "692af96fecc78949f17e99b75b74a92aefbbc94168ab89163480122da0f9fb84",
+      "bytes": 2388,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_ground_contact_bridge.h": {
+      "sha256": "4a91e9427e4c43a868a7a9e7b65781ac4e6920c49adcb92902b2103d4fae4d20",
+      "bytes": 319,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_idle_entry_bridge.cpp": {
+      "sha256": "540352547f7e6c3813d2dae37787f6ded1fa1a6a6fea5f7255419aefb5834546",
+      "bytes": 2993,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_idle_entry_bridge.h": {
+      "sha256": "e21b839bd4c277b0c8c976baf72934c1e16876b3f7d18824a760a7a769697241",
+      "bytes": 328,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_movement_speed_bridge.cpp": {
+      "sha256": "58a027a28c0a3802a81058e50af9ca9a880aca218e6803fad8f4c18d71c135aa",
+      "bytes": 3408,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_movement_speed_bridge.h": {
+      "sha256": "ce587a1b0f536bb2bfbb470bcb48d1fef0d131e73082f3d5626ee2d2119fe73d",
+      "bytes": 321,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_surface_lookup_bridge.cpp": {
+      "sha256": "60a1781b80cece935d16cb279f958f713d7b49ee94111469b4b0719a3a9b433e",
+      "bytes": 3349,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_surface_lookup_bridge.h": {
+      "sha256": "1784cda574ff2ad1b346bf4e182e8ab1404b97e5e375f5ed182de0f562c7e54f",
+      "bytes": 319,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_view_bridge.cpp": {
+      "sha256": "309f6dc7b4579848d1eeeb301fa9567233928688bef0367b4f46f84cb99ac39d",
+      "bytes": 6450,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_player_view_bridge.h": {
+      "sha256": "375dfc49ecb7fd337869f28a9697019b752f534259804742563781d02f7cdcdc",
+      "bytes": 326,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_port_options.cpp": {
-      "sha256": "259d44d71a150dbb81793f7cbb9d648b3c57d6971bce4d3c3b321dd908feb278",
-      "bytes": 36052,
+      "sha256": "77af72b62e751723f3c9a79fa4bcf393dd461de2536b1139d3dc9b46075d1d59",
+      "bytes": 42997,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_port_options.hpp": {
-      "sha256": "0fde0ef82f621edc62a3ab8c1b45c2d8bd098e8405fe40966c6dd53e4643003e",
-      "bytes": 2378,
+      "sha256": "fc57e5c49db7c7ec913e0bc9e01eb3effc27d8177c2d73d1ffe898c0be7445c9",
+      "bytes": 2478,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_presentation_clock.hpp": {
@@ -3864,7 +4295,7 @@
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_release.rc": {
-      "sha256": "bb684e87cdf8669a61b621bc9644610aa8174ae7fc09d7f7712156057252952d",
+      "sha256": "760bd1c2983c5ca914be1873fdec3422227d3a2c9efc17b4fc5ba811c367c78c",
       "bytes": 681,
       "origin": "working-source"
     },
@@ -3899,8 +4330,8 @@
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_camera.hpp": {
-      "sha256": "52a5c507ec3bef7e5899c88a2e183d8ecc2291e0512b29a9eec5dd9a104d5fc1",
-      "bytes": 1095,
+      "sha256": "9ec937d0df247881a188829090d37c99eabb88f2d036c0fa94a0e77734328f8e",
+      "bytes": 2347,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_color.hpp": {
@@ -3909,13 +4340,18 @@
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_controls.hpp": {
-      "sha256": "98e32dea5e27fe28d820e0ffa806d566ae77a0446553882c580578e4295542b2",
-      "bytes": 5628,
+      "sha256": "0fb4b8d57b4c385cc9fe2116527f19d88fdbe301f8ae0e2093a8b2b3ebc1e08a",
+      "bytes": 6338,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_frame_stats.hpp": {
+      "sha256": "4d74dc67223938e59a8814e514dabf1baf46dfecbaabd8b98cf6352f8ebcd9f5",
+      "bytes": 7860,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_guest_input.hpp": {
-      "sha256": "0fcd3f2fbb9bba0d86796f5a385f48695cd7d2e60905897f42cdfb601114787e",
-      "bytes": 1752,
+      "sha256": "109baf71407cf9222984867dce02bcd4f2ff414aebf4540be1fd1e9ced8d92ad",
+      "bytes": 1805,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_hand_ray.hpp": {
@@ -3923,9 +4359,19 @@
       "bytes": 1533,
       "origin": "working-source"
     },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_hud.hpp": {
+      "sha256": "61bcb1ef19ca3972e2ffdfa506c698284941386cc6b00dc327ea6002374892d4",
+      "bytes": 5314,
+      "origin": "working-source"
+    },
+    "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_laser.hpp": {
+      "sha256": "678a029fbf01eaa942cb706391242d411f3bdca5ec19090ad96cf1753621a933",
+      "bytes": 3468,
+      "origin": "working-source"
+    },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_menu.hpp": {
-      "sha256": "c029c7498cc78f0989089b7468545b97d38d85b8bf601117f71895aca514d7fc",
-      "bytes": 595,
+      "sha256": "3d97e0a0908c6bad8633774ae88d778b992ae095e69d774da3df465cd0ddb4a3",
+      "bytes": 658,
       "origin": "working-source"
     },
     "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_shot.hpp": {
@@ -3962,16 +4408,6 @@
       "sha256": "5dfdf9c738bd3a604c43914a85a1bc253ed88031a218131e6b7bd4189c101113",
       "bytes": 1725,
       "origin": "working-source"
-    },
-    "scripts/apply_results_decoder_callbacks.py": {
-      "sha256": "712217c35acd3fd4890589100c6f982808bd780703a5a43578fd181d811a6ea8",
-      "bytes": 4489,
-      "origin": "focused-original-ROM-verified-callback-recipe"
-    },
-    "scripts/results_decoder_callback_dispatch.json": {
-      "sha256": "83b41b765664f68c6b17f4cc5536ec2e96e59a29fd8dd22ad7dd1672e348b265",
-      "bytes": 4495,
-      "origin": "focused-original-ROM-verified-callback-recipe"
     }
   },
   "excluded": [
@@ -3985,114 +4421,6 @@
     "build products",
     "unrelated development output"
   ],
-  "notice_provenance": {
-    "origin": "Exact notices copied from the clean-B Windows program ZIP and checked against its embedded package-manifest.json.",
-    "program_zip": "RageWarsRecompiled-v0.2.0-beta.1-windows.zip",
-    "program_zip_sha256": "89FD11695D9D39D47BDAA7A63E505E29C40A53345AD17EC69B64556010BFE84F",
-    "package_manifest_sha256": "0B84155D801812C58E89BEBE0BA19C2FED451D27D7B19DFF790CEBAC0E46FF73",
-    "added_file_count": 32,
-    "license_file_count": 31,
-    "notice_files": [
-      "THIRD-PARTY-NOTICES.txt",
-      "licenses/0530cbedd4-LICENSE",
-      "licenses/07b0517a30-LICENSE",
-      "licenses/0c34463d08-LICENSE",
-      "licenses/16b008239b-LICENSE-odashi-encoding.txt",
-      "licenses/1b790bec9b-LICENSE.txt",
-      "licenses/31de7f3e77-LICENSE",
-      "licenses/337f91b9d7-COPYING",
-      "licenses/4047e7c8a7-LICENSE.MIT",
-      "licenses/46d9eea800-COPYING",
-      "licenses/4d4e6e1a83-LICENSE",
-      "licenses/51a6960a22-LICENSE-PerfectDarkVR-reference.txt",
-      "licenses/530ca09e5c-LICENSE-Fast3D-reference.txt",
-      "licenses/5864596295-LICENSE",
-      "licenses/670b97c1ac-LICENSE.txt",
-      "licenses/6a413a28ea-LICENSE",
-      "licenses/717fad8efc-LICENSE",
-      "licenses/7886c05d73-LICENSE-Ares-RSP.txt",
-      "licenses/7b5c2d9da4-LICENSE",
-      "licenses/7d404da449-LICENSE",
-      "licenses/8130e3fbe7-LICENSE",
-      "licenses/Microsoft-VCRedist.txt",
-      "licenses/OpenXR-ATTRIBUTION.txt",
-      "licenses/OpenXR-Apache-2.0.txt",
-      "licenses/OpenXR-JsonCpp.txt",
-      "licenses/OpenXR-MIT.txt",
-      "licenses/SDL2.txt",
-      "licenses/a68c4e11a1-LICENSE",
-      "licenses/a7dc098df0-LICENSE",
-      "licenses/a85d3b168e-LICENSE",
-      "licenses/concurrentqueue.txt",
-      "licenses/e7a9216367-LICENSE"
-    ]
-  },
-  "source_delta_provenance": {
-    "schema": "xr64.rage-wars.source-delta.v1",
-    "delta_id": "startup-transition-final5",
-    "parent_source_archive": "RageWarsRecompiled-v0.2.0-beta.1-source-final4.zip",
-    "parent_source_archive_sha256": "D521B6FCF6BE9800B0CF7DC71201A45C532F29CEE570F33E0C49FE6C1A19ACDD",
-    "parent_source_manifest_sha256": "CF9332184942518C6E3BF766699C8B8ECDA8B49E709F87A86F2B6501DFCDEEB8",
-    "replacement_count": 4,
-    "added_file_count": 1,
-    "source_change_receipt_schema": "xr64.startup-transition-source-change.v1",
-    "files": [
-      {
-        "path": "MODIFICATIONS.txt",
-        "action": "replaced",
-        "before_sha256": "420B113523B2651E84475276C84019F195CB4A3975F9A88174E7F2458E92BA07",
-        "after_sha256": "8071AB72A511BF983AE81AAF1077D4F4E4C42789D1690BABF5392740DC8D2392",
-        "bytes": 3060,
-        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
-      },
-      {
-        "path": "xr64/games/rage_wars/recomp_host/src/rage_wars_desktop_renderer.cpp",
-        "action": "replaced",
-        "before_sha256": "6296BAA2712E1EAF04CA53B8CE54D73C6D2D4A1AA9496886CE34E03896B154F6",
-        "after_sha256": "C316C3B9111561F5612B2C776B14472CC1FB46E87B92132613A5B46AFFCF9FB2",
-        "bytes": 205092,
-        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
-      },
-      {
-        "path": "xr64/games/rage_wars/recomp_host/src/rage_wars_xr_menu.hpp",
-        "action": "replaced",
-        "before_sha256": "6F76E5427966F5AA4D018212F7AF6AC9464351200A04AC145D81DF287E504223",
-        "after_sha256": "C029C7498CC78F0989089B7468545B97D38D85B8BF601117F71895ACA514D7FC",
-        "bytes": 595,
-        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
-      },
-      {
-        "path": "staging/rage-wars-recomp-spike/pc_runtime/tests/rage_wars_xr_camera_test.cpp",
-        "action": "replaced",
-        "before_sha256": "2ACB0CBB2FD4AE8CC960CC46EE47D58B228231D5FFB5CF0DD78E71E0A5A5A2A3",
-        "after_sha256": "9D943CD98BEB5B4C7DC67A68FC510CD1A8D3B1B338A65DACB83C81B024B4632E",
-        "bytes": 23804,
-        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
-      },
-      {
-        "path": "xr64/games/rage_wars/recomp_host/src/rage_wars_startup_transition.hpp",
-        "action": "added",
-        "before_sha256": null,
-        "after_sha256": "9943FFB04715E0AE575F08F3F3EB1B4671A9299D0BE0180D95A9F35CB07F597C",
-        "bytes": 1330,
-        "origin": "active XR64 source tree, pinned by source-change-receipt.json"
-      }
-    ],
-    "notice_payloads": "All 32 existing B program notice files are preserved byte-for-byte from final4.",
-    "build_scope": "A4 guarded consumer build and source contracts passed; a fresh B2 reconstruction and owner runtime acceptance remain pending."
-  },
-  "release_version": "0.2.1-beta.1",
-  "callback_dispatch_patch": {
-    "release": "v0.2.1-beta.1",
-    "caller": "0x0025F074",
-    "call_site": "0x0025F21C",
-    "existing_callbacks": [
-      "0x00261120",
-      "0x0025EED4",
-      "0x002611D8"
-    ],
-    "save_path": "Nine fixed calls in existing caller 0x00449B20 restored to five registered ROM-backed bodies.",
-    "new_guest_function_count": 0,
-    "runtime_acceptance": "Intermittent reporter failure not reliably reproduced; player confirmation pending."
-  }
+  "release_version": "0.5.0-beta.1",
+  "matching_executable_sha256": "7E5E22ABBEDFC8B2B3E1B8C5404B5CB2D8E78A1908FE6C0F158C61C779B1E0A2"
 }

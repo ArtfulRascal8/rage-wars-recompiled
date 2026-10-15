@@ -16,6 +16,7 @@
 #include <cstdio>
 #include <cstring>
 #include <algorithm>
+#include <cmath>
 #include <chrono>
 #include <mutex>
 #include <cstdlib>
@@ -32,6 +33,8 @@ XrPath left_hand_path=XR_NULL_PATH,right_hand_path=XR_NULL_PATH;
 XrAction left_pose=XR_NULL_HANDLE, right_pose=XR_NULL_HANDLE, right_aim_pose=XR_NULL_HANDLE;
 XrAction left_stick=XR_NULL_HANDLE, right_stick=XR_NULL_HANDLE, right_stick_click=XR_NULL_HANDLE;
 XrAction right_trigger=XR_NULL_HANDLE, right_grip=XR_NULL_HANDLE;
+XrAction left_trigger=XR_NULL_HANDLE, left_grip=XR_NULL_HANDLE, left_stick_click=XR_NULL_HANDLE;
+std::atomic<bool> right_stick_recenter{true};
 XrAction left_menu=XR_NULL_HANDLE, left_x=XR_NULL_HANDLE, left_y=XR_NULL_HANDLE;
 XrAction right_a=XR_NULL_HANDLE, right_b=XR_NULL_HANDLE;
 XrSpace left_action_space=XR_NULL_HANDLE, right_action_space=XR_NULL_HANDLE, right_aim_action_space=XR_NULL_HANDLE;
@@ -143,6 +146,9 @@ bool create_touch_actions(std::string& error) {
        !action(right_stick_click,"right_stick_click","Reset view",XR_ACTION_TYPE_BOOLEAN_INPUT,right)||
        !action(right_trigger,"right_trigger","Fire",XR_ACTION_TYPE_FLOAT_INPUT,right)||
        !action(right_grip,"right_grip","Secondary",XR_ACTION_TYPE_FLOAT_INPUT,right)||
+       !action(left_trigger,"left_trigger","Left trigger",XR_ACTION_TYPE_FLOAT_INPUT,left)||
+       !action(left_grip,"left_grip","Left grip",XR_ACTION_TYPE_FLOAT_INPUT,left)||
+       !action(left_stick_click,"left_stick_click","Left stick press",XR_ACTION_TYPE_BOOLEAN_INPUT,left)||
        !action(left_menu,"left_menu","Start",XR_ACTION_TYPE_BOOLEAN_INPUT,left)||
        !action(left_x,"left_x","Previous weapon",XR_ACTION_TYPE_BOOLEAN_INPUT,left)||
        !action(left_y,"left_y","Next weapon",XR_ACTION_TYPE_BOOLEAN_INPUT,left)||
@@ -163,6 +169,9 @@ bool create_touch_actions(std::string& error) {
        !bind(right_stick_click,"/user/hand/right/input/thumbstick/click")||
        !bind(right_trigger,"/user/hand/right/input/trigger/value")||
        !bind(right_grip,"/user/hand/right/input/squeeze/value")||
+       !bind(left_trigger,"/user/hand/left/input/trigger/value")||
+       !bind(left_grip,"/user/hand/left/input/squeeze/value")||
+       !bind(left_stick_click,"/user/hand/left/input/thumbstick/click")||
        !bind(left_menu,"/user/hand/left/input/menu/click")||
        !bind(left_x,"/user/hand/left/input/x/click")||
        !bind(left_y,"/user/hand/left/input/y/click")||
@@ -215,7 +224,7 @@ void sample_touch(XrTime predicted,const XrPosef* head_pose) {
     };
     auto boolean=[&](XrAction action,bool& out){
         XrActionStateGetInfo info{XR_TYPE_ACTION_STATE_GET_INFO};info.action=action;
-        info.subactionPath=(action==left_stick||action==left_menu||action==left_x||action==left_y||action==left_pose) ? left_hand_path : right_hand_path;
+        info.subactionPath=(action==left_stick||action==left_menu||action==left_x||action==left_y||action==left_pose||action==left_stick_click) ? left_hand_path : right_hand_path;
         XrActionStateBoolean state{XR_TYPE_ACTION_STATE_BOOLEAN};
         if(XR_SUCCEEDED(xrGetActionStateBoolean(session,&info,&state))&&state.isActive)
             out=state.currentState==XR_TRUE;
@@ -247,10 +256,19 @@ void sample_touch(XrTime predicted,const XrPosef* head_pose) {
     XrActionStateFloat grip{XR_TYPE_ACTION_STATE_FLOAT};
     if(XR_SUCCEEDED(xrGetActionStateFloat(session,&grip_info,&grip))&&grip.isActive)
         next.right.grip=grip.currentState;
+    auto left_float=[&](XrAction action,float& out){
+        XrActionStateGetInfo info{XR_TYPE_ACTION_STATE_GET_INFO};info.action=action;info.subactionPath=left_hand_path;
+        XrActionStateFloat state{XR_TYPE_ACTION_STATE_FLOAT};
+        if(XR_SUCCEEDED(xrGetActionStateFloat(session,&info,&state))&&state.isActive)out=state.currentState;
+    };
+    left_float(left_trigger,next.left.trigger);
+    left_float(left_grip,next.left.grip);
+    boolean(left_stick_click,next.left.stick_click);
     boolean(left_menu,next.menu_button);
     bool right_stick_click_down=false;
     boolean(right_stick_click,right_stick_click_down);
-    if(right_stick_click_down && !right_stick_click_was_down){
+    next.right.stick_click=right_stick_click_down;
+    if(right_stick_click_down && !right_stick_click_was_down && right_stick_recenter.load()){
         recenter.store(true);
         std::fprintf(stderr,"RW_XR_RECENTER source=right_stick_click requested=1\n");
     }
@@ -395,8 +413,16 @@ bool RageWarsOpenXr::initialize(std::string& error) {
     // legacy arithmetic. The opt-in sRGB format tells OpenXR how to sample the
     // stored bytes; EncodedEyeScope prevents a second encode while drawing.
     if(!color_selection.format){error="Runtime has no usable XR color swapchain format";return false;}
+    // Opt-in measurement/performance aid: XR64_XR_RENDER_SCALE in [0.5, 1.0].
+    float render_scale=1.0F;
+    if(const char* value=std::getenv("XR64_XR_RENDER_SCALE")) {
+        const float parsed=std::strtof(value,nullptr);
+        if(std::isfinite(parsed) && parsed>=0.5F && parsed<=1.0F) render_scale=parsed;
+    }
     for(int i=0;i<2;++i){
-        auto& e=eyes[i];e.width=views[i].recommendedImageRectWidth;e.height=views[i].recommendedImageRectHeight;
+        auto& e=eyes[i];
+        e.width=(std::max)(1,int(views[i].recommendedImageRectWidth*render_scale+0.5F));
+        e.height=(std::max)(1,int(views[i].recommendedImageRectHeight*render_scale+0.5F));
         XrSwapchainCreateInfo sc{XR_TYPE_SWAPCHAIN_CREATE_INFO};
         sc.usageFlags=XR_SWAPCHAIN_USAGE_COLOR_ATTACHMENT_BIT|XR_SWAPCHAIN_USAGE_TRANSFER_SRC_BIT;sc.format=color_selection.format;sc.sampleCount=1;
         sc.width=e.width;sc.height=e.height;sc.faceCount=1;sc.arraySize=1;sc.mipCount=1;
@@ -405,7 +431,7 @@ bool RageWarsOpenXr::initialize(std::string& error) {
         e.images.resize(n,{XR_TYPE_SWAPCHAIN_IMAGE_OPENGL_KHR});
         if(!check(xrEnumerateSwapchainImages(e.chain,n,&n,reinterpret_cast<XrSwapchainImageBaseHeader*>(e.images.data())),"images",error)) return false;
         genFbo(1,&e.fbo);genRb(1,&e.depth);bindRb(RBO,e.depth);storage(RBO,0x81A6,e.width,e.height);
-        std::fprintf(stderr,"RW_XR_EYE index=%d extent=%dx%d\n",i,e.width,e.height);
+        std::fprintf(stderr,"RW_XR_EYE index=%d extent=%dx%d recommended=%ux%u scale=%.2f\n",i,e.width,e.height,views[i].recommendedImageRectWidth,views[i].recommendedImageRectHeight,render_scale);
     }
     return true;
 }
@@ -536,6 +562,10 @@ bool RageWarsOpenXr::render(const std::function<bool(const XrEyeFrame&)>& draw,c
                     const auto pos=rotate(inverse,{v.pose.position.x-origin.x,v.pose.position.y-origin.y,v.pose.position.z-origin.z});
                     f.orientation[0]=q.x;f.orientation[1]=q.y;f.orientation[2]=q.z;f.orientation[3]=q.w;
                     f.position[0]=pos.x;f.position[1]=pos.y;f.position[2]=pos.z;
+                    const auto hq=multiply(inverse,head_pose.orientation);
+                    const auto hp=rotate(inverse,{head_pose.position.x-origin.x,head_pose.position.y-origin.y,head_pose.position.z-origin.z});
+                    f.head_orientation[0]=hq.x;f.head_orientation[1]=hq.y;f.head_orientation[2]=hq.z;f.head_orientation[3]=hq.w;
+                    f.head_position[0]=hp.x;f.head_position[1]=hp.y;f.head_position[2]=hp.z;
                     f.fov[0]=v.fov.angleLeft;f.fov[1]=v.fov.angleRight;f.fov[2]=v.fov.angleUp;f.fov[3]=v.fov.angleDown;
                     if(i==0) { timing.pose_y=pos.y; timing.pose_qy=q.y; timing.pose_qw=q.w; }
                     const auto eye_start=Clock::now();
@@ -613,6 +643,7 @@ XrMotionInput RageWarsOpenXr::shot_snapshot() const {
     return shot_state;
 }
 void RageWarsOpenXr::request_recenter(){recenter.store(true);}
+void RageWarsOpenXr::set_right_stick_recenter(bool enabled){right_stick_recenter.store(enabled);}
 void RageWarsOpenXr::shutdown(){
     last_end={}; last_prediction=0; have_last_prediction=false; frame_number=0;
     for(auto& sample:gpu_samples) {
@@ -626,6 +657,7 @@ void RageWarsOpenXr::shutdown(){
     if(right_aim_action_space)xrDestroySpace(right_aim_action_space);right_aim_action_space=XR_NULL_HANDLE;
     if(touch_set)xrDestroyActionSet(touch_set);touch_set=XR_NULL_HANDLE;
     left_pose=right_pose=right_aim_pose=left_stick=right_stick=right_stick_click=right_trigger=right_grip=XR_NULL_HANDLE;
+    left_trigger=left_grip=left_stick_click=XR_NULL_HANDLE;
     left_menu=left_x=left_y=right_a=right_b=XR_NULL_HANDLE;
     touch_ready=false;right_stick_click_was_down=false;session_state=XR_SESSION_STATE_UNKNOWN;left_hand_path=right_hand_path=XR_NULL_PATH;
     if(view_space)xrDestroySpace(view_space);view_space=XR_NULL_HANDLE;

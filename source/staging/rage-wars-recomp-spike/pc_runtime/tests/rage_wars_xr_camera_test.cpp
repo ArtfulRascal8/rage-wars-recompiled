@@ -63,6 +63,21 @@ void local_presentation_contract() {
     const auto pitch_only=local_camera_correction(native,turned,101);
     require(pitch_only.valid && std::abs(pitch_only.pitch-1.0F)<1e-5F && pitch_only.target[5]>0,
         "pending pitch uses actual guest bounds and cannot flip upside down");
+    {
+        auto det=[](const std::array<float,16>& m){
+            return m[0]*(m[5]*m[10]-m[6]*m[9])-m[1]*(m[4]*m[10]-m[6]*m[8])+m[2]*(m[4]*m[9]-m[5]*m[8]);};
+        auto pitched=pitch_only.target;
+        const float before=det(pitched);
+        require(level_play_space(pitched),"pitched camera levels");
+        require(std::abs(pitched[4])<1e-6F && std::abs(pitched[5]-1)<1e-6F && std::abs(pitched[6])<1e-6F &&
+            std::abs(pitched[9])<1e-6F && std::abs(pitched[1])<1e-6F,"level play space has world-up Y");
+        require((det(pitched)>0)==(before>0) && std::abs(std::abs(det(pitched))-1)<1e-4F,"levelling keeps handedness");
+        for(int i=12;i<15;++i)require(pitched[i]==pitch_only.target[i],"levelling keeps body position");
+        LocalPresentationState flat;flat.player=native;flat.player.yaw=0.7F;
+        auto yaw_only=local_camera_correction(native,flat,101).target;const auto copy=yaw_only;
+        require(level_play_space(yaw_only),"level camera accepted");
+        for(int i=0;i<16;++i)require(std::abs(yaw_only[i]-copy[i])<1e-5F,"level camera is unchanged");
+    }
     draw.source_projection=native.projection;draw.camera_attachment=true;
     require(!local_scene_projection(draw,yaw_only),"first-person gun is camera attached, not world retargeted");
     draw.camera_attachment=false;

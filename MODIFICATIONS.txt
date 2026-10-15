@@ -75,3 +75,71 @@ Builds and targeted automated checks passed; the reported intermittent
 gameplay crash could not be reliably reproduced and player confirmation is
 pending. Underlying overlay/code-residency lifecycle causation is unproven.
 Normal production crash reporting remains enabled.
+
+--- Beta 0.5.0 additions and carried-forward integration ---
+
+Rage Wars Recompiled - v0.5.0-beta.1
+XR64 Studios modifications and distribution notice - 2026-10-03
+
+XR64 Studios modified the N64ModernRuntime runtime and N64Recomp generator
+sources and added Rage Wars port integration, PC settings, OpenXR support,
+packaging, source reconstruction and build tooling. The modified source is
+marked and recorded in reconstruction/runtime-local.patch,
+reconstruction/generator-local.patch and their provenance manifests.
+
+The port/runtime integration, modifications and combined distribution are
+provided under GNU General Public License version 3. See COPYING.txt.
+Upstream permissive component copyrights and licenses remain in licenses/.
+No warranty is provided to the extent permitted by the applicable licenses.
+
+October 3 update: additional ROM-derived gameplay/menu callable recovery,
+registration and lookup fixes, ordinary versioned error reporting, and updated
+consumer filtering, reconstruction and complete-program packaging. Startup
+white-fill handling now uses frame-owned classification in both desktop and
+OpenXR rendering; splash artwork and gameplay colors retain their scope. Private
+development call journals, replay diagnostics and frame/memory captures are
+excluded from consumer distribution. Original game rights remain separate.
+
+Matching source and reconstruction instructions are provided alongside the
+binary download as RageWarsRecompiled-v0.5.0-beta.1-source.zip at:
+https://github.com/ArtfulRascal8/rage-wars-recompiled/releases/tag/v0.5.0-beta.1
+The source includes the modified runtime, port code, generator source,
+configuration and scripts. Rebuilding requires your own supported US v1.0 ROM.
+
+XR64 Studios has chosen to distribute this as a non-commercial fan
+recompilation. Turok: Rage Wars and the original game code/content remain
+copyrighted by their respective owners. This records the studio's release
+decision; it does not claim permission from a rights holder or a legal finding.
+The binary contains translated guest code and the source contains
+reconstruction edits derived from the original program. No ROM file,
+extracted assets, saves, profiles, RAM captures or Git history are supplied.
+
+Renderer provenance: fast3d_scene_decoder.cpp identifies LibUltraShip field
+extraction and libultra GBI protocol macros as references. The historical
+reference revision was not recorded. The preserved Fast3D reference notice
+is MIT, copyright 2020 Emill, MaikelChan. No historical revision is invented.
+Perfect Dark VR was consulted for OpenXR lifecycle and tracking-space
+separation; rage_wars_openxr.cpp records that it does not import game-specific
+camera/input code. Its reference revision is
+67ea20c86986c6bc85687f26a27418b266af309c.
+
+Independent Windows/VM or donor-denying sandbox validation remains open.
+Local reconstruction, input closure, package checks and exact-package runtime
+evidence are recorded on the versioned release page. General gameplay and
+PCVR acceptance remain limited to the scenarios actually documented there.
+
+October 4 private C1 update: the native VI integration now returns the full
+64-bit guest time from its existing counter owner. This prevents a 32-bit
+counter rollover from producing an invalid pickup rotation. Original item
+transforms and trigonometry remain unchanged. Matching source includes the
+explicit reconstruction edit and clock-boundary contract. This private pair is
+RageWarsRecompiled-pickup-clock-C1-windows-x64.zip and
+RageWarsRecompiled-pickup-clock-C1-source.zip; publication is not authorized
+by these local validation artifacts. Ammo/health visibility was reported in
+two desktop matches. Power-ups, Quest and broader regressions remain open.
+
+2026-10-15 - Beta 0.5.0 release packaging by XR64 Studios
+- Publishes selected TESTING executable 7E5E22ABBEDFC8B2B3E1B8C5404B5CB2D8E78A1908FE6C0F158C61C779B1E0A2 without rebuilding the game.
+- Carries forward native first-person view/movement, presentation/animation and renderer/VR improvements, four-port input assignment, and additive original-ROM recovery.
+- Matching reconstruction restores the inner symbol base before replaying layered recovery; all original pins remain enforced. A test-only C-linkage correction repairs the idle-entry fixture.
+- No code copied from the US v1.1 reference decompilation; its function sizes/order supported US v1.0 ROM recovery. Original rights and upstream notices remain.

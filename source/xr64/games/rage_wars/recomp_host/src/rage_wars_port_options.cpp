@@ -34,6 +34,7 @@ std::mutex g_mutex;
 Settings g_settings{};
 static_assert(std::atomic<float>::is_always_lock_free);
 std::atomic<float> g_master_gain{1.0F};
+std::atomic<bool> g_recenter_request{false};
 std::uint64_t g_revision = 0;
 bool g_initialized = false;
 bindings::Capture g_binding_editor;
@@ -149,6 +150,13 @@ Settings load() {
     if(read_number(text,"xrTurnSpeed",number))loaded.controls.xr_turn_speed=static_cast<float>(number);
     if(read_number(text,"xrMoveThreshold",number))loaded.controls.xr_move_threshold=static_cast<float>(number);
     if(read_number(text,"xrTriggerThreshold",number))loaded.controls.xr_trigger_threshold=static_cast<float>(number);
+    if(read_number(text,"xrHudDistance",number))loaded.controls.xr_hud_distance=static_cast<float>(number);
+    if(read_number(text,"xrHudWidth",number))loaded.controls.xr_hud_width=static_cast<float>(number);
+    if(read_number(text,"xrMenuDistance",number))loaded.controls.xr_menu_distance=static_cast<float>(number);
+    if(read_number(text,"xrMenuWidth",number))loaded.controls.xr_menu_width=static_cast<float>(number);
+    if(read_number(text,"xrReticleMode",number) && number>=0 && number<=2)loaded.controls.xr_reticle_mode=static_cast<std::uint8_t>(number);
+    if(read_number(text,"xrMoveDirection",number) && number>=0 && number<=2)loaded.controls.xr_move_direction=static_cast<std::uint8_t>(number);
+    if(read_number(text,"xrAnalogMove",number))loaded.controls.xr_analog_move=number!=0;
     for(unsigned i=0;i<bindings::kActionCount;++i)for(unsigned slot=0;slot<2;++slot) {
         const auto key="xrBind"+std::to_string(i)+(slot==0?"Primary":"Alternate");
         if(read_number(text,key.c_str(),number) && number>=0 && number<=65535 && std::floor(number)==number)
@@ -203,7 +211,14 @@ void save_locked() {
     file << ",\n  \"xrMotionControls\": " << (g_settings.controls.xr_motion_controls ? "true" : "false")
          << ",\n  \"xrTurnSpeed\": " << g_settings.controls.xr_turn_speed
          << ",\n  \"xrMoveThreshold\": " << g_settings.controls.xr_move_threshold
-         << ",\n  \"xrTriggerThreshold\": " << g_settings.controls.xr_trigger_threshold;
+         << ",\n  \"xrTriggerThreshold\": " << g_settings.controls.xr_trigger_threshold
+         << ",\n  \"xrHudDistance\": " << g_settings.controls.xr_hud_distance
+         << ",\n  \"xrHudWidth\": " << g_settings.controls.xr_hud_width
+         << ",\n  \"xrMenuDistance\": " << g_settings.controls.xr_menu_distance
+         << ",\n  \"xrMenuWidth\": " << g_settings.controls.xr_menu_width
+         << ",\n  \"xrReticleMode\": " << unsigned(g_settings.controls.xr_reticle_mode)
+         << ",\n  \"xrMoveDirection\": " << unsigned(g_settings.controls.xr_move_direction)
+         << ",\n  \"xrAnalogMove\": " << (g_settings.controls.xr_analog_move ? 1 : 0);
     for(unsigned i=0;i<bindings::kActionCount;++i)
         file << ",\n  \"xrBind" << i << "Primary\": " << g_settings.controls.xr_bindings[i].primary
              << ",\n  \"xrBind" << i << "Alternate\": " << g_settings.controls.xr_bindings[i].alternate;
@@ -242,6 +257,7 @@ void update(Change&& change) {
 
 float master_gain() noexcept { return g_master_gain.load(std::memory_order_relaxed); }
 void initialize() { std::lock_guard guard(g_mutex); ensure_initialized_locked(); }
+bool take_recenter_request() { return g_recenter_request.exchange(false, std::memory_order_acq_rel); }
 Settings snapshot() { std::lock_guard guard(g_mutex); ensure_initialized_locked(); return g_settings; }
 std::uint64_t revision() { std::lock_guard guard(g_mutex); ensure_initialized_locked(); return g_revision; }
 void replace(Settings settings) { update([&](Settings& next) { next = settings; }); }
@@ -359,11 +375,63 @@ extern "C" const char* xr64_pc_option_label(std::uint32_t option) {
 #endif
             return "ENTER VR";
         }
+        case XR64_PC_OPEN_PLAYERS:return "PLAYERS";
+        case XR64_PC_PLAYER_1: case XR64_PC_PLAYER_2: case XR64_PC_PLAYER_3: case XR64_PC_PLAYER_4: {
+#if defined(XR64_DEMO_BUILD)
+            namespace ia = xr64::rage_wars::input_assignment;
+            const unsigned port = option - XR64_PC_PLAYER_1;
+            const auto assignment = xr64::rage_wars::recomp::gate5_input_assignment();
+            const auto effective = xr64::rage_wars::recomp::gate5_effective_assignment()[port];
+            const auto& want = assignment.port[port];
+            const char* name = "AUTO";
+            char pad[16] = {};
+            switch (want.kind) {
+                case ia::Kind::Auto: name = "AUTO"; break;
+                case ia::Kind::KeyboardMouse: name = "KEYBOARD"; break;
+                case ia::Kind::Xr: name = "VR"; break;
+                case ia::Kind::Off: name = "OFF"; break;
+                case ia::Kind::Gamepad:
+                    std::snprintf(pad, sizeof(pad), "GAMEPAD %u", static_cast<unsigned>(want.index == 0 ? 1 : want.index));
+                    name = pad;
+                    break;
+            }
+            if (want.kind == ia::Kind::Auto) {
+                const char* resolved = "OFF";
+                char auto_pad[16] = {};
+                if (effective.route == ia::Route::Legacy) resolved = "MAIN";
+                else if (effective.route == ia::Route::Gamepad && effective.connected) {
+                    std::snprintf(auto_pad, sizeof(auto_pad), "PAD %u", static_cast<unsigned>(effective.pad));
+                    resolved = auto_pad;
+                }
+                std::snprintf(label, sizeof(label), "PLAYER %u: AUTO (%s)", port + 1U, resolved);
+            } else if (want.kind != ia::Kind::Off && !effective.connected) {
+                std::snprintf(label, sizeof(label), "PLAYER %u: %s (NONE)", port + 1U, name);
+            } else if (effective.conflict) {
+                std::snprintf(label, sizeof(label), "PLAYER %u: %s (TAKEN)", port + 1U, name);
+            } else {
+                std::snprintf(label, sizeof(label), "PLAYER %u: %s", port + 1U, name);
+            }
+            return label;
+#else
+            return "PLAYER: AUTO";
+#endif
+        }
+        case XR64_PC_PLAYERS_RESET:return "ALL PLAYERS: AUTO";
         case XR64_PC_OPEN_VR_MORE:return "MORE VR OPTIONS";
-        case XR64_PC_OPEN_XR_BINDINGS:return "VR CONTROLLER BINDINGS";
+        case XR64_PC_OPEN_VR_VIEW:return "HUD & MENU";
+        case XR64_PC_OPEN_VR_MOVE:return "MOVEMENT & TURNING";
+        case XR64_PC_XR_MOVE_DIRECTION:return settings.controls.xr_move_direction==1 ? "MOVE DIRECTION: HEAD" : settings.controls.xr_move_direction==2 ? "MOVE DIRECTION: LEFT HAND" : "MOVE DIRECTION: BODY";
+        case XR64_PC_XR_RECENTER:return "RECENTER VIEW";
+        case XR64_PC_XR_ANALOG_MOVE:return settings.controls.xr_analog_move ? "ANALOG MOVEMENT: ON" : "ANALOG MOVEMENT: OFF";
+        case XR64_PC_OPEN_XR_BINDINGS:return "CONTROLLER BINDINGS";
         case XR64_PC_XR_MOTION:return settings.controls.xr_motion_controls ? "MOTION CONTROLS: ON" : "MOTION CONTROLS: OFF";
-        case XR64_PC_XR_RESET:return "RESET VR CONTROLS";
+        case XR64_PC_XR_RESET:return "RESET VR SETTINGS";
         case XR64_PC_XR_TURN:std::snprintf(label,sizeof(label),"TURN SPEED: %.0f%%",settings.controls.xr_turn_speed*100);break;
+        case XR64_PC_XR_HUD_DISTANCE:std::snprintf(label,sizeof(label),"HUD DISTANCE: %.1f M",settings.controls.xr_hud_distance);break;
+        case XR64_PC_XR_HUD_SIZE:std::snprintf(label,sizeof(label),"HUD SIZE: %.1f M",settings.controls.xr_hud_width);break;
+        case XR64_PC_XR_MENU_DISTANCE:std::snprintf(label,sizeof(label),"MENU DISTANCE: %.1f M",settings.controls.xr_menu_distance);break;
+        case XR64_PC_XR_MENU_SIZE:std::snprintf(label,sizeof(label),"MENU SIZE: %.1f M",settings.controls.xr_menu_width);break;
+        case XR64_PC_XR_RETICLE:return settings.controls.xr_reticle_mode==0 ? "RETICLE: LASER" : settings.controls.xr_reticle_mode==1 ? "RETICLE: RING" : "RETICLE: OFF";
         case XR64_PC_XR_MOVE:std::snprintf(label,sizeof(label),"MOVE THRESHOLD: %.0f%%",settings.controls.xr_move_threshold*100);break;
         case XR64_PC_XR_TRIGGER:std::snprintf(label,sizeof(label),"TRIGGER AT: %.0f%%",settings.controls.xr_trigger_threshold*100);break;
         case XR64_PC_LOOK_SPRING: std::snprintf(label,sizeof(label),"LOOK SPRING: %s",settings.controls.look_spring ? "ON" : "OFF");break;
@@ -554,8 +622,35 @@ extern "C" void xr64_pc_option_cycle(std::uint32_t option) {
 #endif
             return;
         }
+        case XR64_PC_PLAYER_1: case XR64_PC_PLAYER_2: case XR64_PC_PLAYER_3: case XR64_PC_PLAYER_4:
+        case XR64_PC_PLAYERS_RESET: {
+#if defined(XR64_DEMO_BUILD)
+            namespace ia = xr64::rage_wars::input_assignment;
+            auto assignment = xr64::rage_wars::recomp::gate5_input_assignment();
+            if (option == XR64_PC_PLAYERS_RESET) {
+                assignment = ia::Assignment{};
+            } else {
+                // AUTO -> KEYBOARD -> GAMEPAD 1..4 -> VR -> OFF -> AUTO
+                auto& source = assignment.port[option - XR64_PC_PLAYER_1];
+                if (source.kind == ia::Kind::Auto) source = {ia::Kind::KeyboardMouse, 0};
+                else if (source.kind == ia::Kind::KeyboardMouse) source = {ia::Kind::Gamepad, 1};
+                else if (source.kind == ia::Kind::Gamepad && source.index < ia::kMaxGamepads) ++source.index;
+                else if (source.kind == ia::Kind::Gamepad) source = {ia::Kind::Xr, 0};
+                else if (source.kind == ia::Kind::Xr) source = {ia::Kind::Off, 0};
+                else source = {ia::Kind::Auto, 0};
+            }
+            xr64::rage_wars::recomp::set_gate5_input_assignment(assignment);
+#endif
+            return;
+        }
         case XR64_PC_VR_STATUS:
         case XR64_PC_OPEN_VR_MORE:
+        case XR64_PC_OPEN_VR_VIEW:
+        case XR64_PC_OPEN_VR_MOVE:
+        case XR64_PC_OPEN_PLAYERS:
+            return;
+        case XR64_PC_XR_RECENTER:
+            g_recenter_request.store(true, std::memory_order_release);
             return;
         case XR64_PC_WEAPON_MODELS:
             set_calibrated_weapon_models(!settings.calibrated_weapon_models);
@@ -576,7 +671,15 @@ extern "C" void xr64_pc_option_cycle(std::uint32_t option) {
                 case XR64_PC_XR_TURN:next.xr_turn_speed=next.xr_turn_speed>=0.99F?0.1F:next.xr_turn_speed+0.1F;break;
                 case XR64_PC_XR_MOVE:next.xr_move_threshold=next.xr_move_threshold>=0.59F?0.15F:next.xr_move_threshold+0.05F;break;
                 case XR64_PC_XR_TRIGGER:next.xr_trigger_threshold=next.xr_trigger_threshold>=0.89F?0.2F:next.xr_trigger_threshold+0.05F;break;
-                case XR64_PC_XR_RESET:next.xr_motion_controls=true;next.xr_bindings=xr64::rage_wars::bindings::xr_defaults();next.xr_turn_speed=0.5F;next.xr_move_threshold=0.25F;next.xr_trigger_threshold=0.55F;break;
+                case XR64_PC_XR_RESET:next.xr_motion_controls=true;next.xr_bindings=xr64::rage_wars::bindings::xr_defaults();next.xr_turn_speed=0.5F;next.xr_move_threshold=0.25F;next.xr_trigger_threshold=0.55F;
+                    next.xr_hud_distance=2.5F;next.xr_hud_width=2.2F;next.xr_menu_distance=2.0F;next.xr_menu_width=2.0F;next.xr_reticle_mode=0;next.xr_move_direction=0;next.xr_analog_move=true;break;
+                case XR64_PC_XR_HUD_DISTANCE:next.xr_hud_distance=next.xr_hud_distance>=5.99F?1.0F:next.xr_hud_distance+0.5F;break;
+                case XR64_PC_XR_HUD_SIZE:next.xr_hud_width=next.xr_hud_width>=3.99F?1.0F:next.xr_hud_width+0.2F;break;
+                case XR64_PC_XR_MENU_DISTANCE:next.xr_menu_distance=next.xr_menu_distance>=5.99F?1.0F:next.xr_menu_distance+0.5F;break;
+                case XR64_PC_XR_MENU_SIZE:next.xr_menu_width=next.xr_menu_width>=3.99F?1.0F:next.xr_menu_width+0.2F;break;
+                case XR64_PC_XR_RETICLE:next.xr_reticle_mode=static_cast<std::uint8_t>((next.xr_reticle_mode+1)%3);break;
+                case XR64_PC_XR_MOVE_DIRECTION:next.xr_move_direction=static_cast<std::uint8_t>((next.xr_move_direction+1)%3);break;
+                case XR64_PC_XR_ANALOG_MOVE:next.xr_analog_move=!next.xr_analog_move;break;
                 case XR64_PC_LOOK_SPRING: next.look_spring=!next.look_spring;break;
                 case XR64_PC_SWAP_STICKS: next.swap_sticks=!next.swap_sticks;break;
                 case XR64_PC_RESET_KEYS: next.keyboard_bindings=xr64::rage_wars::bindings::keyboard_defaults();break;
@@ -640,6 +743,7 @@ extern "C" std::uint64_t xr64_pc_ui_revision() {
 #if defined(XR64_DEMO_BUILD)
     revision ^= xr64::rage_wars::recomp::gate5_xr_transition_revision() * 0x9E3779B185EBCA87ULL;
     revision ^= g_vr_menu_revision.load(std::memory_order_relaxed) * 0xC2B2AE3D27D4EB4FULL;
+    revision ^= xr64::rage_wars::recomp::gate5_input_ui_revision() * 0x165667B19E3779F9ULL;
 #endif
     return revision;
 }

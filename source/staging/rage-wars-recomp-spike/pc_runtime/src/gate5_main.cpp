@@ -2,6 +2,7 @@
 #include "rage_wars_crash_report.hpp"
 #include "rage_wars_xr_guest_input.hpp"
 extern "C" void xr64_page16_refresh_pc_options(unsigned char*);
+extern "C" int xr64_rdram_snapshot_take();
 #include "rage_wars_audio.hpp"
 #ifdef XR64_DEMO_BUILD
 #include "rage_wars_demo_launcher.hpp"
@@ -1261,7 +1262,7 @@ bool effective_controller_present() {
     if (g_input_replay.enabled() || !g_desktop_input_ready.load()) {
         return g_controller_present;
     }
-    return xr64::rage_wars::recomp::gate5_desktop_controller_snapshot().connected;
+    return xr64::rage_wars::recomp::gate5_port_connected(0);
 }
 
 bool input_replay_start_ready() {
@@ -1314,7 +1315,7 @@ bool get_input(int controller, std::uint16_t* buttons, float* x, float* y) {
         rw_replay_diag_emit(line.str());
     }
 #endif
-    if (controller != 0 || buttons == nullptr || x == nullptr || y == nullptr) return false;
+    if (controller < 0 || controller > 3 || buttons == nullptr || x == nullptr || y == nullptr) return false;
     if(g_state.rdram)xr64_page16_refresh_pc_options(g_state.rdram);
     // The game flag stays 1 on title and match-setup pages. A live menu manager
     // distinguishes those pages from actual gameplay (verified in title, pause,
@@ -1334,11 +1335,31 @@ bool get_input(int controller, std::uint16_t* buttons, float* x, float* y) {
                 g_state.rdram ? g_state.rdram[0x140225U^3U]:99U,menu_manager);
     }
 #endif
-    const bool replay_enabled = g_input_replay.enabled();
-    const auto physical = xr64::rage_wars::recomp::consume_gate5_desktop_controller_snapshot(gameplay,
+    if (g_state.rdram && xr64_rdram_snapshot_take()) {
+        // Opt-in owner diagnostic (F10 with XR64_RDRAM_SNAPSHOT_DIR): host-word-swapped RDRAM.
+        static int snapshot_index = 0;
+        if (const char* directory = std::getenv("XR64_RDRAM_SNAPSHOT_DIR")) {
+            const auto path = std::filesystem::path(directory) /
+                    ("rdram-" + std::to_string(++snapshot_index) + ".bin");
+            std::ofstream out(path, std::ios::binary);
+            out.write(reinterpret_cast<const char*>(g_state.rdram),
+                    static_cast<std::streamsize>(xr64::rage_wars::memory_profile::kRdramSize));
+            std::fprintf(stderr, "RDRAM_SNAPSHOT index=%d saved=%d gameplay=%u pause=%u game=%u menu_manager=0x%08X
+",
+                    snapshot_index, out.good() ? 1 : 0, gameplay ? 1U : 0U,
+                    *reinterpret_cast<const std::uint32_t*>(g_state.rdram + 0x1407D4U),
+                    g_state.rdram[0x140225U ^ 3U], menu_manager);
+        }
+    }
+    const bool replay_enabled = g_input_replay.enabled() && controller == 0;
+    // The in-match SELECT TEAM overlay reads the analog stick (radius 60 of 80)
+    // while the game still reports gameplay; route desktop input as a menu there.
+    const bool team_select = gameplay &&
+            xr64::rage_wars::recomp::gate5_guest_team_select(g_state.rdram, gameplay);
+    const auto physical = xr64::rage_wars::recomp::consume_gate5_desktop_port_snapshot(static_cast<unsigned>(controller), gameplay && !team_select,
                 xr64::rage_wars::recomp::gate5_xr_guest_gameplay(g_state.rdram,gameplay));
-    const bool present = replay_enabled ? g_controller_present : physical.connected;
-    const bool valid = controller == 0 && present && buttons != nullptr &&
+    const bool present = controller == 0 && replay_enabled ? g_controller_present : physical.connected;
+    const bool valid = present && buttons != nullptr &&
             x != nullptr && y != nullptr;
 #ifdef XR64_RW_REPLAY_DIAGNOSTICS
     static std::atomic<int> previous_poll_state{-1};
@@ -1420,7 +1441,7 @@ bool get_input(int controller, std::uint16_t* buttons, float* x, float* y) {
         static bool last_stick_active = false;
         std::lock_guard transition_lock(transition_mutex);
         const bool stick_active = std::hypot(*x, *y) > 0.05F;
-        if (*buttons != last_buttons || stick_active != last_stick_active) {
+        if (controller == 0 && (*buttons != last_buttons || stick_active != last_stick_active)) {
             std::fprintf(stderr,
                     "RW077_GUEST_INPUT_DELIVERY mode=%s buttons=0x%04X stick=(%.3f,%.3f) vi=%llu\n",
                     replay_enabled ? "replay" : "live", *buttons, *x, *y,
@@ -1444,6 +1465,9 @@ ultramodern::input::connected_device_info_t connected_device(int controller) {
             ultramodern::input::Device::None, ultramodern::input::Pak::None};
     if (controller == 0 && effective_controller_present()) {
         result = {ultramodern::input::Device::Controller, g_controller_pak_loaded ? ultramodern::input::Pak::ControllerPak : ultramodern::input::Pak::None};
+    } else if (controller > 0 && controller < 4 && !g_input_replay.enabled() && g_desktop_input_ready.load() &&
+            xr64::rage_wars::recomp::gate5_port_connected(static_cast<unsigned>(controller))) {
+        result = {ultramodern::input::Device::Controller, ultramodern::input::Pak::None};
     }
     const bool valid = result.connected_device == ultramodern::input::Device::Controller;
     const bool pak = result.connected_pak == ultramodern::input::Pak::ControllerPak;

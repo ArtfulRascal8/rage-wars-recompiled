@@ -1,13 +1,14 @@
 #include "funcs.h"
 #include <stdio.h>
 extern uint32_t xr64_controls_take_weapon_cycle(void);
+extern uint32_t xr64_local_look_block(void);
 
 /* Called inside the original weapon-selection callback after its stun, mode,
  * menu and wheel gates. Selection writes the same pending field as native quick
  * select; the original callback then owns cache invalidation and animation. */
 uint32_t xr64_controls_read_weapon_cycle(uint8_t* rdram,uint32_t actor) {
     if(actor<0x80000000U || actor>0x807FE918U || (actor&3U) ||
-       MEM_W(0x5D4,actor)!=0 || (uint32_t)MEM_W(0x698,actor)!=0x80109328U)return 0;
+       MEM_W(0x5D4,actor)!=0 || (uint32_t)MEM_W(0x698,actor)!=xr64_local_look_block())return 0;
     return xr64_controls_take_weapon_cycle();
 }
 
@@ -15,7 +16,7 @@ void xr64_controls_weapon_cycle(uint8_t* rdram,recomp_context* ctx,uint32_t acto
     int current,order,step,target=-1;
     recomp_context saved;
     if(actor<0x80000000U || actor>0x807FE918U || (actor&3U) ||
-       MEM_W(0x5D4,actor)!=0 || (uint32_t)MEM_W(0x698,actor)!=0x80109328U)return;
+       MEM_W(0x5D4,actor)!=0 || (uint32_t)MEM_W(0x698,actor)!=xr64_local_look_block())return;
     if((cycle!=1 && cycle!=2) || MEM_BU(0x80140225,0)!=1 ||
        MEM_W(0x801407D4,0)!=0 || MEM_W(0x5E4,actor)<=0)return;
     current=MEM_H(0x62E,actor);
